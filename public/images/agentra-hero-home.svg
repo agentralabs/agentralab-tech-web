@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 700" role="img" aria-label="Agentra Labs home hero panel">
+  <defs>
+    <pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1" fill="#c9c6bb"/>
+    </pattern>
+    <style><![CDATA[
+      .mono { font-family:'IBM Plex Mono','JetBrains Mono',monospace; }
+      .sans { font-family:'Sora','Space Grotesk',sans-serif; }
+      .ink { fill:#121212; }
+      .muted { fill:#6d6a63; }
+      .accent { fill:#ea580c; }
+    ]]></style>
+  </defs>
+
+  <rect width="1600" height="700" fill="#f2f1ea"/>
+  <rect width="1600" height="700" fill="url(#grid)"/>
+
+  <line x1="26" y1="36" x2="1574" y2="36" stroke="#1f1f1f" stroke-width="1.2"/>
+  <text x="26" y="27" class="mono muted" font-size="14" letter-spacing="2">// PROFILE: AGENTRALABS.TECH</text>
+  <text x="1546" y="27" class="mono muted" font-size="14" text-anchor="end" letter-spacing="2">TICK:0201</text>
+
+  <rect x="40" y="72" width="520" height="564" fill="#fffdf6" stroke="#1f1f1f" stroke-width="2"/>
+  <rect x="40" y="72" width="520" height="40" fill="#2a2825"/>
+  <text x="60" y="97" class="mono" font-size="13" fill="#d7d3ca" letter-spacing="2">RENDER: IDENTITY.CORE</text>
+  <text x="536" y="97" class="mono accent" font-size="13" text-anchor="end" letter-spacing="2">LIVE</text>
+
+  <rect x="68" y="126" width="464" height="426" fill="#0f0f10" stroke="#1f1f1f" stroke-width="1.5"/>
+  <line x1="300" y1="188" x2="300" y2="490" stroke="#2f2c28"/>
+  <line x1="152" y1="338" x2="448" y2="338" stroke="#2f2c28"/>
+  <line x1="185" y1="223" x2="415" y2="453" stroke="#2f2c28"/>
+  <line x1="415" y1="223" x2="185" y2="453" stroke="#2f2c28"/>
+  <circle cx="300" cy="188" r="6" fill="#ea580c"/>
+  <circle cx="300" cy="490" r="6" fill="#ea580c"/>
+  <circle cx="152" cy="338" r="6" fill="#ea580c"/>
+  <circle cx="448" cy="338" r="6" fill="#ea580c"/>
+
+  <text x="60" y="584" class="mono ink" font-size="34" font-weight="700" letter-spacing="1">SIGNAL: MEMORY + VISION + CODEBASE</text>
+  <text x="60" y="622" class="mono muted" font-size="29" letter-spacing="1">STATUS: OPEN-SOURCE LAB / ACTIVE BUILD</text>
+
+  <line x1="600" y1="72" x2="600" y2="636" stroke="#1f1f1f" stroke-width="2"/>
+  <text x="648" y="214" class="sans ink" font-size="104" font-weight="700" letter-spacing="1">BUILDING AI AGENTS</text>
+  <text x="648" y="314" class="sans ink" font-size="104" font-weight="700" letter-spacing="1">FOR <tspan class="accent">TRUSTED SYSTEMS</tspan></text>
+
+  <text x="648" y="392" class="mono muted" font-size="36">Risk intelligence, regulatory governance, and resilient infrastructure.</text>
+  <text x="648" y="442" class="mono muted" font-size="36">From persistent memory to web-scale vision and semantic code intelligence.</text>
+
+  <line x1="648" y1="494" x2="1540" y2="494" stroke="#1f1f1f" stroke-width="2"/>
+  <text x="648" y="534" class="mono ink" font-size="28" letter-spacing="1.8">AGENTICMEMORY</text>
+  <text x="1024" y="534" class="mono ink" font-size="28" letter-spacing="1.8">AGENTICVISION</text>
+  <text x="1348" y="534" class="mono ink" font-size="28" letter-spacing="1.8">AGENTICCODEBASE</text>
+
+  <line x1="648" y1="560" x2="1540" y2="560" stroke="#1f1f1f" stroke-width="1.5"/>
+  <text x="648" y="598" class="mono muted" font-size="30" letter-spacing="1.2">OMOSHOLA OWOLABI</text>
+  <text x="1092" y="598" class="mono muted" font-size="30" letter-spacing="1.2">@HOWOLARBYM</text>
+  <text x="1388" y="598" class="mono muted" font-size="30" text-anchor="end" letter-spacing="1.2">OMOSHOLA.ME</text>
+
+  <circle cx="1540" cy="598" r="6" fill="#ea580c"/>
+</svg>
