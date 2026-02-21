@@ -1,5 +1,7 @@
 import type { ReactNode } from "react"
 import Link from "next/link"
+import Image from "next/image"
+import { Manrope } from "next/font/google"
 import { source } from "@/lib/source"
 import { DocsSidebarNav } from "@/components/docs-sidebar-nav"
 import "./docs.css"
@@ -7,6 +9,11 @@ import "./docs.css"
 interface DocsRouteLayoutProps {
   children: ReactNode
 }
+
+const manrope = Manrope({
+  subsets: ["latin"],
+  variable: "--docs-font-sans",
+})
 
 function titleFor(url: string, title?: string) {
   if (title) return title
@@ -55,10 +62,22 @@ export default function DocsRouteLayout({ children }: DocsRouteLayoutProps) {
   ]
 
   return (
-    <div className="docs-shell">
+    <div className={`docs-shell ${manrope.variable}`}>
       <header className="docs-topbar">
         <Link href="/docs" className="docs-brand">
-          Agentra Labs Docs
+          <span className="docs-brand-mark">
+            <Image
+              src="/images/agentra-logo-current.svg"
+              alt="Agentra Labs"
+              width={24}
+              height={24}
+              priority
+            />
+          </span>
+          <span className="docs-brand-copy">
+            <span className="docs-brand-title">Agentra Labs Docs</span>
+            <span className="docs-brand-subtitle">Public Documentation</span>
+          </span>
         </Link>
         <nav className="docs-topnav">
           <Link href="/docs">Documentation</Link>
@@ -66,14 +85,14 @@ export default function DocsRouteLayout({ children }: DocsRouteLayoutProps) {
           <Link href="/docs/ecosystem-feature-reference">API reference</Link>
         </nav>
         <div className="docs-top-search" role="search" aria-label="Search docs">
-          <span>Search...</span>
+          <span>Search documentation...</span>
           <kbd>⌘K</kbd>
         </div>
         <div className="docs-top-links">
-          <a href="https://agentralabs.tech" target="_blank" rel="noreferrer">
+          <a className="docs-top-link docs-top-link-ghost" href="https://agentralabs.tech" target="_blank" rel="noreferrer">
             Website
           </a>
-          <a href="https://github.com/agentralabs" target="_blank" rel="noreferrer">
+          <a className="docs-top-link docs-top-link-solid" href="https://github.com/agentralabs" target="_blank" rel="noreferrer">
             GitHub
           </a>
         </div>
@@ -81,6 +100,10 @@ export default function DocsRouteLayout({ children }: DocsRouteLayoutProps) {
 
       <div className="docs-frame">
         <aside className="docs-sidebar">
+          <div className="docs-sidebar-head">
+            <p className="docs-sidebar-title">Docs Navigation</p>
+            <p className="docs-sidebar-subtitle">Install, integrate, and run the Agentra ecosystem.</p>
+          </div>
           <DocsSidebarNav groups={navGroups} />
         </aside>
         <main className="docs-main">{children}</main>

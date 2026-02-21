@@ -9,12 +9,14 @@ Use hosted installers first. They keep install behavior consistent across all pu
 
 ## Hosted installers
 
-<Command
-  title="Install all three runtimes"
-  description="Run each command independently. This gives users the option to keep projects standalone."
-  code={`curl -fsSL https://agentralabs.tech/install/memory | bash
-curl -fsSL https://agentralabs.tech/install/vision | bash
-curl -fsSL https://agentralabs.tech/install/codebase | bash`}
+<CommandTabs
+  title="Hosted install commands"
+  description="Run only the runtime you need. All projects remain standalone-first."
+  items={[
+    { label: "Memory", code: "curl -fsSL https://agentralabs.tech/install/memory | bash" },
+    { label: "Vision", code: "curl -fsSL https://agentralabs.tech/install/vision | bash" },
+    { label: "Codebase", code: "curl -fsSL https://agentralabs.tech/install/codebase | bash" },
+  ]}
 />
 
 ## Fallback behavior
@@ -33,12 +35,14 @@ If a platform-specific release artifact is unavailable, installers fall back to 
 
 ### Rust crates
 
-<Command
+<CommandTabs
   title="Rust channel"
-  description="Direct installation from crates.io for environments that manage binaries via cargo."
-  code={`cargo install agentic-memory agentic-memory-mcp
-cargo install agentic-vision-mcp
-cargo install agentic-codebase`}
+  description="Direct installation from crates.io for environments that standardize on cargo-managed binaries."
+  items={[
+    { label: "Memory", code: "cargo install agentic-memory agentic-memory-mcp" },
+    { label: "Vision", code: "cargo install agentic-vision-mcp" },
+    { label: "Codebase", code: "cargo install agentic-codebase" },
+  ]}
 />
 
 ### Python helper (memory installer)

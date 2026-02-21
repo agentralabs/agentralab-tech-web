@@ -14,47 +14,56 @@ Use one installer command per runtime. Each installer handles platform detection
 - Rust toolchain installed (fallback source build path)
 
 <Steps>
-  <Step number={1} title="Install AgenticMemory">
-    <Command
-      title="Memory runtime"
-      description="Installs amem + memory MCP server and applies compatible local client config updates."
-      code={`curl -fsSL https://agentralabs.tech/install/memory | bash`}
-    />
-    <CliOutput
-      title="Expected output"
-      output={`[ok] Platform detected\n[info] Configuring MCP clients...\n[ok] Done! Memory defaults to ~/.brain.amem`}
-    />
-  </Step>
-
-  <Step number={2} title="Install AgenticVision">
-    <Command
-      title="Vision runtime"
-      description="Installs vision MCP runtime for browserless visual workflows."
-      code={`curl -fsSL https://agentralabs.tech/install/vision | bash`}
-    />
-  </Step>
-
-  <Step number={3} title="Install AgenticCodebase">
-    <Command
-      title="Codebase runtime"
-      description="Installs acb + acb-mcp for semantic code intelligence workflows."
-      code={`curl -fsSL https://agentralabs.tech/install/codebase | bash`}
+  <Step number={1} title="Install one runtime (or all three)">
+    <CommandTabs
+      title="Hosted install channels"
+      description="Install independently by project. Each installer applies platform detection and safe defaults."
+      items={[
+        {
+          label: "AgenticMemory",
+          code: "curl -fsSL https://agentralabs.tech/install/memory | bash",
+          description: "Installs amem + agentic-memory-mcp and applies compatible client merge behavior.",
+        },
+        {
+          label: "AgenticVision",
+          code: "curl -fsSL https://agentralabs.tech/install/vision | bash",
+          description: "Installs agentic-vision-mcp for browserless perception and visual continuity workflows.",
+        },
+        {
+          label: "AgenticCodebase",
+          code: "curl -fsSL https://agentralabs.tech/install/codebase | bash",
+          description: "Installs acb + acb-mcp for semantic code intelligence and MCP operations.",
+        },
+      ]}
     />
   </Step>
 
-  <Step number={4} title="Verify binaries">
+  <Step number={2} title="Run binary checks">
     <Command
       title="Version checks"
-      description="Confirm each binary is available in your shell PATH."
-      code={`amem --version\nagentic-vision-mcp --version\nacb --version\nacb-mcp --version`}
+      description="Confirm installed binaries are available in your current PATH."
+      code={`amem --version
+agentic-memory-mcp --version
+agentic-vision-mcp --version
+acb --version
+acb-mcp --version`}
     />
   </Step>
 
-  <Step number={5} title="Optional MCP runtime checks">
+  <Step number={3} title="Validate MCP entrypoints">
     <Command
       title="Runtime sanity"
-      description="Useful when validating desktop client integration and troubleshooting startup issues."
-      code={`agentic-memory-mcp --help\nagentic-vision-mcp serve --help\nacb-mcp serve --help`}
+      description="Use this output pattern to verify MCP entrypoints before connecting desktop clients."
+      code={`agentic-memory-mcp --help
+agentic-vision-mcp serve --help
+acb-mcp serve --help`}
+    />
+    <CliOutput
+      title="Expected signal"
+      output={`[ok] Platform detected
+[ok] Runtime installed
+[info] MCP client merge completed (where supported)
+[ok] Entry-point command responds without error`}
     />
   </Step>
 </Steps>

@@ -18,6 +18,7 @@ import {
   TriangleAlert,
   Wrench,
 } from "lucide-react"
+import { CommandTabs, type CommandTabItem } from "@/components/docs-command-tabs"
 
 type CalloutType = "info" | "tip" | "success" | "warning"
 
@@ -31,6 +32,12 @@ interface CommandProps {
   title: string
   description?: string
   code: string
+}
+
+interface CommandTabsProps {
+  title: string
+  description?: string
+  items: CommandTabItem[]
 }
 
 interface CliOutputProps {
@@ -119,6 +126,10 @@ export function Command({ title, description, code }: CommandProps) {
       <pre className="docs-command-code"><code>{code.trim()}</code></pre>
     </div>
   )
+}
+
+export function CommandTabsBlock({ title, description, items }: CommandTabsProps) {
+  return <CommandTabs title={title} description={description} items={items} />
 }
 
 export function CliOutput({ title = "CLI Output", output }: CliOutputProps) {

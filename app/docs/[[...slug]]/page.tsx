@@ -24,10 +24,12 @@ export default async function Page({ params }: DocsPageProps) {
 
   const data = page.data as DocsPageData
   const MDX = data.body
+  const sectionLabel = page.url === "/docs/ecosystem-feature-reference" ? "Reference" : "Get Started"
 
   return (
     <div className="docs-article-wrap">
       <article className="docs-article">
+        <p className="docs-eyebrow">{sectionLabel}</p>
         <h1>{data.title}</h1>
         {data.description ? <p className="docs-description">{data.description}</p> : null}
         <div className="docs-content">
