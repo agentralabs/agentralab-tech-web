@@ -36,7 +36,6 @@ export const navRoutes = [
   { path: "/feedback", priority: 0.7, changeFrequency: "weekly" as const },
   { path: "/showcase", priority: 0.7, changeFrequency: "weekly" as const },
   { path: "/integrations", priority: 0.7, changeFrequency: "weekly" as const },
-  { path: "/channels", priority: 0.6, changeFrequency: "monthly" as const },
   { path: "/blog", priority: 0.6, changeFrequency: "weekly" as const },
   { path: "/partners", priority: 0.6, changeFrequency: "monthly" as const },
 ]

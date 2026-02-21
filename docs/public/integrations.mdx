@@ -1,0 +1,48 @@
+---
+title: Integrations
+description: Connect MCP servers to desktop clients and local agent runtimes.
+---
+
+## MCP client integration
+
+Each installer can auto-merge supported local config files.
+
+Typical locations:
+
+- Claude Desktop config
+- Claude Code config
+
+For other MCP clients (Cursor, VS Code, Windsurf, Cline, Codex Desktop), add server entries manually.
+
+## Example MCP server entry
+
+```json
+{
+  "command": "/Users/<you>/.local/bin/agentic-vision-mcp",
+  "args": ["serve"]
+}
+```
+
+Equivalent binaries:
+
+- `agentic-memory-mcp`
+- `agentic-vision-mcp`
+- `acb-mcp`
+
+## Local usage patterns
+
+- Memory-only setup is supported and fully independent.
+- Vision-only setup is supported and fully independent.
+- Codebase-only setup is supported and fully independent.
+- Combined setup is optional and composable through MCP.
+
+## Validation checklist
+
+```bash
+which amem
+which agentic-vision-mcp
+which acb
+which acb-mcp
+```
+
+Then restart your client application and run a first tool call.

@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { SectionRail } from "@/components/section-rail"
+import { CommunityRoutingTable } from "@/components/community-routing-table"
 import { submissionLinks } from "@/lib/community"
 import { getCommunityFeed } from "@/lib/community-feed"
 
@@ -16,7 +17,7 @@ export default async function FeedbackPage() {
   const entries = feed.feedback
 
   return (
-    <div className="min-h-screen dot-grid-bg">
+    <div className="min-h-screen dot-grid-bg bg-white">
       <Navbar />
       <main>
         <section className="w-full px-6 pt-10 pb-14 lg:px-12">
@@ -93,6 +94,7 @@ export default async function FeedbackPage() {
             </div>
           </div>
         </section>
+        <CommunityRoutingTable step="030" />
       </main>
       <Footer />
     </div>

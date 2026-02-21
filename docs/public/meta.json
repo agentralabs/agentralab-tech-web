@@ -1,0 +1,15 @@
+{
+  "title": "Agentra Labs Docs",
+  "pages": [
+    "index",
+    "quickstart",
+    "installation",
+    "integrations",
+    "feedback",
+    "ecosystem-feature-reference",
+    "design-doctrine",
+    "community-sync",
+    "seo-checklist",
+    "vercel-deployment"
+  ]
+}

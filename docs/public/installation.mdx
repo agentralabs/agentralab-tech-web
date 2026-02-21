@@ -1,0 +1,45 @@
+---
+title: Installation
+description: Installation channels and fallback behavior for each project.
+---
+
+## Primary install channel
+
+Use the hosted installers from `agentralabs.tech/install/...`.
+
+```bash
+curl -fsSL https://agentralabs.tech/install/memory | bash
+curl -fsSL https://agentralabs.tech/install/vision | bash
+curl -fsSL https://agentralabs.tech/install/codebase | bash
+```
+
+## Fallback behavior
+
+If no release artifact is found for your platform, installer scripts fall back to source installation (`cargo install` from repo/tag source).
+
+## Direct package channels
+
+### Rust crates
+
+```bash
+cargo install agentic-memory agentic-memory-mcp
+cargo install agentic-vision-mcp
+cargo install agentic-codebase
+```
+
+### Python channel (memory installer helper)
+
+```bash
+pip install amem-installer
+amem-install install --auto
+```
+
+## Expected post-install output
+
+Installers should print:
+
+- platform detected
+- binary destination
+- MCP client config merge results
+- restart instructions
+- optional terminal verification command

@@ -4,7 +4,7 @@ import { motion } from "framer-motion"
 
 const ease = [0.22, 1, 0.36, 1] as const
 
-const LINKS = [
+const SITE_LINKS = [
   { label: "Home", href: "/" },
   { label: "Projects", href: "/projects" },
   { label: "Publications", href: "/publications" },
@@ -12,13 +12,15 @@ const LINKS = [
   { label: "Feedback", href: "/feedback" },
   { label: "Showcase", href: "/showcase" },
   { label: "Integrations", href: "/integrations" },
-  { label: "Channels", href: "/channels" },
   { label: "Blog", href: "/blog" },
-  { label: "Partners", href: "/partners" },
+  { label: "Partner", href: "/partners" },
+]
+
+const PROJECT_LINKS = [
   { label: "AgenticMemory", href: "https://github.com/agentralabs/agentic-memory" },
   { label: "AgenticVision", href: "https://github.com/agentralabs/agentic-vision" },
   { label: "AgenticCodebase", href: "https://github.com/agentralabs/codebase" },
-  { label: "AgentraLabsWeb", href: "https://github.com/agentralabs/agentralabs-tech-web" },
+  { label: "AgentraLabsWeb", href: "https://github.com/agentralabs/agentralab-tech-web" },
 ]
 
 export function Footer() {
@@ -40,22 +42,41 @@ export function Footer() {
               {"(C) 2026 AGENTRA LABS | OPEN SOURCE AGENTIC LAB"}
             </span>
           </div>
-          <div className="flex items-center gap-6 flex-wrap">
-            {LINKS.map((link, i) => (
-              <motion.a
-                key={link.label}
-                href={link.href}
-                target={link.href.startsWith("http") ? "_blank" : undefined}
-                rel={link.href.startsWith("http") ? "noreferrer" : undefined}
-                initial={{ opacity: 0, y: 6 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.1 + i * 0.04, duration: 0.35, ease }}
-                className="text-[10px] font-mono tracking-widest uppercase text-muted-foreground hover:text-foreground transition-colors duration-200"
-              >
-                {link.label}
-              </motion.a>
-            ))}
+          <div className="flex flex-col items-start gap-3">
+            <div className="flex items-center gap-5 flex-wrap">
+              {SITE_LINKS.map((link, i) => (
+                <motion.a
+                  key={link.label}
+                  href={link.href}
+                  target={link.href.startsWith("http") ? "_blank" : undefined}
+                  rel={link.href.startsWith("http") ? "noreferrer" : undefined}
+                  initial={{ opacity: 0, y: 6 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.1 + i * 0.03, duration: 0.35, ease }}
+                  className="text-[10px] font-mono tracking-widest uppercase text-muted-foreground hover:text-foreground transition-colors duration-200"
+                >
+                  {link.label}
+                </motion.a>
+              ))}
+            </div>
+            <div className="w-full border-t border-border pt-3 flex items-center gap-5 flex-wrap">
+              {PROJECT_LINKS.map((link, i) => (
+                <motion.a
+                  key={link.label}
+                  href={link.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  initial={{ opacity: 0, y: 6 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.2 + i * 0.04, duration: 0.35, ease }}
+                  className="text-[10px] font-mono tracking-widest uppercase text-muted-foreground hover:text-foreground transition-colors duration-200"
+                >
+                  {link.label}
+                </motion.a>
+              ))}
+            </div>
           </div>
         </div>
 

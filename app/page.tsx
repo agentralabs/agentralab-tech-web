@@ -6,6 +6,7 @@ import { AboutSection } from "@/components/about-section"
 import { PricingSection } from "@/components/pricing-section"
 import { GlitchMarquee } from "@/components/glitch-marquee"
 import { Footer } from "@/components/footer"
+import { CommunityRoutingTable } from "@/components/community-routing-table"
 import { siteConfig } from "@/lib/site"
 
 export const metadata: Metadata = {
@@ -36,6 +37,7 @@ export default function Page() {
         <AboutSection />
         <PricingSection />
         <GlitchMarquee />
+        <CommunityRoutingTable step="017" />
       </main>
       <Footer />
     </div>

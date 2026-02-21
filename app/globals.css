@@ -153,3 +153,84 @@
 .docs-clean .prose h4 {
   letter-spacing: -0.01em;
 }
+
+.docs-clean {
+  color-scheme: light;
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+.docs-clean .prose {
+  max-width: 78ch;
+  font-size: 1rem;
+  line-height: 1.72;
+}
+
+.docs-clean .prose h1 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.docs-clean .prose h2 {
+  margin-top: 2.25rem;
+  margin-bottom: 0.85rem;
+  font-size: 1.5rem;
+  font-weight: 650;
+}
+
+.docs-clean .prose h3 {
+  margin-top: 1.75rem;
+  margin-bottom: 0.65rem;
+  font-size: 1.2rem;
+  font-weight: 630;
+}
+
+.docs-clean .prose p,
+.docs-clean .prose li {
+  color: #242424;
+}
+
+.docs-clean .prose code:not(pre code) {
+  border: 1px solid #e4e4e7;
+  background: #f4f4f5;
+  border-radius: 0.4rem;
+  padding: 0.15rem 0.4rem;
+  font-size: 0.9em;
+}
+
+.docs-clean .prose pre {
+  border: 1px solid #d4d4d8;
+  border-radius: 0.75rem;
+  background: #0f172a;
+  color: #e5e7eb;
+  padding: 1rem 1.2rem;
+}
+
+.docs-clean .prose blockquote {
+  border-left: 3px solid #f97316;
+  background: #fff7ed;
+  border-radius: 0.5rem;
+  margin: 1rem 0;
+  padding: 0.85rem 1rem;
+  color: #7c2d12;
+}
+
+.docs-clean .prose table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.docs-clean .prose th,
+.docs-clean .prose td {
+  border: 1px solid #e4e4e7;
+  padding: 0.55rem 0.7rem;
+  text-align: left;
+}
+
+.docs-clean .prose thead th {
+  background: #fafafa;
+  font-weight: 620;
+}

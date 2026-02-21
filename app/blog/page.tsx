@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { SectionRail } from "@/components/section-rail"
+import { CommunityRoutingTable } from "@/components/community-routing-table"
 import { blogEntries } from "@/lib/community"
 
 export const metadata: Metadata = {
@@ -12,7 +13,7 @@ export const metadata: Metadata = {
 
 export default function BlogPage() {
   return (
-    <div className="min-h-screen dot-grid-bg">
+    <div className="min-h-screen dot-grid-bg bg-white">
       <Navbar />
       <main>
         <section className="w-full px-6 pt-10 pb-14 lg:px-12">
@@ -49,6 +50,7 @@ export default function BlogPage() {
             ))}
           </div>
         </section>
+        <CommunityRoutingTable step="033" />
       </main>
       <Footer />
     </div>
