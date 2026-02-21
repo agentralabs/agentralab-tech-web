@@ -3,68 +3,62 @@ title: Quickstart
 description: Fastest path to install and verify each Agentra Labs project.
 ---
 
-<Callout type="tip" title="Zero-friction path">
-Use one installer command per project. Each installer handles platform detection, binary install, and MCP merge for supported clients.
+<Callout type="tip" title="Zero-friction setup">
+Use one installer command per runtime. Each installer handles platform detection, binary install, and supported MCP config merge.
 </Callout>
 
-## Before you begin
+## Prereqs
 
 - macOS, Linux, or Windows with WSL
 - `curl` available
-- Rust toolchain installed (fallback source install)
+- Rust toolchain installed (fallback source build path)
 
-## 1. Install AgenticMemory
+<Steps>
+  <Step number={1} title="Install AgenticMemory">
+    <Command
+      title="Memory runtime"
+      description="Installs amem + memory MCP server and applies compatible local client config updates."
+      code={`curl -fsSL https://agentralabs.tech/install/memory | bash`}
+    />
+    <CliOutput
+      title="Expected output"
+      output={`[ok] Platform detected\n[info] Configuring MCP clients...\n[ok] Done! Memory defaults to ~/.brain.amem`}
+    />
+  </Step>
 
-<Command
-  title="Install AgenticMemory"
-  description="Adds amem runtime + memory MCP server and updates compatible local client config."
-  code={`curl -fsSL https://agentralabs.tech/install/memory | bash`}
-/>
+  <Step number={2} title="Install AgenticVision">
+    <Command
+      title="Vision runtime"
+      description="Installs vision MCP runtime for browserless visual workflows."
+      code={`curl -fsSL https://agentralabs.tech/install/vision | bash`}
+    />
+  </Step>
 
-<CliOutput
-  title="Expected signal"
-  output={`[ok] Platform: darwin-aarch64
-[info] Configuring MCP clients...
-[ok] Done! Memory defaults to ~/.brain.amem`}
-/>
+  <Step number={3} title="Install AgenticCodebase">
+    <Command
+      title="Codebase runtime"
+      description="Installs acb + acb-mcp for semantic code intelligence workflows."
+      code={`curl -fsSL https://agentralabs.tech/install/codebase | bash`}
+    />
+  </Step>
 
-## 2. Install AgenticVision
+  <Step number={4} title="Verify binaries">
+    <Command
+      title="Version checks"
+      description="Confirm each binary is available in your shell PATH."
+      code={`amem --version\nagentic-vision-mcp --version\nacb --version\nacb-mcp --version`}
+    />
+  </Step>
 
-<Command
-  title="Install AgenticVision"
-  description="Installs vision MCP runtime for browserless visual workflows and merges local MCP config."
-  code={`curl -fsSL https://agentralabs.tech/install/vision | bash`}
-/>
-
-## 3. Install AgenticCodebase
-
-<Command
-  title="Install AgenticCodebase"
-  description="Installs acb + acb-mcp for semantic code intelligence workflows."
-  code={`curl -fsSL https://agentralabs.tech/install/codebase | bash`}
-/>
-
-## 4. Verify installed binaries
-
-<Command
-  title="Binary checks"
-  description="Confirm all major binaries are available in your shell PATH."
-  code={`amem --version
-agentic-vision-mcp --version
-acb --version
-acb-mcp --version`}
-/>
-
-## 5. Optional MCP runtime checks
-
-<Command
-  title="Runtime sanity check"
-  description="Useful when validating client integration or troubleshooting connection issues."
-  code={`agentic-memory-mcp --help
-agentic-vision-mcp serve --help
-acb-mcp serve --help`}
-/>
+  <Step number={5} title="Optional MCP runtime checks">
+    <Command
+      title="Runtime sanity"
+      description="Useful when validating desktop client integration and troubleshooting startup issues."
+      code={`agentic-memory-mcp --help\nagentic-vision-mcp serve --help\nacb-mcp serve --help`}
+    />
+  </Step>
+</Steps>
 
 <Callout type="success" title="Next">
-Continue to <a href="/docs/integrations">Integrations</a> to configure desktop clients and runtime profiles.
+Continue with <a href="/docs/integrations">Integrations</a> to wire desktop clients and runtime profiles.
 </Callout>
