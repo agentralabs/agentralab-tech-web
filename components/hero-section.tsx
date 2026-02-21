@@ -21,19 +21,6 @@ export function HeroSection() {
           REMEMBER. SEE.
         </motion.h1>
 
-        <motion.div
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1, ease }}
-          className="w-full max-w-6xl my-4 lg:my-6 border-2 border-foreground"
-        >
-          <img
-            src="/images/agentra-hero-home.svg"
-            alt="Agentra Labs hero panel"
-            className="w-full h-auto block"
-          />
-        </motion.div>
-
         {/* Central Workflow Diagram */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
