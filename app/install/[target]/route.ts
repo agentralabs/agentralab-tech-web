@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server"
+import { NextRequest, NextResponse } from "next/server"
 
 const INSTALL_TARGETS: Record<string, string> = {
   memory: "https://raw.githubusercontent.com/agentralabs/agentic-memory/main/scripts/install.sh",
@@ -14,10 +14,10 @@ function resolveTarget(target: string): string | undefined {
 }
 
 export async function GET(
-  _request: Request,
-  { params }: { params: { target: string } }
+  _request: NextRequest,
+  { params }: { params: Promise<{ target: string }> }
 ) {
-  const { target } = params
+  const { target } = await params
   const scriptUrl = resolveTarget(target)
 
   if (!scriptUrl) {
@@ -34,10 +34,10 @@ export async function GET(
 }
 
 export async function HEAD(
-  _request: Request,
-  { params }: { params: { target: string } }
+  _request: NextRequest,
+  { params }: { params: Promise<{ target: string }> }
 ) {
-  const { target } = params
+  const { target } = await params
   const scriptUrl = resolveTarget(target)
 
   if (!scriptUrl) {
