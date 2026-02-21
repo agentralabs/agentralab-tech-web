@@ -59,16 +59,12 @@ const COMMANDS: Record<ProjectKey, Record<CommandType, CommandEntry[]>> = {
   AgenticVision: {
     GLOBAL: [
       {
-        command: "npx cortex plug",
-        note: "Auto-discovers compatible AI agents and injects Cortex MCP config.",
+        command: "curl -fsSL https://raw.githubusercontent.com/agentralabs/agentic-vision/main/scripts/install.sh | bash",
+        note: "Installs vision MCP binary and merges config for desktop clients.",
       },
       {
-        command: "cortex start --http-port 7700",
-        note: "Starts Cortex runtime with REST and dashboard support at localhost:7700.",
-      },
-      {
-        command: "cargo install agentic-vision-mcp",
-        note: "Installs persistent .avis visual memory MCP server.",
+        command: "cargo install agentic-vision agentic-vision-mcp",
+        note: "Installs core vision crate and MCP server from crates.io.",
       },
     ],
     RUST: [
@@ -88,21 +84,24 @@ const COMMANDS: Record<ProjectKey, Record<CommandType, CommandEntry[]>> = {
       },
     ],
     PYTHON: [],
-    NPM: [
-      {
-        command: "npm i -g @cortex-ai/client @cortex/mcp-server",
-        note: "Installs TypeScript client and MCP server packages for Cortex workflows.",
-      },
-    ],
+    NPM: [],
   },
   AgenticCodebase: {
     GLOBAL: [
+      {
+        command: "curl -fsSL https://raw.githubusercontent.com/agentralabs/codebase/main/scripts/install.sh | bash",
+        note: "Installs acb/acb-mcp binaries and merges MCP config for desktop clients.",
+      },
       {
         command: "cargo install agentic-codebase",
         note: "Installs acb and acb-mcp for semantic code workflows.",
       },
     ],
     RUST: [
+      {
+        command: "cargo install agentic-codebase",
+        note: "Installs both acb CLI and acb-mcp from crates.io.",
+      },
       {
         command: "acb compile ./my-project -o project.acb",
         note: "Compiles repository structure into a portable semantic graph.",

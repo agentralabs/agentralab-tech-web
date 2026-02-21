@@ -42,7 +42,7 @@ const PROJECTS: {
     key: "AgenticCodebase",
     artifact: ".acb",
     capacity: "semantic compiler + collective + prophecy",
-    repo: "https://github.com/agentralabs/agentic-codebase",
+    repo: "https://github.com/agentralabs/codebase",
     line: "Concept-level code intelligence with impact edges, hidden coupling, and temporal prophecy.",
   },
 ]

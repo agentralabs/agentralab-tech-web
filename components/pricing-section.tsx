@@ -133,7 +133,7 @@ const MODULES: ModuleCard[] = [
       },
     ],
     cta: "VIEW REPO",
-    href: "https://github.com/agentralabs/agentic-codebase",
+    href: "https://github.com/agentralabs/codebase",
     highlighted: false,
   },
 ]

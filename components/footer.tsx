@@ -10,7 +10,7 @@ const LINKS = [
   { label: "Publications", href: "/publications" },
   { label: "AgenticMemory", href: "https://github.com/agentralabs/agentic-memory" },
   { label: "AgenticVision", href: "https://github.com/agentralabs/agentic-vision" },
-  { label: "AgenticCodebase", href: "https://github.com/agentralabs/agentic-codebase" },
+  { label: "AgenticCodebase", href: "https://github.com/agentralabs/codebase" },
   { label: "AgentraLabsWeb", href: "https://github.com/agentralabs/agentralabs-tech-web" },
 ]
 
