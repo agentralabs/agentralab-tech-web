@@ -7,6 +7,9 @@ Use one of the following commands:
 curl -fsSL https://agentralabs.tech/install/memory | bash
 curl -fsSL https://agentralabs.tech/install/vision | bash
 curl -fsSL https://agentralabs.tech/install/codebase | bash
+
+Optional feedback:
+https://agentralabs.tech/feedback
 `
 
 export async function GET() {

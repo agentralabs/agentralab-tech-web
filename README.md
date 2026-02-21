@@ -34,14 +34,21 @@ This repo is prepared for Vercel deployment.
 
 See:
 
-- `docs/public/VERCEL_DEPLOYMENT.md`
-- `docs/public/SEO_CHECKLIST.md`
+- `docs/public/vercel-deployment.mdx`
+- `docs/public/seo-checklist.mdx`
 
 ## Pages
 
 - `/` Home
 - `/projects` Projects
 - `/publications` Publications
+- `/docs` Documentation Hub
+- `/feedback` Feedback
+- `/showcase` Showcase
+- `/integrations` Integrations
+- `/channels` Channels
+- `/blog` Blog
+- `/partners` Partners
 
 ## Linked Repositories
 

@@ -8,6 +8,13 @@ const LINKS = [
   { label: "Home", href: "/" },
   { label: "Projects", href: "/projects" },
   { label: "Publications", href: "/publications" },
+  { label: "Docs", href: "/docs" },
+  { label: "Feedback", href: "/feedback" },
+  { label: "Showcase", href: "/showcase" },
+  { label: "Integrations", href: "/integrations" },
+  { label: "Channels", href: "/channels" },
+  { label: "Blog", href: "/blog" },
+  { label: "Partners", href: "/partners" },
   { label: "AgenticMemory", href: "https://github.com/agentralabs/agentic-memory" },
   { label: "AgenticVision", href: "https://github.com/agentralabs/agentic-vision" },
   { label: "AgenticCodebase", href: "https://github.com/agentralabs/codebase" },
@@ -54,7 +61,7 @@ export function Footer() {
 
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 pt-4 border-t border-border">
           <span className="text-[10px] font-mono tracking-[0.15em] uppercase text-muted-foreground">
-            Open to partnerships, sponsorships, and research collaboration.
+            Open to feedback, showcases, integrations, partnerships, and research collaboration.
           </span>
           <div className="flex items-center gap-5 flex-wrap">
             <a

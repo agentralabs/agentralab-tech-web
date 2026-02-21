@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import { JetBrains_Mono } from 'next/font/google'
 import { GeistPixelGrid } from 'geist/font/pixel'
+import { RootProvider } from "fumadocs-ui/provider/next"
 import { ThemeProvider } from '@/components/theme-provider'
 import { siteConfig } from '@/lib/site'
 
@@ -112,7 +113,7 @@ export default function RootLayout({
       <body className="font-mono antialiased">
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false} disableTransitionOnChange>
-          {children}
+          <RootProvider>{children}</RootProvider>
         </ThemeProvider>
       </body>
     </html>

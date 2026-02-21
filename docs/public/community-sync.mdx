@@ -1,0 +1,47 @@
+---
+title: Community Sync (GitHub Discussions)
+description: Configure live syncing for feedback, showcase, and integrations from GitHub Discussions.
+---
+
+# Community Sync (GitHub Discussions)
+
+This site can auto-populate `/feedback`, `/showcase`, and `/integrations` from GitHub Discussions.
+
+## Vercel environment variables
+
+Set these in Vercel Project Settings -> Environment Variables:
+
+- `AGENTRA_GITHUB_TOKEN`
+  - GitHub token with read access to discussions on the target repository.
+- `GITHUB_DISCUSSIONS_OWNER`
+  - Example: `agentralabs`
+- `GITHUB_DISCUSSIONS_REPO`
+  - Example: `.github` (recommended central repo for org discussions)
+- `GITHUB_DISCUSSIONS_LIMIT`
+  - Optional, default `40`
+- `GITHUB_DISCUSSIONS_STRICT_CATEGORY_ROUTING`
+  - Optional, default `1` (strict)
+- `GITHUB_FEEDBACK_CATEGORY_SLUGS`
+  - Optional, default `feedback`
+- `GITHUB_SHOWCASE_CATEGORY_SLUGS`
+  - Optional, default `showcase`
+- `GITHUB_INTEGRATIONS_CATEGORY_SLUGS`
+  - Optional, default `integrations`
+
+## Category routing behavior
+
+Default behavior is strict category slug routing:
+
+- `/feedback` uses `GITHUB_FEEDBACK_CATEGORY_SLUGS`
+- `/showcase` uses `GITHUB_SHOWCASE_CATEGORY_SLUGS`
+- `/integrations` uses `GITHUB_INTEGRATIONS_CATEGORY_SLUGS`
+
+Set `GITHUB_DISCUSSIONS_STRICT_CATEGORY_ROUTING=0` to allow keyword fallback routing from title/body text.
+
+If no live discussions are available, pages fall back to curated local entries.
+
+## Notes
+
+- Data fetch interval is revalidated every 10 minutes.
+- Sync is server-side only. Tokens are never exposed to browsers.
+- Keep moderation in GitHub Discussions so public pages remain high-signal.

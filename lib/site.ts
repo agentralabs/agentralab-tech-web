@@ -32,4 +32,11 @@ export const navRoutes = [
   { path: "/", priority: 1.0, changeFrequency: "daily" as const },
   { path: "/projects", priority: 0.9, changeFrequency: "daily" as const },
   { path: "/publications", priority: 0.8, changeFrequency: "weekly" as const },
+  { path: "/docs", priority: 0.8, changeFrequency: "weekly" as const },
+  { path: "/feedback", priority: 0.7, changeFrequency: "weekly" as const },
+  { path: "/showcase", priority: 0.7, changeFrequency: "weekly" as const },
+  { path: "/integrations", priority: 0.7, changeFrequency: "weekly" as const },
+  { path: "/channels", priority: 0.6, changeFrequency: "monthly" as const },
+  { path: "/blog", priority: 0.6, changeFrequency: "weekly" as const },
+  { path: "/partners", priority: 0.6, changeFrequency: "monthly" as const },
 ]
