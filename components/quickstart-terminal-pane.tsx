@@ -21,7 +21,7 @@ const COMMANDS: Record<ProjectKey, Record<CommandType, CommandEntry[]>> = {
     GLOBAL: [
       {
         command: "curl -fsSL https://agentralabs.tech/install/memory | bash",
-        note: "Installs memory binaries and links local .amem workflows.",
+        note: "Installs release binaries when available, otherwise compiles from source; then merges MCP config.",
       },
       {
         command: "pip install amem-installer && amem-install install --auto",
@@ -60,17 +60,21 @@ const COMMANDS: Record<ProjectKey, Record<CommandType, CommandEntry[]>> = {
     GLOBAL: [
       {
         command: "curl -fsSL https://agentralabs.tech/install/vision | bash",
-        note: "Installs vision MCP binary and merges config for desktop clients.",
+        note: "Installs release binaries when available, otherwise compiles from source; then merges MCP config.",
       },
       {
-        command: "cargo install agentic-vision agentic-vision-mcp",
-        note: "Installs core vision crate and MCP server from crates.io.",
+        command: "cargo install agentic-vision-mcp",
+        note: "Installs the Vision MCP server binary from crates.io.",
       },
     ],
     RUST: [
       {
-        command: "cargo install agentic-vision agentic-vision-mcp",
-        note: "Installs vision runtime and MCP bridge.",
+        command: "cargo add agentic-vision",
+        note: "Adds the core vision library crate to your Rust project.",
+      },
+      {
+        command: "cargo install agentic-vision-mcp",
+        note: "Installs the MCP bridge binary for desktop/client integrations.",
       },
     ],
     MCP: [
@@ -90,7 +94,7 @@ const COMMANDS: Record<ProjectKey, Record<CommandType, CommandEntry[]>> = {
     GLOBAL: [
       {
         command: "curl -fsSL https://agentralabs.tech/install/codebase | bash",
-        note: "Installs acb/acb-mcp binaries and merges MCP config for desktop clients.",
+        note: "Installs release binaries when available, otherwise compiles from source; then merges MCP config.",
       },
       {
         command: "cargo install agentic-codebase",
