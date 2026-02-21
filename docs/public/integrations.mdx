@@ -3,25 +3,29 @@ title: Integrations
 description: Connect MCP servers to desktop clients and local agent runtimes.
 ---
 
-## MCP client integration
+<Callout type="info" title="Integration model">
+Each project is standalone-first. You can run Memory-only, Vision-only, or Codebase-only. Combined operation is optional through MCP.
+</Callout>
 
-Each installer can auto-merge supported local config files.
+## Auto-merge clients
 
-Typical locations:
+Installer scripts can merge supported local config for:
 
-- Claude Desktop config
-- Claude Code config
+- Claude Desktop
+- Claude Code
 
-For other MCP clients (Cursor, VS Code, Windsurf, Cline, Codex Desktop), add server entries manually.
+## Manual MCP entry (other clients)
 
-## Example MCP server entry
+For Cursor, VS Code, Windsurf, Cline, Codex Desktop, and generic MCP clients:
 
-```json
-{
+<Command
+  title="MCP server entry"
+  description="Add one server entry per runtime in your client config file."
+  code={`{
   "command": "/Users/<you>/.local/bin/agentic-vision-mcp",
   "args": ["serve"]
-}
-```
+}`}
+/>
 
 Equivalent binaries:
 
@@ -29,20 +33,25 @@ Equivalent binaries:
 - `agentic-vision-mcp`
 - `acb-mcp`
 
-## Local usage patterns
-
-- Memory-only setup is supported and fully independent.
-- Vision-only setup is supported and fully independent.
-- Codebase-only setup is supported and fully independent.
-- Combined setup is optional and composable through MCP.
-
 ## Validation checklist
 
-```bash
-which amem
+<Command
+  title="Binary path validation"
+  description="Run this before debugging client-side connection issues."
+  code={`which amem
 which agentic-vision-mcp
 which acb
-which acb-mcp
-```
+which acb-mcp`}
+/>
 
-Then restart your client application and run a first tool call.
+<CliOutput
+  title="Expected signal"
+  output={`[ok] /Users/<you>/.local/bin/amem
+[ok] /Users/<you>/.local/bin/agentic-vision-mcp
+[ok] /Users/<you>/.local/bin/acb
+[ok] /Users/<you>/.local/bin/acb-mcp`}
+/>
+
+<Callout type="tip" title="After validation">
+Restart the target desktop client and run a first tool call to confirm MCP wiring.
+</Callout>

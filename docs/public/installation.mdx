@@ -3,43 +3,61 @@ title: Installation
 description: Installation channels and fallback behavior for each project.
 ---
 
-## Primary install channel
+<Callout type="info" title="Primary recommendation">
+Use hosted installers first. They keep install behavior consistent across all public docs, README instructions, and web quickstart surfaces.
+</Callout>
 
-Use the hosted installers from `agentralabs.tech/install/...`.
+## Hosted installers
 
-```bash
-curl -fsSL https://agentralabs.tech/install/memory | bash
+<Command
+  title="Install all three runtimes"
+  description="Run each command independently. This gives users the option to keep projects standalone."
+  code={`curl -fsSL https://agentralabs.tech/install/memory | bash
 curl -fsSL https://agentralabs.tech/install/vision | bash
-curl -fsSL https://agentralabs.tech/install/codebase | bash
-```
+curl -fsSL https://agentralabs.tech/install/codebase | bash`}
+/>
 
 ## Fallback behavior
 
-If no release artifact is found for your platform, installer scripts fall back to source installation (`cargo install` from repo/tag source).
+If a platform-specific release artifact is unavailable, installers fall back to source-based install (`cargo install` from canonical repo source).
+
+<CliOutput
+  title="Fallback example"
+  output={`[info] No GitHub release found; using source fallback.
+[info] Installing from source...
+[ok] Build complete.
+[ok] Binary installed in ~/.local/bin`}
+/>
 
 ## Direct package channels
 
 ### Rust crates
 
-```bash
-cargo install agentic-memory agentic-memory-mcp
+<Command
+  title="Rust channel"
+  description="Direct installation from crates.io for environments that manage binaries via cargo."
+  code={`cargo install agentic-memory agentic-memory-mcp
 cargo install agentic-vision-mcp
-cargo install agentic-codebase
-```
+cargo install agentic-codebase`}
+/>
 
-### Python channel (memory installer helper)
+### Python helper (memory installer)
 
-```bash
-pip install amem-installer
-amem-install install --auto
-```
+<Command
+  title="Python helper channel"
+  description="Convenient memory setup helper for teams standardizing on Python-based agent tooling."
+  code={`pip install amem-installer
+amem-install install --auto`}
+/>
 
-## Expected post-install output
+## Post-install expectations
 
-Installers should print:
+- platform detection summary
+- binary destination path
+- MCP merge status
+- restart guidance
+- optional runtime validation command
 
-- platform detected
-- binary destination
-- MCP client config merge results
-- restart instructions
-- optional terminal verification command
+<Callout type="warning" title="Guardrail">
+If command output diverges from these expectations, capture full terminal output and report it via <a href="/docs/feedback">Feedback and Community</a>.
+</Callout>

@@ -222,8 +222,8 @@
   margin: 16px 0;
   overflow-x: auto;
   border: 1px solid #d1d5db;
-  background: #0f172a;
-  color: #e5e7eb;
+  background: #f3f4f6;
+  color: #111827;
   border-radius: 10px;
   padding: 14px 16px;
 }
@@ -242,6 +242,137 @@
   color: #166534;
   border-radius: 8px;
   padding: 10px 14px;
+}
+
+.docs-callout {
+  margin: 14px 0 18px;
+  border: 1px solid #dbeafe;
+  border-left-width: 4px;
+  border-radius: 10px;
+  padding: 12px 14px;
+  background: #eff6ff;
+}
+
+.docs-callout-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.docs-callout-body {
+  font-size: 14px;
+  color: #1f2937;
+}
+
+.docs-callout-info {
+  border-color: #93c5fd;
+  background: #eff6ff;
+}
+
+.docs-callout-tip {
+  border-color: #fcd34d;
+  background: #fffbeb;
+}
+
+.docs-callout-success {
+  border-color: #86efac;
+  background: #ecfdf3;
+}
+
+.docs-callout-warning {
+  border-color: #fdba74;
+  background: #fff7ed;
+}
+
+.docs-command {
+  margin: 16px 0 18px;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: #fff;
+  overflow: hidden;
+}
+
+.docs-command-head {
+  border-bottom: 1px solid #e5e7eb;
+  padding: 11px 14px;
+  background: #fafafa;
+}
+
+.docs-command-title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.docs-command-description {
+  margin: 4px 0 0;
+  font-size: 13px;
+  color: #4b5563;
+}
+
+.docs-command-code {
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  background: #f3f4f6;
+  color: #111827;
+}
+
+.docs-cli {
+  margin: 14px 0 18px;
+  border: 1px solid #d1d5db;
+  border-radius: 12px;
+  background: #0b1220;
+  overflow: hidden;
+}
+
+.docs-cli-title {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 14px;
+  border-bottom: 1px solid #1f2937;
+  color: #cbd5e1;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.docs-cli pre {
+  margin: 0;
+  border: 0;
+  background: transparent;
+  color: #cbd5e1;
+  border-radius: 0;
+}
+
+.docs-cli-line {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+.docs-cli-line-ok {
+  color: #86efac;
+}
+
+.docs-cli-line-info {
+  color: #93c5fd;
+}
+
+.docs-cli-line-warn {
+  color: #fdba74;
+}
+
+.docs-cli-line-plain {
+  color: #e2e8f0;
 }
 
 .docs-content a {

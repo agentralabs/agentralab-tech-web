@@ -3,48 +3,68 @@ title: Quickstart
 description: Fastest path to install and verify each Agentra Labs project.
 ---
 
+<Callout type="tip" title="Zero-friction path">
+Use one installer command per project. Each installer handles platform detection, binary install, and MCP merge for supported clients.
+</Callout>
+
 ## Before you begin
 
 - macOS, Linux, or Windows with WSL
 - `curl` available
-- Rust toolchain installed for fallback source builds
+- Rust toolchain installed (fallback source install)
 
 ## 1. Install AgenticMemory
 
-```bash
-curl -fsSL https://agentralabs.tech/install/memory | bash
-```
+<Command
+  title="Install AgenticMemory"
+  description="Adds amem runtime + memory MCP server and updates compatible local client config."
+  code={`curl -fsSL https://agentralabs.tech/install/memory | bash`}
+/>
+
+<CliOutput
+  title="Expected signal"
+  output={`[ok] Platform: darwin-aarch64
+[info] Configuring MCP clients...
+[ok] Done! Memory defaults to ~/.brain.amem`}
+/>
 
 ## 2. Install AgenticVision
 
-```bash
-curl -fsSL https://agentralabs.tech/install/vision | bash
-```
+<Command
+  title="Install AgenticVision"
+  description="Installs vision MCP runtime for browserless visual workflows and merges local MCP config."
+  code={`curl -fsSL https://agentralabs.tech/install/vision | bash`}
+/>
 
 ## 3. Install AgenticCodebase
 
-```bash
-curl -fsSL https://agentralabs.tech/install/codebase | bash
-```
+<Command
+  title="Install AgenticCodebase"
+  description="Installs acb + acb-mcp for semantic code intelligence workflows."
+  code={`curl -fsSL https://agentralabs.tech/install/codebase | bash`}
+/>
 
-## 4. Verify binaries
+## 4. Verify installed binaries
 
-```bash
-amem --version
+<Command
+  title="Binary checks"
+  description="Confirm all major binaries are available in your shell PATH."
+  code={`amem --version
 agentic-vision-mcp --version
 acb --version
-acb-mcp --version
-```
+acb-mcp --version`}
+/>
 
-## 5. Verify MCP runtime (optional)
+## 5. Optional MCP runtime checks
 
-```bash
-agentic-memory-mcp --help
+<Command
+  title="Runtime sanity check"
+  description="Useful when validating client integration or troubleshooting connection issues."
+  code={`agentic-memory-mcp --help
 agentic-vision-mcp serve --help
-acb-mcp serve --help
-```
+acb-mcp serve --help`}
+/>
 
-## Next steps
-
-- Use [Integrations](/docs/integrations) to wire desktop clients.
-- Use [Feedback and Community](/docs/feedback) to report usage and issues.
+<Callout type="success" title="Next">
+Continue to <a href="/docs/integrations">Integrations</a> to configure desktop clients and runtime profiles.
+</Callout>
