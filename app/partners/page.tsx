@@ -3,7 +3,6 @@ import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { SectionRail } from "@/components/section-rail"
 import { CommunityRoutingTable } from "@/components/community-routing-table"
-import { submissionLinks } from "@/lib/community"
 
 export const metadata: Metadata = {
   title: "Partners",
@@ -39,12 +38,15 @@ export default function PartnersPage() {
               We partner with teams shipping real systems. If your work touches persistent memory, web perception,
               semantic code intelligence, or governance infrastructure, we can collaborate.
             </p>
-            <a
-              href={submissionLinks.partnerEmail}
-              className="mt-5 inline-flex bg-foreground text-background text-[10px] font-mono tracking-wider uppercase"
-            >
-              <span className="px-4 py-2">Open Partner Intake</span>
-            </a>
+            <div className="mt-5 inline-flex border-2 border-foreground text-foreground text-[10px] font-mono tracking-wider uppercase">
+              <span className="px-4 py-2">Partner Intake Paused</span>
+            </div>
+            <p className="mt-3 text-xs font-mono text-muted-foreground">
+              Intake is currently inactive. For urgent institutional requests, use{" "}
+              <a href="mailto:contact@agentralabs.tech" className="underline hover:text-foreground">
+                contact@agentralabs.tech
+              </a>.
+            </p>
           </div>
         </section>
 

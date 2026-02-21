@@ -32,10 +32,10 @@ export default async function FeedbackPage() {
               <div className="border-2 border-foreground p-4">
                 <p className="text-[10px] uppercase tracking-[0.16em] font-mono text-muted-foreground">Submit feedback</p>
                 <ul className="mt-3 space-y-2 text-xs font-mono text-muted-foreground leading-relaxed">
-                  <li>1. Open feedback discussion.</li>
+                  <li>1. Open Discord channel.</li>
                   <li>2. Select project and category.</li>
                   <li>3. Add reproducible details and environment notes.</li>
-                  <li>4. Opt-in for public quote if you want a showcase shoutout.</li>
+                  <li>4. Use email for escalations requiring private context.</li>
                 </ul>
                 <a
                   href={submissionLinks.feedbackForm}
@@ -43,15 +43,15 @@ export default async function FeedbackPage() {
                   rel="noreferrer"
                   className="mt-4 inline-flex bg-foreground text-background text-[10px] font-mono tracking-wider uppercase"
                 >
-                  <span className="px-4 py-2">Open Feedback Form</span>
+                  <span className="px-4 py-2">Open Discord</span>
                 </a>
               </div>
               <div className="border-2 border-foreground p-4">
-                <p className="text-[10px] uppercase tracking-[0.16em] font-mono text-muted-foreground">Post-install prompt</p>
+                <p className="text-[10px] uppercase tracking-[0.16em] font-mono text-muted-foreground">Live channels</p>
                 <div className="mt-3 border border-foreground bg-foreground text-background p-3 text-xs font-mono space-y-1">
-                  <p>{"> Install complete."}</p>
-                  <p>{"> Optional: share feedback"}</p>
-                  <p>{"> https://agentralabs.tech/feedback?project=memory"}</p>
+                  <p>{"> Discord: https://discord.gg/agentralabs"}</p>
+                  <p>{"> X: https://x.com/agentralab"}</p>
+                  <p>{"> Email: contact@agentralabs.tech"}</p>
                 </div>
                 <p className="mt-3 text-xs font-mono text-muted-foreground leading-relaxed">
                   Keep it optional and explicit. No forced telemetry. No hidden prompts.

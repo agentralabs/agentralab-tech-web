@@ -601,7 +601,7 @@ export default function ProjectsPage() {
             </div>
             <div className="p-5 grid grid-cols-1 lg:grid-cols-2 gap-6">
               <p className="text-xs lg:text-sm font-mono text-muted-foreground leading-relaxed">
-                Open to partnerships, sponsorships, and research collaborations across AI, ML, and agent systems,
+                Open to sponsorships and research collaborations across AI, ML, and agent systems,
                 including persistent memory, visual continuity, and semantic code intelligence.
               </p>
               <div className="flex flex-col gap-2">

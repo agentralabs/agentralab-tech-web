@@ -34,7 +34,7 @@ export default async function ShowcasePage() {
               rel="noreferrer"
               className="mt-5 inline-flex bg-foreground text-background text-[10px] font-mono tracking-wider uppercase"
             >
-              <span className="px-4 py-2">Submit Your Build</span>
+              <span className="px-4 py-2">Share on X (@agentralab)</span>
             </a>
           </div>
         </section>

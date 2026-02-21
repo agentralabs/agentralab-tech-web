@@ -29,11 +29,9 @@ export default async function IntegrationsPage() {
             </p>
             <a
               href={submissionLinks.integrationForm}
-              target="_blank"
-              rel="noreferrer"
               className="mt-5 inline-flex bg-foreground text-background text-[10px] font-mono tracking-wider uppercase"
             >
-              <span className="px-4 py-2">Submit Integration</span>
+              <span className="px-4 py-2">Submit via Email</span>
             </a>
           </div>
         </section>

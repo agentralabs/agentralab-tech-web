@@ -82,7 +82,7 @@ export function Footer() {
 
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 pt-4 border-t border-border">
           <span className="text-[10px] font-mono tracking-[0.15em] uppercase text-muted-foreground">
-            Open to feedback, showcases, integrations, partnerships, and research collaboration.
+            Open to feedback, showcases, integrations, and research collaboration.
           </span>
           <div className="flex items-center gap-5 flex-wrap">
             <a

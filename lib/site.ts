@@ -5,7 +5,7 @@ export const siteConfig = {
     "Open-source agentic systems lab building AgenticMemory, AgenticVision, and AgenticCodebase for persistent memory, web-scale vision, and semantic code intelligence.",
   url: "https://www.agentralabs.tech",
   locale: "en_US",
-  xHandle: "@HowolarbyM",
+  xHandle: "@agentralab",
   contactEmail: "contact@agentralabs.tech",
   githubOrgUrl: "https://github.com/agentralabs",
   githubWebUrl: "https://github.com/agentralabs/agentralabs-tech-web",

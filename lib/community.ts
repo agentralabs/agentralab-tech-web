@@ -50,21 +50,21 @@ export interface ChannelEntry {
 
 export const communityChannels: ChannelEntry[] = [
   {
-    name: "GitHub Discussions",
-    purpose: "Long-form feedback, roadmap discussion, and searchable community threads.",
-    primaryAction: "Start a discussion",
-    href: "https://github.com/orgs/agentralabs/discussions",
-  },
-  {
     name: "Discord",
-    purpose: "Real-time support, onboarding help, and integration debugging.",
-    primaryAction: "Join server",
+    purpose: "Real-time feedback, support requests, integration debugging, and community coordination.",
+    primaryAction: "Join @agentralabs",
     href: "https://discord.gg/agentralabs",
   },
   {
+    name: "X (Twitter)",
+    purpose: "Showcase highlights, launch updates, and public signal from builders.",
+    primaryAction: "Follow @agentralab",
+    href: "https://x.com/agentralab",
+  },
+  {
     name: "Email",
-    purpose: "Partnership, sponsorship, and research collaboration requests.",
-    primaryAction: "Contact team",
+    purpose: "Formal contact for integrations, support escalation, and collaboration requests.",
+    primaryAction: "contact@agentralabs.tech",
     href: "mailto:contact@agentralabs.tech",
   },
 ]
@@ -78,8 +78,8 @@ export const featuredFeedback: FeedbackEntry[] = [
       "The .amem portability made multi-agent handoffs predictable. We finally stopped rebuilding context every session.",
     author: "Platform Engineering Team",
     role: "FinTech Ops",
-    sourceLabel: "GitHub Discussion",
-    sourceUrl: "https://github.com/orgs/agentralabs/discussions",
+    sourceLabel: "Discord",
+    sourceUrl: "https://discord.gg/agentralabs",
     dateIso: "2026-02-08",
   },
   {
@@ -117,7 +117,7 @@ export const showcaseEntries: ShowcaseEntry[] = [
       "Operations agents now preserve incident context across shifts with portable .amem memory snapshots.",
     stack: ["AgenticMemory", "MCP", "Claude Desktop"],
     links: [
-      { label: "Writeup", href: "https://github.com/orgs/agentralabs/discussions" },
+      { label: "Thread", href: "https://discord.gg/agentralabs" },
       { label: "Repo", href: "https://github.com/agentralabs/agentic-memory" },
     ],
     tags: ["SRE", "Ops", "Memory"],
@@ -130,7 +130,7 @@ export const showcaseEntries: ShowcaseEntry[] = [
       "Cortex map deltas power daily pricing checks and stock alerts without heavyweight browser automation.",
     stack: ["AgenticVision", "REST", "Python"],
     links: [
-      { label: "Thread", href: "https://github.com/orgs/agentralabs/discussions" },
+      { label: "Post", href: "https://x.com/agentralab" },
       { label: "Project", href: "https://github.com/agentralabs/agentic-vision" },
     ],
     tags: ["Commerce", "Observability", "Vision"],
@@ -143,7 +143,7 @@ export const showcaseEntries: ShowcaseEntry[] = [
       "Repository-wide change planning now runs through semantic impact paths before edits are approved.",
     stack: ["AgenticCodebase", "Rust", "MCP"],
     links: [
-      { label: "Case", href: "https://github.com/orgs/agentralabs/discussions" },
+      { label: "Contact", href: "mailto:contact@agentralabs.tech" },
       { label: "Project", href: "https://github.com/agentralabs/codebase" },
     ],
     tags: ["Code Intelligence", "Refactoring", "Governance"],
@@ -217,9 +217,9 @@ export const blogEntries: BlogEntry[] = [
 ]
 
 export const submissionLinks = {
-  feedbackForm: "https://github.com/orgs/agentralabs/discussions/new?category=feedback",
-  showcaseForm: "https://github.com/orgs/agentralabs/discussions/new?category=showcase",
-  integrationForm: "https://github.com/orgs/agentralabs/discussions/new?category=integrations",
+  feedbackForm: "https://discord.gg/agentralabs",
+  showcaseForm: "https://x.com/agentralab",
+  integrationForm: "mailto:contact@agentralabs.tech?subject=Agentra%20Labs%20Integration%20Submission&body=Project:%0AIntegration%20type:%0ARuntime:%0AEnvironment:%0A",
   partnerEmail:
     "mailto:contact@agentralabs.tech?subject=Agentra%20Labs%20Partnership%20Inquiry&body=Team%20name:%0AUse%20case:%0ATimeline:%0A",
 }

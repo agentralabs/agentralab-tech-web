@@ -96,7 +96,7 @@ export default function RootLayout({
           email: siteConfig.contactEmail,
         },
       ],
-      sameAs: [siteConfig.githubOrgUrl, 'https://x.com/HowolarbyM'],
+      sameAs: [siteConfig.githubOrgUrl, 'https://x.com/agentralab'],
     },
     {
       '@context': 'https://schema.org',

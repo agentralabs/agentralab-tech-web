@@ -224,13 +224,13 @@ export default function PublicationsPage() {
             </div>
             <div className="px-5 py-4 border-t-2 border-foreground flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3">
               <span className="text-[10px] font-mono tracking-[0.15em] uppercase text-muted-foreground">
-                Open to research collaboration, partnerships, and sponsorship support.
+                Open to research collaboration and sponsorship support.
               </span>
               <a
-                href="mailto:contact@agentralabs.tech"
+                href="mailto:omoshola.owolabi@agentralabs.tech"
                 className="text-[10px] font-mono tracking-widest uppercase text-muted-foreground hover:text-foreground"
               >
-                contact@agentralabs.tech
+                omoshola.owolabi@agentralabs.tech
               </a>
             </div>
           </div>
