@@ -1,9 +1,5 @@
 # Agentra Labs Web
 
-<p align="center">
-  <img src="public/images/agentra-hero-home.svg" alt="Agentra Labs hero panel" width="1200" />
-</p>
-
 Official website for Agentra Labs (`agentralabs.tech`) built with Next.js and the internal Agentra design system.
 
 ## Stack
