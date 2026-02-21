@@ -8,7 +8,7 @@ const SITE_LINKS = [
   { label: "Home", href: "/" },
   { label: "Projects", href: "/projects" },
   { label: "Publications", href: "/publications" },
-  { label: "Docs", href: "/docs" },
+  { label: "Docs", href: "/docs", newTab: true },
   { label: "Feedback", href: "/feedback" },
   { label: "Showcase", href: "/showcase" },
   { label: "Integrations", href: "/integrations" },
@@ -48,8 +48,8 @@ export function Footer() {
                 <motion.a
                   key={link.label}
                   href={link.href}
-                  target={link.href.startsWith("http") ? "_blank" : undefined}
-                  rel={link.href.startsWith("http") ? "noreferrer" : undefined}
+                  target={link.href.startsWith("http") || link.newTab ? "_blank" : undefined}
+                  rel={link.href.startsWith("http") || link.newTab ? "noreferrer" : undefined}
                   initial={{ opacity: 0, y: 6 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}

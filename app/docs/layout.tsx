@@ -1,6 +1,7 @@
 import type { ReactNode } from "react"
 import { DocsLayout } from "fumadocs-ui/layouts/docs"
 import { source } from "@/lib/source"
+import "./docs.css"
 
 interface DocsRouteLayoutProps {
   children: ReactNode
@@ -8,7 +9,7 @@ interface DocsRouteLayoutProps {
 
 export default function DocsRouteLayout({ children }: DocsRouteLayoutProps) {
   return (
-    <div className="docs-clean min-h-screen bg-white text-black">
+    <div className="docs-standalone min-h-screen bg-white text-black">
       <DocsLayout
         tree={source.getPageTree()}
         nav={{

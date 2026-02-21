@@ -1,0 +1,14 @@
+@import "fumadocs-ui/css/lib/default-colors.css";
+@import "fumadocs-ui/css/neutral.css";
+@import "fumadocs-ui/css/generated/docs.css";
+@import "fumadocs-ui/css/generated/shared.css";
+
+.docs-standalone {
+  color-scheme: light;
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+.docs-standalone #nd-docs-layout {
+  min-height: 100vh;
+  background: #fff;
+}
