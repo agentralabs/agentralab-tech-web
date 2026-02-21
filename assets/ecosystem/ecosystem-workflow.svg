@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="Agentic ecosystem workflow from capture and compile through remember, query, link, and act">
+  <defs>
+    <style>
+      .bg { fill: #f2f1ea; }
+      .fg { fill: #0a0a0a; }
+      .line { stroke: #0a0a0a; stroke-linecap: square; stroke-linejoin: miter; }
+      .grid { stroke: #c4c2b8; stroke-width: 1; }
+      .h1 { font-family: 'JetBrains Mono', monospace; font-size: 24px; letter-spacing: 0.12em; text-transform: uppercase; fill: #0a0a0a; }
+      .h2 { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; fill: #5f5a4f; }
+      .label { font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; fill: #0a0a0a; }
+      .step { font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; fill: #f2f1ea; }
+    </style>
+    <marker id="arrow" markerWidth="10" markerHeight="8" refX="10" refY="4" orient="auto" markerUnits="strokeWidth">
+      <polygon points="0,0 10,4 0,8" fill="#0a0a0a"/>
+    </marker>
+  </defs>
+
+  <rect width="1200" height="630" class="bg"/>
+
+  <g>
+    <line x1="0" y1="0" x2="1200" y2="0" class="grid"/>
+    <line x1="0" y1="24" x2="1200" y2="24" class="grid"/>
+    <line x1="0" y1="48" x2="1200" y2="48" class="grid"/>
+    <line x1="0" y1="72" x2="1200" y2="72" class="grid"/>
+    <line x1="0" y1="96" x2="1200" y2="96" class="grid"/>
+    <line x1="0" y1="120" x2="1200" y2="120" class="grid"/>
+    <line x1="0" y1="144" x2="1200" y2="144" class="grid"/>
+    <line x1="0" y1="168" x2="1200" y2="168" class="grid"/>
+    <line x1="0" y1="192" x2="1200" y2="192" class="grid"/>
+    <line x1="0" y1="216" x2="1200" y2="216" class="grid"/>
+    <line x1="0" y1="240" x2="1200" y2="240" class="grid"/>
+    <line x1="0" y1="264" x2="1200" y2="264" class="grid"/>
+    <line x1="0" y1="288" x2="1200" y2="288" class="grid"/>
+    <line x1="0" y1="312" x2="1200" y2="312" class="grid"/>
+    <line x1="0" y1="336" x2="1200" y2="336" class="grid"/>
+    <line x1="0" y1="360" x2="1200" y2="360" class="grid"/>
+    <line x1="0" y1="384" x2="1200" y2="384" class="grid"/>
+    <line x1="0" y1="408" x2="1200" y2="408" class="grid"/>
+    <line x1="0" y1="432" x2="1200" y2="432" class="grid"/>
+    <line x1="0" y1="456" x2="1200" y2="456" class="grid"/>
+    <line x1="0" y1="480" x2="1200" y2="480" class="grid"/>
+    <line x1="0" y1="504" x2="1200" y2="504" class="grid"/>
+    <line x1="0" y1="528" x2="1200" y2="528" class="grid"/>
+    <line x1="0" y1="552" x2="1200" y2="552" class="grid"/>
+    <line x1="0" y1="576" x2="1200" y2="576" class="grid"/>
+    <line x1="0" y1="600" x2="1200" y2="600" class="grid"/>
+  </g>
+
+  <rect x="24" y="24" width="1152" height="582" fill="none" class="line" stroke-width="2"/>
+
+  <text x="48" y="62" class="h1">AGENTIC ECOSYSTEM WORKFLOW</text>
+  <text x="48" y="86" class="h2">capture + compile + remember + query + link + act</text>
+
+  <g>
+    <rect x="60" y="150" width="170" height="82" fill="#0a0a0a"/>
+    <text x="82" y="196" class="step">01 CAPTURE</text>
+
+    <rect x="248" y="150" width="170" height="82" fill="#0a0a0a"/>
+    <text x="270" y="196" class="step">02 COMPILE</text>
+
+    <rect x="436" y="150" width="170" height="82" fill="#0a0a0a"/>
+    <text x="458" y="196" class="step">03 REMEMBER</text>
+
+    <rect x="624" y="150" width="170" height="82" fill="#0a0a0a"/>
+    <text x="659" y="196" class="step">04 QUERY</text>
+
+    <rect x="812" y="150" width="170" height="82" fill="#0a0a0a"/>
+    <text x="847" y="196" class="step">05 LINK</text>
+
+    <rect x="1000" y="150" width="140" height="82" fill="#ea580c"/>
+    <text x="1036" y="196" class="step">06 ACT</text>
+  </g>
+
+  <g class="line" stroke-width="2" fill="none" marker-end="url(#arrow)">
+    <line x1="230" y1="191" x2="248" y2="191"/>
+    <line x1="418" y1="191" x2="436" y2="191"/>
+    <line x1="606" y1="191" x2="624" y2="191"/>
+    <line x1="794" y1="191" x2="812" y2="191"/>
+    <line x1="982" y1="191" x2="1000" y2="191"/>
+  </g>
+
+  <g>
+    <rect x="60" y="276" width="170" height="80" fill="none" class="line" stroke-width="2"/>
+    <text x="76" y="308" class="label">AGENTIC-VISION</text>
+    <text x="76" y="332" class="h2">.AVIS STORE</text>
+
+    <rect x="248" y="276" width="170" height="80" fill="none" class="line" stroke-width="2"/>
+    <text x="264" y="308" class="label">AGENTIC-CODEBASE</text>
+    <text x="264" y="332" class="h2">.ACB GRAPH</text>
+
+    <rect x="436" y="276" width="170" height="80" fill="none" class="line" stroke-width="2"/>
+    <text x="452" y="308" class="label">AGENTIC-MEMORY</text>
+    <text x="452" y="332" class="h2">.AMEM GRAPH</text>
+
+    <rect x="624" y="276" width="170" height="80" fill="none" class="line" stroke-width="2"/>
+    <text x="640" y="308" class="label">QUERY ENGINE</text>
+    <text x="640" y="332" class="h2">16 + 10 + 24</text>
+
+    <rect x="812" y="276" width="328" height="80" fill="none" class="line" stroke-width="2"/>
+    <text x="828" y="308" class="label">MCP SURFACE</text>
+    <text x="828" y="332" class="h2">CLAUDE / VSCODE / CURSOR / WINDSURF</text>
+  </g>
+
+  <g>
+    <rect x="60" y="398" width="1080" height="170" fill="none" class="line" stroke-width="2"/>
+    <rect x="60" y="398" width="1080" height="34" fill="#0a0a0a"/>
+    <text x="76" y="421" style="font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; fill:#f2f1ea;">operator notes</text>
+
+    <text x="84" y="468" class="label">- preserve typed edges across memory, vision, and codebase contexts</text>
+    <text x="84" y="496" class="label">- run query cycles against persistent artifacts, not transient sessions</text>
+    <text x="84" y="524" class="label">- keep mcp layer as the stable integration contract for all clients</text>
+    <text x="84" y="552" class="h2">design doctrine lock: hard edges / monospace hierarchy / single accent signal</text>
+  </g>
+
+  <circle cx="1088" cy="109" r="7" fill="#ea580c"/>
+</svg>

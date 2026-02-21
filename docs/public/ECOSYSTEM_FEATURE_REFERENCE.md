@@ -1,0 +1,153 @@
+# Ecosystem Feature Reference (Content Source of Truth)
+
+Applies to: `AgenticMemory`, `AgenticVision`, `AgenticCodebase`  
+Date: 2026-02-20  
+Purpose: editorial source for `HOME`, `PROJECTS`, and `PUBLICATIONS` copy
+
+## 1) AgenticMemory feature reference
+
+Core role:
+- Persistent cognitive graph memory for AI agents across sessions.
+
+Primary artifact:
+- `.amem`
+
+Key capabilities:
+- Graph-native memory traversal (not flat retrieval)
+- Cognitive-event modeling (FACT, DECISION, INFERENCE, CORRECTION, SKILL, EPISODE)
+- Truth evolution through contradiction and supersession edges
+- Belief revision and impact cascades
+- Reasoning gap detection
+- Drift detection over time
+
+Query surface:
+- 16 query types (as documented in project README)
+
+Operational properties:
+- Portable single-file storage
+- Memory-mappable binary `.amem` format
+- MCP server support (`agentic-memory-mcp`)
+- Cross-provider continuity for agent memory workflows
+
+Launch narrative anchors (approved for `PROJECTS` copy):
+- "Memory is not a search problem. Memory is a graph navigation problem."
+- "The atom is the cognitive event."
+- "Edges make it a brain, not a filing cabinet."
+
+## 2) AgenticVision feature reference
+
+Core role:
+- Browserless web cartography plus persistent visual memory for agents.
+
+Primary artifact:
+- `.avis`
+
+Key capabilities:
+- Web cartography: map whole sites into binary graph structures
+- HTTP-first extraction from sitemaps, structured data, metadata, and APIs
+- Direct action execution via discovered HTTP action surfaces
+- Image capture from file/base64/screenshot/clipboard
+- Visual similarity search
+- Pixel-level diffing
+- Timeline and session retrieval
+- Linking visual captures to memory graph nodes
+
+Tool surface:
+- AgenticVision MCP: 10 tools (capture/query/compare/ocr/similar/track/diff/link/session controls)
+- Cortex MCP/REST direction: map/query/pathfind/act/perceive/compare/auth/compile/wql through cartography runtime
+
+Operational properties:
+- Portable single-file storage
+- MCP-native integration across clients
+- CLIP embedding pipeline for visual indexing
+- Dashboard telemetry available via `localhost:7700/dashboard` when Cortex runtime is active
+
+Capability progression (editorial framing, no version labels on public pages):
+- Runtime foundation and core reliability
+- Browserless mapping as default acquisition path
+- Advanced action execution without UI clicking
+- Gateway transport and multi-interface integration (MCP + REST + clients)
+- Framework adapters, containerized delivery, and package-manager distribution
+- WebMCP readiness for site-declared tool interfaces
+- Live visibility and mission-control telemetry
+- Compiler + collective + temporal layers for typed APIs, shared deltas, and history-aware intelligence
+
+Launch narrative anchors (approved for `PROJECTS` page copy):
+- "AI can think. AI cannot see."
+- "Any agent that uses Cortex does not browse. It maps."
+- "The web gets a memory."
+- "In human terms:" blocks should be used to translate technical behavior into plain language
+
+## 3) AgenticCodebase feature reference
+
+Core role:
+- Semantic code intelligence across repository structure, hidden coupling, and temporal evolution.
+
+Primary artifact:
+- `.acb`
+
+Key capabilities:
+- Semantic code compiler for concept-level navigation
+- Impact-aware traversal before code modification
+- Collective pattern intelligence for dependencies and frameworks
+- Prophecy analysis from temporal deltas and stability trends
+- Hidden coupling detection via co-change graph analysis
+- Cross-language FFI trace continuity across runtime boundaries
+
+Query surface:
+- 24 query types across core, built, and advanced groups
+
+Operational properties:
+- Portable binary graph output
+- CLI + MCP server integration (`acb-mcp`)
+- Cross-session code understanding persistence
+
+Launch narrative anchors (approved for `PROJECTS` copy):
+- "The agent does not read files. It navigates concepts."
+- "Impact edges show what breaks before you break it."
+- "The codebase gets prophecy."
+
+## 4) Cross-ecosystem integration reference
+
+Shared contract:
+- MCP as integration layer across components
+
+Shared design principles:
+- Portable binary artifacts
+- Agent continuity across sessions
+- Queryable graph-first structures
+
+Common message for public pages:
+- `AgenticMemory` preserves reasoning context.
+- `AgenticVision` preserves visual context.
+- `AgenticCodebase` preserves code context.
+
+## 5) Cortex direction reference (for Projects page narrative)
+
+From current `agentic-vision` docs/guides:
+
+### Web Compiler direction
+- Map site structure
+- Compile map to typed schema
+- Generate typed client surfaces
+- Enable cross-site type unification
+
+### Collective Web Graph direction
+- Delta-based map sharing
+- Registry synchronization model
+- Reduced duplicated mapping effort
+- Faster startup through pre-existing graph pulls
+
+### Temporal Intelligence direction
+- History-aware feature tracking
+- Pattern and anomaly detection
+- Trend-based prediction workflows
+- Time-aware alerting/watch conditions
+
+## 6) Editorial guardrails
+
+Use this reference when writing page copy:
+- Use canonical casing (`AgenticMemory`, `AgenticVision`, `AgenticCodebase`).
+- Keep claims aligned with documented capabilities.
+- Avoid unverified benchmark claims unless they are sourced from repo docs.
+- Keep roadmap-sensitive details off public-facing copy unless explicitly approved.

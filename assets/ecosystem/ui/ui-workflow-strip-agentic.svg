@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 300" role="img" aria-label="Agentic workflow strip connecting Capture, Compile, Remember to Query, Link, Act">
+  <defs>
+    <style>
+      .bg { fill: #f2f1ea; }
+      .fg { fill: #0a0a0a; }
+      .muted-stroke { stroke: #b6b2a7; stroke-linecap: square; stroke-linejoin: miter; }
+      .strong-stroke { stroke: #0a0a0a; stroke-linecap: square; stroke-linejoin: miter; }
+      .pill-text { font-family: 'JetBrains Mono', monospace; font-size: 21px; letter-spacing: 0.1em; text-transform: uppercase; fill: #0a0a0a; }
+      .meta { font-family: 'JetBrains Mono', monospace; font-size: 14px; letter-spacing: 0.16em; text-transform: uppercase; fill: #6e685b; }
+    </style>
+    <pattern id="dotGrid" width="24" height="24" patternUnits="userSpaceOnUse">
+      <rect width="24" height="24" class="bg"/>
+      <circle cx="2" cy="2" r="1.1" fill="#c8c5ba"/>
+    </pattern>
+  </defs>
+
+  <rect width="1400" height="300" fill="url(#dotGrid)"/>
+  <rect x="1" y="1" width="1398" height="298" fill="none" class="strong-stroke" stroke-width="2"/>
+
+  <g>
+    <rect x="126" y="56" width="140" height="40" rx="20" fill="none" class="strong-stroke" stroke-width="2"/>
+    <text x="160" y="82" class="pill-text">Capture</text>
+
+    <rect x="126" y="130" width="140" height="40" rx="20" fill="none" class="strong-stroke" stroke-width="2"/>
+    <text x="160" y="156" class="pill-text">Compile</text>
+
+    <rect x="126" y="204" width="164" height="40" rx="20" fill="none" class="strong-stroke" stroke-width="2"/>
+    <text x="154" y="230" class="pill-text">Remember</text>
+  </g>
+
+  <g>
+    <rect x="1120" y="56" width="128" height="40" rx="20" fill="none" class="strong-stroke" stroke-width="2"/>
+    <text x="1160" y="82" class="pill-text">Query</text>
+
+    <rect x="1120" y="130" width="104" height="40" rx="20" fill="none" class="strong-stroke" stroke-width="2"/>
+    <text x="1158" y="156" class="pill-text">Link</text>
+
+    <rect x="1120" y="204" width="92" height="40" rx="20" fill="none" class="strong-stroke" stroke-width="2"/>
+    <text x="1156" y="230" class="pill-text">Act</text>
+  </g>
+
+  <g>
+    <line x1="266" y1="76" x2="700" y2="150" class="muted-stroke" stroke-width="1.6"/>
+    <line x1="266" y1="150" x2="700" y2="150" class="muted-stroke" stroke-width="1.6"/>
+    <line x1="290" y1="224" x2="700" y2="150" class="muted-stroke" stroke-width="1.6"/>
+
+    <line x1="700" y1="150" x2="1120" y2="76" class="muted-stroke" stroke-width="1.6"/>
+    <line x1="700" y1="150" x2="1120" y2="150" class="muted-stroke" stroke-width="1.6"/>
+    <line x1="700" y1="150" x2="1120" y2="224" class="muted-stroke" stroke-width="1.6"/>
+
+    <circle cx="458" cy="149" r="5" fill="#ea580c"/>
+    <circle cx="586" cy="133" r="5" fill="#ea580c"/>
+    <circle cx="894" cy="133" r="5" fill="#ea580c"/>
+    <circle cx="1022" cy="77" r="5" fill="#ea580c"/>
+    <circle cx="1120" cy="224" r="5" fill="#ea580c"/>
+  </g>
+
+  <g>
+    <rect x="645" y="96" width="110" height="110" fill="#d2cec3" stroke="#b6b2a7" stroke-width="2"/>
+    <circle cx="700" cy="151" r="43" fill="none" stroke="#ea580c" stroke-width="1.8"/>
+    <line x1="700" y1="116" x2="700" y2="186" class="strong-stroke" stroke-width="4"/>
+    <line x1="665" y1="151" x2="735" y2="151" class="strong-stroke" stroke-width="4"/>
+    <line x1="674" y1="125" x2="726" y2="177" class="strong-stroke" stroke-width="3"/>
+    <line x1="726" y1="125" x2="674" y2="177" class="strong-stroke" stroke-width="3"/>
+  </g>
+
+  <text x="40" y="284" class="meta">agentic stack workflow strip / hard-edge doctrine / single accent signal</text>
+</svg>

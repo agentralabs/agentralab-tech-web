@@ -1,0 +1,348 @@
+# AgentraLabs Template Design Doctrine
+
+Version: 1.0  
+Applies to: `/Users/omoshola/Documents/agentralabs-tech/agentralabs-tech`  
+Last updated: 2026-02-20
+
+## 1) Purpose
+
+This doctrine defines how the template should look, feel, behave, and evolve.
+It is the baseline for all future instances of this landing-page system.
+
+Goals:
+- Preserve a recognizable visual identity across forks.
+- Keep engineering quality high while moving fast.
+- Prevent aesthetic drift and inconsistent component behavior.
+- Provide a repeatable method for producing future variants.
+
+## 2) Product Aesthetic Thesis
+
+This template expresses an **engineering-brutalist** identity:
+- Hard edges, high contrast, strict geometry.
+- Monospace-first typography and command-line visual language.
+- Observable systems motifs: grids, status lines, ticks, telemetry.
+- Controlled motion that suggests live infrastructure, not decorative animation.
+
+The brand personality should read as:
+- Deterministic
+- Technical
+- Auditable
+- Fast
+- Industrial
+
+## 3) Non-Negotiable Design Principles
+
+1. **Function before decoration**: every visual pattern must carry semantic or structural meaning.
+2. **Token-driven styling only**: no arbitrary color drift outside the defined system.
+3. **Square geometry**: default corner radius is zero; avoid soft consumer-style curvature.
+4. **Monospace hierarchy**: interface text should remain system/terminal flavored.
+5. **Single accent strategy**: orange (`#ea580c`) is the active signal color.
+6. **Border-led composition**: separation via rules/borders before shadows.
+7. **Dense but legible UI**: compact text is acceptable, clarity is mandatory.
+8. **Motion with intent**: every animation must indicate state, flow, reveal, or continuity.
+9. **Progressive disclosure**: use staged reveals, not simultaneous visual noise.
+10. **Responsive parity**: preserve narrative structure on mobile and desktop.
+
+## 4) Canonical Sources of Truth
+
+Use these files as canonical for system behavior:
+- Theme tokens: `/Users/omoshola/Documents/agentralabs-tech/agentralabs-tech/app/globals.css`
+- Tailwind token mapping: `/Users/omoshola/Documents/agentralabs-tech/agentralabs-tech/tailwind.config.ts`
+- App composition shell: `/Users/omoshola/Documents/agentralabs-tech/agentralabs-tech/app/page.tsx`
+- Typography and providers: `/Users/omoshola/Documents/agentralabs-tech/agentralabs-tech/app/layout.tsx`
+
+Note:
+- `/Users/omoshola/Documents/agentralabs-tech/agentralabs-tech/styles/globals.css` exists but is not the active global stylesheet for this app router setup. Treat it as non-canonical unless intentionally reactivated.
+
+## 5) Visual Token Doctrine
+
+### 5.1 Color Roles
+
+Core roles:
+- `--background`, `--foreground`: base surface/text polarity.
+- `--card`, `--muted`, `--border`: structure and informational hierarchy.
+- `--accent`: active signal and action emphasis.
+- `--destructive`: error/severe states only.
+
+Accent rule:
+- `#ea580c` is reserved for:
+  - Live indicators
+  - CTA icon rails
+  - Highlighted keywords
+  - Data packet/flow signals
+- Do not use accent as full-page wash or background foundation.
+
+### 5.2 Border and Shape
+
+- `--radius: 0rem` is a core identity decision.
+- Primary panels use `border-2`.
+- Secondary separators use `border` or `border-t`.
+- Avoid shadows unless communicating depth in data visualization contexts.
+
+### 5.3 Texture
+
+- Dot-grid background is part of brand DNA (`.dot-grid-bg`).
+- Grid textures must remain subtle and low contrast.
+- Background texture should never reduce text contrast.
+
+## 6) Typography Doctrine
+
+### 6.1 Font Roles
+
+- `font-mono` (JetBrains Mono): default UI, body, nav, metadata, labels.
+- `font-pixel` (Geist Pixel): hero-grade statements and selective display text only.
+
+### 6.2 Typographic Behavior
+
+- Frequent uppercase for system labels and navigation.
+- High letter-spacing on metadata rows (`tracking-widest` / custom tracking).
+- Compact sizes (`10px` to `13px`) are acceptable for telemetry labels.
+- Large display type should remain short and forceful (2-4 words).
+
+### 6.3 Copy Styling Rules
+
+- Prefer command-like labels:
+  - `// SECTION: ...`
+  - `manifest.md`
+  - `tick:0001`
+- Prefer declarative, technical language over marketing fluff.
+- Keep sentence length short in high-density regions.
+
+## 7) Layout and Spacing System
+
+### 7.1 Page Composition
+
+Standard order:
+1. Navbar
+2. Hero
+3. Feature grid
+4. About
+5. Pricing
+6. Partner marquee
+7. Footer
+
+This order is intentional: identity -> capability -> trust -> conversion.
+
+### 7.2 Horizontal Rhythm
+
+- Desktop section containers generally use `lg:px-12` or higher.
+- Hero uses larger side padding to create theatrical entry (`lg:px-24`).
+- Keep the same horizontal rhythm between adjacent sections unless deliberate contrast is needed.
+
+### 7.3 Vertical Rhythm
+
+- Core sections use `py-20` cadence.
+- Section labels precede content blocks and establish scan rhythm.
+- Preserve breathing room around section transitions; avoid collapsing major blocks.
+
+### 7.4 Grid Rules
+
+- Use hard-framed layouts (e.g., 2x2 bento with explicit borders).
+- Prefer zero-gap panel grids when the visual language is “modular machine”.
+- Maintain consistent min-heights for cards in the same row.
+
+## 8) Component Doctrine
+
+### 8.1 Navbar
+
+- Thin, high-contrast shell with light blur.
+- Left: identity lockup.
+- Center: structural nav (desktop only).
+- Right: theme toggle + auth utility + primary CTA.
+- CTA remains bold and rectangular.
+
+### 8.2 Hero
+
+- Large pixel-display statement split across lines.
+- Central system diagram between headline blocks.
+- One short, technical supporting paragraph.
+- One clear primary CTA only.
+
+### 8.3 Feature Bento
+
+- Must feel like a control plane, not a marketing card deck.
+- Panels should represent distinct operational dimensions:
+  - terminal/logging
+  - visualization/signal
+  - performance metrics
+  - fleet status
+
+### 8.4 About Section
+
+- Dual-column architecture: visual proof + technical narrative.
+- Include at least one “live” or dynamic telemetry element.
+- Stats should feel measurable and machine-generated.
+
+### 8.5 Pricing Section
+
+- Exactly one highlighted tier unless business requirements differ.
+- Feature rows should encode inclusion/exclusion states explicitly.
+- CTA treatment must match global CTA grammar.
+
+### 8.6 Partner Marquee
+
+- Represents ecosystem compatibility and platform legitimacy.
+- Motion should be continuous but slow.
+- Glitch should be sparse and intentionally irregular.
+
+### 8.7 Footer
+
+- Utility-focused closure.
+- Keep legal and system-brand text terse.
+- No oversized marketing copy in footer.
+
+## 9) Motion Doctrine
+
+### 9.1 Global Motion Signature
+
+Primary easing:
+- `cubic-bezier(0.22, 1, 0.36, 1)` (implemented as `[0.22, 1, 0.36, 1]`)
+
+Duration ranges:
+- Micro interaction: `0.2s - 0.35s`
+- Section reveal: `0.5s - 0.7s`
+- Ambient loops: `2s - 30s` depending on element role
+
+### 9.2 Reveal Strategy
+
+- Use staggered reveals for hierarchy.
+- Prefer y-offset and opacity transitions.
+- Keep blur reveals subtle and brief.
+
+### 9.3 Ambient Animation Budget
+
+- Maximum 3 high-salience loops visible at once in a viewport zone.
+- Use low-amplitude transforms for background loops.
+- Any loop must degrade gracefully on low-power devices.
+
+### 9.4 Interaction Feedback
+
+- Hover scale is minimal (`~1.02 to 1.05`).
+- Tap scale should be slightly compressive (`~0.97 to 0.98`).
+- Never allow interactive feedback to shift layout.
+
+## 10) Accessibility and Usability Standards
+
+1. Maintain readable contrast across both themes.
+2. Provide semantic labels on non-text visuals (`aria-label`, `role="img"` where needed).
+3. Preserve keyboard focus visibility in all custom components.
+4. Avoid color-only status signaling; pair with text labels.
+5. Respect reduced-motion preferences in future iterations for non-essential loops.
+6. Keep body copy readable at small sizes through spacing and line-height.
+
+## 11) Content and Messaging Doctrine
+
+- Speak in systems language, not hype language.
+- Prefer measurable claims (`4.2ms`, `99.97%`, `12.8K req/s`).
+- Use concise verb-led headlines (`Deploy`, `Route`, `Observe`).
+- Avoid generic startup language:
+  - “revolutionary”
+  - “world-class”
+  - “best-in-class”
+- Copy should imply trust through specificity.
+
+## 12) Theming Doctrine
+
+- Light and dark themes are first-class and must both feel intentional.
+- Theme swap cannot rely on generic inversion only; keep semantic token roles stable.
+- Accent color remains constant across themes unless a brand variant explicitly redefines it.
+- Any token addition must have both light and dark definitions.
+
+## 13) Performance Doctrine
+
+- Prefer CSS/transform-driven animations over layout-affecting animation.
+- Use viewport-triggered animation (`whileInView`) for deferred rendering.
+- Keep client components limited to where interactivity is required.
+- Ensure animation loops do not create memory leaks (clean intervals/timeouts).
+
+## 14) Future Instance Playbook
+
+When creating a new instance, keep this process strict.
+
+### Step 1: Define Variant Envelope
+
+Specify:
+- Industry context (AI infra, fintech infra, data platform, etc.)
+- Voice profile (clinical, aggressive, minimal, enterprise)
+- Trust signals (certs, uptime, compliance, logos, case studies)
+- Primary CTA and conversion target
+
+### Step 2: Preserve Structural Spine
+
+Keep:
+- Section order and narrative arc
+- Token semantics
+- Typography roles
+- CTA grammar
+
+Allow variation in:
+- Copy
+- Data values
+- Iconography
+- Section-specific visuals
+
+### Step 3: Re-theme Safely
+
+If rebranding:
+- Change tokens first, components second.
+- Keep single accent policy.
+- Revalidate contrast and state visibility.
+
+### Step 4: Update Data Realism
+
+- Replace placeholder metrics with plausible values.
+- Keep units and precision consistent.
+- Ensure all telemetry-style displays are internally coherent.
+
+### Step 5: Validate Against QA Gate
+
+Required checks before release:
+- Visual regression in light and dark themes
+- Mobile/desktop layout parity
+- Interaction states (hover, focus, active)
+- Animation sanity and performance
+- Broken asset/path validation
+
+## 15) Anti-Patterns (Do Not Introduce)
+
+- Rounded, soft consumer card aesthetics.
+- Multiple competing accent colors.
+- Heavy drop shadows as primary separation mechanism.
+- Overly long marketing paragraphs in dense system sections.
+- Simultaneous flashy animation across many elements.
+- Inconsistent label grammar (`Title Case` mixed with `SYSTEM_CASE` randomly).
+- Arbitrary spacing changes that break section rhythm.
+
+## 16) Governance
+
+Any substantial design change must document:
+1. Why the change is needed.
+2. Which principle(s) are affected.
+3. Whether the change is global or local.
+4. Validation evidence (screenshots, accessibility check, performance notes).
+
+Recommended change process:
+1. Propose token/system-level change first.
+2. Apply to one representative section.
+3. Validate in both themes and mobile/desktop.
+4. Roll out globally only after passing QA.
+
+## 17) Quick Operational Checklist
+
+Use this checklist for every future update:
+
+- [ ] Uses canonical tokens from `app/globals.css`
+- [ ] Preserves monospace-first hierarchy
+- [ ] Maintains hard-edge geometry
+- [ ] Keeps accent usage intentional and sparse
+- [ ] Respects section label grammar and rhythm
+- [ ] Includes accessible labels for non-text visuals
+- [ ] Keeps animation purposeful and performance-safe
+- [ ] Works cleanly on mobile and desktop
+- [ ] Keeps brand voice technical and specific
+- [ ] Passes theme parity (light and dark)
+
+---
+
+This doctrine is the contract for visual and interaction consistency.  
+Future instances should innovate within this system, not outside it.

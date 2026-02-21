@@ -1,0 +1,35 @@
+export const siteConfig = {
+  name: "AGENTRA LABS",
+  shortName: "AGENTRA",
+  description:
+    "Open-source agentic systems lab building AgenticMemory, AgenticVision, and AgenticCodebase for persistent memory, web-scale vision, and semantic code intelligence.",
+  url: "https://agentralabs.tech",
+  locale: "en_US",
+  xHandle: "@HowolarbyM",
+  contactEmail: "contact@agentralabs.tech",
+  githubOrgUrl: "https://github.com/agentralabs",
+  githubWebUrl: "https://github.com/agentralabs/agentralabs-tech-web",
+  keywords: [
+    "agentic memory",
+    "agentic vision",
+    "agentic codebase",
+    "agenticmemory",
+    "agenticvision",
+    "agenticcodebase",
+    "mcp tools",
+    "model context protocol",
+    "ai agent infrastructure",
+    "semantic code intelligence",
+    "persistent agent memory",
+    "web cartography",
+    "agent engineering",
+    "open source ai",
+    "rust ai tooling",
+  ],
+}
+
+export const navRoutes = [
+  { path: "/", priority: 1.0, changeFrequency: "daily" as const },
+  { path: "/projects", priority: 0.9, changeFrequency: "daily" as const },
+  { path: "/publications", priority: 0.8, changeFrequency: "weekly" as const },
+]

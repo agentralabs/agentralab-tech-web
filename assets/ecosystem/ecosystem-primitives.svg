@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="Agentic ecosystem primitive shapes and reusable symbols">
+  <defs>
+    <style>
+      .bg { fill: #f2f1ea; }
+      .fg { fill: #0a0a0a; }
+      .muted { fill: #c4c2b8; }
+      .accent { fill: #ea580c; }
+      .stroke-fg { stroke: #0a0a0a; stroke-linecap: square; stroke-linejoin: miter; }
+      .stroke-muted { stroke: #9e9b90; stroke-linecap: square; stroke-linejoin: miter; }
+      .label { font-family: 'JetBrains Mono', monospace; font-size: 14px; letter-spacing: 0.14em; text-transform: uppercase; fill: #0a0a0a; }
+      .meta { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; fill: #5f5a4f; }
+    </style>
+
+    <pattern id="dotGrid" width="24" height="24" patternUnits="userSpaceOnUse">
+      <rect width="24" height="24" class="bg" />
+      <circle cx="2" cy="2" r="1" fill="#c4c2b8" />
+    </pattern>
+
+    <symbol id="node-core" viewBox="0 0 180 80">
+      <rect x="1" y="1" width="178" height="78" fill="none" class="stroke-fg" stroke-width="2"/>
+      <rect x="12" y="14" width="16" height="16" class="accent"/>
+      <text x="40" y="27" class="meta">Module</text>
+      <rect x="12" y="42" width="156" height="22" fill="#0a0a0a"/>
+      <text x="20" y="57" style="font-family:'JetBrains Mono', monospace; font-size:12px; letter-spacing:0.08em; fill:#f2f1ea; text-transform:uppercase;">AGENTIC-MEMORY</text>
+    </symbol>
+
+    <symbol id="edge-link" viewBox="0 0 200 24">
+      <line x1="0" y1="12" x2="182" y2="12" class="stroke-fg" stroke-width="2"/>
+      <polygon points="182,5 198,12 182,19" class="fg"/>
+      <circle cx="72" cy="12" r="4" class="accent"/>
+    </symbol>
+
+    <symbol id="panel-header" viewBox="0 0 320 40">
+      <rect x="1" y="1" width="318" height="38" fill="none" class="stroke-fg" stroke-width="2"/>
+      <text x="14" y="25" class="meta">// SECTION: PRIMITIVE_PANEL</text>
+      <rect x="292" y="10" width="18" height="18" class="accent"/>
+    </symbol>
+
+    <symbol id="status-pill" viewBox="0 0 150 30">
+      <rect x="1" y="1" width="148" height="28" fill="none" class="stroke-fg" stroke-width="2"/>
+      <circle cx="14" cy="15" r="4" class="accent"/>
+      <text x="28" y="20" class="meta">ONLINE</text>
+    </symbol>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#dotGrid)"/>
+
+  <rect x="24" y="24" width="1152" height="582" fill="none" class="stroke-fg" stroke-width="2"/>
+  <text x="48" y="62" class="label">AGENTIC SVG PRIMITIVES</text>
+  <text x="48" y="84" class="meta">hard-edge geometry / single accent / monospace-first</text>
+
+  <g transform="translate(48 124)">
+    <use href="#node-core" x="0" y="0" width="180" height="80"/>
+    <text x="0" y="102" class="meta">node-core</text>
+  </g>
+
+  <g transform="translate(280 148)">
+    <use href="#edge-link" x="0" y="0" width="200" height="24"/>
+    <text x="0" y="44" class="meta">edge-link</text>
+  </g>
+
+  <g transform="translate(540 124)">
+    <use href="#panel-header" x="0" y="0" width="320" height="40"/>
+    <text x="0" y="62" class="meta">panel-header</text>
+  </g>
+
+  <g transform="translate(920 129)">
+    <use href="#status-pill" x="0" y="0" width="150" height="30"/>
+    <text x="0" y="52" class="meta">status-pill</text>
+  </g>
+
+  <line x1="48" y1="248" x2="1130" y2="248" class="stroke-muted" stroke-width="1" stroke-dasharray="5 5"/>
+
+  <g transform="translate(48 280)">
+    <text x="0" y="0" class="meta">Usage notes:</text>
+    <text x="0" y="28" class="meta">1) keep radius square (0)</text>
+    <text x="0" y="52" class="meta">2) accent color reserved for active signal</text>
+    <text x="0" y="76" class="meta">3) use border-led composition before shadow</text>
+    <text x="0" y="100" class="meta">4) do not introduce new colors outside token set</text>
+  </g>
+
+  <g transform="translate(640 300)">
+    <rect x="0" y="0" width="490" height="250" fill="none" class="stroke-fg" stroke-width="2"/>
+    <rect x="0" y="0" width="490" height="34" class="fg"/>
+    <text x="14" y="22" style="font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; fill:#f2f1ea;">token palette</text>
+
+    <rect x="20" y="54" width="20" height="20" fill="#f2f1ea" class="stroke-fg" stroke-width="1"/>
+    <text x="52" y="69" class="meta">background #f2f1ea</text>
+
+    <rect x="20" y="86" width="20" height="20" fill="#0a0a0a"/>
+    <text x="52" y="101" class="meta">foreground #0a0a0a</text>
+
+    <rect x="20" y="118" width="20" height="20" fill="#c4c2b8"/>
+    <text x="52" y="133" class="meta">muted #c4c2b8</text>
+
+    <rect x="20" y="150" width="20" height="20" fill="#ea580c"/>
+    <text x="52" y="165" class="meta">accent #ea580c</text>
+
+    <text x="20" y="205" class="meta">recommended sizes: 1200x630, 800x600</text>
+    <text x="20" y="229" class="meta">font: JetBrains Mono (fallback monospace)</text>
+  </g>
+</svg>

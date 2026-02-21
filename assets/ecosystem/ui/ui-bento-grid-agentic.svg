@@ -1,0 +1,139 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 1040" role="img" aria-label="Agentic ecosystem bento grid with terminal, visual memory map, metrics, and module status">
+  <defs>
+    <style>
+      .bg { fill: #f2f1ea; }
+      .fg { fill: #0a0a0a; }
+      .muted { fill: #6a6559; }
+      .muted2 { fill: #9d988d; }
+      .line { stroke: #0a0a0a; stroke-linecap: square; stroke-linejoin: miter; }
+      .gridline { stroke: #c8c5ba; stroke-width: 1; }
+      .title { font-family: 'JetBrains Mono', monospace; font-size: 14px; letter-spacing: 0.2em; text-transform: uppercase; fill: #6a6559; }
+      .meta { font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; fill: #6a6559; }
+      .label { font-family: 'JetBrains Mono', monospace; font-size: 26px; letter-spacing: 0.04em; text-transform: uppercase; fill: #0a0a0a; }
+      .log { font-family: 'JetBrains Mono', monospace; font-size: 27px; letter-spacing: 0.03em; fill: #f2f1ea; }
+      .small { font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: 0.18em; text-transform: uppercase; fill: #6a6559; }
+      .table { font-family: 'JetBrains Mono', monospace; font-size: 26px; letter-spacing: 0.06em; text-transform: uppercase; fill: #0a0a0a; }
+      .value { font-family: 'JetBrains Mono', monospace; font-size: 72px; letter-spacing: 0.01em; fill: #0a0a0a; font-weight: 700; }
+    </style>
+    <pattern id="dotGrid" width="24" height="24" patternUnits="userSpaceOnUse">
+      <rect width="24" height="24" class="bg"/>
+      <circle cx="2" cy="2" r="1.1" fill="#c8c5ba"/>
+    </pattern>
+    <pattern id="dither2" width="8" height="8" patternUnits="userSpaceOnUse">
+      <rect width="8" height="8" fill="#f2f1ea"/>
+      <circle cx="2" cy="2" r="1" fill="#0a0a0a"/>
+      <circle cx="6" cy="6" r="1" fill="#0a0a0a"/>
+    </pattern>
+  </defs>
+
+  <rect width="1400" height="1040" fill="url(#dotGrid)"/>
+
+  <g>
+    <text x="26" y="24" class="title">// SECTION: AGENTIC_STACK</text>
+    <line x1="200" y1="16" x2="1372" y2="16" stroke="#9d988d" stroke-width="2"/>
+    <text x="1360" y="24" class="title">004</text>
+  </g>
+
+  <rect x="20" y="60" width="1360" height="960" fill="none" class="line" stroke-width="3"/>
+
+  <line x1="700" y1="60" x2="700" y2="1020" class="line" stroke-width="2.5"/>
+  <line x1="20" y1="610" x2="1380" y2="610" class="line" stroke-width="2.5"/>
+
+  <line x1="20" y1="100" x2="1380" y2="100" class="line" stroke-width="2"/>
+  <line x1="20" y1="650" x2="1380" y2="650" class="line" stroke-width="2"/>
+
+  <g>
+    <rect x="36" y="72" width="10" height="10" fill="#ea580c"/>
+    <rect x="54" y="72" width="10" height="10" fill="#0a0a0a"/>
+    <rect x="72" y="72" width="10" height="10" fill="none" stroke="#0a0a0a" stroke-width="1.5"/>
+  </g>
+
+  <text x="620" y="84" class="meta">STACK.INIT.LOG</text>
+  <text x="716" y="84" class="meta">VISUAL_MEMORY.MAP</text>
+  <text x="1310" y="84" class="meta">320X240</text>
+
+  <g>
+    <rect x="20" y="100" width="680" height="510" class="fg"/>
+    <text x="36" y="140" class="log">&gt; Booting AGENTIC.STACK...</text>
+    <text x="36" y="180" class="log">&gt; Loading memory graph: ~/.brain.amem</text>
+    <text x="36" y="220" class="log">&gt; Loading visual store: ~/.vision.avis</text>
+    <text x="36" y="260" class="log">&gt; Loading code graph: project.acb</text>
+    <text x="36" y="300" class="log">&gt; AgenticMemory ready: 16 queries</text>
+    <text x="36" y="340" class="log">&gt; AgenticVision ready: 10 tools</text>
+    <text x="36" y="380" class="log">&gt; AgenticCodebase ready: 24 queries</text>
+    <text x="36" y="420" class="log">&gt; Linking memory &lt;-&gt; vision</text>
+    <text x="36" y="460" class="log">&gt; Linking memory &lt;-&gt; codebase</text>
+    <text x="36" y="500" class="log">&gt; MCP transport: STDIO ONLINE</text>
+    <text x="36" y="540" class="log">&gt; --------- STACK READY ---------</text>
+  </g>
+
+  <g>
+    <rect x="700" y="100" width="680" height="510" fill="#f2f1ea"/>
+    <rect x="718" y="118" width="644" height="474" fill="url(#dither2)"/>
+    <path d="M760 150 C 860 80, 940 80, 1040 150 C 1110 200, 1110 300, 1040 350 C 950 410, 860 410, 760 350 C 680 300, 680 210, 760 150 Z" fill="#d8d4c9"/>
+    <path d="M825 180 C 890 145, 910 145, 975 180 C 1020 206, 1020 296, 975 324 C 910 360, 890 360, 825 324 C 780 295, 780 205, 825 180 Z" fill="#0a0a0a"/>
+    <path d="M1110 155 C 1175 130, 1230 170, 1240 240 C 1250 315, 1215 382, 1145 392 C 1085 400, 1044 352, 1040 290 C 1037 240, 1060 174, 1110 155 Z" fill="#d8d4c9"/>
+    <path d="M842 418 C 898 390, 947 405, 980 450 C 1009 488, 1004 541, 972 570 C 938 603, 880 605, 848 568 C 813 526, 811 453, 842 418 Z" fill="#d8d4c9"/>
+  </g>
+
+  <text x="34" y="636" class="meta">ECOSYSTEM.METRICS</text>
+  <rect x="670" y="624" width="8" height="8" fill="#ea580c"/>
+
+  <text x="716" y="636" class="meta">STACK_MODULES.STATUS</text>
+  <text x="1272" y="636" class="meta">SYNC:1003</text>
+
+  <g>
+    <text x="44" y="710" class="value">16</text>
+    <text x="44" y="742" class="small">MEMORY QUERIES</text>
+
+    <text x="44" y="812" class="value">10</text>
+    <text x="44" y="844" class="small">VISION TOOLS</text>
+
+    <text x="44" y="914" class="value">24</text>
+    <text x="44" y="946" class="small">CODEBASE QUERIES</text>
+
+    <text x="44" y="1000" class="value" style="font-size:56px;">.AMEM/.AVIS/.ACB</text>
+    <text x="44" y="1018" class="small">CORE FORMATS</text>
+  </g>
+
+  <g>
+    <text x="720" y="676" class="small">MODULE</text>
+    <text x="962" y="676" class="small">STATE</text>
+    <text x="1278" y="676" class="small">ARTIFACT</text>
+
+    <line x1="716" y1="692" x2="1330" y2="692" stroke="#a8a296" stroke-width="1.5"/>
+
+    <text x="720" y="736" class="table">AGENTIC-MEMORY</text>
+    <rect x="962" y="719" width="8" height="8" fill="#ea580c"/>
+    <text x="980" y="736" class="table" style="font-size:24px; fill:#6a6559;">ONLINE</text>
+    <text x="1292" y="736" class="table" style="font-size:24px;">.AMEM</text>
+
+    <line x1="716" y1="752" x2="1330" y2="752" stroke="#a8a296" stroke-width="1.5"/>
+
+    <text x="720" y="796" class="table">AGENTIC-VISION</text>
+    <rect x="962" y="779" width="8" height="8" fill="#ea580c"/>
+    <text x="980" y="796" class="table" style="font-size:24px; fill:#6a6559;">ONLINE</text>
+    <text x="1292" y="796" class="table" style="font-size:24px;">.AVIS</text>
+
+    <line x1="716" y1="812" x2="1330" y2="812" stroke="#a8a296" stroke-width="1.5"/>
+
+    <text x="720" y="856" class="table">AGENTIC-CODEBASE</text>
+    <rect x="962" y="839" width="8" height="8" fill="#ea580c"/>
+    <text x="980" y="856" class="table" style="font-size:24px; fill:#6a6559;">ONLINE</text>
+    <text x="1300" y="856" class="table" style="font-size:24px;">.ACB</text>
+
+    <line x1="716" y1="872" x2="1330" y2="872" stroke="#a8a296" stroke-width="1.5"/>
+
+    <text x="720" y="916" class="table">MCP-BRIDGE</text>
+    <rect x="962" y="899" width="8" height="8" fill="#ea580c"/>
+    <text x="980" y="916" class="table" style="font-size:24px; fill:#6a6559;">ONLINE</text>
+    <text x="1282" y="916" class="table" style="font-size:24px;">STDIO</text>
+
+    <line x1="716" y1="932" x2="1330" y2="932" stroke="#a8a296" stroke-width="1.5"/>
+
+    <text x="716" y="984" class="small">STACK READINESS</text>
+    <text x="1300" y="984" class="small">94%</text>
+    <rect x="716" y="996" width="614" height="8" fill="none" stroke="#0a0a0a" stroke-width="1.5"/>
+    <rect x="716" y="996" width="577" height="8" fill="#0a0a0a"/>
+  </g>
+</svg>
