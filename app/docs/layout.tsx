@@ -1,5 +1,5 @@
 import type { ReactNode } from "react"
-import { DocsLayout } from "fumadocs-ui/layouts/docs"
+import Link from "next/link"
 import { source } from "@/lib/source"
 import "./docs.css"
 
@@ -7,28 +7,50 @@ interface DocsRouteLayoutProps {
   children: ReactNode
 }
 
+function titleFor(url: string, title?: string) {
+  if (title) return title
+  const value = url.split("/").filter(Boolean).pop() ?? "docs"
+  return value
+    .split("-")
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(" ")
+}
+
 export default function DocsRouteLayout({ children }: DocsRouteLayoutProps) {
+  const pages = source
+    .getPages()
+    .filter((page) => page.url.startsWith("/docs"))
+    .sort((a, b) => a.url.localeCompare(b.url))
+
   return (
-    <div className="docs-standalone min-h-screen bg-white text-black">
-      <DocsLayout
-        tree={source.getPageTree()}
-        nav={{
-          title: <span className="font-semibold tracking-tight">Agentra Labs Docs</span>,
-          transparentMode: "none",
-        }}
-        links={[
-          { text: "Get Started", url: "/docs", active: "nested-url", on: "nav" },
-          { text: "Reference", url: "/docs/ecosystem-feature-reference", active: "nested-url", on: "nav" },
-          { text: "Integrations", url: "/docs/integrations", active: "nested-url", on: "nav" },
-          { text: "Website", url: "https://agentralabs.tech", on: "nav" },
-        ]}
-        sidebar={{ defaultOpenLevel: 1, collapsible: false }}
-        searchToggle={{ enabled: true }}
-        themeSwitch={{ enabled: false }}
-        githubUrl="https://github.com/agentralabs/agentralab-tech-web"
-      >
-        {children}
-      </DocsLayout>
+    <div className="docs-shell">
+      <header className="docs-topbar">
+        <Link href="/docs" className="docs-brand">
+          Agentra Labs Docs
+        </Link>
+        <div className="docs-top-links">
+          <a href="https://agentralabs.tech" target="_blank" rel="noreferrer">
+            Website
+          </a>
+          <a href="https://github.com/agentralabs" target="_blank" rel="noreferrer">
+            GitHub
+          </a>
+        </div>
+      </header>
+
+      <div className="docs-frame">
+        <aside className="docs-sidebar">
+          <p className="docs-sidebar-label">Get started</p>
+          <nav className="docs-sidebar-nav">
+            {pages.map((page) => (
+              <Link key={page.url} href={page.url}>
+                {titleFor(page.url, page.data.title)}
+              </Link>
+            ))}
+          </nav>
+        </aside>
+        <main className="docs-main">{children}</main>
+      </div>
     </div>
   )
 }
