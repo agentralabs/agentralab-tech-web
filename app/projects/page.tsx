@@ -344,7 +344,7 @@ function CodebaseCapacity() {
       </div>
 
       <div className="border-2 border-foreground p-4">
-        <p className="text-sm font-mono font-bold uppercase tracking-tight">Invention 1: Semantic Code Compiler</p>
+        <p className="text-sm font-mono font-bold uppercase tracking-tight">Semantic Code Compiler</p>
         <p className="mt-2 text-xs font-mono text-muted-foreground leading-relaxed">
           Compile repositories into semantic graphs where nodes represent intentions, not just syntax. Concepts become
           first-class navigation targets across files and languages.
@@ -362,7 +362,7 @@ function CodebaseCapacity() {
       </div>
 
       <div className="border-2 border-foreground p-4">
-        <p className="text-sm font-mono font-bold uppercase tracking-tight">Invention 2: Collective Code Intelligence</p>
+        <p className="text-sm font-mono font-bold uppercase tracking-tight">Collective Code Intelligence</p>
         <p className="mt-2 text-xs font-mono text-muted-foreground leading-relaxed">
           Dependency intelligence arrives pre-understood from shared ecosystem patterns. Private code remains private
           while open-source operational knowledge compounds across agents.
@@ -376,7 +376,7 @@ function CodebaseCapacity() {
       </div>
 
       <div className="border-2 border-foreground p-4">
-        <p className="text-sm font-mono font-bold uppercase tracking-tight">Invention 3: Code Prophecy</p>
+        <p className="text-sm font-mono font-bold uppercase tracking-tight">Code Prophecy</p>
         <p className="mt-2 text-xs font-mono text-muted-foreground leading-relaxed">
           Temporal delta stacking turns repository history into forward-looking risk intelligence. The system predicts
           likely failure boundaries before they become incidents.
