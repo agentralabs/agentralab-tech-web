@@ -13,6 +13,15 @@ function resolveTarget(target: string): string | undefined {
   return INSTALL_TARGETS[target.toLowerCase()]
 }
 
+function withCacheBust(scriptUrl: string, request: NextRequest): string {
+  const url = new URL(scriptUrl)
+  const externalNonce = request.nextUrl.searchParams.get("v")
+    ?? request.nextUrl.searchParams.get("ts")
+    ?? Date.now().toString()
+  url.searchParams.set("v", externalNonce)
+  return url.toString()
+}
+
 export async function GET(
   _request: NextRequest,
   { params }: { params: Promise<{ target: string }> }
@@ -30,7 +39,7 @@ export async function GET(
     )
   }
 
-  return NextResponse.redirect(scriptUrl, 307)
+  return NextResponse.redirect(withCacheBust(scriptUrl, _request), 307)
 }
 
 export async function HEAD(
@@ -44,5 +53,5 @@ export async function HEAD(
     return new NextResponse(null, { status: 404 })
   }
 
-  return NextResponse.redirect(scriptUrl, 307)
+  return NextResponse.redirect(withCacheBust(scriptUrl, _request), 307)
 }
