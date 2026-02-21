@@ -24,7 +24,14 @@ export default async function Page({ params }: DocsPageProps) {
 
   const data = page.data as DocsPageData
   const MDX = data.body
-  const sectionLabel = page.url === "/docs/ecosystem-feature-reference" ? "Reference" : "Get Started"
+  const sectionLabel =
+    page.url === "/docs/ecosystem-feature-reference" ? "Reference" :
+    page.url === "/docs/operations-autonomic-and-backup" || page.url === "/docs/troubleshooting-matrix" ? "Operations" :
+    page.url === "/docs/security-and-data-boundaries" ? "Security" :
+    page.url === "/docs/benchmarks-and-methodology" ? "Performance" :
+    page.url === "/docs/system-architecture" ? "Deep Dive" :
+    page.url === "/docs/use-case-playbooks" ? "Playbooks" :
+    "Get Started"
 
   return (
     <div className="docs-article-wrap">

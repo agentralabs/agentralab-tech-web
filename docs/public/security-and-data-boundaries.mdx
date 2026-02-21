@@ -1,0 +1,35 @@
+---
+title: Security and Data Boundaries
+description: Understand what stays local, what is shared, and how to operate safely.
+---
+
+## Boundary model
+
+<FeatureGrid>
+  <FeatureCard icon="shield" title="Local artifacts" description=".amem, .avis, and .acb artifacts are generated and managed in your local/runtime environment unless you explicitly export or sync." />
+  <FeatureCard icon="network" title="Client configs" description="MCP config files live in local desktop/runtime config paths and should be treated as operational credentials." />
+  <FeatureCard icon="book" title="Operational logs" description="Health ledgers and runtime diagnostics can expose workflow metadata; protect and rotate as needed." />
+  <FeatureCard icon="wrench" title="Controlled sharing" description="Share only required artifacts and scrub sensitive context before publishing traces or benchmarks." />
+</FeatureGrid>
+
+## Minimum hardening checklist
+
+- store backup directories on encrypted storage
+- protect config files with least-privilege permissions
+- rotate tokens or credentials referenced by MCP surfaces
+- separate personal and production artifacts
+- avoid posting raw logs publicly without review
+
+## Recommended operating practice
+
+<Command
+  title="Permission hardening"
+  description="Example baseline for private backup directories and config files."
+  code={`chmod 700 "$HOME/.agentra-backups"
+chmod 700 "$HOME/.claude"
+chmod 600 "$HOME/.claude/mcp.json" 2>/dev/null || true`}
+/>
+
+<Callout type="warning" title="Public sharing caution">
+Screenshots and copied CLI logs can leak paths, hostnames, and operational context. Review before posting in issues or social channels.
+</Callout>

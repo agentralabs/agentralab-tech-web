@@ -1,0 +1,114 @@
+---
+title: System Architecture
+description: Deep operational context for AgenticVision, AgenticMemory, and AgenticCodebase.
+---
+
+<Callout type="info" title="Why this page exists">
+This page explains how each runtime works internally enough for operators, integrators, and technical buyers to understand behavior, tradeoffs, and deployment posture.
+</Callout>
+
+## AgenticVision
+
+### The Retina (Ingestion + Pre-processing)
+
+AgenticVision operates with a persistent execution model instead of cold-starting browser infrastructure per request. Runtime contexts stay warm, so URL perception routes into already-active workers and returns faster than one-shot browser automation.
+
+Operationally, the runtime can speculatively pre-fetch likely next surfaces based on current task trajectory. That means when an agent asks for the next page in a flow, the representation may already be prepared.
+
+For recurring domains, runtime caches maintain semantic snapshots on a refresh cadence. First request can hit semantic state instead of full rendering, reducing latency and execution cost.
+
+### The Visual Cortex (Semantic Extraction Engine)
+
+As pages resolve, extraction and structural encoding happen in parallel. The result is a machine-usable manifold:
+
+- **Content graph**: entities, text blocks, tables, and semantic tags
+- **Action schema**: interactable surfaces mapped into typed actions
+- **Navigation topology**: link paths classified by purpose and boundary
+- **Visual skeleton**: lightweight spatial structure for multimodal reasoning
+
+This gives agents structure-first perception instead of screenshot-only interpretation.
+
+### The Agent Interface (Protocol Gateway)
+
+The interaction model is intentionally minimal:
+
+<Command
+  title="Core runtime verbs"
+  description="Intent-level protocol for perception and action without exposing browser internals to agent frameworks."
+  code={`PERCEIVE  url=https://example.com
+ACT       action_id=btn_submit payload={...}
+TRAVERSE  link_id=next_page
+OBSERVE   selector=.price`}
+/>
+
+<Callout type="tip" title="Integration principle">
+Agents should speak intent, not browser mechanics. AgenticVision translates intent into robust runtime execution.
+</Callout>
+
+## AgenticMemory
+
+### The Formation Layer
+
+AgenticMemory persists cognition as structured graph events rather than flat text chunks. Facts, decisions, inferences, corrections, and skills are linked at write-time so retrieval stays contextual at read-time.
+
+### The Graph Brain
+
+Each `.amem` artifact stores nodes + edges in a portable binary layout optimized for memory-mapped access. This supports low-latency traversal and keeps memory portable across providers and environments.
+
+### Query Model
+
+The runtime is built around navigation and reasoning operations:
+
+- traversal (`why did I decide this?`)
+- temporal diff (`what changed between sessions?`)
+- impact (`what breaks if this belief is wrong?`)
+- context resolution (`what is current truth after corrections?`)
+
+<Callout type="success" title="User impact">
+Day-to-day, users experience continuity: the agent does not reset to zero knowledge each session, and reasoning provenance remains inspectable.
+</Callout>
+
+## AgenticCodebase
+
+### Semantic Compiler
+
+AgenticCodebase compiles repositories into semantic graphs where navigation follows concepts and relationships, not file-order text scans.
+
+### Impact + Coupling Intelligence
+
+Before edits are applied, impact paths can reveal downstream consumers, likely breakage zones, and under-tested boundaries. Historical coupling signals surface hidden dependencies that static syntax alone does not reveal.
+
+### Temporal and Stability Signals
+
+Codebase evolution is treated as time-series data. Stability, drift, and change-risk surfaces help operators sequence edits with lower regression probability.
+
+<Command
+  title="Operational posture"
+  description="Common runtime flow for code intelligence operations."
+  code={`acb compile ./repo
+acb query impact --symbol User.email
+acb query coupling --symbol PaymentService
+acb-mcp serve`}
+/>
+
+## Cross-runtime contract
+
+All three runtimes share these public constraints:
+
+- standalone-first install and operation
+- MCP-native integration for composition
+- artifact portability (`.amem`, `.avis`, `.acb`)
+- inspectable, reproducible operational behavior
+
+## What to add next
+
+If you are expanding docs for technical trust and adoption, prioritize:
+
+1. Architecture diagrams per runtime (request path + cache path + failure path)
+2. Real benchmark methodology pages (hardware, dataset, reproducibility script)
+3. Troubleshooting matrix by runtime/client/OS
+4. Security and data boundary documentation per runtime
+
+<Callout type="warning" title="Public-doc guardrail">
+Keep this page focused on shipped or validated behavior. Place roadmap-sensitive internals in private planning docs, not public docs.
+</Callout>

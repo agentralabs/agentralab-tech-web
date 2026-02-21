@@ -35,6 +35,12 @@ export default function DocsRouteLayout({ children }: DocsRouteLayoutProps) {
     "installation",
     "integrations",
     "feedback",
+    "operations-autonomic-and-backup",
+    "system-architecture",
+    "use-case-playbooks",
+    "troubleshooting-matrix",
+    "security-and-data-boundaries",
+    "benchmarks-and-methodology",
     "ecosystem-feature-reference",
   ]
 
@@ -54,6 +60,26 @@ export default function DocsRouteLayout({ children }: DocsRouteLayoutProps) {
       items: orderedItems.filter((item) =>
         ["/docs", "/docs/quickstart", "/docs/installation", "/docs/integrations", "/docs/feedback"].includes(item.href),
       ),
+    },
+    {
+      label: "Operations",
+      items: orderedItems.filter((item) =>
+        ["/docs/operations-autonomic-and-backup", "/docs/troubleshooting-matrix"].includes(item.href),
+      ),
+    },
+    {
+      label: "Deep Dive",
+      items: orderedItems.filter((item) =>
+        ["/docs/system-architecture", "/docs/use-case-playbooks"].includes(item.href),
+      ),
+    },
+    {
+      label: "Security",
+      items: orderedItems.filter((item) => item.href === "/docs/security-and-data-boundaries"),
+    },
+    {
+      label: "Performance",
+      items: orderedItems.filter((item) => item.href === "/docs/benchmarks-and-methodology"),
     },
     {
       label: "Reference",
@@ -82,6 +108,8 @@ export default function DocsRouteLayout({ children }: DocsRouteLayoutProps) {
         <nav className="docs-topnav">
           <Link href="/docs">Documentation</Link>
           <Link href="/docs/quickstart">Guides</Link>
+          <Link href="/docs/operations-autonomic-and-backup">Operations</Link>
+          <Link href="/docs/system-architecture">Architecture</Link>
           <Link href="/docs/ecosystem-feature-reference">API reference</Link>
         </nav>
         <div className="docs-top-search" role="search" aria-label="Search docs">
