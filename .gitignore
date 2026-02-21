@@ -14,3 +14,4 @@ node_modules/
 # Internal planning/prompt docs (not for public repo)
 docs/internal/
 .claude/
+docs/REPO_HYGIENE.md
