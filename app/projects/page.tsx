@@ -609,7 +609,7 @@ export default function ProjectsPage() {
                   contact@agentralabs.tech
                 </a>
                 <span className="text-xs font-mono uppercase tracking-widest text-muted-foreground">
-                  agentralabs.tech (registered, coming online)
+                  www.agentralabs.tech
                 </span>
                 <a
                   href="/publications"

@@ -5,22 +5,22 @@ Use this list before and after each production deployment.
 ## 1) Search Engines
 
 - Verify domain ownership in Google Search Console.
-- Submit sitemap URL: `https://agentralabs.tech/sitemap.xml`.
+- Submit sitemap URL: `https://www.agentralabs.tech/sitemap.xml`.
 - Verify domain ownership in Bing Webmaster Tools.
-- Submit sitemap URL in Bing: `https://agentralabs.tech/sitemap.xml`.
+- Submit sitemap URL in Bing: `https://www.agentralabs.tech/sitemap.xml`.
 
 ## 2) Crawl Controls
 
-- Confirm `https://agentralabs.tech/robots.txt` is reachable.
+- Confirm `https://www.agentralabs.tech/robots.txt` is reachable.
 - Confirm `robots.txt` references the correct sitemap.
-- Confirm canonical URLs are absolute and use `https://agentralabs.tech`.
+- Confirm canonical URLs are absolute and use `https://www.agentralabs.tech`.
 
 ## 3) Metadata + Social Cards
 
 - Validate Open Graph card with Facebook Sharing Debugger.
 - Validate X card with Twitter Card Validator.
-- Confirm OG image URL resolves: `https://agentralabs.tech/opengraph-image`.
-- Confirm Twitter image URL resolves: `https://agentralabs.tech/twitter-image`.
+- Confirm OG image URL resolves: `https://www.agentralabs.tech/opengraph-image`.
+- Confirm Twitter image URL resolves: `https://www.agentralabs.tech/twitter-image`.
 
 ## 4) Structured Data
 

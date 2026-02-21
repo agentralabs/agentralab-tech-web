@@ -64,7 +64,7 @@ export function Footer() {
               contact@agentralabs.tech
             </a>
             <span className="text-[10px] font-mono tracking-widest uppercase text-muted-foreground">
-              agentralabs.tech (registered, coming online)
+              www.agentralabs.tech
             </span>
           </div>
         </div>

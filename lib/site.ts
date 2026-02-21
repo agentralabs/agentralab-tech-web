@@ -3,7 +3,7 @@ export const siteConfig = {
   shortName: "AGENTRA",
   description:
     "Open-source agentic systems lab building AgenticMemory, AgenticVision, and AgenticCodebase for persistent memory, web-scale vision, and semantic code intelligence.",
-  url: "https://agentralabs.tech",
+  url: "https://www.agentralabs.tech",
   locale: "en_US",
   xHandle: "@HowolarbyM",
   contactEmail: "contact@agentralabs.tech",

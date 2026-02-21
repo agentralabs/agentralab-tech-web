@@ -20,7 +20,7 @@ const COMMANDS: Record<ProjectKey, Record<CommandType, CommandEntry[]>> = {
   AgenticMemory: {
     GLOBAL: [
       {
-        command: "curl -fsSL https://raw.githubusercontent.com/agentralabs/agentic-memory/main/scripts/install.sh | bash",
+        command: "curl -fsSL https://agentralabs.tech/install/memory | bash",
         note: "Installs memory binaries and links local .amem workflows.",
       },
       {
@@ -59,7 +59,7 @@ const COMMANDS: Record<ProjectKey, Record<CommandType, CommandEntry[]>> = {
   AgenticVision: {
     GLOBAL: [
       {
-        command: "curl -fsSL https://raw.githubusercontent.com/agentralabs/agentic-vision/main/scripts/install.sh | bash",
+        command: "curl -fsSL https://agentralabs.tech/install/vision | bash",
         note: "Installs vision MCP binary and merges config for desktop clients.",
       },
       {
@@ -89,7 +89,7 @@ const COMMANDS: Record<ProjectKey, Record<CommandType, CommandEntry[]>> = {
   AgenticCodebase: {
     GLOBAL: [
       {
-        command: "curl -fsSL https://raw.githubusercontent.com/agentralabs/codebase/main/scripts/install.sh | bash",
+        command: "curl -fsSL https://agentralabs.tech/install/codebase | bash",
         note: "Installs acb/acb-mcp binaries and merges MCP config for desktop clients.",
       },
       {
