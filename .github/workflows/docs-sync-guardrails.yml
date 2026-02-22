@@ -37,6 +37,9 @@ jobs:
       - name: Clone canonical ecosystem workspace
         run: |
           git clone --depth 1 https://github.com/agentralabs/agentralabs-tech.git "$RUNNER_TEMP/agentra-workspace"
+          git clone --depth 1 https://github.com/agentralabs/agentic-memory.git "$RUNNER_TEMP/agentra-workspace/agentic-memory"
+          git clone --depth 1 https://github.com/agentralabs/agentic-codebase.git "$RUNNER_TEMP/agentra-workspace/agentic-codebase"
+          git clone --depth 1 https://github.com/agentralabs/agentic-vision.git "$RUNNER_TEMP/agentra-workspace/agentic-vision"
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile

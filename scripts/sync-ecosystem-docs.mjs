@@ -126,20 +126,44 @@ const CONTRACT_SOURCES = [
   {
     labelEn: "Codebase canonical contract",
     labelZh: "Codebase 规范契约",
-    file: path.join(workspaceRoot, "agentic-codebase", "planning-docs", "CANONICAL_SISTER_KIT.md"),
-    sourcePath: "agentic-codebase/planning-docs/CANONICAL_SISTER_KIT.md",
+    fileCandidates: [
+      {
+        file: path.join(workspaceRoot, "agentic-codebase", "docs", "ecosystem", "CANONICAL_SISTER_KIT.md"),
+        sourcePath: "agentic-codebase/docs/ecosystem/CANONICAL_SISTER_KIT.md",
+      },
+      {
+        file: path.join(workspaceRoot, "agentic-codebase", "planning-docs", "CANONICAL_SISTER_KIT.md"),
+        sourcePath: "agentic-codebase/planning-docs/CANONICAL_SISTER_KIT.md",
+      },
+    ],
   },
   {
     labelEn: "Memory canonical contract",
     labelZh: "Memory 规范契约",
-    file: path.join(workspaceRoot, "agentic-memory", "planning-docs", "CANONICAL_SISTER_KIT.md"),
-    sourcePath: "agentic-memory/planning-docs/CANONICAL_SISTER_KIT.md",
+    fileCandidates: [
+      {
+        file: path.join(workspaceRoot, "agentic-memory", "docs", "ecosystem", "CANONICAL_SISTER_KIT.md"),
+        sourcePath: "agentic-memory/docs/ecosystem/CANONICAL_SISTER_KIT.md",
+      },
+      {
+        file: path.join(workspaceRoot, "agentic-memory", "planning-docs", "CANONICAL_SISTER_KIT.md"),
+        sourcePath: "agentic-memory/planning-docs/CANONICAL_SISTER_KIT.md",
+      },
+    ],
   },
   {
     labelEn: "Vision canonical contract",
     labelZh: "Vision 规范契约",
-    file: path.join(workspaceRoot, "agentic-vision", "planning-docs", "CANONICAL_SISTER_KIT.md"),
-    sourcePath: "agentic-vision/planning-docs/CANONICAL_SISTER_KIT.md",
+    fileCandidates: [
+      {
+        file: path.join(workspaceRoot, "agentic-vision", "docs", "ecosystem", "CANONICAL_SISTER_KIT.md"),
+        sourcePath: "agentic-vision/docs/ecosystem/CANONICAL_SISTER_KIT.md",
+      },
+      {
+        file: path.join(workspaceRoot, "agentic-vision", "planning-docs", "CANONICAL_SISTER_KIT.md"),
+        sourcePath: "agentic-vision/planning-docs/CANONICAL_SISTER_KIT.md",
+      },
+    ],
   },
 ]
 
@@ -233,6 +257,15 @@ async function exists(target) {
   } catch {
     return false
   }
+}
+
+async function resolveSourceCandidate(spec) {
+  for (const candidate of spec.fileCandidates) {
+    if (await exists(candidate.file)) {
+      return candidate
+    }
+  }
+  return null
 }
 
 function withFrontMatter({ title, description, body }) {
@@ -418,18 +451,20 @@ async function syncContractPage() {
   const rowsZh = []
 
   for (const source of CONTRACT_SOURCES) {
-    if (!(await exists(source.file))) {
-      if (strict) throw new Error(`Missing source file: ${source.file}`)
-      console.warn(`[sync] skipped (missing source): ${source.file}`)
+    const resolved = await resolveSourceCandidate(source)
+    if (!resolved) {
+      const attempted = source.fileCandidates.map((entry) => entry.file).join(", ")
+      if (strict) throw new Error(`Missing source file. Tried: ${attempted}`)
+      console.warn(`[sync] skipped (missing source): ${attempted}`)
       continue
     }
 
-    const raw = await fs.readFile(source.file, "utf8")
+    const raw = await fs.readFile(resolved.file, "utf8")
     const clean = escapeUnsafeAngles(normalizeMarkdown(stripLeadingH1(stripFrontMatter(raw))))
-    enSections.push(`## ${source.labelEn}\n\n<Callout type="info" title="Source">\`${source.sourcePath}\`</Callout>\n\n${clean}`)
-    zhSections.push(`## ${source.labelZh}\n\n<Callout type="info" title="Source">\`${source.sourcePath}\`</Callout>\n\n${clean}`)
-    rowsEn.push(`| ${source.labelEn} | \`${source.sourcePath}\` |`)
-    rowsZh.push(`| ${source.labelZh} | \`${source.sourcePath}\` |`)
+    enSections.push(`## ${source.labelEn}\n\n<Callout type="info" title="Source">\`${resolved.sourcePath}\`</Callout>\n\n${clean}`)
+    zhSections.push(`## ${source.labelZh}\n\n<Callout type="info" title="Source">\`${resolved.sourcePath}\`</Callout>\n\n${clean}`)
+    rowsEn.push(`| ${source.labelEn} | \`${resolved.sourcePath}\` |`)
+    rowsZh.push(`| ${source.labelZh} | \`${resolved.sourcePath}\` |`)
   }
 
   if (enSections.length === 0) return null
@@ -465,7 +500,7 @@ async function syncContractPage() {
 
   return {
     slug,
-    sourcePath: "*/planning-docs/CANONICAL_SISTER_KIT.md",
+    sourcePath: "*/{planning-docs,docs/ecosystem}/CANONICAL_SISTER_KIT.md",
     titleEn,
     titleZh,
     sister: "Ecosystem",
