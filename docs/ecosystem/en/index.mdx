@@ -61,8 +61,9 @@ Read each chunk in order. Every chunk has command, output, screenshot, and simpl
     <div className="docs-runtime-chunk">
       <Command title="Run this command" code={`sample_dir="/tmp/agentra-doc-sample-$(date +%s)"\nmkdir -p "$sample_dir"\ncat > "$sample_dir/main.rs" <<'RS'\nfn main() {\n    println!(\"hello\");\n}\nRS\nacb compile "$sample_dir" -o /tmp/sample.acb\nacb query /tmp/sample.acb symbol --name "main"`} />
       <CliOutput title="Expected output (example)" output={`[ok] compile complete\n[ok] symbol lookup: main\n[info] file: /tmp/agentra-doc-sample-.../main.rs`} />
-      <img className="docs-runtime-shot" src="/images/docs/sisters/codebase-query.png" alt="Chunk 1: AgenticCodebase runtime output" />
-      <a className="docs-runtime-shot-link" href="/images/docs/sisters/codebase-query.png" target="_blank" rel="noreferrer">Open full-size screenshot</a>
+      <div className="docs-runtime-shot-frame">
+        <img className="docs-runtime-shot" src="/images/docs/sisters/codebase-query.png" alt="Chunk 1: AgenticCodebase runtime output" />
+      </div>
       <p className="docs-runtime-shot-caption">If your output shows a symbol found, Chunk 1 is complete.</p>
     </div>
   </Step>
@@ -73,8 +74,9 @@ Read each chunk in order. Every chunk has command, output, screenshot, and simpl
     <div className="docs-runtime-chunk">
       <Command title="Run this command" code={`brain="/tmp/docs-test-$(date +%s).amem"\namem create "$brain"\namem add "$brain" fact "Agentra memory test"\namem search "$brain" --limit 5`} />
       <CliOutput title="Expected output (example)" output={`[ok] file created\n[ok] node added: fact\n[ok] search result contains: Agentra memory test`} />
-      <img className="docs-runtime-shot" src="/images/docs/sisters/memory-add-search.png" alt="Chunk 2: AgenticMemory runtime output" />
-      <a className="docs-runtime-shot-link" href="/images/docs/sisters/memory-add-search.png" target="_blank" rel="noreferrer">Open full-size screenshot</a>
+      <div className="docs-runtime-shot-frame">
+        <img className="docs-runtime-shot" src="/images/docs/sisters/memory-add-search.png" alt="Chunk 2: AgenticMemory runtime output" />
+      </div>
       <p className="docs-runtime-shot-caption">If your saved fact appears in search results, Chunk 2 is complete.</p>
     </div>
   </Step>
@@ -85,8 +87,9 @@ Read each chunk in order. Every chunk has command, output, screenshot, and simpl
     <div className="docs-runtime-chunk">
       <Command title="Run this command" code={`agentic-vision-mcp info\nagentic-vision-mcp serve --help`} />
       <CliOutput title="Expected output (example)" output={`[ok] info printed\n[ok] serve command usage shown`} />
-      <img className="docs-runtime-shot" src="/images/docs/sisters/vision-runtime.png" alt="Chunk 3: AgenticVision runtime output" />
-      <a className="docs-runtime-shot-link" href="/images/docs/sisters/vision-runtime.png" target="_blank" rel="noreferrer">Open full-size screenshot</a>
+      <div className="docs-runtime-shot-frame">
+        <img className="docs-runtime-shot" src="/images/docs/sisters/vision-runtime.png" alt="Chunk 3: AgenticVision runtime output" />
+      </div>
       <p className="docs-runtime-shot-caption">If info + serve usage are shown without errors, Chunk 3 is complete.</p>
     </div>
   </Step>
@@ -97,8 +100,9 @@ Read each chunk in order. Every chunk has command, output, screenshot, and simpl
     <div className="docs-runtime-chunk">
       <Command title="Run this command" code={`# from agentralabs-tech workspace root\ncargo run --bin agentra -- status --session`} />
       <CliOutput title="Expected output (example)" output={`Agentra: active\nSisters: codebase=on memory=on vision=on\nFull Control: yes`} />
-      <img className="docs-runtime-shot" src="/images/docs/sisters/agentra-status.png" alt="Chunk 4: Agentra status runtime output" />
-      <a className="docs-runtime-shot-link" href="/images/docs/sisters/agentra-status.png" target="_blank" rel="noreferrer">Open full-size screenshot</a>
+      <div className="docs-runtime-shot-frame">
+        <img className="docs-runtime-shot" src="/images/docs/sisters/agentra-status.png" alt="Chunk 4: Agentra status runtime output" />
+      </div>
       <p className="docs-runtime-shot-caption">If status lists your installed sisters correctly, Chunk 4 is complete.</p>
     </div>
   </Step>
@@ -109,8 +113,9 @@ Read each chunk in order. Every chunk has command, output, screenshot, and simpl
     <div className="docs-runtime-chunk">
       <Command title="Run this command" code={`curl -fsSL https://agentralabs.tech/install/memory | bash`} />
       <CliOutput title="Expected output (example)" output={`[##########----------------------] 30%\n[##########################------] 80%\n[################################] 100%\nInstall complete: AgenticMemory`} />
-      <img className="docs-runtime-shot" src="/images/docs/sisters/install-progress.png" alt="Chunk 5: Install progress runtime output" />
-      <a className="docs-runtime-shot-link" href="/images/docs/sisters/install-progress.png" target="_blank" rel="noreferrer">Open full-size screenshot</a>
+      <div className="docs-runtime-shot-frame">
+        <img className="docs-runtime-shot" src="/images/docs/sisters/install-progress.png" alt="Chunk 5: Install progress runtime output" />
+      </div>
       <p className="docs-runtime-shot-caption">If the bar reaches 100% and install complete appears, Chunk 5 is complete.</p>
     </div>
   </Step>
@@ -121,8 +126,9 @@ Read each chunk in order. Every chunk has command, output, screenshot, and simpl
     <div className="docs-runtime-chunk">
       <Command title="Run this command" code={`# from agentralabs-tech workspace root\ncargo run --bin agentra -- status --session\ncargo run --bin agentra -- doctor\n# then run your workflow command that uses memory + vision + codebase`} />
       <CliOutput title="Expected output (example)" output={`[ok] doctor pass: all sisters detected\n[ok] session: full control active\n[ok] workflow result returned`} />
-      <img className="docs-runtime-shot" src="/images/docs/sisters/integrated-workflow.png" alt="Chunk 6: Integrated workflow runtime output" />
-      <a className="docs-runtime-shot-link" href="/images/docs/sisters/integrated-workflow.png" target="_blank" rel="noreferrer">Open full-size screenshot</a>
+      <div className="docs-runtime-shot-frame">
+        <img className="docs-runtime-shot" src="/images/docs/sisters/integrated-workflow.png" alt="Chunk 6: Integrated workflow runtime output" />
+      </div>
       <p className="docs-runtime-shot-caption">If doctor passes and workflow returns output, Chunk 6 is complete.</p>
     </div>
   </Step>

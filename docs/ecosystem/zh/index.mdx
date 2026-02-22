@@ -61,8 +61,9 @@ description: 在统一文档中心安装并运行 AgenticMemory、AgenticVision 
     <div className="docs-runtime-chunk">
       <Command title="运行这条命令" code={`sample_dir="/tmp/agentra-doc-sample-$(date +%s)"\nmkdir -p "$sample_dir"\ncat > "$sample_dir/main.rs" <<'RS'\nfn main() {\n    println!(\"hello\");\n}\nRS\nacb compile "$sample_dir" -o /tmp/sample.acb\nacb query /tmp/sample.acb symbol --name "main"`} />
       <CliOutput title="预期输出（示例）" output={`[ok] compile complete\n[ok] symbol lookup: main\n[info] file: /tmp/agentra-doc-sample-.../main.rs`} />
-      <img className="docs-runtime-shot" src="/images/docs/sisters/codebase-query.png" alt="Chunk 1: AgenticCodebase runtime output" />
-      <a className="docs-runtime-shot-link" href="/images/docs/sisters/codebase-query.png" target="_blank" rel="noreferrer">查看大图</a>
+      <div className="docs-runtime-shot-frame">
+        <img className="docs-runtime-shot" src="/images/docs/sisters/codebase-query.png" alt="Chunk 1: AgenticCodebase runtime output" />
+      </div>
       <p className="docs-runtime-shot-caption">看到 symbol found 就表示第 1 块完成。</p>
     </div>
   </Step>
@@ -73,8 +74,9 @@ description: 在统一文档中心安装并运行 AgenticMemory、AgenticVision 
     <div className="docs-runtime-chunk">
       <Command title="运行这条命令" code={`brain="/tmp/docs-test-$(date +%s).amem"\namem create "$brain"\namem add "$brain" fact "Agentra memory test"\namem search "$brain" --limit 5`} />
       <CliOutput title="预期输出（示例）" output={`[ok] file created\n[ok] node added: fact\n[ok] search result contains: Agentra memory test`} />
-      <img className="docs-runtime-shot" src="/images/docs/sisters/memory-add-search.png" alt="Chunk 2: AgenticMemory runtime output" />
-      <a className="docs-runtime-shot-link" href="/images/docs/sisters/memory-add-search.png" target="_blank" rel="noreferrer">查看大图</a>
+      <div className="docs-runtime-shot-frame">
+        <img className="docs-runtime-shot" src="/images/docs/sisters/memory-add-search.png" alt="Chunk 2: AgenticMemory runtime output" />
+      </div>
       <p className="docs-runtime-shot-caption">搜索结果里出现刚保存的信息，就表示第 2 块完成。</p>
     </div>
   </Step>
@@ -85,8 +87,9 @@ description: 在统一文档中心安装并运行 AgenticMemory、AgenticVision 
     <div className="docs-runtime-chunk">
       <Command title="运行这条命令" code={`agentic-vision-mcp info\nagentic-vision-mcp serve --help`} />
       <CliOutput title="预期输出（示例）" output={`[ok] info printed\n[ok] serve command usage shown`} />
-      <img className="docs-runtime-shot" src="/images/docs/sisters/vision-runtime.png" alt="Chunk 3: AgenticVision runtime output" />
-      <a className="docs-runtime-shot-link" href="/images/docs/sisters/vision-runtime.png" target="_blank" rel="noreferrer">查看大图</a>
+      <div className="docs-runtime-shot-frame">
+        <img className="docs-runtime-shot" src="/images/docs/sisters/vision-runtime.png" alt="Chunk 3: AgenticVision runtime output" />
+      </div>
       <p className="docs-runtime-shot-caption">看到 info 与 serve 用法且无报错，就表示第 3 块完成。</p>
     </div>
   </Step>
@@ -97,8 +100,9 @@ description: 在统一文档中心安装并运行 AgenticMemory、AgenticVision 
     <div className="docs-runtime-chunk">
       <Command title="运行这条命令" code={`# 在 agentralabs-tech 工作区根目录执行\ncargo run --bin agentra -- status --session`} />
       <CliOutput title="预期输出（示例）" output={`Agentra: active\nSisters: codebase=on memory=on vision=on\nFull Control: yes`} />
-      <img className="docs-runtime-shot" src="/images/docs/sisters/agentra-status.png" alt="Chunk 4: Agentra status runtime output" />
-      <a className="docs-runtime-shot-link" href="/images/docs/sisters/agentra-status.png" target="_blank" rel="noreferrer">查看大图</a>
+      <div className="docs-runtime-shot-frame">
+        <img className="docs-runtime-shot" src="/images/docs/sisters/agentra-status.png" alt="Chunk 4: Agentra status runtime output" />
+      </div>
       <p className="docs-runtime-shot-caption">状态页正确显示已安装的姐妹能力，就表示第 4 块完成。</p>
     </div>
   </Step>
@@ -109,8 +113,9 @@ description: 在统一文档中心安装并运行 AgenticMemory、AgenticVision 
     <div className="docs-runtime-chunk">
       <Command title="运行这条命令" code={`curl -fsSL https://agentralabs.tech/install/memory | bash`} />
       <CliOutput title="预期输出（示例）" output={`[##########----------------------] 30%\n[##########################------] 80%\n[################################] 100%\nInstall complete: AgenticMemory`} />
-      <img className="docs-runtime-shot" src="/images/docs/sisters/install-progress.png" alt="Chunk 5: Install progress runtime output" />
-      <a className="docs-runtime-shot-link" href="/images/docs/sisters/install-progress.png" target="_blank" rel="noreferrer">查看大图</a>
+      <div className="docs-runtime-shot-frame">
+        <img className="docs-runtime-shot" src="/images/docs/sisters/install-progress.png" alt="Chunk 5: Install progress runtime output" />
+      </div>
       <p className="docs-runtime-shot-caption">看到 100% 和 Install complete，就表示第 5 块完成。</p>
     </div>
   </Step>
@@ -121,8 +126,9 @@ description: 在统一文档中心安装并运行 AgenticMemory、AgenticVision 
     <div className="docs-runtime-chunk">
       <Command title="运行这条命令" code={`# 在 agentralabs-tech 工作区根目录执行\ncargo run --bin agentra -- status --session\ncargo run --bin agentra -- doctor\n# 然后运行你的组合工作流命令（使用 memory + vision + codebase）`} />
       <CliOutput title="预期输出（示例）" output={`[ok] doctor pass: all sisters detected\n[ok] session: full control active\n[ok] workflow result returned`} />
-      <img className="docs-runtime-shot" src="/images/docs/sisters/integrated-workflow.png" alt="Chunk 6: Integrated workflow runtime output" />
-      <a className="docs-runtime-shot-link" href="/images/docs/sisters/integrated-workflow.png" target="_blank" rel="noreferrer">查看大图</a>
+      <div className="docs-runtime-shot-frame">
+        <img className="docs-runtime-shot" src="/images/docs/sisters/integrated-workflow.png" alt="Chunk 6: Integrated workflow runtime output" />
+      </div>
       <p className="docs-runtime-shot-caption">doctor 通过且工作流有结果返回，就表示第 6 块完成。</p>
     </div>
   </Step>
