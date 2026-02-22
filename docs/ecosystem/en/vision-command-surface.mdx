@@ -1,0 +1,39 @@
+---
+title: "Command Surface"
+description: "Install commands are documented in [Installation](/docs/vision-installation)."
+---
+
+Install commands are documented in [Installation](/docs/vision-installation).
+
+## Binary
+
+- `agentic-vision-mcp`
+
+## Top-level commands
+
+```bash
+agentic-vision-mcp serve
+agentic-vision-mcp validate
+agentic-vision-mcp info
+agentic-vision-mcp completions
+agentic-vision-mcp repl
+```
+
+## Common options
+
+- `-v, --vision &lt;file.avis&gt;`
+- `--model &lt;clip_model.onnx&gt;`
+- `--log-level trace|debug|info|warn|error`
+
+## Universal MCP entry
+
+```json
+{
+  "mcpServers": {
+    "agentic-vision": {
+      "command": "$HOME/.local/bin/agentic-vision-mcp",
+      "args": ["serve"]
+    }
+  }
+}
+```

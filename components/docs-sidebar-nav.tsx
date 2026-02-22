@@ -11,6 +11,7 @@ interface DocsNavItem {
 interface DocsNavGroup {
   label: string
   items: DocsNavItem[]
+  defaultOpen?: boolean
 }
 
 interface DocsSidebarNavProps {
@@ -22,21 +23,29 @@ export function DocsSidebarNav({ groups }: DocsSidebarNavProps) {
 
   return (
     <div className="docs-sidebar-groups">
-      {groups.map((group) => (
-        <section key={group.label} className="docs-sidebar-group">
-          <p className="docs-sidebar-label">{group.label}</p>
-          <nav className="docs-sidebar-nav">
-            {group.items.map((item) => {
-              const active = pathname === item.href
-              return (
-                <Link key={item.href} href={item.href} data-active={active ? "true" : "false"}>
-                  {item.label}
-                </Link>
-              )
-            })}
-          </nav>
-        </section>
-      ))}
+      {groups.map((group) => {
+        const hasActive = group.items.some((item) => item.href === pathname)
+        const open = group.defaultOpen ?? hasActive
+
+        return (
+          <details key={group.label} className="docs-sidebar-group" open={open}>
+            <summary className="docs-sidebar-summary">
+              <span className="docs-sidebar-label">{group.label}</span>
+              <span className="docs-sidebar-chevron" aria-hidden="true">▾</span>
+            </summary>
+            <nav className="docs-sidebar-nav">
+              {group.items.map((item) => {
+                const active = pathname === item.href
+                return (
+                  <Link key={item.href} href={item.href} data-active={active ? "true" : "false"}>
+                    {item.label}
+                  </Link>
+                )
+              })}
+            </nav>
+          </details>
+        )
+      })}
     </div>
   )
 }

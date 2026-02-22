@@ -21,11 +21,11 @@ const COMMANDS: Record<ProjectKey, Record<CommandType, CommandEntry[]>> = {
     GLOBAL: [
       {
         command: "curl -fsSL https://agentralabs.tech/install/memory | bash",
-        note: "Default desktop profile (backward-compatible): installs binaries and auto-merges Claude Desktop/Code MCP when detected.",
+        note: "Default desktop profile (backward-compatible): installs binaries and auto-merges MCP config for common clients when detected (Claude, Cursor, VS Code, Codex, Windsurf).",
       },
       {
         command: "curl -fsSL https://agentralabs.tech/install/memory/desktop | bash",
-        note: "Explicit desktop profile with MCP auto-merge for Claude Desktop/Code.",
+        note: "Explicit desktop profile with MCP auto-merge for common desktop clients.",
       },
       {
         command: "curl -fsSL https://agentralabs.tech/install/memory/terminal | bash",
@@ -33,11 +33,11 @@ const COMMANDS: Record<ProjectKey, Record<CommandType, CommandEntry[]>> = {
       },
       {
         command: "curl -fsSL https://agentralabs.tech/install/memory/server | bash",
-        note: "Server profile: installs binaries only for remote hosts and service-style environments.",
+        note: "Server profile: installs binaries only for remote hosts and service-style environments. Then run agentra server preflight.",
       },
       {
         command: "pip install amem-installer && amem-install install --auto",
-        note: "Auto-connects memory to compatible desktop clients.",
+        note: "Auto-connects memory to compatible MCP clients.",
       },
     ],
     RUST: [
@@ -72,11 +72,11 @@ const COMMANDS: Record<ProjectKey, Record<CommandType, CommandEntry[]>> = {
     GLOBAL: [
       {
         command: "curl -fsSL https://agentralabs.tech/install/vision | bash",
-        note: "Default desktop profile (backward-compatible): installs binaries and auto-merges Claude Desktop/Code MCP when detected.",
+        note: "Default desktop profile (backward-compatible): installs binaries and auto-merges MCP config for common clients when detected (Claude, Cursor, VS Code, Codex, Windsurf).",
       },
       {
         command: "curl -fsSL https://agentralabs.tech/install/vision/desktop | bash",
-        note: "Explicit desktop profile with MCP auto-merge for Claude Desktop/Code.",
+        note: "Explicit desktop profile with MCP auto-merge for common desktop clients.",
       },
       {
         command: "curl -fsSL https://agentralabs.tech/install/vision/terminal | bash",
@@ -84,7 +84,7 @@ const COMMANDS: Record<ProjectKey, Record<CommandType, CommandEntry[]>> = {
       },
       {
         command: "curl -fsSL https://agentralabs.tech/install/vision/server | bash",
-        note: "Server profile: installs binaries only for remote hosts and service-style environments.",
+        note: "Server profile: installs binaries only for remote hosts and service-style environments. Then run agentra server preflight.",
       },
       {
         command: "cargo install agentic-vision-mcp",
@@ -118,11 +118,11 @@ const COMMANDS: Record<ProjectKey, Record<CommandType, CommandEntry[]>> = {
     GLOBAL: [
       {
         command: "curl -fsSL https://agentralabs.tech/install/codebase | bash",
-        note: "Default desktop profile (backward-compatible): installs binaries and auto-merges Claude Desktop/Code MCP when detected.",
+        note: "Default desktop profile (backward-compatible): installs binaries and auto-merges MCP config for common clients when detected (Claude, Cursor, VS Code, Codex, Windsurf).",
       },
       {
         command: "curl -fsSL https://agentralabs.tech/install/codebase/desktop | bash",
-        note: "Explicit desktop profile with MCP auto-merge for Claude Desktop/Code.",
+        note: "Explicit desktop profile with MCP auto-merge for common desktop clients.",
       },
       {
         command: "curl -fsSL https://agentralabs.tech/install/codebase/terminal | bash",
@@ -130,7 +130,7 @@ const COMMANDS: Record<ProjectKey, Record<CommandType, CommandEntry[]>> = {
       },
       {
         command: "curl -fsSL https://agentralabs.tech/install/codebase/server | bash",
-        note: "Server profile: installs binaries only for remote hosts and service-style environments.",
+        note: "Server profile: installs binaries only for remote hosts and service-style environments. Then run agentra server preflight.",
       },
       {
         command: "cargo install agentic-codebase",
@@ -153,8 +153,8 @@ const COMMANDS: Record<ProjectKey, Record<CommandType, CommandEntry[]>> = {
     ],
     MCP: [
       {
-        command: "acb-mcp",
-        note: "Starts MCP transport for code intelligence tools.",
+        command: "acb-mcp serve",
+        note: "Starts MCP stdio transport for code intelligence tools.",
       },
     ],
     PYTHON: [],
@@ -175,9 +175,9 @@ export function QuickstartTerminalPane() {
 
   const modeCopy = useMemo(() => {
     if (mode === "LOCAL") {
-      return "Local mode keeps .amem, .avis, and .acb as portable files under your control."
+      return "Local mode keeps .amem, .avis, and .acb as portable files under your control. After install, run: agentra status --session and agentra doctor."
     }
-    return "MCP mode exposes the same .amem, .avis, and .acb artifacts to desktop LLM apps."
+    return "MCP mode exposes the same .amem, .avis, and .acb artifacts to MCP clients. Restart your MCP host/client after install to reload config."
   }, [mode])
 
   const unsupportedNote = `No official ${commandType} commands documented for ${project} yet.`

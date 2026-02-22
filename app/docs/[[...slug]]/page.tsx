@@ -97,27 +97,15 @@ export default async function Page({ params }: DocsPageProps) {
 
   const data = page.data as DocsPageData
   const MDX = data.body
+  const pageSlug = page.url.replace(/^\/docs\/?/, "") || "index"
   const sectionLabel =
-    page.url === "/docs/ecosystem-feature-reference" ? "Reference" :
-    page.url === "/docs/operations-autonomic-and-backup" ||
-    page.url === "/docs/troubleshooting-matrix" ||
-    page.url === "/docs/server-runtime-auth-and-artifact-sync" ? "Operations" :
-    page.url === "/docs/security-and-data-boundaries" ? "Security" :
-    page.url === "/docs/benchmarks-and-methodology" ? "Performance" :
-    page.url === "/docs/memory-system-architecture" ||
-    page.url === "/docs/codebase-system-architecture" ||
-    page.url === "/docs/vision-system-architecture" ? "Deep Dive" :
-    page.url === "/docs/system-architecture" ||
-    page.url === "/docs/ecosystem-canonical-contract" ? "Architecture" :
-    page.url === "/docs/codebase-canonical-contract" ||
-    page.url.startsWith("/docs/codebase-") ? "AgenticCodebase" :
-    page.url === "/docs/memory-canonical-contract" ||
-    page.url.startsWith("/docs/memory-") ? "AgenticMemory" :
-    page.url === "/docs/vision-canonical-contract" ||
-    page.url.startsWith("/docs/vision-") ? "AgenticVision" :
-    page.url === "/docs/sister-docs-catalog" ||
-    page.url === "/docs/feedback" ? "Reference" :
-    page.url === "/docs/use-case-playbooks" ? "Playbooks" :
+    pageSlug.startsWith("workspace-") ? "Workspace" :
+    pageSlug.startsWith("memory-") ? "AgenticMemory" :
+    pageSlug.startsWith("codebase-") ? "AgenticCodebase" :
+    pageSlug.startsWith("vision-") ? "AgenticVision" :
+    pageSlug.startsWith("feedback-") ? "Feedback and Community" :
+    pageSlug.startsWith("architecture-") ? "System Architecture" :
+    pageSlug.startsWith("playbooks-") ? "Use-Case Playbooks" :
     "Get Started"
 
   return (
