@@ -46,8 +46,9 @@ jobs:
           clone_with_token() {
             local repo="$1"
             local dest="$2"
-            git -c http.extraheader="AUTHORIZATION: bearer ${AGENTRALABS_REPO_READ_TOKEN}" \
-              clone --depth 1 "https://github.com/${repo}.git" "${dest}"
+            git clone --depth 1 \
+              "https://x-access-token:${AGENTRALABS_REPO_READ_TOKEN}@github.com/${repo}.git" \
+              "${dest}"
           }
 
           clone_with_token "agentralabs/agentralabs-tech" "$RUNNER_TEMP/agentra-workspace"
