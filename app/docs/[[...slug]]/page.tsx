@@ -114,7 +114,7 @@ export default async function Page({ params }: DocsPageProps) {
 
   return (
     <div className="docs-article-wrap">
-      <article className="docs-article docs-surface-panel">
+      <article className="docs-article">
         <p className="docs-eyebrow">{localizeDocsLabel(sectionLabel, language)}</p>
         <h1>{data.title}</h1>
         {data.description ? <p className="docs-description">{data.description}</p> : null}
@@ -127,7 +127,7 @@ export default async function Page({ params }: DocsPageProps) {
         </div>
       </article>
 
-      <aside className="docs-toc docs-surface-panel" aria-label={ui.onThisPage}>
+      <aside className="docs-toc" aria-label={ui.onThisPage}>
         <p className="docs-toc-label">{ui.onThisPage}</p>
         <nav>
           {(data.toc ?? [])
