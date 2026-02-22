@@ -5,8 +5,8 @@ const TARGET_SCRIPTS: Record<string, string> = {
   "agentic-memory": "https://raw.githubusercontent.com/agentralabs/agentic-memory/main/scripts/install.sh",
   vision: "https://raw.githubusercontent.com/agentralabs/agentic-vision/main/scripts/install.sh",
   "agentic-vision": "https://raw.githubusercontent.com/agentralabs/agentic-vision/main/scripts/install.sh",
-  codebase: "https://raw.githubusercontent.com/agentralabs/codebase/main/scripts/install.sh",
-  "agentic-codebase": "https://raw.githubusercontent.com/agentralabs/codebase/main/scripts/install.sh",
+  codebase: "https://raw.githubusercontent.com/agentralabs/agentic-codebase/main/scripts/install.sh",
+  "agentic-codebase": "https://raw.githubusercontent.com/agentralabs/agentic-codebase/main/scripts/install.sh",
 }
 
 const VALID_PROFILES = new Set(["desktop", "terminal", "server"])

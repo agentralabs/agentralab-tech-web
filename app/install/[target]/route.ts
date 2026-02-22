@@ -5,8 +5,8 @@ const INSTALL_TARGETS: Record<string, string> = {
   "agentic-memory": "https://raw.githubusercontent.com/agentralabs/agentic-memory/main/scripts/install.sh",
   vision: "https://raw.githubusercontent.com/agentralabs/agentic-vision/main/scripts/install.sh",
   "agentic-vision": "https://raw.githubusercontent.com/agentralabs/agentic-vision/main/scripts/install.sh",
-  codebase: "https://raw.githubusercontent.com/agentralabs/codebase/main/scripts/install.sh",
-  "agentic-codebase": "https://raw.githubusercontent.com/agentralabs/codebase/main/scripts/install.sh",
+  codebase: "https://raw.githubusercontent.com/agentralabs/agentic-codebase/main/scripts/install.sh",
+  "agentic-codebase": "https://raw.githubusercontent.com/agentralabs/agentic-codebase/main/scripts/install.sh",
 }
 
 function resolveTarget(target: string): string | undefined {
