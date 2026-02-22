@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import type { CSSProperties } from "react"
 
 interface DocsNavItem {
@@ -39,6 +39,21 @@ export function DocsSidebarNav({ groups }: DocsSidebarNavProps) {
     { accent: "#0e7490", soft: "#ecfeff", softBorder: "#a5f3fc" },
     { accent: "#64748b", soft: "#f8fafc", softBorder: "#cbd5e1" },
   ]
+
+  useEffect(() => {
+    setOpenGroups((prev) => {
+      const next = { ...prev }
+      for (const group of groups) {
+        const hasActive = group.items.some((item) => item.href === pathname)
+        if (hasActive) {
+          next[group.label] = true
+        } else if (next[group.label] == null) {
+          next[group.label] = group.defaultOpen ?? false
+        }
+      }
+      return next
+    })
+  }, [groups, pathname])
 
   return (
     <div className="docs-sidebar-groups">

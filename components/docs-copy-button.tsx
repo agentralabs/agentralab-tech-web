@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
+import { Check, Copy, History, Sparkles } from "lucide-react"
 
 interface DocsCopyButtonProps {
   value: string
@@ -50,14 +51,22 @@ export function DocsCopyButton({ value, className }: DocsCopyButtonProps) {
   }
 
   return (
-    <button
-      type="button"
-      className={className ?? "docs-copy-button"}
-      onClick={onCopy}
-      aria-label={copied ? "Copied" : "Copy code"}
-      title={copied ? "Copied" : "Copy"}
-    >
-      {copied ? "Copied" : "Copy"}
-    </button>
+    <div className={className ?? "docs-copy-actions"}>
+      <span className="docs-copy-icon docs-copy-icon-passive" title="Command history">
+        <History size={14} />
+      </span>
+      <button
+        type="button"
+        className="docs-copy-button"
+        onClick={onCopy}
+        aria-label={copied ? "Copied" : "Copy code"}
+        title={copied ? "Copied" : "Copy"}
+      >
+        {copied ? <Check size={14} /> : <Copy size={14} />}
+      </button>
+      <span className="docs-copy-icon docs-copy-icon-passive" title="Enhance">
+        <Sparkles size={14} />
+      </span>
+    </div>
   )
 }

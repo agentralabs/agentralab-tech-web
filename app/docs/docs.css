@@ -2238,3 +2238,277 @@ body:has(.docs-shell-premium.docs-variant-mintlify) {
     padding: 20px 14px 46px;
   }
 }
+
+/* Mintlify-style lock: simpler white layout + timeline/code feel */
+.docs-shell-premium.docs-variant-mintlify {
+  background: #ffffff;
+}
+
+.docs-shell-premium.docs-variant-mintlify::before,
+.docs-shell-premium.docs-variant-mintlify::after,
+.docs-shell-premium.docs-variant-mintlify .docs-ambient,
+.docs-shell-premium.docs-variant-mintlify .docs-reading-progress {
+  display: none;
+}
+
+.docs-shell-premium.docs-variant-mintlify .docs-topbar {
+  width: 100%;
+  margin: 0;
+  border: 0;
+  border-bottom: 1px solid #e5e7eb;
+  border-radius: 0;
+  box-shadow: none;
+  height: 60px;
+  top: 0;
+  padding: 0 18px;
+}
+
+.docs-shell-premium.docs-variant-mintlify .docs-frame-shell {
+  width: min(1420px, 100%);
+  margin: 0 auto;
+  padding-bottom: 0;
+}
+
+.docs-shell-premium.docs-variant-mintlify .docs-frame {
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  min-height: calc(100vh - 60px);
+}
+
+.docs-shell-premium.docs-variant-mintlify .docs-sidebar {
+  background: #ffffff;
+  border-right: 1px solid #eceff3;
+  padding: 16px 12px 24px;
+}
+
+.docs-shell-premium.docs-variant-mintlify .docs-sidebar-head {
+  border-color: #eceff3;
+  border-radius: 10px;
+}
+
+.docs-shell-premium.docs-variant-mintlify .docs-sidebar-groups {
+  top: 74px;
+  max-height: calc(100vh - 86px);
+}
+
+.docs-shell-premium.docs-variant-mintlify .docs-sidebar-group {
+  border: 1px solid #eceff3;
+  box-shadow: none;
+}
+
+.docs-shell-premium.docs-variant-mintlify .docs-sidebar-summary {
+  border-radius: 0;
+}
+
+.docs-shell-premium.docs-variant-mintlify .docs-sidebar-nav {
+  padding: 8px;
+}
+
+.docs-shell-premium.docs-variant-mintlify .docs-sidebar-nav a {
+  border-radius: 8px;
+}
+
+.docs-shell-premium.docs-variant-mintlify .docs-main {
+  padding: 22px 26px 58px;
+}
+
+.docs-shell-premium.docs-variant-mintlify .docs-article-wrap {
+  grid-template-columns: minmax(0, 940px) 244px;
+  gap: 26px;
+}
+
+.docs-shell-premium.docs-variant-mintlify .docs-article {
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 8px 6px 24px;
+}
+
+.docs-shell-premium.docs-variant-mintlify .docs-article h1 {
+  font-size: clamp(38px, 4.2vw, 56px);
+  line-height: 1.06;
+}
+
+.docs-shell-premium.docs-variant-mintlify .docs-content h2 {
+  font-size: clamp(32px, 3.8vw, 40px);
+  margin-top: 36px;
+}
+
+.docs-shell-premium.docs-variant-mintlify .docs-content h3 {
+  font-size: 30px;
+}
+
+.docs-shell-premium.docs-variant-mintlify .docs-command {
+  border: 1px solid #d8dde5;
+  border-radius: 14px;
+  box-shadow: none;
+}
+
+.docs-shell-premium.docs-variant-mintlify .docs-command-head {
+  border-bottom-color: #dfe4ea;
+  background: #f6f8fa;
+}
+
+.docs-shell-premium.docs-variant-mintlify .docs-command-tabs .docs-command-tabbar {
+  gap: 14px;
+  padding: 0 14px;
+  border-bottom: 1px solid #dfe4ea;
+  background: #f6f8fa;
+}
+
+.docs-shell-premium.docs-variant-mintlify .docs-command-tab {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #4b5563;
+  padding: 10px 0 9px;
+  border-bottom: 2px solid transparent;
+}
+
+.docs-shell-premium.docs-variant-mintlify .docs-command-tab:hover {
+  border-color: #bbf7d0;
+}
+
+.docs-shell-premium.docs-variant-mintlify .docs-command-tab[data-active="true"] {
+  color: #166534;
+  border-color: #16a34a;
+  background: transparent;
+}
+
+.docs-shell-premium.docs-variant-mintlify .docs-code-shell pre {
+  padding: 16px 72px 16px 14px;
+}
+
+.docs-copy-actions {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 4;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.docs-copy-icon,
+.docs-copy-button {
+  width: 24px;
+  height: 24px;
+  border: 1px solid #d1d5db;
+  border-radius: 7px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #6b7280;
+  background: #ffffff;
+}
+
+.docs-copy-button {
+  position: static;
+  padding: 0;
+  font-size: 0;
+  box-shadow: none;
+}
+
+.docs-copy-button:hover {
+  color: #111827;
+  border-color: #9ca3af;
+  background: #f9fafb;
+}
+
+.docs-copy-icon-passive {
+  opacity: 0.9;
+}
+
+.docs-shell-premium.docs-variant-mintlify .docs-steps {
+  margin-top: 18px;
+  gap: 0;
+}
+
+.docs-shell-premium.docs-variant-mintlify .docs-step {
+  grid-template-columns: 36px minmax(0, 1fr);
+  gap: 14px;
+  padding-bottom: 16px;
+}
+
+.docs-shell-premium.docs-variant-mintlify .docs-step::before {
+  left: 17px;
+  top: 34px;
+  bottom: -2px;
+  width: 1px;
+  background: #e5e7eb;
+}
+
+.docs-shell-premium.docs-variant-mintlify .docs-step-marker {
+  width: 28px;
+  height: 28px;
+  border: 1px solid #e5e7eb;
+  background: #f3f4f6;
+  color: #4b5563;
+  margin-top: 0;
+}
+
+.docs-shell-premium.docs-variant-mintlify .docs-step-content h3 {
+  font-size: 33px;
+  line-height: 1.12;
+  margin-bottom: 10px;
+}
+
+.docs-shell-premium.docs-variant-mintlify .docs-callout {
+  border: 1px solid #dbe4ee;
+  border-left-width: 4px;
+  border-radius: 12px;
+  padding: 12px 14px;
+}
+
+.docs-shell-premium.docs-variant-mintlify .docs-callout-title {
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.docs-shell-premium.docs-variant-mintlify .docs-callout-body {
+  font-size: 14px;
+  color: #334155;
+}
+
+.docs-shell-premium.docs-variant-mintlify .docs-callout-note,
+.docs-shell-premium.docs-variant-mintlify .docs-callout-info {
+  border-color: #93c5fd;
+  background: #f5f9ff;
+}
+
+.docs-shell-premium.docs-variant-mintlify .docs-callout-hint,
+.docs-shell-premium.docs-variant-mintlify .docs-callout-tip {
+  border-color: #86efac;
+  background: #f2fcf5;
+}
+
+.docs-shell-premium.docs-variant-mintlify .docs-toc {
+  border: 1px solid #eceff3;
+  border-radius: 12px;
+  padding: 12px;
+  background: #ffffff;
+  box-shadow: none;
+}
+
+@media (max-width: 980px) {
+  .docs-shell-premium.docs-variant-mintlify .docs-topbar {
+    padding: 10px 14px;
+  }
+
+  .docs-shell-premium.docs-variant-mintlify .docs-frame-shell {
+    width: 100%;
+  }
+
+  .docs-shell-premium.docs-variant-mintlify .docs-main {
+    padding: 18px 14px 42px;
+  }
+
+  .docs-shell-premium.docs-variant-mintlify .docs-article h1 {
+    font-size: 34px;
+  }
+
+  .docs-shell-premium.docs-variant-mintlify .docs-step-content h3 {
+    font-size: 26px;
+  }
+}
