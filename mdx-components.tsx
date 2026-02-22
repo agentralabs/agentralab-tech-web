@@ -7,6 +7,8 @@ import {
   CommandTabsBlock,
   FeatureCard,
   FeatureGrid,
+  Hint,
+  Note,
   Step,
   Steps,
 } from "@/components/docs-mdx"
@@ -69,6 +71,8 @@ export function getMDXComponents(components?: MDXComponents): MDXComponents {
     CliOutput,
     FeatureGrid,
     FeatureCard,
+    Note,
+    Hint,
     Steps,
     Step,
     img: MdxImage,

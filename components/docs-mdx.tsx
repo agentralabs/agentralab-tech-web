@@ -21,7 +21,7 @@ import {
 import { CommandTabs, type CommandTabItem } from "@/components/docs-command-tabs"
 import { DocsCopyButton } from "@/components/docs-copy-button"
 
-type CalloutType = "info" | "tip" | "success" | "warning"
+type CalloutType = "info" | "tip" | "success" | "warning" | "note" | "hint"
 
 interface CalloutProps {
   type?: CalloutType
@@ -102,16 +102,42 @@ function lineTone(line: string): "ok" | "info" | "warn" | "plain" {
 
 export function Callout({ type = "info", title, children }: CalloutProps) {
   const icon =
-    type === "tip" ? <Lightbulb size={16} /> :
+    type === "tip" || type === "hint" ? <Lightbulb size={16} /> :
     type === "success" ? <CircleCheckBig size={16} /> :
     type === "warning" ? <TriangleAlert size={16} /> :
     <Info size={16} />
 
+  const resolvedTitle =
+    title ??
+    (type === "tip" || type === "hint"
+      ? "Hint"
+      : type === "success"
+        ? "Success"
+        : type === "warning"
+          ? "Warning"
+          : "Note")
+
   return (
     <div className={`docs-callout docs-callout-${type}`}>
-      <div className="docs-callout-title">{icon}<span>{title ?? "Note"}</span></div>
+      <div className="docs-callout-title">{icon}<span>{resolvedTitle}</span></div>
       <div className="docs-callout-body">{children}</div>
     </div>
+  )
+}
+
+export function Note({ title = "Note", children }: Omit<CalloutProps, "type">) {
+  return (
+    <Callout type="note" title={title}>
+      {children}
+    </Callout>
+  )
+}
+
+export function Hint({ title = "Hint", children }: Omit<CalloutProps, "type">) {
+  return (
+    <Callout type="hint" title={title}>
+      {children}
+    </Callout>
   )
 }
 

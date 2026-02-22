@@ -169,9 +169,11 @@ export default async function DocsRouteLayout({ children }: DocsRouteLayoutProps
 
   const hrefSet = new Set(orderedItems.map((item) => item.href))
   const hrefForSlug = (target: string) => orderedItems.find((item) => slugFromUrl(item.href) === target)?.href
-  const memoryHref = hrefForSlug("memory-docs")
-  const codebaseHref = hrefForSlug("codebase-docs")
-  const visionHref = hrefForSlug("vision-docs")
+  const apiReferenceHref =
+    hrefForSlug("api-reference") ??
+    hrefForSlug("memory-api-reference") ??
+    hrefForSlug("codebase-api-reference") ??
+    hrefForSlug("vision-api-reference")
 
   const navGroups = [
     {
@@ -217,7 +219,7 @@ export default async function DocsRouteLayout({ children }: DocsRouteLayoutProps
   ].filter((group) => group.items.length > 0)
 
   return (
-    <div className={`docs-shell ${manrope.variable}`}>
+    <div className={`docs-shell docs-variant-aspen ${manrope.variable}`}>
       <header className="docs-topbar">
         <Link href="/docs" className="docs-brand">
           <span className="docs-brand-mark">
@@ -235,10 +237,8 @@ export default async function DocsRouteLayout({ children }: DocsRouteLayoutProps
           </span>
         </Link>
         <nav className="docs-topnav">
-          <Link href="/docs">{ui.nav.docs}</Link>
-          {memoryHref ? <Link href={memoryHref}>{localizeDocsLabel("AgenticMemory", language)}</Link> : null}
-          {codebaseHref ? <Link href={codebaseHref}>{localizeDocsLabel("AgenticCodebase", language)}</Link> : null}
-          {visionHref ? <Link href={visionHref}>{localizeDocsLabel("AgenticVision", language)}</Link> : null}
+          <Link href="/docs">{localizeDocsLabel("Guides", language)}</Link>
+          {apiReferenceHref ? <Link href={apiReferenceHref}>{localizeDocsLabel("API Reference", language)}</Link> : null}
         </nav>
         <DocsTopControls language={language} items={orderedItems} />
         <div className="docs-top-links">
