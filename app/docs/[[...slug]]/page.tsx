@@ -1,10 +1,12 @@
 import type { Metadata } from "next"
 import type { ComponentType } from "react"
+import { cookies } from "next/headers"
 import { notFound } from "next/navigation"
 import { createRelativeLink } from "fumadocs-ui/mdx"
 import type { TOCItemType } from "fumadocs-core/toc"
 import { getMDXComponents } from "@/mdx-components"
 import { source } from "@/lib/source"
+import { DOCS_LANGUAGE_COOKIE, docsUi, localizeDocsLabel, normalizeDocsLanguage } from "@/lib/docs-i18n"
 
 interface DocsPageProps {
   params: Promise<{ slug?: string[] }>
@@ -19,6 +21,9 @@ interface DocsPageData {
 
 export default async function Page({ params }: DocsPageProps) {
   const { slug } = await params
+  const cookieStore = await cookies()
+  const language = normalizeDocsLanguage(cookieStore.get(DOCS_LANGUAGE_COOKIE)?.value)
+  const ui = docsUi(language)
   const page = source.getPage(slug)
   if (!page) notFound()
 
@@ -36,7 +41,7 @@ export default async function Page({ params }: DocsPageProps) {
   return (
     <div className="docs-article-wrap">
       <article className="docs-article">
-        <p className="docs-eyebrow">{sectionLabel}</p>
+        <p className="docs-eyebrow">{localizeDocsLabel(sectionLabel, language)}</p>
         <h1>{data.title}</h1>
         {data.description ? <p className="docs-description">{data.description}</p> : null}
         <div className="docs-content">
@@ -48,12 +53,12 @@ export default async function Page({ params }: DocsPageProps) {
         </div>
       </article>
 
-      <aside className="docs-toc" aria-label="On this page">
-        <p className="docs-toc-label">On this page</p>
+      <aside className="docs-toc" aria-label={ui.onThisPage}>
+        <p className="docs-toc-label">{ui.onThisPage}</p>
         <nav>
           {(data.toc ?? []).map((item) => (
             <a key={item.url} href={item.url}>
-              {item.title}
+              {localizeDocsLabel(String(item.title ?? ""), language)}
             </a>
           ))}
         </nav>

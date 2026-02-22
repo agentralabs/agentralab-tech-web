@@ -2,8 +2,11 @@ import type { ReactNode } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { Manrope } from "next/font/google"
+import { cookies } from "next/headers"
 import { source } from "@/lib/source"
 import { DocsSidebarNav } from "@/components/docs-sidebar-nav"
+import { DocsTopControls } from "@/components/docs-top-controls"
+import { DOCS_LANGUAGE_COOKIE, docsUi, localizeDocsLabel, normalizeDocsLanguage } from "@/lib/docs-i18n"
 import "./docs.css"
 
 interface DocsRouteLayoutProps {
@@ -24,7 +27,11 @@ function titleFor(url: string, title?: string) {
     .join(" ")
 }
 
-export default function DocsRouteLayout({ children }: DocsRouteLayoutProps) {
+export default async function DocsRouteLayout({ children }: DocsRouteLayoutProps) {
+  const cookieStore = await cookies()
+  const language = normalizeDocsLanguage(cookieStore.get(DOCS_LANGUAGE_COOKIE)?.value)
+  const ui = docsUi(language)
+
   const pages = source
     .getPages()
     .filter((page) => page.url.startsWith("/docs") && page.url !== "/docs/design-doctrine")
@@ -51,38 +58,45 @@ export default function DocsRouteLayout({ children }: DocsRouteLayoutProps) {
   const orderedItems = publishedOrder.flatMap((slug) => {
     const page = pageBySlug.get(slug)
     if (!page) return []
-    return [{ href: page.url, label: titleFor(page.url, page.data.title) }]
+    const baseLabel = titleFor(page.url, page.data.title)
+    const description =
+      typeof page.data.description === "string" ? page.data.description : undefined
+    return [{
+      href: page.url,
+      label: localizeDocsLabel(baseLabel, language),
+      description,
+    }]
   })
 
   const navGroups = [
     {
-      label: "Get started",
+      label: localizeDocsLabel("Get started", language),
       items: orderedItems.filter((item) =>
         ["/docs", "/docs/quickstart", "/docs/installation", "/docs/integrations", "/docs/feedback"].includes(item.href),
       ),
     },
     {
-      label: "Operations",
+      label: localizeDocsLabel("Operations", language),
       items: orderedItems.filter((item) =>
         ["/docs/operations-autonomic-and-backup", "/docs/troubleshooting-matrix"].includes(item.href),
       ),
     },
     {
-      label: "Deep Dive",
+      label: localizeDocsLabel("Deep Dive", language),
       items: orderedItems.filter((item) =>
         ["/docs/system-architecture", "/docs/use-case-playbooks"].includes(item.href),
       ),
     },
     {
-      label: "Security",
+      label: localizeDocsLabel("Security", language),
       items: orderedItems.filter((item) => item.href === "/docs/security-and-data-boundaries"),
     },
     {
-      label: "Performance",
+      label: localizeDocsLabel("Performance", language),
       items: orderedItems.filter((item) => item.href === "/docs/benchmarks-and-methodology"),
     },
     {
-      label: "Reference",
+      label: localizeDocsLabel("Reference", language),
       items: orderedItems.filter((item) => item.href === "/docs/ecosystem-feature-reference"),
     },
   ]
@@ -101,27 +115,24 @@ export default function DocsRouteLayout({ children }: DocsRouteLayoutProps) {
             />
           </span>
           <span className="docs-brand-copy">
-            <span className="docs-brand-title">Agentra Labs Docs</span>
-            <span className="docs-brand-subtitle">Public Documentation</span>
+            <span className="docs-brand-title">{ui.docsTitle}</span>
+            <span className="docs-brand-subtitle">{ui.docsSubtitle}</span>
           </span>
         </Link>
         <nav className="docs-topnav">
-          <Link href="/docs">Documentation</Link>
-          <Link href="/docs/quickstart">Guides</Link>
-          <Link href="/docs/operations-autonomic-and-backup">Operations</Link>
-          <Link href="/docs/system-architecture">Architecture</Link>
-          <Link href="/docs/ecosystem-feature-reference">API reference</Link>
+          <Link href="/docs">{ui.nav.docs}</Link>
+          <Link href="/docs/quickstart">{ui.nav.guides}</Link>
+          <Link href="/docs/operations-autonomic-and-backup">{ui.nav.operations}</Link>
+          <Link href="/docs/system-architecture">{ui.nav.architecture}</Link>
+          <Link href="/docs/ecosystem-feature-reference">{ui.nav.reference}</Link>
         </nav>
-        <div className="docs-top-search" role="search" aria-label="Search docs">
-          <span>Search documentation...</span>
-          <kbd>⌘K</kbd>
-        </div>
+        <DocsTopControls language={language} items={orderedItems} />
         <div className="docs-top-links">
           <a className="docs-top-link docs-top-link-ghost" href="https://agentralabs.tech" target="_blank" rel="noreferrer">
-            Website
+            {ui.links.website}
           </a>
           <a className="docs-top-link docs-top-link-solid" href="https://github.com/agentralabs" target="_blank" rel="noreferrer">
-            GitHub
+            {ui.links.github}
           </a>
         </div>
       </header>
