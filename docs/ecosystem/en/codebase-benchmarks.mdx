@@ -1,13 +1,7 @@
 ---
-title: AgenticCodebase Benchmarks (Synced)
-description: Generated from agentic-codebase/docs/benchmarks.md.
+title: AgenticCodebase Benchmarks
+description: AgenticCodebase Benchmarks documentation.
 ---
-
-<Callout type="tip" title="Generated page">
-This page is synced from canonical ecosystem docs. Update source docs, then run docs:sync.
-</Callout>
-
-<Callout type="info" title="Source">`agentic-codebase/docs/benchmarks.md`</Callout>
 
 Performance measurements for AgenticCodebase's core operations across various graph sizes. All benchmarks use the Rust engine with release-mode compilation and link-time optimization.
 
@@ -128,15 +122,8 @@ Time for bidirectional call graph exploration (callers + callees).
 
 ## Running Benchmarks
 
-```bash
-# Run all benchmarks
-cargo bench
 
-# Run specific benchmark
-cargo bench -- "symbol_lookup"
-
-# Generate HTML reports
-cargo bench -- --output-format html
-```
 
 Benchmark source is in `benches/benchmarks.rs`. Uses the Criterion framework with statistical analysis and warm-up phases.
+
+> Command steps are centralized in Quickstart and Integration Guide for faster onboarding.

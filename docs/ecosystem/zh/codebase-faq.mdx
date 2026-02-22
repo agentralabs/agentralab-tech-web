@@ -1,13 +1,7 @@
 ---
-title: AgenticCodebase 常见问题（同步）
-description: 来自 agentic-codebase/docs/faq.md 的同步页面。
+title: AgenticCodebase 常见问题
+description: AgenticCodebase 常见问题文档。
 ---
-
-<Callout type="tip" title="同步页面">
-本页来自生态仓库规范文档，更新源文档后运行 docs:sync 即可同步。
-</Callout>
-
-<Callout type="info" title="Source">`agentic-codebase/docs/faq.md`</Callout>
 
 ## How is this different from a language server (LSP)?
 
@@ -64,27 +58,13 @@ Practical limits:
 
 Yes. Compile the monorepo root (or specific subdirectories) and the graph captures cross-package relationships:
 
-```bash
-# Entire monorepo
-acb compile ./monorepo -o full.acb
 
-# Specific packages
-acb compile ./monorepo/packages/api -o api.acb
-acb compile ./monorepo/packages/web -o web.acb
-
-# Exclude specific directories
-acb compile ./monorepo --exclude="**/node_modules/**" --exclude="**/vendor/**" -o project.acb
-```
 
 ## Can I use this in CI/CD?
 
 Yes. AgenticCodebase is designed for automation:
 
-```bash
-# In your CI pipeline
-acb compile ./src -o project.acb -f json   # JSON output for parsing
-acb query project.acb prophecy -f json     # Machine-readable predictions
-```
+
 
 Common CI use cases:
 
@@ -145,3 +125,5 @@ Prophecy is a heuristic, not a guarantee. It is most useful for prioritizing cod
 Not yet. Currently, `acb compile` rebuilds the entire graph from scratch. For most repositories (under 50K units), full compilation takes under 20 ms, so incremental compilation is rarely needed.
 
 Incremental compilation is planned for a future version to support very large repositories and watch-mode workflows.
+
+> 为了避免重复，命令步骤集中在 Quickstart 与 Integration Guide 页面。

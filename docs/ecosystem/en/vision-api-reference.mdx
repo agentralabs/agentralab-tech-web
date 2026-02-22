@@ -1,13 +1,7 @@
 ---
-title: AgenticVision API Reference (Synced)
-description: Generated from agentic-vision/docs/api-reference.md.
+title: AgenticVision API Reference
+description: AgenticVision API Reference documentation.
 ---
-
-<Callout type="tip" title="Generated page">
-This page is synced from canonical ecosystem docs. Update source docs, then run docs:sync.
-</Callout>
-
-<Callout type="info" title="Source">`agentic-vision/docs/api-reference.md`</Callout>
 
 Cortex exposes its functionality through five interfaces: CLI, Python client, TypeScript client, REST API, and MCP tools.
 
@@ -17,12 +11,7 @@ Cortex exposes its functionality through five interfaces: CLI, Python client, Ty
 
 Map a website into a binary graph.
 
-```bash
-cortex map amazon.com
-cortex map amazon.com --max-nodes 10000 --timeout 60
-cortex map amazon.com --no-browser      # Skip browser fallback
-cortex map amazon.com --json            # Machine-readable output
-```
+
 
 | Flag | Default | Description |
 |:-----|:--------|:------------|
@@ -36,11 +25,7 @@ cortex map amazon.com --json            # Machine-readable output
 
 Generate typed client libraries from a mapped site.
 
-```bash
-cortex compile amazon.com
-cortex compile amazon.com --format python
-cortex compile amazon.com --output ./my-clients/
-```
+
 
 | Flag | Default | Description |
 |:-----|:--------|:------------|
@@ -51,63 +36,43 @@ cortex compile amazon.com --output ./my-clients/
 
 Execute a WQL query against cached maps.
 
-```bash
-cortex wql "SELECT name, price FROM Product WHERE price < 200 ORDER BY price ASC LIMIT 10"
-cortex wql "SELECT url, page_type FROM Node LIMIT 20" --json
-```
+
 
 ### `cortex query &lt;domain&gt;`
 
 Search a mapped site by type and features.
 
-```bash
-cortex query amazon.com --type product_detail --price-lt 100 --rating-gt 4.0 --limit 20
-cortex query amazon.com --type article --limit 10 --json
-```
+
 
 ### `cortex pathfind &lt;domain&gt;`
 
 Find shortest path between nodes.
 
-```bash
-cortex pathfind amazon.com --from 0 --to 42
-```
+
 
 ### `cortex perceive &lt;url&gt;`
 
 Analyze a single live page.
 
-```bash
-cortex perceive "https://amazon.com/dp/B0ABCDEF"
-cortex perceive "https://amazon.com/dp/B0ABCDEF" --include-content
-```
+
 
 ### `cortex history &lt;domain&gt; &lt;url&gt;`
 
 Query temporal feature history.
 
-```bash
-cortex history amazon.com "https://amazon.com/dp/B0ABCDEF" --dim price --since 2026-01-01
-```
+
 
 ### `cortex patterns &lt;domain&gt; &lt;url&gt;`
 
 Detect temporal patterns (trends, anomalies, periodicity).
 
-```bash
-cortex patterns amazon.com "https://amazon.com/dp/B0ABCDEF" --dim price
-```
+
 
 ### `cortex plug`
 
 Auto-discover AI agents and inject Cortex tools via MCP.
 
-```bash
-cortex plug              # Auto-discover and inject
-cortex plug --status     # Check injection status
-cortex plug --remove     # Clean removal
-cortex plug --list       # List detected config files
-```
+
 
 ### `cortex doctor`
 
@@ -117,13 +82,7 @@ Check environment and diagnose issues.
 
 Manage the background daemon.
 
-```bash
-cortex start                       # Start daemon
-cortex start --http-port 7700      # Start with REST API
-cortex stop                        # Stop daemon
-cortex restart                     # Restart daemon
-cortex status                      # Show status + cached maps
-```
+
 
 ### Global Flags
 
@@ -138,9 +97,7 @@ cortex status                      # Show status + cached maps
 
 ## Python Client
 
-```bash
-pip install cortex-agent
-```
+
 
 ### `cortex_client.map(domain, **kwargs)`
 
@@ -262,9 +219,7 @@ except CortexMapError as e:
 
 ## TypeScript Client
 
-```bash
-npm install cortex-web-client
-```
+
 
 ### `map(domain, options?)`
 
@@ -344,9 +299,7 @@ try {
 
 Start the daemon with `--http-port` to enable the REST API:
 
-```bash
-cortex start --http-port 7700
-```
+
 
 ### Endpoints
 
@@ -366,27 +319,15 @@ cortex start --http-port 7700
 
 ### Example: Map a domain
 
-```bash
-curl -X POST http://localhost:7700/api/v1/map \
-  -H "Content-Type: application/json" \
-  -d '{"domain": "example.com", "max_nodes": 1000}'
-```
+
 
 ### Example: Query products
 
-```bash
-curl -X POST http://localhost:7700/api/v1/query \
-  -H "Content-Type: application/json" \
-  -d '{"domain": "amazon.com", "page_type": 4, "features": {"48": {"lt": 300}}, "limit": 10}'
-```
+
 
 ### Example: WQL
 
-```bash
-curl -X POST http://localhost:7700/api/v1/wql \
-  -H "Content-Type: application/json" \
-  -d '{"query": "SELECT name, price FROM Product WHERE price < 200 LIMIT 10"}'
-```
+
 
 ---
 
@@ -407,3 +348,5 @@ curl -X POST http://localhost:7700/api/v1/wql \
 | `cortex_wql` | Execute a WQL query |
 
 See [Integration Guide](/docs/vision-integration-guide) for MCP setup details.
+
+> Command steps are centralized in Quickstart and Integration Guide for faster onboarding.

@@ -29,6 +29,12 @@ Read left to right: request/control enters from clients, passes through Agentra 
 Cloud/server agents cannot read laptop artifacts directly. Handoff requires artifact sync and explicit token-based authentication.
 </Callout>
 
+## Per-sister architecture pages
+
+- [AgenticMemory Architecture](/docs/memory-system-architecture)
+- [AgenticCodebase Architecture](/docs/codebase-system-architecture)
+- [AgenticVision Architecture](/docs/vision-system-architecture)
+
 ## AgenticVision
 
 ### The Retina (Ingestion + Pre-processing)
@@ -52,16 +58,8 @@ This gives agents structure-first perception instead of screenshot-only interpre
 
 ### The Agent Interface (Protocol Gateway)
 
-The interaction model is intentionally minimal:
-
-<Command
-  title="Core runtime verbs"
-  description="Intent-level protocol for perception and action without exposing browser internals to agent frameworks."
-  code={`PERCEIVE  url=https://example.com
-ACT       action_id=btn_submit payload={...}
-TRAVERSE  link_id=next_page
-OBSERVE   selector=.price`}
-/>
+The interaction model is intentionally minimal and intent-based.
+Detailed command usage is documented in each sister quickstart + integration page.
 
 <Callout type="tip" title="Integration principle">
 Agents should speak intent, not browser mechanics. AgenticVision translates intent into robust runtime execution.
@@ -103,15 +101,6 @@ Before edits are applied, impact paths can reveal downstream consumers, likely b
 ### Temporal and Stability Signals
 
 Codebase evolution is treated as time-series data. Stability, drift, and change-risk surfaces help operators sequence edits with lower regression probability.
-
-<Command
-  title="Operational posture"
-  description="Common runtime flow for code intelligence operations."
-  code={`acb compile ./repo
-acb query impact --symbol User.email
-acb query coupling --symbol PaymentService
-acb-mcp serve`}
-/>
 
 ## Cross-runtime contract
 

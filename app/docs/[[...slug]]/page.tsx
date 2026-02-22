@@ -82,7 +82,7 @@ function fallbackLabelFromHref(href: string, language: "en" | "zh"): string {
 
 function isInvalidTocLabel(label: string): boolean {
   if (!label.trim()) return true
-  if (label.trim().toLowerCase() === "[object object]") return true
+  if (/\[object object\]/i.test(label.trim())) return true
   return false
 }
 
@@ -104,12 +104,19 @@ export default async function Page({ params }: DocsPageProps) {
     page.url === "/docs/server-runtime-auth-and-artifact-sync" ? "Operations" :
     page.url === "/docs/security-and-data-boundaries" ? "Security" :
     page.url === "/docs/benchmarks-and-methodology" ? "Performance" :
+    page.url === "/docs/memory-system-architecture" ||
+    page.url === "/docs/codebase-system-architecture" ||
+    page.url === "/docs/vision-system-architecture" ? "Deep Dive" :
     page.url === "/docs/system-architecture" ||
-    page.url === "/docs/ecosystem-canonical-contract" ? "Deep Dive" :
+    page.url === "/docs/ecosystem-canonical-contract" ? "Architecture" :
+    page.url === "/docs/codebase-canonical-contract" ||
+    page.url.startsWith("/docs/codebase-") ? "AgenticCodebase" :
+    page.url === "/docs/memory-canonical-contract" ||
+    page.url.startsWith("/docs/memory-") ? "AgenticMemory" :
+    page.url === "/docs/vision-canonical-contract" ||
+    page.url.startsWith("/docs/vision-") ? "AgenticVision" :
     page.url === "/docs/sister-docs-catalog" ||
-    page.url.startsWith("/docs/memory-") ||
-    page.url.startsWith("/docs/codebase-") ||
-    page.url.startsWith("/docs/vision-") ? "Reference" :
+    page.url === "/docs/feedback" ? "Reference" :
     page.url === "/docs/use-case-playbooks" ? "Playbooks" :
     "Get Started"
 

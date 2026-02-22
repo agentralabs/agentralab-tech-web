@@ -24,12 +24,21 @@ const CURATED_SLUGS = [
   "operations-autonomic-and-backup",
   "server-runtime-auth-and-artifact-sync",
   "system-architecture",
+  "memory-system-architecture",
+  "codebase-system-architecture",
+  "vision-system-architecture",
   "use-case-playbooks",
   "troubleshooting-matrix",
   "security-and-data-boundaries",
   "benchmarks-and-methodology",
   "ecosystem-feature-reference",
+  "memory-docs",
+  "codebase-docs",
+  "vision-docs",
   "workspace-how-to",
+  "codebase-canonical-contract",
+  "memory-canonical-contract",
+  "vision-canonical-contract",
   "sister-docs-catalog",
   "ecosystem-canonical-contract",
 ]
@@ -110,13 +119,10 @@ const SISTER_SPECS = [
 const DIRECT_SOURCES = [
   {
     slug: "workspace-how-to",
-    titleEn: "Workspace How-To (Synced)",
-    titleZh: "Workspace 操作手册（同步）",
-    descriptionEn: "Generated from the canonical workspace how-to guide.",
-    descriptionZh: "来自 Agentra 工作区规范文档的同步页面。",
-    introEn:
-      "This page is generated from the canonical workspace how-to guide in the Agentra workspace.",
-    introZh: "本页由生态仓库的 docs/how-to.md 自动同步。",
+    titleEn: "Workspace How-To",
+    titleZh: "Workspace 操作手册",
+    descriptionEn: "How to run the full Agentra workspace from one place.",
+    descriptionZh: "如何从一个入口运行完整 Agentra 工作区。",
     file: path.join(workspaceRoot, "docs", "how-to.md"),
     sourcePath: "docs/how-to.md",
   },
@@ -124,8 +130,12 @@ const DIRECT_SOURCES = [
 
 const CONTRACT_SOURCES = [
   {
+    key: "codebase",
+    slug: "codebase-canonical-contract",
     labelEn: "Codebase canonical contract",
     labelZh: "Codebase 规范契约",
+    titleEn: "AgenticCodebase Canonical Contract",
+    titleZh: "AgenticCodebase 规范契约",
     fileCandidates: [
       {
         file: path.join(workspaceRoot, "agentic-codebase", "docs", "ecosystem", "CANONICAL_SISTER_KIT.md"),
@@ -138,8 +148,12 @@ const CONTRACT_SOURCES = [
     ],
   },
   {
+    key: "memory",
+    slug: "memory-canonical-contract",
     labelEn: "Memory canonical contract",
     labelZh: "Memory 规范契约",
+    titleEn: "AgenticMemory Canonical Contract",
+    titleZh: "AgenticMemory 规范契约",
     fileCandidates: [
       {
         file: path.join(workspaceRoot, "agentic-memory", "docs", "ecosystem", "CANONICAL_SISTER_KIT.md"),
@@ -152,8 +166,12 @@ const CONTRACT_SOURCES = [
     ],
   },
   {
+    key: "vision",
+    slug: "vision-canonical-contract",
     labelEn: "Vision canonical contract",
     labelZh: "Vision 规范契约",
+    titleEn: "AgenticVision Canonical Contract",
+    titleZh: "AgenticVision 规范契约",
     fileCandidates: [
       {
         file: path.join(workspaceRoot, "agentic-vision", "docs", "ecosystem", "CANONICAL_SISTER_KIT.md"),
@@ -172,6 +190,68 @@ const LEGACY_PAGES = [
   "agentic-codebase-manual",
   "agentic-vision-manual",
   "agentic-vision-limitations",
+]
+
+const COMMAND_FOCUSED_DOCS = new Set(["quickstart", "integration-guide"])
+
+const ARCHITECTURE_SPECS = [
+  {
+    key: "memory",
+    titleEn: "AgenticMemory Architecture",
+    titleZh: "AgenticMemory 架构",
+    slug: "memory-system-architecture",
+    introEn: "How memory ingestion, graph updates, and retrieval work end-to-end.",
+    introZh: "说明记忆写入、图更新与检索的完整流程。",
+    pointsEn: [
+      "Input events are normalized and written into a persistent graph.",
+      "Search combines lexical + graph relevance so old context can be recalled quickly.",
+      "MCP server exposes memory operations to any compliant client.",
+    ],
+    pointsZh: [
+      "输入事件会标准化并写入持久化图结构。",
+      "检索结合词法与图相关性，确保历史上下文快速找回。",
+      "MCP 服务对所有兼容客户端公开统一记忆能力。",
+    ],
+    links: ["memory-concepts", "memory-file-format", "memory-api-reference", "memory-integration-guide"],
+  },
+  {
+    key: "codebase",
+    titleEn: "AgenticCodebase Architecture",
+    titleZh: "AgenticCodebase 架构",
+    slug: "codebase-system-architecture",
+    introEn: "How repositories are parsed, indexed, and queried as semantic graphs.",
+    introZh: "说明仓库如何被解析、建索引并以语义图方式查询。",
+    pointsEn: [
+      "Source code is parsed into typed units and semantic relationships.",
+      "Compiled .acb artifacts keep query latency low for impact analysis workflows.",
+      "MCP layer exposes symbol, impact, and graph-aware operations.",
+    ],
+    pointsZh: [
+      "源代码会解析为类型化单元及语义关系。",
+      ".acb 工件可保持低延迟，支撑影响分析场景。",
+      "MCP 层提供符号、影响与图查询能力。",
+    ],
+    links: ["codebase-concepts", "codebase-file-format", "codebase-api-reference", "codebase-integration-guide"],
+  },
+  {
+    key: "vision",
+    titleEn: "AgenticVision Architecture",
+    titleZh: "AgenticVision 架构",
+    slug: "vision-system-architecture",
+    introEn: "How capture, embeddings, and visual retrieval are composed.",
+    introZh: "说明视觉采集、向量嵌入与检索如何协作。",
+    pointsEn: [
+      "Visual inputs are captured and embedded into retrievable artifacts.",
+      "Queries match by semantic similarity and metadata filters.",
+      "MCP server provides universal access for desktop, terminal, and hosted clients.",
+    ],
+    pointsZh: [
+      "视觉输入会被采集并转为可检索工件。",
+      "查询通过语义相似度与元数据过滤匹配结果。",
+      "MCP 服务为桌面、终端与托管客户端提供统一接入。",
+    ],
+    links: ["vision-concepts", "vision-limitations", "vision-api-reference", "vision-integration-guide"],
+  },
 ]
 
 function titleize(value) {
@@ -206,6 +286,10 @@ function normalizeMarkdown(markdown) {
     .replace(/\t/g, "  ")
     .replace(/^export\s+/gm, "export ")
     .trim()
+}
+
+function stripCommandCodeFences(markdown) {
+  return markdown.replace(/```(?:bash|sh|shell|zsh|console)[\s\S]*?```/gi, "").trim()
 }
 
 function escapeUnsafeAngles(markdown) {
@@ -248,6 +332,10 @@ function rewriteSiblingLinks(markdown, siblingSlugMap) {
     const hashSuffix = hash ? `#${hash}` : ""
     return `[${text}](/docs/${targetSlug}${hashSuffix})`
   })
+}
+
+function labelFromSlug(slug) {
+  return titleize(slug)
 }
 
 async function exists(target) {
@@ -361,37 +449,38 @@ async function syncSisterReferencePages() {
       const sourcePath = `${spec.sourcePrefix}/${filename}`
       const labelEn = SISTER_DOC_LABEL_EN[base] ?? titleize(base)
       const labelZh = SISTER_DOC_LABEL_ZH[base] ?? titleize(base)
-      const titleEn = `${spec.name} ${labelEn} (Synced)`
-      const titleZh = `${spec.name} ${labelZh}（同步）`
+      const titleEn = `${spec.name} ${labelEn}`
+      const titleZh = `${spec.name} ${labelZh}`
 
       const raw = await fs.readFile(sourceFile, "utf8")
-      const clean = escapeUnsafeAngles(
+      const normalized = escapeUnsafeAngles(
         rewriteSiblingLinks(
           normalizeMarkdown(stripLeadingH1(stripFrontMatter(raw))),
           siblingMap,
         ),
       )
+      const commandFocused = COMMAND_FOCUSED_DOCS.has(base)
+      const cleanedBody = commandFocused
+        ? normalized
+        : stripCommandCodeFences(normalized)
+      const commandTrimmed = !commandFocused && cleanedBody !== normalized
+      const cleanEn = commandTrimmed
+        ? `${cleanedBody}\n\n> Command steps are centralized in Quickstart and Integration Guide for faster onboarding.`
+        : cleanedBody
+      const cleanZh = commandTrimmed
+        ? `${cleanedBody}\n\n> 为了避免重复，命令步骤集中在 Quickstart 与 Integration Guide 页面。`
+        : cleanedBody
 
       const enContent = withFrontMatter({
         title: titleEn,
-        description: `Generated from ${sourcePath}.`,
-        body:
-          `<Callout type="tip" title="Generated page">\n` +
-          `This page is synced from canonical ecosystem docs. Update source docs, then run docs:sync.\n` +
-          `</Callout>\n\n` +
-          `<Callout type="info" title="Source">\`${sourcePath}\`</Callout>\n\n` +
-          clean,
+        description: `${spec.name} ${labelEn} documentation.`,
+        body: cleanEn,
       })
 
       const zhContent = withFrontMatter({
         title: titleZh,
-        description: `来自 ${sourcePath} 的同步页面。`,
-        body:
-          `<Callout type="tip" title="同步页面">\n` +
-          `本页来自生态仓库规范文档，更新源文档后运行 docs:sync 即可同步。\n` +
-          `</Callout>\n\n` +
-          `<Callout type="info" title="Source">\`${sourcePath}\`</Callout>\n\n` +
-          clean,
+        description: `${spec.name} ${labelZh}文档。`,
+        body: cleanZh,
       })
 
       await writeFileIfChanged(path.join(EN_OUT_DIR, `${slug}.mdx`), enContent)
@@ -418,20 +507,14 @@ async function syncDirectSource(spec) {
   const enContent = withFrontMatter({
     title: spec.titleEn,
     description: spec.descriptionEn,
-    body:
-      `<Callout type="tip" title="Generated page">\n${spec.introEn}\n</Callout>\n\n` +
-      `<Callout type="info" title="Source">\`${spec.sourcePath}\`</Callout>\n\n` +
-      clean,
+    body: clean,
   })
   await writeFileIfChanged(path.join(EN_OUT_DIR, `${spec.slug}.mdx`), enContent)
 
   const zhContent = withFrontMatter({
     title: spec.titleZh,
     description: spec.descriptionZh,
-    body:
-      `<Callout type="tip" title="同步页面">\n${spec.introZh}\n</Callout>\n\n` +
-      `<Callout type="info" title="Source">\`${spec.sourcePath}\`</Callout>\n\n` +
-      clean,
+    body: clean,
   })
   await writeFileIfChanged(path.join(ZH_OUT_DIR, `${spec.slug}.mdx`), zhContent)
 
@@ -444,11 +527,10 @@ async function syncDirectSource(spec) {
   }
 }
 
-async function syncContractPage() {
-  const enSections = []
-  const zhSections = []
-  const rowsEn = []
-  const rowsZh = []
+async function syncContractPages() {
+  const records = []
+  const overviewRowsEn = []
+  const overviewRowsZh = []
 
   for (const source of CONTRACT_SOURCES) {
     const resolved = await resolveSourceCandidate(source)
@@ -461,50 +543,142 @@ async function syncContractPage() {
 
     const raw = await fs.readFile(resolved.file, "utf8")
     const clean = escapeUnsafeAngles(normalizeMarkdown(stripLeadingH1(stripFrontMatter(raw))))
-    enSections.push(`## ${source.labelEn}\n\n<Callout type="info" title="Source">\`${resolved.sourcePath}\`</Callout>\n\n${clean}`)
-    zhSections.push(`## ${source.labelZh}\n\n<Callout type="info" title="Source">\`${resolved.sourcePath}\`</Callout>\n\n${clean}`)
-    rowsEn.push(`| ${source.labelEn} | \`${resolved.sourcePath}\` |`)
-    rowsZh.push(`| ${source.labelZh} | \`${resolved.sourcePath}\` |`)
+    const enContent = withFrontMatter({
+      title: source.titleEn,
+      description: `${source.labelEn.charAt(0).toUpperCase()}${source.labelEn.slice(1)} for public use.`,
+      body: clean,
+    })
+
+    const zhContent = withFrontMatter({
+      title: source.titleZh,
+      description: `${source.labelZh}（面向公开使用）。`,
+      body: clean,
+    })
+
+    await writeFileIfChanged(path.join(EN_OUT_DIR, `${source.slug}.mdx`), enContent)
+    await writeFileIfChanged(path.join(ZH_OUT_DIR, `${source.slug}.mdx`), zhContent)
+
+    overviewRowsEn.push(`| ${source.titleEn} | [/docs/${source.slug}](/docs/${source.slug}) |`)
+    overviewRowsZh.push(`| ${source.titleZh} | [/docs/${source.slug}](/docs/${source.slug}) |`)
+    records.push({
+      slug: source.slug,
+      sourcePath: resolved.sourcePath,
+      titleEn: source.titleEn,
+      titleZh: source.titleZh,
+      sister: source.key === "memory" ? "AgenticMemory" : source.key === "codebase" ? "AgenticCodebase" : "AgenticVision",
+    })
   }
 
-  if (enSections.length === 0) return null
+  if (records.length === 0) return records
 
-  const slug = "ecosystem-canonical-contract"
-  const titleEn = "Ecosystem Canonical Contract (Synced)"
-  const titleZh = "生态规范契约（同步）"
-
-  const enContent = withFrontMatter({
-    title: titleEn,
-    description: "Generated from canonical sister contract docs across the ecosystem.",
+  const overviewEn = withFrontMatter({
+    title: "Ecosystem Canonical Contracts",
+    description: "Core rules for each sister, split by project for easier reading.",
     body:
-      `<Callout type="tip" title="Generated page">\n` +
-      `This page is generated from canonical sister contract docs. Update source contracts, then run docs:sync.\n` +
-      `</Callout>\n\n` +
-      `## Included sources\n\n| Source | Path |\n|---|---|\n${rowsEn.join("\n")}\n\n` +
-      enSections.join("\n\n"),
+      "Use these contract pages when implementing or reviewing standards.\n\n" +
+      "## Choose a sister\n\n| Contract | Page |\n|---|---|\n" +
+      overviewRowsEn.join("\n"),
   })
 
-  const zhContent = withFrontMatter({
-    title: titleZh,
-    description: "来自三姐妹规范契约文档的同步页面。",
+  const overviewZh = withFrontMatter({
+    title: "生态规范契约",
+    description: "按姐妹项目拆分的核心规范，阅读更清晰。",
     body:
-      `<Callout type="tip" title="同步页面">\n` +
-      `本页由三姐妹规范契约文档自动同步。更新源文档后运行 docs:sync。\n` +
-      `</Callout>\n\n` +
-      `## 已同步来源\n\n| 来源 | 路径 |\n|---|---|\n${rowsZh.join("\n")}\n\n` +
-      zhSections.join("\n\n"),
+      "请按项目查看对应规范页面。\n\n" +
+      "## 选择姐妹项目\n\n| 规范 | 页面 |\n|---|---|\n" +
+      overviewRowsZh.join("\n"),
   })
 
-  await writeFileIfChanged(path.join(EN_OUT_DIR, `${slug}.mdx`), enContent)
-  await writeFileIfChanged(path.join(ZH_OUT_DIR, `${slug}.mdx`), zhContent)
-
-  return {
-    slug,
-    sourcePath: "*/{planning-docs,docs/ecosystem}/CANONICAL_SISTER_KIT.md",
-    titleEn,
-    titleZh,
+  await writeFileIfChanged(path.join(EN_OUT_DIR, "ecosystem-canonical-contract.mdx"), overviewEn)
+  await writeFileIfChanged(path.join(ZH_OUT_DIR, "ecosystem-canonical-contract.mdx"), overviewZh)
+  records.push({
+    slug: "ecosystem-canonical-contract",
+    sourcePath: "Split overview from sister canonical contracts",
+    titleEn: "Ecosystem Canonical Contracts",
+    titleZh: "生态规范契约",
     sister: "Ecosystem",
+  })
+
+  return records
+}
+
+async function syncArchitecturePages() {
+  for (const spec of ARCHITECTURE_SPECS) {
+    const enLinks = spec.links
+      .map((slug) => `- [${labelFromSlug(slug.replace(`${spec.key}-`, ""))}](/docs/${slug})`)
+      .join("\n")
+    const zhLinks = spec.links
+      .map((slug) => `- [${labelFromSlug(slug.replace(`${spec.key}-`, ""))}](/docs/${slug})`)
+      .join("\n")
+
+    const enContent = withFrontMatter({
+      title: spec.titleEn,
+      description: spec.introEn,
+      body:
+        `## Runtime flow\n\n${spec.pointsEn.map((point) => `- ${point}`).join("\n")}\n\n` +
+        "## Related pages\n\n" +
+        enLinks,
+    })
+
+    const zhContent = withFrontMatter({
+      title: spec.titleZh,
+      description: spec.introZh,
+      body:
+        `## 运行流程\n\n${spec.pointsZh.map((point) => `- ${point}`).join("\n")}\n\n` +
+        "## 相关页面\n\n" +
+        zhLinks,
+    })
+
+    await writeFileIfChanged(path.join(EN_OUT_DIR, `${spec.slug}.mdx`), enContent)
+    await writeFileIfChanged(path.join(ZH_OUT_DIR, `${spec.slug}.mdx`), zhContent)
   }
+}
+
+async function syncSisterHubPages(records) {
+  const hubRecords = []
+  const sisters = [
+    { key: "memory", name: "AgenticMemory", slug: "memory-docs", titleZh: "AgenticMemory 文档总览" },
+    { key: "codebase", name: "AgenticCodebase", slug: "codebase-docs", titleZh: "AgenticCodebase 文档总览" },
+    { key: "vision", name: "AgenticVision", slug: "vision-docs", titleZh: "AgenticVision 文档总览" },
+  ]
+
+  for (const sister of sisters) {
+    const items = records
+      .filter((entry) => entry.sister === sister.name)
+      .sort((a, b) => a.slug.localeCompare(b.slug))
+
+    const enRows = items.map((entry) => `| ${entry.titleEn} | [/docs/${entry.slug}](/docs/${entry.slug}) |`)
+    const zhRows = items.map((entry) => `| ${entry.titleZh} | [/docs/${entry.slug}](/docs/${entry.slug}) |`)
+
+    const enContent = withFrontMatter({
+      title: `${sister.name} Docs`,
+      description: `Everything for ${sister.name} in one page.`,
+      body:
+        "## Pages\n\n" +
+        "| Page | Link |\n|---|---|\n" +
+        enRows.join("\n"),
+    })
+
+    const zhContent = withFrontMatter({
+      title: sister.titleZh,
+      description: `${sister.name} 的页面导航。`,
+      body:
+        "## 页面列表\n\n" +
+        "| 页面 | 链接 |\n|---|---|\n" +
+        zhRows.join("\n"),
+    })
+
+    await writeFileIfChanged(path.join(EN_OUT_DIR, `${sister.slug}.mdx`), enContent)
+    await writeFileIfChanged(path.join(ZH_OUT_DIR, `${sister.slug}.mdx`), zhContent)
+    hubRecords.push({
+      slug: sister.slug,
+      sourcePath: "Generated from sister page map",
+      titleEn: `${sister.name} Docs`,
+      titleZh: sister.titleZh,
+      sister: sister.name,
+    })
+  }
+  return hubRecords
 }
 
 async function syncCatalogPage(records) {
@@ -513,31 +687,25 @@ async function syncCatalogPage(records) {
     .sort((a, b) => String(a.slug).localeCompare(String(b.slug)))
 
   const enRows = sorted.map((entry) =>
-    `| ${entry.sister} | ${entry.titleEn} | \`${entry.sourcePath}\` | [/docs/${entry.slug}](/docs/${entry.slug}) |`,
+    `| ${entry.sister} | ${entry.titleEn} | [/docs/${entry.slug}](/docs/${entry.slug}) |`,
   )
   const zhRows = sorted.map((entry) =>
-    `| ${entry.sister} | ${entry.titleZh} | \`${entry.sourcePath}\` | [/docs/${entry.slug}](/docs/${entry.slug}) |`,
+    `| ${entry.sister} | ${entry.titleZh} | [/docs/${entry.slug}](/docs/${entry.slug}) |`,
   )
 
   const enContent = withFrontMatter({
-    title: "Sister Docs Catalog (Synced)",
-    description: "Index of user-facing docs synced from canonical ecosystem sources.",
+    title: "Sister Docs Catalog",
+    description: "Index of user-facing docs across all sisters.",
     body:
-      `<Callout type="success" title="Single-source docs pipeline">\n` +
-      `This catalog is generated from ecosystem repositories. Website docs are synced from canonical sources to avoid duplication drift.\n` +
-      `</Callout>\n\n` +
-      `## Synced source map\n\n| Sister | Entry | Canonical source | Public page |\n|---|---|---|---|\n` +
+      `## Documentation map\n\n| Sister | Entry | Public page |\n|---|---|---|\n` +
       enRows.join("\n"),
   })
 
   const zhContent = withFrontMatter({
-    title: "姐妹文档目录（同步）",
-    description: "从生态规范源同步的用户文档索引。",
+    title: "姐妹文档目录",
+    description: "所有姐妹项目的用户文档索引。",
     body:
-      `<Callout type="success" title="单一来源文档">\n` +
-      `本目录由生态仓库规范文档自动生成，避免多处手工维护导致漂移。\n` +
-      `</Callout>\n\n` +
-      `## 同步来源映射\n\n| 模块 | 条目 | 规范来源 | 公共页面 |\n|---|---|---|---|\n` +
+      `## 文档地图\n\n| 模块 | 条目 | 公共页面 |\n|---|---|---|\n` +
       zhRows.join("\n"),
   })
 
@@ -564,13 +732,23 @@ async function main() {
     if (synced) records.push(synced)
   }
 
-  const contract = await syncContractPage()
-  if (contract) records.push(contract)
+  const contractRecords = await syncContractPages()
+  records.push(...contractRecords)
+  await syncArchitecturePages()
+  const sisterHubRecords = await syncSisterHubPages(records)
+  records.push(...sisterHubRecords)
 
   await syncCatalogPage(records)
   await writeMeta(generatedSlugs)
-  await cleanupGeneratedFiles(EN_OUT_DIR, generatedSlugs)
-  await cleanupGeneratedFiles(ZH_OUT_DIR, generatedSlugs)
+  const managedSisterSlugs = [
+    ...generatedSlugs,
+    ...contractRecords
+      .concat(sisterHubRecords)
+      .map((record) => record.slug)
+      .filter((slug) => /^(memory|codebase|vision)-/.test(slug)),
+  ]
+  await cleanupGeneratedFiles(EN_OUT_DIR, managedSisterSlugs)
+  await cleanupGeneratedFiles(ZH_OUT_DIR, managedSisterSlugs)
 
   console.log("[sync] ecosystem docs sync complete")
 }

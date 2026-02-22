@@ -1,13 +1,7 @@
 ---
-title: AgenticMemory 基准测试（同步）
-description: 来自 agentic-memory/docs/benchmarks.md 的同步页面。
+title: AgenticMemory 基准测试
+description: AgenticMemory 基准测试文档。
 ---
-
-<Callout type="tip" title="同步页面">
-本页来自生态仓库规范文档，更新源文档后运行 docs:sync 即可同步。
-</Callout>
-
-<Callout type="info" title="Source">`agentic-memory/docs/benchmarks.md`</Callout>
 
 Performance measurements for AgenticMemory's core operations across various graph sizes. All benchmarks use the Rust engine directly; Python SDK overhead is negligible for I/O-bound operations and adds approximately 5-15 microseconds per FFI call for compute-bound operations.
 
@@ -143,42 +137,21 @@ These benchmarks are intended for understanding AgenticMemory's performance prof
 
 ### Prerequisites
 
-```bash
-# Rust toolchain
-rustup update stable
 
-# Clone and build
-git clone https://github.com/anthropic/agentic-memory.git
-cd agentic-memory
-```
 
 ### Running All Benchmarks
 
-```bash
-cargo bench
-```
+
 
 Results are written to `target/criterion/` with HTML reports including statistical analysis, throughput charts, and regression detection.
 
 ### Running Specific Benchmarks
 
-```bash
-# Only node operations
-cargo bench -- add_node
 
-# Only I/O benchmarks
-cargo bench -- file_write
-cargo bench -- file_read
-
-# Only search benchmarks
-cargo bench -- similarity_search
-```
 
 ### Generating a Report
 
-```bash
-cargo bench -- --save-baseline my_hardware
-```
+
 
 The HTML report at `target/criterion/report/index.html` includes:
 - Distribution plots for each benchmark
@@ -190,18 +163,13 @@ The HTML report at `target/criterion/report/index.html` includes:
 
 The benchmarks accept environment variables to control graph size:
 
-```bash
-BENCH_NODES=50000 BENCH_EDGES=250000 cargo bench
-```
+
 
 ### Profiling
 
 For detailed profiling, use `cargo-flamegraph`:
 
-```bash
-cargo install flamegraph
-cargo flamegraph --bench core_benchmarks -- --bench
-```
+
 
 This generates an SVG flamegraph showing where time is spent during benchmark execution.
 
@@ -262,3 +230,5 @@ Queries divide into three tiers at 100K nodes:
 | 100K nodes | 1.58 ms | 122 ms | 77x |
 
 The inverted index speedup grows with graph size because the fast path cost depends on posting list size (sub-linear in n) while the slow path is always O(n).
+
+> 为了避免重复，命令步骤集中在 Quickstart 与 Integration Guide 页面。

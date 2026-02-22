@@ -43,16 +43,22 @@ export default async function DocsRouteLayout({ children }: DocsRouteLayoutProps
     "installation",
     "integrations",
     "feedback",
+    "workspace-how-to",
     "operations-autonomic-and-backup",
     "server-runtime-auth-and-artifact-sync",
     "troubleshooting-matrix",
     "system-architecture",
+    "memory-system-architecture",
+    "codebase-system-architecture",
+    "vision-system-architecture",
     "use-case-playbooks",
     "ecosystem-canonical-contract",
     "security-and-data-boundaries",
     "benchmarks-and-methodology",
     "ecosystem-feature-reference",
-    "workspace-how-to",
+    "memory-docs",
+    "codebase-docs",
+    "vision-docs",
     "sister-docs-catalog",
   ]
 
@@ -79,78 +85,64 @@ export default async function DocsRouteLayout({ children }: DocsRouteLayoutProps
     }]
   })
 
+  const itemByHref = new Map(orderedItems.map((item) => [item.href, item] as const))
+  const pick = (hrefs: string[]) =>
+    hrefs.flatMap((href) => {
+      const item = itemByHref.get(href)
+      return item ? [item] : []
+    })
+
   const navGroups = [
     {
       label: localizeDocsLabel("Get started", language),
-      items: orderedItems.filter((item) =>
-        [
-          "/docs",
-          "/docs/quickstart",
-          "/docs/installation",
-          "/docs/integrations",
-          "/docs/feedback",
-          "/docs/workspace-how-to",
-        ].includes(item.href),
-      ),
+      items: pick([
+        "/docs",
+        "/docs/quickstart",
+        "/docs/installation",
+        "/docs/integrations",
+        "/docs/feedback",
+        "/docs/workspace-how-to",
+      ]),
     },
     {
       label: localizeDocsLabel("Operations", language),
-      items: orderedItems.filter((item) =>
-        [
-          "/docs/operations-autonomic-and-backup",
-          "/docs/server-runtime-auth-and-artifact-sync",
-          "/docs/troubleshooting-matrix",
-        ].includes(item.href),
-      ),
+      items: pick([
+        "/docs/operations-autonomic-and-backup",
+        "/docs/server-runtime-auth-and-artifact-sync",
+        "/docs/troubleshooting-matrix",
+      ]),
     },
     {
       label: localizeDocsLabel("Deep Dive", language),
-      items: orderedItems.filter((item) =>
-        [
-          "/docs/system-architecture",
-          "/docs/use-case-playbooks",
-          "/docs/ecosystem-canonical-contract",
-        ].includes(item.href),
-      ),
+      items: pick([
+        "/docs/system-architecture",
+        "/docs/memory-system-architecture",
+        "/docs/codebase-system-architecture",
+        "/docs/vision-system-architecture",
+        "/docs/use-case-playbooks",
+        "/docs/ecosystem-canonical-contract",
+      ]),
     },
     {
       label: localizeDocsLabel("Security", language),
-      items: orderedItems.filter((item) => item.href === "/docs/security-and-data-boundaries"),
+      items: pick(["/docs/security-and-data-boundaries"]),
     },
     {
       label: localizeDocsLabel("Performance", language),
-      items: orderedItems.filter((item) => item.href === "/docs/benchmarks-and-methodology"),
+      items: pick(["/docs/benchmarks-and-methodology"]),
     },
     {
       label: localizeDocsLabel("Reference", language),
-      items: orderedItems.filter((item) =>
-        [
-          "/docs/ecosystem-feature-reference",
-          "/docs/sister-docs-catalog",
-          "/docs/memory-quickstart",
-          "/docs/memory-concepts",
-          "/docs/memory-integration-guide",
-          "/docs/memory-faq",
-          "/docs/memory-benchmarks",
-          "/docs/memory-api-reference",
-          "/docs/memory-file-format",
-          "/docs/memory-rust-api",
-          "/docs/codebase-quickstart",
-          "/docs/codebase-concepts",
-          "/docs/codebase-integration-guide",
-          "/docs/codebase-faq",
-          "/docs/codebase-benchmarks",
-          "/docs/codebase-api-reference",
-          "/docs/codebase-file-format",
-          "/docs/vision-quickstart",
-          "/docs/vision-concepts",
-          "/docs/vision-integration-guide",
-          "/docs/vision-faq",
-          "/docs/vision-benchmarks",
-          "/docs/vision-api-reference",
-          "/docs/vision-limitations",
-        ].includes(item.href),
-      ),
+      items: pick([
+        "/docs/ecosystem-feature-reference",
+        "/docs/memory-docs",
+        "/docs/codebase-docs",
+        "/docs/vision-docs",
+        "/docs/memory-canonical-contract",
+        "/docs/codebase-canonical-contract",
+        "/docs/vision-canonical-contract",
+        "/docs/sister-docs-catalog",
+      ]),
     },
   ]
 
@@ -177,7 +169,7 @@ export default async function DocsRouteLayout({ children }: DocsRouteLayoutProps
           <Link href="/docs/quickstart">{ui.nav.guides}</Link>
           <Link href="/docs/operations-autonomic-and-backup">{ui.nav.operations}</Link>
           <Link href="/docs/system-architecture">{ui.nav.architecture}</Link>
-          <Link href="/docs/sister-docs-catalog">{ui.nav.reference}</Link>
+          <Link href="/docs/memory-api-reference">{ui.nav.reference}</Link>
         </nav>
         <DocsTopControls language={language} items={orderedItems} />
         <div className="docs-top-links">

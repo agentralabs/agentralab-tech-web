@@ -1,13 +1,7 @@
 ---
-title: AgenticMemory 常见问题（同步）
-description: 来自 agentic-memory/docs/faq.md 的同步页面。
+title: AgenticMemory 常见问题
+description: AgenticMemory 常见问题文档。
 ---
-
-<Callout type="tip" title="同步页面">
-本页来自生态仓库规范文档，更新源文档后运行 docs:sync 即可同步。
-</Callout>
-
-<Callout type="info" title="Source">`agentic-memory/docs/faq.md`</Callout>
 
 ## How is this different from a vector database?
 
@@ -100,20 +94,7 @@ agent_b = MemoryAgent(brain, provider_b)
 
 A brain is a single `.amem` file. Back it up the same way you would any file:
 
-```bash
-# Simple copy
-cp agent.amem agent.amem.backup
 
-# With timestamp
-cp agent.amem "agent_$(date +%Y%m%d_%H%M%S).amem"
-
-# Git (the file is binary, so git stores full snapshots)
-git add agent.amem
-git commit -m "Brain snapshot after session 42"
-
-# rsync to remote
-rsync agent.amem user@backup-server:/backups/
-```
 
 The file is self-contained -- no external dependencies, no database server state, no separate index files. A copied `.amem` file is a complete, valid brain.
 
@@ -203,3 +184,5 @@ The `amem` CLI also works entirely without an LLM. The separate MCP server (`age
 - Periodically auditing brain contents with `amem query`.
 
 **MCP server.** When running `agentic-memory-mcp serve`, the server binds to `127.0.0.1` by default (localhost only). It does not expose the brain to the network. If you need remote access, use an SSH tunnel or VPN rather than binding to `0.0.0.0`.
+
+> 为了避免重复，命令步骤集中在 Quickstart 与 Integration Guide 页面。
