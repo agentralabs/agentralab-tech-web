@@ -496,6 +496,22 @@ async function pruneOutput(dir, keepFiles) {
 }
 
 async function main() {
+  const sourceChecks = await Promise.all(
+    DOC_SPECS.map(async (spec) => ({
+      spec,
+      exists: await pathExists(spec.docsPublicDir),
+    })),
+  )
+
+  const missing = sourceChecks.filter((entry) => !entry.exists)
+  if (missing.length && !strict) {
+    const missingList = missing.map((entry) => entry.spec.docsPublicDir).join(", ")
+    console.warn(
+      `[sync] skipped: canonical source docs unavailable (${missingList}); keeping committed docs/ecosystem output`,
+    )
+    return
+  }
+
   await ensureDir(EN_OUT_DIR)
   await ensureDir(ZH_OUT_DIR)
 
