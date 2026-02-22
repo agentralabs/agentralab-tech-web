@@ -33,8 +33,9 @@ function tocTitleToText(value: unknown, language: "en" | "zh"): string {
   if (value && typeof value === "object") {
     const record = value as Record<string, unknown>
     const localized = language === "zh" ? record.zh : record.en
-    if (typeof localized === "string") {
-      return localized
+    if (localized != null) {
+      const fromLocalized = tocTitleToText(localized, language)
+      if (fromLocalized) return fromLocalized
     }
 
     if ("props" in record && record.props && typeof record.props === "object") {
@@ -60,6 +61,11 @@ function tocTitleToText(value: unknown, language: "en" | "zh"): string {
   }
 
   return ""
+}
+
+function tocHrefToText(value: unknown): string {
+  if (typeof value !== "string") return ""
+  return value.startsWith("#") ? value : `#${value.replace(/^#*/, "")}`
 }
 
 export default async function Page({ params }: DocsPageProps) {
@@ -100,11 +106,17 @@ export default async function Page({ params }: DocsPageProps) {
       <aside className="docs-toc" aria-label={ui.onThisPage}>
         <p className="docs-toc-label">{ui.onThisPage}</p>
         <nav>
-          {(data.toc ?? []).map((item) => (
-            <a key={item.url} href={item.url}>
-              {tocTitleToText(item.title, language) || item.url}
-            </a>
-          ))}
+          {(data.toc ?? [])
+            .map((item) => ({
+              href: tocHrefToText(item.url),
+              label: tocTitleToText(item.title, language),
+            }))
+            .filter((item) => item.href && item.label)
+            .map((item) => (
+              <a key={`${item.href}-${item.label}`} href={item.href}>
+                {item.label}
+              </a>
+            ))}
         </nav>
       </aside>
     </div>

@@ -42,46 +42,86 @@ description: 在统一文档中心安装并运行 AgenticMemory、AgenticVision 
 
 ## 运行时截图
 
-下面把运行过程拆成小块（chunk），每块都配一张图和一句简单解释，按顺序看就能懂。
+下面把运行过程拆成小块（chunk），每块都按同一顺序：
+1. 复制命令。
+2. 运行命令。
+3. 对照输出。
+4. 查看截图。
 
 <Callout type="tip" title="阅读方式">
-按顺序阅读每个 chunk：先看截图，再看下面的短说明。
+按顺序阅读每个 chunk。每块都有命令、输出、截图和简单解释。
 </Callout>
 
 <Steps>
   <Step number={1} title="Chunk 1：Codebase 检查代码">
-    <p><strong>正在发生什么：</strong> AgenticCodebase 读取项目代码，显示找到的符号/函数。</p>
-    <p><strong>小朋友版解释：</strong>它像一张“代码地图”，告诉你代码里有什么。</p>
-    <img className="docs-runtime-shot" src="/images/docs/sisters/codebase-query.png" alt="Chunk 1: AgenticCodebase runtime output" />
+    <p className="docs-runtime-intro"><strong>正在发生什么：</strong> AgenticCodebase 读取项目代码并显示符号/函数。</p>
+    <p className="docs-runtime-intro"><strong>小朋友版解释：</strong>它像一张“代码地图”，告诉你代码里有什么。</p>
+    <div className="docs-runtime-chunk">
+      <Command title="运行这条命令" code={`acb compile ./sample-project -o sample.acb\nacb query sample.acb symbol --name "main"`} />
+      <CliOutput title="预期输出（示例）" output={`[ok] compile complete\n[ok] symbol found: main\n[info] file: src/main.rs`} />
+      <img className="docs-runtime-shot" src="/images/docs/sisters/codebase-query.png" alt="Chunk 1: AgenticCodebase runtime output" />
+      <a className="docs-runtime-shot-link" href="/images/docs/sisters/codebase-query.png" target="_blank" rel="noreferrer">查看大图</a>
+      <p className="docs-runtime-shot-caption">看到 symbol found 就表示第 1 块完成。</p>
+    </div>
   </Step>
 
   <Step number={2} title="Chunk 2：Memory 保存并找回事实">
-    <p><strong>正在发生什么：</strong> AgenticMemory 先保存一条信息，再把它搜索出来。</p>
-    <p><strong>小朋友版解释：</strong>它像一本会记事的笔记本。</p>
-    <img className="docs-runtime-shot" src="/images/docs/sisters/memory-add-search.png" alt="Chunk 2: AgenticMemory runtime output" />
+    <p className="docs-runtime-intro"><strong>正在发生什么：</strong> AgenticMemory 先保存信息，再搜索并找回。</p>
+    <p className="docs-runtime-intro"><strong>小朋友版解释：</strong>它像一本会记事的笔记本。</p>
+    <div className="docs-runtime-chunk">
+      <Command title="运行这条命令" code={`amem add-fact "Agentra memory test"\namem search "Agentra memory test"`} />
+      <CliOutput title="预期输出（示例）" output={`[ok] fact added\n[ok] search result: Agentra memory test`} />
+      <img className="docs-runtime-shot" src="/images/docs/sisters/memory-add-search.png" alt="Chunk 2: AgenticMemory runtime output" />
+      <a className="docs-runtime-shot-link" href="/images/docs/sisters/memory-add-search.png" target="_blank" rel="noreferrer">查看大图</a>
+      <p className="docs-runtime-shot-caption">搜索结果里出现刚保存的信息，就表示第 2 块完成。</p>
+    </div>
   </Step>
 
   <Step number={3} title="Chunk 3：Vision 看图并理解">
-    <p><strong>正在发生什么：</strong> AgenticVision 采集视觉输入并执行视觉分析。</p>
-    <p><strong>小朋友版解释：</strong>它就是系统的“眼睛”。</p>
-    <img className="docs-runtime-shot" src="/images/docs/sisters/vision-runtime.png" alt="Chunk 3: AgenticVision runtime output" />
+    <p className="docs-runtime-intro"><strong>正在发生什么：</strong> AgenticVision 采集视觉输入并执行视觉分析。</p>
+    <p className="docs-runtime-intro"><strong>小朋友版解释：</strong>它就是系统的“眼睛”。</p>
+    <div className="docs-runtime-chunk">
+      <Command title="运行这条命令" code={`agentic-vision-mcp capture --source screenshot --description "runtime test"\nagentic-vision-mcp query --description "runtime test"`} />
+      <CliOutput title="预期输出（示例）" output={`[ok] capture saved\n[ok] visual match found`} />
+      <img className="docs-runtime-shot" src="/images/docs/sisters/vision-runtime.png" alt="Chunk 3: AgenticVision runtime output" />
+      <a className="docs-runtime-shot-link" href="/images/docs/sisters/vision-runtime.png" target="_blank" rel="noreferrer">查看大图</a>
+      <p className="docs-runtime-shot-caption">捕获成功且查询返回匹配项，就表示第 3 块完成。</p>
+    </div>
   </Step>
 
   <Step number={4} title="Chunk 4：Agentra 状态面板显示健康度">
-    <p><strong>正在发生什么：</strong> Agentra 展示三姐妹是否可用、当前会话是否正常。</p>
-    <p><strong>小朋友版解释：</strong>它像仪表盘，告诉你哪些功能开着并且好好的。</p>
-    <img className="docs-runtime-shot" src="/images/docs/sisters/agentra-status.png" alt="Chunk 4: Agentra status runtime output" />
+    <p className="docs-runtime-intro"><strong>正在发生什么：</strong> Agentra 展示三姐妹可用状态与会话健康度。</p>
+    <p className="docs-runtime-intro"><strong>小朋友版解释：</strong>它像仪表盘，告诉你哪些功能开着并正常。</p>
+    <div className="docs-runtime-chunk">
+      <Command title="运行这条命令" code={`agentra status --session`} />
+      <CliOutput title="预期输出（示例）" output={`Agentra: active\nSisters: codebase=on memory=on vision=on\nFull Control: yes`} />
+      <img className="docs-runtime-shot" src="/images/docs/sisters/agentra-status.png" alt="Chunk 4: Agentra status runtime output" />
+      <a className="docs-runtime-shot-link" href="/images/docs/sisters/agentra-status.png" target="_blank" rel="noreferrer">查看大图</a>
+      <p className="docs-runtime-shot-caption">状态页正确显示已安装的姐妹能力，就表示第 4 块完成。</p>
+    </div>
   </Step>
 
   <Step number={5} title="Chunk 5：安装进度从 0% 到 100%">
-    <p><strong>正在发生什么：</strong> 安装器显示清晰进度条，实时看到安装走到哪一步。</p>
-    <p><strong>小朋友版解释：</strong>它就是“加载条”，会慢慢走到 100%。</p>
-    <img className="docs-runtime-shot" src="/images/docs/sisters/install-progress.png" alt="Chunk 5: Install progress runtime output" />
+    <p className="docs-runtime-intro"><strong>正在发生什么：</strong> 安装器显示从 0% 到 100% 的进度条。</p>
+    <p className="docs-runtime-intro"><strong>小朋友版解释：</strong>它就是“加载条”，会慢慢走到 100%。</p>
+    <div className="docs-runtime-chunk">
+      <Command title="运行这条命令" code={`curl -fsSL https://agentralabs.tech/install/memory | bash`} />
+      <CliOutput title="预期输出（示例）" output={`[##########----------------------] 30%\n[##########################------] 80%\n[################################] 100%\nInstall complete: AgenticMemory`} />
+      <img className="docs-runtime-shot" src="/images/docs/sisters/install-progress.png" alt="Chunk 5: Install progress runtime output" />
+      <a className="docs-runtime-shot-link" href="/images/docs/sisters/install-progress.png" target="_blank" rel="noreferrer">查看大图</a>
+      <p className="docs-runtime-shot-caption">看到 100% 和 Install complete，就表示第 5 块完成。</p>
+    </div>
   </Step>
 
   <Step number={6} title="Chunk 6：三姐妹一起工作">
-    <p><strong>正在发生什么：</strong> Codebase + Memory + Vision 在一个流程里协作，输出完整结果。</p>
-    <p><strong>小朋友版解释：</strong>大脑 + 眼睛 + 代码地图，一起帮你完成任务。</p>
-    <img className="docs-runtime-shot" src="/images/docs/sisters/integrated-workflow.png" alt="Chunk 6: Integrated workflow runtime output" />
+    <p className="docs-runtime-intro"><strong>正在发生什么：</strong> Codebase + Memory + Vision 在同一流程中协作输出。</p>
+    <p className="docs-runtime-intro"><strong>小朋友版解释：</strong>大脑 + 眼睛 + 代码地图，一起帮你完成任务。</p>
+    <div className="docs-runtime-chunk">
+      <Command title="运行这条命令" code={`agentra status --session\nagentra doctor\n# 然后运行你的组合工作流命令（使用 memory + vision + codebase）`} />
+      <CliOutput title="预期输出（示例）" output={`[ok] doctor pass: all sisters detected\n[ok] session: full control active\n[ok] workflow result returned`} />
+      <img className="docs-runtime-shot" src="/images/docs/sisters/integrated-workflow.png" alt="Chunk 6: Integrated workflow runtime output" />
+      <a className="docs-runtime-shot-link" href="/images/docs/sisters/integrated-workflow.png" target="_blank" rel="noreferrer">查看大图</a>
+      <p className="docs-runtime-shot-caption">doctor 通过且工作流有结果返回，就表示第 6 块完成。</p>
+    </div>
   </Step>
 </Steps>

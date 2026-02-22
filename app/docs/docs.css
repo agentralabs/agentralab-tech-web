@@ -384,7 +384,7 @@
 
 .docs-article-wrap {
   display: grid;
-  grid-template-columns: minmax(0, 860px) 220px;
+  grid-template-columns: minmax(0, 980px) 240px;
   justify-content: space-between;
   gap: 28px;
 }
@@ -619,7 +619,7 @@
 }
 
 .docs-code-shell pre {
-  padding-right: 88px;
+  padding-right: 100px;
 }
 
 .docs-copy-button {
@@ -627,22 +627,23 @@
   top: 10px;
   right: 10px;
   z-index: 3;
-  border: 1px solid #cbd5e1;
+  border: 1px solid #94a3b8;
   background: #ffffff;
-  color: #334155;
+  color: #0f172a;
   border-radius: 8px;
-  font-size: 11px;
-  font-weight: 700;
+  font-size: 12px;
+  font-weight: 800;
   letter-spacing: 0.01em;
   line-height: 1;
-  padding: 7px 10px;
+  padding: 8px 11px;
   cursor: pointer;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.12);
   transition: all 120ms ease;
 }
 
 .docs-copy-button:hover {
   color: #0f172a;
-  border-color: #94a3b8;
+  border-color: #64748b;
   background: #f8fafc;
 }
 
@@ -742,17 +743,49 @@
 
 .docs-step-content > div {
   color: #374151;
+  display: grid;
+  gap: 8px;
+}
+
+.docs-runtime-intro {
+  margin: 0;
+  font-size: 16px;
+  color: #475569;
+}
+
+.docs-runtime-chunk {
+  margin-top: 8px;
+  border: 1px solid #dbe0e8;
+  border-radius: 14px;
+  background: #fcfdff;
+  padding: 12px;
 }
 
 .docs-runtime-shot {
   display: block;
-  width: min(100%, 1100px);
+  width: 100%;
   height: auto;
-  margin-top: 12px;
+  margin-top: 8px;
   border: 1px solid #dbe3ef;
   border-radius: 12px;
   background: #ffffff;
-  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.1);
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.14);
+}
+
+.docs-runtime-shot-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.docs-runtime-shot-caption {
+  margin: 0;
+  font-size: 13px;
+  color: #64748b;
 }
 
 .docs-cli {
@@ -890,6 +923,10 @@ body:has(.docs-shell) {
     padding: 28px 24px 54px;
   }
 
+  .docs-article-wrap {
+    grid-template-columns: minmax(0, 1fr) 220px;
+  }
+
   .docs-content h2 {
     font-size: 30px;
   }
@@ -910,6 +947,10 @@ body:has(.docs-shell) {
 
   .docs-feature-grid {
     grid-template-columns: 1fr;
+  }
+
+  .docs-runtime-chunk {
+    padding: 10px;
   }
 
   .docs-toc {
