@@ -744,6 +744,17 @@
   color: #374151;
 }
 
+.docs-runtime-shot {
+  display: block;
+  width: min(100%, 1100px);
+  height: auto;
+  margin-top: 12px;
+  border: 1px solid #dbe3ef;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.1);
+}
+
 .docs-cli {
   margin: 14px 0 18px;
   border: 1px solid #cbd5e1;
