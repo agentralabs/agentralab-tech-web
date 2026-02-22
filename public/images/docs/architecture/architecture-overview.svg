@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="760" viewBox="0 0 1400 760" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1400" y2="760" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f8fafc"/>
+      <stop offset="1" stop-color="#eef2ff"/>
+    </linearGradient>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10V0Z" fill="#334155"/>
+    </marker>
+    <style>
+      .title{font:700 36px 'Manrope',Arial,sans-serif;fill:#0f172a}
+      .label{font:600 22px 'Manrope',Arial,sans-serif;fill:#0f172a}
+      .meta{font:500 16px 'Manrope',Arial,sans-serif;fill:#334155}
+      .box{fill:#ffffff;stroke:#cbd5e1;stroke-width:2}
+      .lane{fill:#f1f5f9;stroke:#e2e8f0;stroke-width:2}
+      .line{stroke:#334155;stroke-width:3;marker-end:url(#arrow)}
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="1400" height="760" fill="url(#bg)"/>
+  <text x="60" y="70" class="title">Agentra Ecosystem Architecture Overview</text>
+
+  <rect x="60" y="110" width="1280" height="600" rx="20" class="lane"/>
+
+  <rect x="110" y="170" width="240" height="110" rx="14" class="box"/>
+  <text x="130" y="214" class="label">MCP Client</text>
+  <text x="130" y="242" class="meta">Codex / Cursor / VS Code</text>
+
+  <rect x="420" y="170" width="280" height="110" rx="14" class="box"/>
+  <text x="440" y="214" class="label">Agentra Orchestrator</text>
+  <text x="440" y="242" class="meta">status, doctor, takeover policy</text>
+
+  <rect x="780" y="140" width="230" height="90" rx="14" class="box"/>
+  <text x="805" y="180" class="label">Codebase</text>
+  <text x="805" y="205" class="meta">acb / acb-mcp</text>
+
+  <rect x="780" y="255" width="230" height="90" rx="14" class="box"/>
+  <text x="805" y="295" class="label">Memory</text>
+  <text x="805" y="320" class="meta">amem / memory-mcp</text>
+
+  <rect x="780" y="370" width="230" height="90" rx="14" class="box"/>
+  <text x="805" y="410" class="label">Vision</text>
+  <text x="805" y="435" class="meta">vision-mcp</text>
+
+  <rect x="1080" y="170" width="210" height="110" rx="14" class="box"/>
+  <text x="1100" y="214" class="label">Artifacts</text>
+  <text x="1100" y="242" class="meta">.acb / .amem / .avis</text>
+
+  <rect x="1080" y="330" width="210" height="110" rx="14" class="box"/>
+  <text x="1100" y="374" class="label">Runtime Targets</text>
+  <text x="1100" y="402" class="meta">Desktop / Terminal / Server</text>
+
+  <line x1="350" y1="225" x2="420" y2="225" class="line"/>
+  <line x1="700" y1="225" x2="780" y2="185" class="line"/>
+  <line x1="700" y1="225" x2="780" y2="300" class="line"/>
+  <line x1="700" y1="225" x2="780" y2="415" class="line"/>
+
+  <line x1="1010" y1="185" x2="1080" y2="225" class="line"/>
+  <line x1="1010" y1="300" x2="1080" y2="225" class="line"/>
+  <line x1="1010" y1="415" x2="1080" y2="225" class="line"/>
+  <line x1="1185" y1="280" x2="1185" y2="330" class="line"/>
+
+  <rect x="110" y="500" width="1180" height="150" rx="14" class="box"/>
+  <text x="140" y="548" class="label">Contract Rules</text>
+  <text x="140" y="580" class="meta">1) Sisters remain standalone-first</text>
+  <text x="140" y="608" class="meta">2) Agentra orchestrates detection/takeover and can be released by user</text>
+  <text x="700" y="580" class="meta">3) Server mode requires AGENTIC_TOKEN and synced artifacts</text>
+  <text x="700" y="608" class="meta">4) Any MCP client can connect when binaries + config are valid</text>
+</svg>

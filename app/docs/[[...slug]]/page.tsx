@@ -68,6 +68,24 @@ function tocHrefToText(value: unknown): string {
   return value.startsWith("#") ? value : `#${value.replace(/^#*/, "")}`
 }
 
+function fallbackLabelFromHref(href: string, language: "en" | "zh"): string {
+  const normalized = href.replace(/^#/, "").trim()
+  if (!normalized) return ""
+  const label = normalized
+    .split("-")
+    .map((part) => part.trim())
+    .filter(Boolean)
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(" ")
+  return localizeDocsLabel(label, language)
+}
+
+function isInvalidTocLabel(label: string): boolean {
+  if (!label.trim()) return true
+  if (label.trim().toLowerCase() === "[object object]") return true
+  return false
+}
+
 export default async function Page({ params }: DocsPageProps) {
   const { slug } = await params
   const cookieStore = await cookies()
@@ -81,10 +99,17 @@ export default async function Page({ params }: DocsPageProps) {
   const MDX = data.body
   const sectionLabel =
     page.url === "/docs/ecosystem-feature-reference" ? "Reference" :
-    page.url === "/docs/operations-autonomic-and-backup" || page.url === "/docs/troubleshooting-matrix" ? "Operations" :
+    page.url === "/docs/operations-autonomic-and-backup" ||
+    page.url === "/docs/troubleshooting-matrix" ||
+    page.url === "/docs/server-runtime-auth-and-artifact-sync" ? "Operations" :
     page.url === "/docs/security-and-data-boundaries" ? "Security" :
     page.url === "/docs/benchmarks-and-methodology" ? "Performance" :
-    page.url === "/docs/system-architecture" ? "Deep Dive" :
+    page.url === "/docs/system-architecture" ||
+    page.url === "/docs/ecosystem-canonical-contract" ? "Deep Dive" :
+    page.url === "/docs/sister-docs-catalog" ||
+    page.url.startsWith("/docs/memory-") ||
+    page.url.startsWith("/docs/codebase-") ||
+    page.url.startsWith("/docs/vision-") ? "Reference" :
     page.url === "/docs/use-case-playbooks" ? "Playbooks" :
     "Get Started"
 
@@ -107,10 +132,12 @@ export default async function Page({ params }: DocsPageProps) {
         <p className="docs-toc-label">{ui.onThisPage}</p>
         <nav>
           {(data.toc ?? [])
-            .map((item) => ({
-              href: tocHrefToText(item.url),
-              label: tocTitleToText(item.title, language),
-            }))
+            .map((item) => {
+              const href = tocHrefToText(item.url)
+              const rawLabel = tocTitleToText(item.title, language)
+              const label = isInvalidTocLabel(rawLabel) ? fallbackLabelFromHref(href, language) : rawLabel
+              return { href, label }
+            })
             .filter((item) => item.href && item.label)
             .map((item) => (
               <a key={`${item.href}-${item.label}`} href={item.href}>

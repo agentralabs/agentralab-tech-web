@@ -1,0 +1,45 @@
+name: Docs Sync Guardrails
+
+on:
+  push:
+    paths:
+      - "docs/**"
+      - "scripts/sync-ecosystem-docs.mjs"
+      - "scripts/check-docs-sync.sh"
+      - "package.json"
+      - ".github/workflows/docs-sync-guardrails.yml"
+  pull_request:
+    paths:
+      - "docs/**"
+      - "scripts/sync-ecosystem-docs.mjs"
+      - "scripts/check-docs-sync.sh"
+      - "package.json"
+      - ".github/workflows/docs-sync-guardrails.yml"
+
+jobs:
+  validate-docs-sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout web repo
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: "pnpm"
+
+      - name: Clone canonical ecosystem workspace
+        run: |
+          git clone --depth 1 https://github.com/agentralabs/agentralabs-tech.git "$RUNNER_TEMP/agentra-workspace"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Validate docs sync contract
+        run: AGENTRA_WORKSPACE_ROOT="$RUNNER_TEMP/agentra-workspace" pnpm docs:sync:check

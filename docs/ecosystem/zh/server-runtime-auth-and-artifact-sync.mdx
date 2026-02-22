@@ -1,0 +1,58 @@
+---
+title: 服务端鉴权与工件同步
+description: 托管 Agent 如何在服务端完成鉴权并使用本地姐妹工件。
+---
+
+<Callout type="warning" title="云端边界">
+托管运行时无法直接读取你电脑中的文件。必须先同步工件到服务端可访问目录，并为服务端 MCP 启用鉴权。
+</Callout>
+
+## 1）启用服务端模式
+
+<Command
+  title="必填环境变量"
+  code={`export AGENTRA_RUNTIME_MODE=server
+export AGENTIC_TOKEN="$(openssl rand -hex 32)"
+export AGENTRA_ARTIFACT_DIRS="/srv/agentra:/data/brains"
+# 可选：token 文件方式
+# export AGENTIC_TOKEN_FILE="/etc/agentra/token"`}
+/>
+
+## 2）同步本地工件到服务端
+
+<Command
+  title="推送运行时工件"
+  description="未同步 .amem/.avis/.acb 前，不应预期服务端接管成功。"
+  code={`./sync_artifacts.sh --target=<server-path-or-rsync-target>`}
+/>
+
+## 3）在服务端主机启动 MCP 运行时
+
+<Command
+  title="启动 MCP 服务"
+  code={`agentic-memory-mcp serve
+agentic-vision-mcp serve
+acb-mcp serve`}
+/>
+
+<CliOutput
+  title="预期安装与重启提示"
+  output={`[####################################] 100% Install complete
+Install complete: <runtime>
+[next] 请重启 MCP 主机/客户端
+[tip] 可选反馈：https://agentralabs.tech/docs/feedback`}
+/>
+
+## 4）从任意 MCP 客户端验证
+
+<Command
+  title="客户端检查清单"
+  code={`which agentic-memory-mcp
+which agentic-vision-mcp
+which acb-mcp
+# 然后在你的 MCP 客户端触发首次工具调用`}
+/>
+
+<Callout type="success" title="协议一致性">
+桌面与服务端都遵循同一 MCP 契约。服务端仅额外要求显式鉴权与工件同步。
+</Callout>

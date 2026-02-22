@@ -1,0 +1,73 @@
+---
+title: Use-Case Playbooks
+description: Practical implementation patterns teams can copy directly.
+---
+
+## 1) Memory-first coding assistant
+
+<Steps>
+  <Step number={1} title="Install memory runtime">
+    <Command
+      title="Install"
+      description="Sets up amem + memory MCP surfaces."
+      code={`curl -fsSL https://agentralabs.tech/install/memory | bash`}
+    />
+  </Step>
+  <Step number={2} title="Run session continuity checks">
+    <Command
+      title="Continuity validation"
+      description="Confirm saved context is available across sessions."
+      code={`amem --help
+agentic-memory-mcp --help`}
+    />
+  </Step>
+</Steps>
+
+## 2) Web perception + task execution
+
+<Steps>
+  <Step number={1} title="Install vision runtime">
+    <Command
+      title="Install"
+      description="Installs browserless perception MCP runtime."
+      code={`curl -fsSL https://agentralabs.tech/install/vision | bash`}
+    />
+  </Step>
+  <Step number={2} title="Validate runtime">
+    <Command
+      title="Vision checks"
+      description="Confirm entrypoint behavior before client integration."
+      code={`agentic-vision-mcp --version
+agentic-vision-mcp serve --help`}
+    />
+  </Step>
+</Steps>
+
+## 3) Semantic code impact workflow
+
+<Steps>
+  <Step number={1} title="Install codebase runtime">
+    <Command
+      title="Install"
+      description="Installs semantic compiler + MCP runtime."
+      code={`curl -fsSL https://agentralabs.tech/install/codebase | bash`}
+    />
+  </Step>
+  <Step number={2} title="Compile and inspect">
+    <Command
+      title="Code intelligence flow"
+      description="Compile repo and query impact paths before edits."
+      code={`acb compile ./repo
+acb query impact --symbol User.email
+acb-mcp serve`}
+    />
+  </Step>
+</Steps>
+
+## 4) Combined runtime stack
+
+Use all three runtimes together when you need continuity + perception + code intelligence in one workflow. Keep each runtime independently installable so failures are isolated and debuggable.
+
+<Callout type="tip" title="Rollout strategy">
+Start single-runtime in production, validate stability, then layer additional runtimes one at a time.
+</Callout>

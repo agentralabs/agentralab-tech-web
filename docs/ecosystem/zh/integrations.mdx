@@ -1,0 +1,122 @@
+---
+title: 集成
+description: 将 MCP 服务连接到桌面客户端与本地代理运行时。
+---
+
+<Callout type="info" title="集成模型">
+每个项目都可独立运行。你可以只用 Memory、只用 Vision，或只用 Codebase；通过 MCP 组合是可选能力。
+</Callout>
+
+## 自动合并客户端
+
+安装脚本可自动合并以下本地配置：
+
+- Claude Desktop
+- Claude Code
+
+## 通用 MCP 行为（适用于所有客户端）
+
+协议本身不绑定某个 LLM：只要二进制安装完成、MCP 配置指向正确命令，任何 MCP 客户端都应能发现并调用三姐妹（`Codex Desktop`、`Cursor`、`VS Code`、`Windsurf`、终端 MCP 运行器、自定义 MCP 主机）。
+
+<Callout type="tip" title="每次安装完成后">
+进度条到 100% 后，请重启 MCP 客户端/运行时以重新加载注册表。若检测失败，欢迎提交可选反馈。
+</Callout>
+
+## 安装后如何找到桌面 MCP 配置
+
+若安装成功但找不到 MCP 写入位置，可执行以下检查：
+
+<CommandTabs
+  title="定位 MCP 配置文件"
+  description="根据你的平台选择对应命令。"
+  items={[
+    {
+      label: "macOS/Linux",
+      code: "find \"$HOME\" -maxdepth 5 \\(-name \"*mcp*.json\" -o -name \"claude_desktop_config.json\" \\) 2>/dev/null | head -n 60",
+      description: "列出 Home 目录下常见 MCP/桌面配置文件。",
+    },
+    {
+      label: "搜索条目",
+      code: "rg -n \"agentic-memory|agentic-vision|acb-mcp|agentra\" \"$HOME/.claude\" \"$HOME/.config\" \"$HOME/Library/Application Support\" 2>/dev/null",
+      description: "定位包含 Agentra MCP 条目的配置文件。",
+    },
+  ]}
+/>
+
+<Callout type="tip" title="安装后行为">
+若安装器报告合并成功，请完全重启桌面客户端，再发起一次 MCP 工具调用进行确认。
+</Callout>
+
+## 手动配置 MCP（其他客户端）
+
+适用于 Cursor、VS Code、Windsurf、Cline、Codex Desktop 及其他通用 MCP 客户端：
+
+<Command
+  title="MCP 服务条目"
+  description="在客户端配置文件中为每个运行时添加一个服务项。"
+  code={`{
+  "command": "/Users/<you>/.local/bin/agentic-vision-mcp",
+  "args": ["serve"]
+}`}
+/>
+
+等价二进制：
+
+- `agentic-memory-mcp`
+- `agentic-vision-mcp`
+- `acb-mcp`
+
+<Command
+  title="通用 MCP JSON 示例"
+  description="在 MCP 兼容客户端中都可使用同一结构。"
+  code={`{
+  "command": "/Users/<you>/.local/bin/agentic-memory-mcp",
+  "args": ["serve"],
+  "env": {
+    "AGENTRA_RUNTIME_MODE": "desktop"
+  }
+}`}
+/>
+
+## 验证清单
+
+<Command
+  title="二进制路径验证"
+  description="排查客户端连接问题前先执行。"
+  code={`which amem
+which agentic-vision-mcp
+which acb
+which acb-mcp`}
+/>
+
+<CliOutput
+  title="期望信号"
+  output={`[ok] /Users/<you>/.local/bin/amem
+[ok] /Users/<you>/.local/bin/agentic-vision-mcp
+[ok] /Users/<you>/.local/bin/acb
+[ok] /Users/<you>/.local/bin/acb-mcp`}
+/>
+
+<Callout type="tip" title="验证后">
+重启目标桌面客户端并发起首次工具调用，确认 MCP 已正确接线。
+</Callout>
+
+## 服务端托管 Agent（必须鉴权）
+
+远程/服务端 MCP 运行时需显式 token：
+
+<Command
+  title="服务端 MCP 鉴权契约"
+  code={`export AGENTRA_RUNTIME_MODE=server
+export AGENTIC_TOKEN="<token>"
+# 或
+export AGENTIC_TOKEN_FILE="/etc/agentra/token"`}
+/>
+
+## 保护 MCP 配置
+
+<Command
+  title="手动修改前备份 MCP 配置"
+  description="创建带时间戳备份，便于快速回滚。"
+  code={`mkdir -p "$HOME/.agentra-backups/mcp"\nif [ -f "$HOME/.claude/mcp.json" ]; then\n  cp "$HOME/.claude/mcp.json" "$HOME/.agentra-backups/mcp/claude-mcp-$(date +%F-%H%M%S).json"\nfi`}
+/>

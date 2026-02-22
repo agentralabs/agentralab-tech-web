@@ -1,7 +1,7 @@
 import fs from "node:fs/promises"
 import path from "node:path"
 
-const DOCS_DIR = path.join(process.cwd(), "docs", "public")
+const DOCS_DIR = path.join(process.cwd(), "docs", "ecosystem", "en")
 
 export interface DocRecord {
   slug: string

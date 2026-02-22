@@ -1,0 +1,70 @@
+---
+title: Troubleshooting Matrix
+description: Diagnose installation, MCP connection, and runtime startup issues quickly.
+---
+
+## Quick diagnostic pass
+
+<Steps>
+  <Step number={1} title="Verify binaries are installed">
+    <Command
+      title="Binary checks"
+      description="Confirms your shell can resolve all expected binaries."
+      code={`which amem
+which agentic-memory-mcp
+which agentic-vision-mcp
+which acb
+which acb-mcp`}
+    />
+  </Step>
+
+  <Step number={2} title="Check runtime command responses">
+    <Command
+      title="Entry-point checks"
+      description="Each command should return usage/help without crashing."
+      code={`amem --help
+agentic-memory-mcp --help
+agentic-vision-mcp serve --help
+acb-mcp serve --help`}
+    />
+  </Step>
+
+  <Step number={3} title="Inspect MCP config references">
+    <Command
+      title="Config inspection"
+      description="Look for command paths and stale binary references."
+      code={`rg -n "agentic-memory|agentic-vision|acb-mcp|command" "$HOME/.claude" "$HOME/.config" "$HOME/Library/Application Support" 2>/dev/null`}
+    />
+  </Step>
+</Steps>
+
+## Symptom matrix
+
+| Symptom | Likely cause | Fix |
+|---|---|---|
+| `curl .../install/&lt;target&gt; \| bash` returns 404 | install route not deployed or wrong domain | verify `https://agentralabs.tech/install/&lt;target&gt;` in browser and redeploy web if needed |
+| installer falls back to source unexpectedly | release artifact unavailable for platform | continue fallback build, then validate binary path |
+| `command not found` after successful install | binary dir not in PATH | add runtime bin dir to shell profile and restart terminal |
+| MCP client cannot start server | config points to old path | update config to actual path from `which <binary>` |
+| tools not visible in desktop client | client not restarted after merge | restart the desktop client completely |
+| server agent cannot use local `.amem/.avis/.acb` files | cloud runtime cannot access laptop filesystem | run `./sync_artifacts.sh` and set `AGENTRA_ARTIFACT_DIRS` on server |
+| server MCP startup denied | token missing in server mode | set `AGENTIC_TOKEN` or `AGENTIC_TOKEN_FILE` before starting MCP runtime |
+| MCP works in one client but not another | stale client-side MCP registry cache | restart target MCP client and re-run one tool call |
+
+## Escalation bundle
+
+When reporting issues, include:
+
+- OS + architecture
+- exact install command used
+- full terminal output
+- client name (Claude Desktop, Codex Desktop, Cursor, etc.)
+- output of `which` and `--version` commands
+
+<Callout type="tip" title="Fastest recovery pattern">
+If behavior is inconsistent, back up config, reinstall using hosted installer, re-run path checks, then restart client.
+</Callout>
+
+<Callout type="info" title="Install completed but tools still missing">
+After `[####################################] 100% Install complete`, always restart the MCP host/client and run a first call. Feedback is optional via <a href="/docs/feedback">Feedback and Community</a>.
+</Callout>

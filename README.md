@@ -21,6 +21,7 @@ Open `http://localhost:3000`.
 ## Build and Verify
 
 ```bash
+pnpm docs:sync
 pnpm lint
 pnpm build
 ```
@@ -34,8 +35,15 @@ This repo is prepared for Vercel deployment.
 
 See:
 
-- `docs/public/vercel-deployment.mdx`
-- `docs/public/seo-checklist.mdx`
+- `docs/ecosystem/en/installation.mdx`
+- `docs/ecosystem/en/integrations.mdx`
+- `docs/ecosystem/en/server-runtime-auth-and-artifact-sync.mdx`
+
+## Docs Sync Model
+
+- Single source for web docs: `docs/ecosystem/*`
+- Canonical ecosystem docs are synced in via `pnpm docs:sync`
+- Drift check: `pnpm docs:sync:check`
 
 ## Pages
 

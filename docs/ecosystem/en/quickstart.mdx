@@ -1,0 +1,114 @@
+---
+title: Quickstart
+description: Fastest path to install and verify each Agentra Labs project.
+---
+
+<Callout type="tip" title="Zero-friction setup">
+Use one installer command per runtime. Select the profile that matches your environment:
+- `desktop` for Claude Desktop/Claude Code auto-merge
+- `terminal` for binary-only local CLI installs
+- `server` for remote hosts and service environments
+</Callout>
+
+## Prereqs
+
+- macOS, Linux, or Windows with WSL
+- `curl` available
+- Rust toolchain installed (fallback source build path)
+
+<Steps>
+  <Step number={1} title="Install one runtime (or all three)">
+    <CommandTabs
+      title="Desktop profile (default/backward-compatible)"
+      description="Desktop profile auto-merges supported local MCP desktop configs."
+      items={[
+        {
+          label: "AgenticMemory",
+          code: "curl -fsSL https://agentralabs.tech/install/memory/desktop | bash",
+          description: "Installs amem + agentic-memory-mcp and applies desktop MCP merge behavior.",
+        },
+        {
+          label: "AgenticVision",
+          code: "curl -fsSL https://agentralabs.tech/install/vision/desktop | bash",
+          description: "Installs agentic-vision-mcp for browserless perception and visual continuity workflows.",
+        },
+        {
+          label: "AgenticCodebase",
+          code: "curl -fsSL https://agentralabs.tech/install/codebase/desktop | bash",
+          description: "Installs acb + acb-mcp for semantic code intelligence and MCP operations.",
+        },
+      ]}
+    />
+
+    <CommandTabs
+      title="Terminal profile (binary-only)"
+      description="No desktop config files are modified."
+      items={[
+        {
+          label: "AgenticMemory",
+          code: "curl -fsSL https://agentralabs.tech/install/memory/terminal | bash",
+        },
+        {
+          label: "AgenticVision",
+          code: "curl -fsSL https://agentralabs.tech/install/vision/terminal | bash",
+        },
+        {
+          label: "AgenticCodebase",
+          code: "curl -fsSL https://agentralabs.tech/install/codebase/terminal | bash",
+        },
+      ]}
+    />
+
+    <CommandTabs
+      title="Server profile (remote hosts)"
+      description="Server-safe install behavior without desktop config writes."
+      items={[
+        {
+          label: "AgenticMemory",
+          code: "curl -fsSL https://agentralabs.tech/install/memory/server | bash",
+        },
+        {
+          label: "AgenticVision",
+          code: "curl -fsSL https://agentralabs.tech/install/vision/server | bash",
+        },
+        {
+          label: "AgenticCodebase",
+          code: "curl -fsSL https://agentralabs.tech/install/codebase/server | bash",
+        },
+      ]}
+    />
+  </Step>
+
+  <Step number={2} title="Run binary checks">
+    <Command
+      title="Binary checks"
+      description="Confirm installed binaries respond from your current PATH."
+      code={`amem --help
+agentic-memory-mcp --version
+agentic-vision-mcp --version
+acb --version
+acb-mcp --version`}
+    />
+  </Step>
+
+  <Step number={3} title="Validate MCP entrypoints">
+    <Command
+      title="Runtime sanity"
+      description="Use this output pattern to verify MCP entrypoints before connecting desktop clients."
+      code={`agentic-memory-mcp --help
+agentic-vision-mcp serve --help
+acb-mcp serve --help`}
+    />
+    <CliOutput
+      title="Expected signal"
+      output={`[ok] Platform detected
+[ok] Runtime installed
+[info] MCP client merge completed (where supported)
+[ok] Entry-point command responds without error`}
+    />
+  </Step>
+</Steps>
+
+<Callout type="success" title="Next">
+Continue with <a href="/docs/integrations">Integrations</a> to wire desktop clients and runtime profiles.
+</Callout>

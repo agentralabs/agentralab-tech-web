@@ -1,11 +1,11 @@
 import { defineConfig, defineDocs } from "fumadocs-mdx/config"
 
 export const docs = defineDocs({
-  dir: "docs/public",
+  dir: "docs/ecosystem/en",
 })
 
 export const docsZh = defineDocs({
-  dir: "docs/public-zh",
+  dir: "docs/ecosystem/zh",
 })
 
 export default defineConfig({

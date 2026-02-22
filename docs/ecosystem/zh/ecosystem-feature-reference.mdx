@@ -1,0 +1,108 @@
+---
+title: 生态功能参考
+description: AgenticMemory、AgenticVision 与 AgenticCodebase 的能力地图。
+---
+
+<Callout type="info" title="参考范围">
+本页是网站、文档与仓库文案共享的能力契约，聚焦已发布能力与可集成行为。
+</Callout>
+
+## 核心能力
+
+<FeatureGrid>
+  <FeatureCard icon="brain" title="AgenticMemory" description="持久化认知图记忆，支持可移植 .amem 工件、因果边与跨会话连续性。" />
+  <FeatureCard icon="eye" title="AgenticVision" description="无浏览器网页感知与视觉连续性，支持 .avis 工件、映射、对比与动作能力。" />
+  <FeatureCard icon="code" title="AgenticCodebase" description="语义代码智能，支持影响遍历、耦合信号与可移植 .acb 表示。" />
+  <FeatureCard icon="network" title="MCP 原生集成" description="独立优先运行时可通过 MCP 在桌面、终端与服务运行时组合。" />
+</FeatureGrid>
+
+## AgenticMemory
+
+<FeatureGrid>
+  <FeatureCard icon="search" title="图导航检索" description="基于图遍历检索，而不是扁平相似度分块。" />
+  <FeatureCard icon="git" title="真值修订" description="修正与替代边保留推理历史，显式呈现状态演化。" />
+  <FeatureCard icon="gauge" title="运行速度" description="内存映射友好的二进制格式，优化低延迟访问。" />
+  <FeatureCard icon="book" title="可移植工件" description="单文件 .amem 可在不同提供方与会话间迁移。" />
+</FeatureGrid>
+
+## AgenticVision
+
+<FeatureGrid>
+  <FeatureCard icon="globe" title="网页制图" description="优先通过已发布数据通道构建站点结构，再降级到浏览器路径。" />
+  <FeatureCard icon="search" title="视觉查询与对比" description="支持文件、截图与时间线场景的相似度与差异分析。" />
+  <FeatureCard icon="network" title="动作面" description="基于发现到的站点操作模式执行 HTTP 级动作。" />
+  <FeatureCard icon="gauge" title="运行时可观测" description="提供活动会话的遥测与状态可见性。" />
+</FeatureGrid>
+
+## AgenticCodebase
+
+<FeatureGrid>
+  <FeatureCard icon="code" title="语义编译器" description="把仓库编译为概念图，而非仅语法表示。" />
+  <FeatureCard icon="git" title="影响路径" description="在修改前显示下游潜在破坏路径。" />
+  <FeatureCard icon="network" title="集体模式" description="从生态使用信号提取依赖行为知识。" />
+  <FeatureCard icon="shield" title="稳定性智能" description="通过时序变化分析支持耦合、漂移与风险感知操作。" />
+</FeatureGrid>
+
+## 集成契约
+
+<Steps>
+  <Step number={1} title="安装运行时">
+    <Command
+      title="托管安装器"
+      description="按需安装；每个姐妹项目都可独立运行。"
+      code={`curl -fsSL https://agentralabs.tech/install/memory | bash\ncurl -fsSL https://agentralabs.tech/install/vision | bash\ncurl -fsSL https://agentralabs.tech/install/codebase | bash`}
+    />
+  </Step>
+  <Step number={2} title="验证二进制与 MCP 入口">
+    <Command
+      title="本地检查"
+      description="排查客户端接入前先执行。"
+      code={`amem --help\nagentic-vision-mcp --version\nacb --version\nacb-mcp --version`}
+    />
+  </Step>
+  <Step number={3} title="连接客户端并执行首次调用">
+    <CliOutput
+      title="期望运行信号"
+      output={`[ok] Runtime installed\n[ok] MCP config merged\n[info] Restart desktop client\n[ok] First tool call succeeded`}
+    />
+  </Step>
+</Steps>
+
+## 新姐妹 README 基线
+
+将以下内容作为新姐妹项目 README 的标准基线。
+
+<Callout type="tip" title="基线策略">
+每个姐妹默认必须可独立运行；工作区 UX 仅为可选增强。
+</Callout>
+
+<Command
+  title="必需安装命令集"
+  description="每个姐妹 README 都应包含完整 profile 安装矩阵。"
+  code={`curl -fsSL https://agentralabs.tech/install/<target> | bash\ncurl -fsSL https://agentralabs.tech/install/<target>/desktop | bash\ncurl -fsSL https://agentralabs.tech/install/<target>/terminal | bash\ncurl -fsSL https://agentralabs.tech/install/<target>/server | bash`}
+/>
+
+<Command
+  title="可选工作区 UX 区块"
+  description="该区块必须标注为可选，不能被描述成运行时硬依赖。"
+  code={`cargo run --bin agentra status\ncargo run --bin agentra ui`}
+/>
+
+## 工作区编排器契约
+
+- 姐妹项目必须保持独立可安装、可运行。
+- `agentra`（或未来编排器）仅是可选 UX，不得成为硬依赖。
+- 编排器 UX 必须探测已安装工具，并给出可执行的缺失状态提示。
+- 编排器 UX 可以提供状态与提示，但不得静默强制捆绑安装。
+- 若存在共享 workspace，相关命令必须保持可用。
+
+## 编辑守则
+
+- 保持官方命名：`AgenticMemory`、`AgenticVision`、`AgenticCodebase`
+- 声明必须与已发布能力一致
+- 基准表述必须对应可复现来源
+- 路线图敏感内容不放公开文档
+
+<Callout type="success" title="相关页面">
+继续阅读 <a href="/docs/quickstart">快速开始</a>、<a href="/docs/installation">安装</a> 和 <a href="/docs/integrations">集成</a>。
+</Callout>

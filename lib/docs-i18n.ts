@@ -22,6 +22,7 @@ const LABEL_ZH: Record<string, string> = {
   "Get started": "入门",
   "Get Started": "入门",
   "Deep Dive": "深度解析",
+  Playbooks: "用例",
   Security: "安全",
   Performance: "性能",
   Reference: "参考",
@@ -43,6 +44,15 @@ const LABEL_ZH: Record<string, string> = {
   "Security and Data Boundaries": "安全与数据边界",
   "Benchmarks and Methodology": "基准测试与方法",
   "Ecosystem Feature Reference": "生态功能参考",
+  "Server Runtime Auth and Artifact Sync": "服务端鉴权与工件同步",
+  "Workspace How-To (Synced)": "Workspace 操作手册（同步）",
+  "Sister Docs Catalog (Synced)": "姐妹文档目录（同步）",
+  "Ecosystem Canonical Contract (Synced)": "生态规范契约（同步）",
+  "AgenticMemory Manual (Synced)": "AgenticMemory 手册（同步）",
+  "AgenticVision Manual (Synced)": "AgenticVision 手册（同步）",
+  "AgenticCodebase Manual (Synced)": "AgenticCodebase 手册（同步）",
+  "AgenticVision Limitations (Synced)": "AgenticVision 限制说明（同步）",
+  "Server Runtime Auth And Artifact Sync": "服务端鉴权与工件同步",
 }
 
 export function localizeDocsLabel(label: string, lang: DocsLanguage): string {

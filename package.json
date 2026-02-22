@@ -5,13 +5,15 @@
   "scripts": {
     "dev": "next dev --turbo",
     "build": "next build",
-    "prebuild": "pnpm docs:gen",
+    "prebuild": "pnpm docs:sync && pnpm docs:gen",
+    "docs:sync": "node scripts/sync-ecosystem-docs.mjs",
+    "docs:sync:check": "node scripts/sync-ecosystem-docs.mjs --strict && ./scripts/check-docs-sync.sh",
     "docs:gen": "fumadocs-mdx",
     "start": "next start",
     "lint": "tsc --noEmit",
-    "pretypecheck": "pnpm docs:gen && next typegen",
+    "pretypecheck": "pnpm docs:sync && pnpm docs:gen && next typegen",
     "typecheck": "tsc --noEmit",
-    "postinstall": "fumadocs-mdx"
+    "postinstall": "pnpm docs:sync && fumadocs-mdx"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",

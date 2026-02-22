@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="700" viewBox="0 0 1400 700" fill="none">
+  <defs>
+    <linearGradient id="bg3" x1="0" y1="0" x2="1400" y2="700" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f8fafc"/>
+      <stop offset="1" stop-color="#ecfeff"/>
+    </linearGradient>
+    <marker id="arrow3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10V0Z" fill="#0f172a"/>
+    </marker>
+    <style>
+      .title{font:700 34px 'Manrope',Arial,sans-serif;fill:#0f172a}
+      .label{font:600 20px 'Manrope',Arial,sans-serif;fill:#0f172a}
+      .meta{font:500 15px 'Manrope',Arial,sans-serif;fill:#334155}
+      .box{fill:#ffffff;stroke:#cbd5e1;stroke-width:2}
+      .line{stroke:#0f172a;stroke-width:3;marker-end:url(#arrow3)}
+      .danger{fill:#fff1f2;stroke:#fda4af;stroke-width:2}
+      .ok{fill:#ecfdf5;stroke:#86efac;stroke-width:2}
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="1400" height="700" fill="url(#bg3)"/>
+  <text x="60" y="70" class="title">Server Handoff Flow (Auth + Artifact Sync)</text>
+
+  <rect x="90" y="130" width="360" height="150" rx="16" class="box"/>
+  <text x="120" y="174" class="label">Local Machine</text>
+  <text x="120" y="205" class="meta">Artifacts exist: .acb / .amem / .avis</text>
+  <text x="120" y="233" class="meta">Installers + local MCP clients</text>
+
+  <rect x="520" y="130" width="360" height="150" rx="16" class="danger"/>
+  <text x="550" y="174" class="label">Cloud Boundary</text>
+  <text x="550" y="205" class="meta">Server cannot directly read laptop files</text>
+  <text x="550" y="233" class="meta">Requires explicit sync + auth</text>
+
+  <rect x="950" y="130" width="360" height="150" rx="16" class="ok"/>
+  <text x="980" y="174" class="label">Server Runtime</text>
+  <text x="980" y="205" class="meta">AGENTRA_RUNTIME_MODE=server</text>
+  <text x="980" y="233" class="meta">AGENTIC_TOKEN / TOKEN_FILE</text>
+
+  <line x1="450" y1="205" x2="520" y2="205" class="line"/>
+  <line x1="880" y1="205" x2="950" y2="205" class="line"/>
+
+  <rect x="190" y="360" width="1020" height="260" rx="16" class="box"/>
+  <text x="230" y="402" class="label">Handoff Steps</text>
+  <text x="230" y="438" class="meta">1) Generate token: openssl rand -hex 32</text>
+  <text x="230" y="466" class="meta">2) Set server env: AGENTRA_RUNTIME_MODE + AGENTRA_ARTIFACT_DIRS + AGENTIC_TOKEN</text>
+  <text x="230" y="494" class="meta">3) Sync files: ./sync_artifacts.sh --target=...</text>
+  <text x="230" y="522" class="meta">4) Start MCP servers on host and restart MCP clients</text>
+  <text x="230" y="550" class="meta">5) Agentra status/doctor confirms takeover state and sister availability</text>
+
+  <line x1="700" y1="280" x2="700" y2="360" class="line"/>
+</svg>

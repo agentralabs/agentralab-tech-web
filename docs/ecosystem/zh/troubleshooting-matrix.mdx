@@ -1,0 +1,70 @@
+---
+title: 故障排查矩阵
+description: 快速定位安装、MCP 连接与运行时启动问题。
+---
+
+## 快速诊断流程
+
+<Steps>
+  <Step number={1} title="确认二进制已安装">
+    <Command
+      title="二进制检查"
+      description="确认 shell 能解析所有预期命令。"
+      code={`which amem
+which agentic-memory-mcp
+which agentic-vision-mcp
+which acb
+which acb-mcp`}
+    />
+  </Step>
+
+  <Step number={2} title="检查运行时命令响应">
+    <Command
+      title="入口检查"
+      description="每条命令都应返回帮助信息且不崩溃。"
+      code={`amem --help
+agentic-memory-mcp --help
+agentic-vision-mcp serve --help
+acb-mcp serve --help`}
+    />
+  </Step>
+
+  <Step number={3} title="检查 MCP 配置引用">
+    <Command
+      title="配置检查"
+      description="重点查看命令路径与过期二进制引用。"
+      code={`rg -n "agentic-memory|agentic-vision|acb-mcp|command" "$HOME/.claude" "$HOME/.config" "$HOME/Library/Application Support" 2>/dev/null`}
+    />
+  </Step>
+</Steps>
+
+## 症状矩阵
+
+| 症状 | 可能原因 | 处理方法 |
+|---|---|---|
+| `curl .../install/&lt;target&gt; \| bash` 返回 404 | 安装路由未部署或域名错误 | 浏览器访问 `https://agentralabs.tech/install/&lt;target&gt;` 验证并重新部署 web |
+| 安装器意外回退到源码 | 当前平台没有发布产物 | 继续完成回退编译，再验证二进制路径 |
+| 安装成功后 `command not found` | 二进制目录不在 PATH | 将运行时 bin 目录加入 shell 配置并重启终端 |
+| MCP 客户端无法启动服务 | 配置仍指向旧路径 | 用 `which <binary>` 获取真实路径并更新配置 |
+| 桌面客户端看不到工具 | 合并后未重启客户端 | 完全退出并重启桌面客户端 |
+| 服务端 Agent 读不到本地 `.amem/.avis/.acb` | 云端运行时无法访问本地文件系统 | 先执行 `./sync_artifacts.sh`，并在服务端设置 `AGENTRA_ARTIFACT_DIRS` |
+| 服务端 MCP 启动被拒绝 | server 模式未提供 token | 启动前设置 `AGENTIC_TOKEN` 或 `AGENTIC_TOKEN_FILE` |
+| 某个 MCP 客户端可用，另一个不可用 | 客户端 MCP 注册缓存未刷新 | 重启目标 MCP 客户端并执行一次工具调用 |
+
+## 升级报告信息包
+
+提交问题时请附带：
+
+- 操作系统 + 架构
+- 使用的安装命令
+- 完整终端输出
+- 客户端名称（Claude Desktop、Codex Desktop、Cursor 等）
+- `which` 与 `--version` 输出
+
+<Callout type="tip" title="最快恢复路径">
+若行为异常不稳定：先备份配置 -> 用托管安装器重装 -> 复查路径 -> 重启客户端。
+</Callout>
+
+<Callout type="info" title="安装完成但工具仍不可见">
+看到 `[####################################] 100% Install complete` 后，请务必重启 MCP 主机/客户端并执行首次调用。反馈入口（可选）：<a href="/docs/feedback">反馈与社区</a>。
+</Callout>

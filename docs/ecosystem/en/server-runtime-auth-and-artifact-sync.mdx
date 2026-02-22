@@ -1,0 +1,58 @@
+---
+title: Server Runtime Auth and Artifact Sync
+description: How hosted agents authenticate and consume local sister artifacts safely.
+---
+
+<Callout type="warning" title="Cloud boundary">
+Hosted runtimes cannot directly read files from your laptop. You must sync artifacts to server-accessible storage and authenticate server MCP calls.
+</Callout>
+
+## 1. Enable server mode
+
+<Command
+  title="Required environment"
+  code={`export AGENTRA_RUNTIME_MODE=server
+export AGENTIC_TOKEN="$(openssl rand -hex 32)"
+export AGENTRA_ARTIFACT_DIRS="/srv/agentra:/data/brains"
+# optional file-based token:
+# export AGENTIC_TOKEN_FILE="/etc/agentra/token"`}
+/>
+
+## 2. Sync local artifacts to server
+
+<Command
+  title="Push runtime artifacts"
+  description="Sync .amem/.avis/.acb before expecting server takeover."
+  code={`./sync_artifacts.sh --target=<server-path-or-rsync-target>`}
+/>
+
+## 3. Start MCP runtimes on server host
+
+<Command
+  title="Run MCP servers"
+  code={`agentic-memory-mcp serve
+agentic-vision-mcp serve
+acb-mcp serve`}
+/>
+
+<CliOutput
+  title="Expected install + restart signal"
+  output={`[####################################] 100% Install complete
+Install complete: <runtime>
+[next] Restart MCP host/client
+[tip] Optional feedback: https://agentralabs.tech/docs/feedback`}
+/>
+
+## 4. Validate from any MCP client
+
+<Command
+  title="Client-side checklist"
+  code={`which agentic-memory-mcp
+which agentic-vision-mcp
+which acb-mcp
+# then trigger first MCP tool call from your client`}
+/>
+
+<Callout type="success" title="Protocol parity">
+Desktop and server follow the same MCP contract. Server mode only adds explicit authentication and artifact sync requirements.
+</Callout>

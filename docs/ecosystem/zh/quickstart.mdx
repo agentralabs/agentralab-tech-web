@@ -1,0 +1,114 @@
+---
+title: 快速开始
+description: 以最快路径安装并验证 Agentra Labs 各项目。
+---
+
+<Callout type="tip" title="零摩擦上手">
+每个运行时使用一条安装命令。根据环境选择配置：
+- `desktop`：自动合并 Claude Desktop/Claude Code MCP 配置
+- `terminal`：仅安装本地 CLI 二进制
+- `server`：用于远程主机与服务环境
+</Callout>
+
+## 前置条件
+
+- macOS、Linux，或 Windows + WSL
+- 可用 `curl`
+- 已安装 Rust 工具链（用于源码回退安装）
+
+<Steps>
+  <Step number={1} title="安装一个运行时（或全部三个）">
+    <CommandTabs
+      title="桌面模式（默认/向后兼容）"
+      description="自动合并受支持的本地桌面 MCP 配置。"
+      items={[
+        {
+          label: "AgenticMemory",
+          code: "curl -fsSL https://agentralabs.tech/install/memory/desktop | bash",
+          description: "安装 amem + agentic-memory-mcp，并执行桌面 MCP 合并。",
+        },
+        {
+          label: "AgenticVision",
+          code: "curl -fsSL https://agentralabs.tech/install/vision/desktop | bash",
+          description: "安装 agentic-vision-mcp，用于无浏览器感知与视觉连续性工作流。",
+        },
+        {
+          label: "AgenticCodebase",
+          code: "curl -fsSL https://agentralabs.tech/install/codebase/desktop | bash",
+          description: "安装 acb + acb-mcp，用于语义代码智能与 MCP 操作。",
+        },
+      ]}
+    />
+
+    <CommandTabs
+      title="终端模式（仅二进制）"
+      description="不会修改任何桌面配置文件。"
+      items={[
+        {
+          label: "AgenticMemory",
+          code: "curl -fsSL https://agentralabs.tech/install/memory/terminal | bash",
+        },
+        {
+          label: "AgenticVision",
+          code: "curl -fsSL https://agentralabs.tech/install/vision/terminal | bash",
+        },
+        {
+          label: "AgenticCodebase",
+          code: "curl -fsSL https://agentralabs.tech/install/codebase/terminal | bash",
+        },
+      ]}
+    />
+
+    <CommandTabs
+      title="服务器模式（远程主机）"
+      description="不写入桌面配置，适合服务端环境。"
+      items={[
+        {
+          label: "AgenticMemory",
+          code: "curl -fsSL https://agentralabs.tech/install/memory/server | bash",
+        },
+        {
+          label: "AgenticVision",
+          code: "curl -fsSL https://agentralabs.tech/install/vision/server | bash",
+        },
+        {
+          label: "AgenticCodebase",
+          code: "curl -fsSL https://agentralabs.tech/install/codebase/server | bash",
+        },
+      ]}
+    />
+  </Step>
+
+  <Step number={2} title="执行二进制检查">
+    <Command
+      title="二进制检查"
+      description="确认已安装二进制可在当前 PATH 中正常响应。"
+      code={`amem --help
+agentic-memory-mcp --version
+agentic-vision-mcp --version
+acb --version
+acb-mcp --version`}
+    />
+  </Step>
+
+  <Step number={3} title="验证 MCP 入口">
+    <Command
+      title="运行时健全性检查"
+      description="连接桌面客户端前，先确认 MCP 命令响应正常。"
+      code={`agentic-memory-mcp --help
+agentic-vision-mcp serve --help
+acb-mcp serve --help`}
+    />
+    <CliOutput
+      title="期望信号"
+      output={`[ok] 已识别平台
+[ok] 运行时安装完成
+[info] MCP 客户端合并完成（支持时）
+[ok] 入口命令可正常响应`}
+    />
+  </Step>
+</Steps>
+
+<Callout type="success" title="下一步">
+继续阅读 <a href="/docs/integrations">集成</a>，配置桌面客户端与运行时模式。
+</Callout>
