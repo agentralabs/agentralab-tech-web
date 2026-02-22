@@ -30,7 +30,10 @@ export function DocsSidebarNav({ groups }: DocsSidebarNavProps) {
         return (
           <details key={group.label} className="docs-sidebar-group" open={open}>
             <summary className="docs-sidebar-summary">
-              <span className="docs-sidebar-label">{group.label}</span>
+              <span className="docs-sidebar-label-row">
+                <span className="docs-sidebar-label">{group.label}</span>
+                <span className="docs-sidebar-count">{group.items.length}</span>
+              </span>
               <span className="docs-sidebar-chevron" aria-hidden="true">▾</span>
             </summary>
             <nav className="docs-sidebar-nav">
@@ -38,7 +41,7 @@ export function DocsSidebarNav({ groups }: DocsSidebarNavProps) {
                 const active = pathname === item.href
                 return (
                   <Link key={item.href} href={item.href} data-active={active ? "true" : "false"}>
-                    {item.label}
+                    <span className="docs-sidebar-link-label">{item.label}</span>
                   </Link>
                 )
               })}

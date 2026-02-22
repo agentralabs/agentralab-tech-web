@@ -6,6 +6,7 @@ import { cookies } from "next/headers"
 import { getDocsSource } from "@/lib/source"
 import { DocsSidebarNav } from "@/components/docs-sidebar-nav"
 import { DocsTopControls } from "@/components/docs-top-controls"
+import { DocsReadingProgress } from "@/components/docs-reading-progress"
 import { DOCS_LANGUAGE_COOKIE, docsUi, localizeDocsLabel, normalizeDocsLanguage } from "@/lib/docs-i18n"
 import "./docs.css"
 
@@ -217,7 +218,11 @@ export default async function DocsRouteLayout({ children }: DocsRouteLayoutProps
   ].filter((group) => group.items.length > 0)
 
   return (
-    <div className={`docs-shell ${manrope.variable}`}>
+    <div className={`docs-shell docs-shell-premium docs-variant-enterprise ${manrope.variable}`}>
+      <div className="docs-ambient docs-ambient-a" aria-hidden="true" />
+      <div className="docs-ambient docs-ambient-b" aria-hidden="true" />
+      <div className="docs-ambient docs-ambient-c" aria-hidden="true" />
+      <DocsReadingProgress />
       <header className="docs-topbar">
         <Link href="/docs" className="docs-brand">
           <span className="docs-brand-mark">
@@ -251,15 +256,17 @@ export default async function DocsRouteLayout({ children }: DocsRouteLayoutProps
         </div>
       </header>
 
-      <div className="docs-frame">
-        <aside className="docs-sidebar">
-          <div className="docs-sidebar-head">
-            <p className="docs-sidebar-title">{ui.sidebarTitle}</p>
-            <p className="docs-sidebar-subtitle">{ui.sidebarSubtitle}</p>
-          </div>
-          <DocsSidebarNav groups={navGroups} />
-        </aside>
-        <main className="docs-main">{children}</main>
+      <div className="docs-frame-shell">
+        <div className="docs-frame">
+          <aside className="docs-sidebar">
+            <div className="docs-sidebar-head">
+              <p className="docs-sidebar-title">{ui.sidebarTitle}</p>
+              <p className="docs-sidebar-subtitle">{ui.sidebarSubtitle}</p>
+            </div>
+            <DocsSidebarNav groups={navGroups} />
+          </aside>
+          <main className="docs-main">{children}</main>
+        </div>
       </div>
     </div>
   )
