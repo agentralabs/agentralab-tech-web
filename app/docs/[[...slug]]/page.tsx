@@ -97,7 +97,11 @@ export default async function Page({ params }: DocsPageProps) {
 
   const data = page.data as DocsPageData
   const MDX = data.body
-  const pageSlug = page.url.replace(/^\/docs\/?/, "") || "index"
+  const pageSlugRaw = page.url.replace(/^\/docs\/?/, "") || "index"
+  const pageSlug =
+    pageSlugRaw === "en" || pageSlugRaw === "zh"
+      ? "index"
+      : pageSlugRaw.replace(/^(en|zh)\//, "") || "index"
   const sectionLabel =
     pageSlug.startsWith("workspace-") ? "Workspace" :
     pageSlug.startsWith("memory-") ? "AgenticMemory" :

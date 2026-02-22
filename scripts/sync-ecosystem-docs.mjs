@@ -509,7 +509,7 @@ async function main() {
   const zhFiles = new Map()
 
   const indexEnBody = [
-    "This documentation hub is generated from canonical workspace docs and each sister's `docs/public/` folder.",
+    "This documentation hub brings together workspace and sister documentation in one place.",
     "",
     "## Sections",
     "",
@@ -522,7 +522,7 @@ async function main() {
   ].join("\n")
 
   const indexZhBody = [
-    "该文档中心由工作区规范文档与每个 sister 的 `docs/public/` 目录生成。",
+    "该文档中心将工作区与三姐妹文档汇总到同一个入口。",
     "",
     "## 分组",
     "",
@@ -538,7 +538,7 @@ async function main() {
     "index.mdx",
     mdxPage({
       title: "Documentation",
-      description: "Public docs generated from each sister public folder.",
+      description: "Unified documentation for workspace and sister systems.",
       body: indexEnBody,
     }),
   )
@@ -547,7 +547,7 @@ async function main() {
     "index.mdx",
     mdxPage({
       title: "文档",
-      description: "由各 sister 的公共文档目录生成。",
+      description: "工作区与三姐妹系统的统一文档入口。",
       body: indexZhBody,
     }),
   )

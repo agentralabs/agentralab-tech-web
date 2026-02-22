@@ -60,7 +60,9 @@ function titleFor(url: string, title?: string) {
 }
 
 function slugFromUrl(url: string) {
-  return url.replace(/^\/docs\/?/, "") || "index"
+  const raw = url.replace(/^\/docs\/?/, "") || "index"
+  if (raw === "en" || raw === "zh") return "index"
+  return raw.replace(/^(en|zh)\//, "") || "index"
 }
 
 function suffixForPrefix(slug: string, prefix: string) {
@@ -166,6 +168,10 @@ export default async function DocsRouteLayout({ children }: DocsRouteLayoutProps
   ]
 
   const hrefSet = new Set(orderedItems.map((item) => item.href))
+  const hrefForSlug = (target: string) => orderedItems.find((item) => slugFromUrl(item.href) === target)?.href
+  const memoryHref = hrefForSlug("memory-docs")
+  const codebaseHref = hrefForSlug("codebase-docs")
+  const visionHref = hrefForSlug("vision-docs")
 
   const navGroups = [
     {
@@ -230,9 +236,9 @@ export default async function DocsRouteLayout({ children }: DocsRouteLayoutProps
         </Link>
         <nav className="docs-topnav">
           <Link href="/docs">{ui.nav.docs}</Link>
-          {hrefSet.has("/docs/memory-docs") ? <Link href="/docs/memory-docs">{localizeDocsLabel("AgenticMemory", language)}</Link> : null}
-          {hrefSet.has("/docs/codebase-docs") ? <Link href="/docs/codebase-docs">{localizeDocsLabel("AgenticCodebase", language)}</Link> : null}
-          {hrefSet.has("/docs/vision-docs") ? <Link href="/docs/vision-docs">{localizeDocsLabel("AgenticVision", language)}</Link> : null}
+          {memoryHref ? <Link href={memoryHref}>{localizeDocsLabel("AgenticMemory", language)}</Link> : null}
+          {codebaseHref ? <Link href={codebaseHref}>{localizeDocsLabel("AgenticCodebase", language)}</Link> : null}
+          {visionHref ? <Link href={visionHref}>{localizeDocsLabel("AgenticVision", language)}</Link> : null}
         </nav>
         <DocsTopControls language={language} items={orderedItems} />
         <div className="docs-top-links">
