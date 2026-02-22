@@ -227,10 +227,10 @@ export default function PublicationsPage() {
                 Open to research collaboration and sponsorship support.
               </span>
               <a
-                href="mailto:omoshola.owolabi@agentralabs.tech"
+                href="mailto:contact@agentralabs.tech"
                 className="text-[10px] font-mono tracking-widest uppercase text-muted-foreground hover:text-foreground"
               >
-                omoshola.owolabi@agentralabs.tech
+                contact@agentralabs.tech
               </a>
             </div>
           </div>
