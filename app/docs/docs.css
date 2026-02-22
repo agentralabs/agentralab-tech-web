@@ -382,6 +382,13 @@
   min-width: 0;
 }
 
+.docs-main-wide {
+  grid-column: 1 / -1;
+  max-width: 1120px;
+  margin: 0 auto;
+  width: 100%;
+}
+
 .docs-article-wrap {
   display: grid;
   grid-template-columns: minmax(0, 980px) 240px;
