@@ -14,6 +14,7 @@ const LABEL_ZH: Record<string, string> = {
   Operations: "运维",
   Architecture: "架构",
   "API reference": "API 参考",
+  "API Reference": "API 参考",
   Website: "官网",
   GitHub: "GitHub",
   "Search documentation...": "搜索文档...",
@@ -64,6 +65,13 @@ const LABEL_ZH: Record<string, string> = {
   AgenticCodebase: "AgenticCodebase",
   AgenticVision: "AgenticVision",
   "Server Runtime Auth And Artifact Sync": "服务端鉴权与工件同步",
+  "Docs Navigation": "文档导航",
+  "Install, integrate, and run the Agentra ecosystem.": "安装、集成并运行 Agentra 生态。",
+  Sections: "章节",
+  Note: "说明",
+  Hint: "提示",
+  Warning: "警告",
+  Success: "成功",
 }
 
 export function localizeDocsLabel(label: string, lang: DocsLanguage): string {

@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { useEffect, useMemo, useRef, useState } from "react"
-import { useRouter } from "next/navigation"
+import { usePathname, useSearchParams } from "next/navigation"
 import {
   DOCS_LANGUAGE_COOKIE,
   DOCS_LANGUAGE_STORAGE,
@@ -23,7 +23,8 @@ interface DocsTopControlsProps {
 }
 
 export function DocsTopControls({ language, items }: DocsTopControlsProps) {
-  const router = useRouter()
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
   const [lang, setLang] = useState<DocsLanguage>(language)
   const [searchOpen, setSearchOpen] = useState(false)
   const [query, setQuery] = useState("")
@@ -64,11 +65,22 @@ export function DocsTopControls({ language, items }: DocsTopControlsProps) {
     return () => window.removeEventListener("keydown", onKeyDown)
   }, [])
 
+  function normalizePathForLanguage(path: string): string {
+    return path.replace(/^\/docs\/(?:en|zh)(?=\/|$)/, "/docs")
+  }
+
   function setLanguage(next: DocsLanguage) {
+    const currentPath = pathname || "/docs"
+    const normalizedPath = normalizePathForLanguage(currentPath)
+    if (next === lang && normalizedPath === currentPath) return
+
     setLang(next)
+    setSearchOpen(false)
     localStorage.setItem(DOCS_LANGUAGE_STORAGE, next)
     document.cookie = `${DOCS_LANGUAGE_COOKIE}=${next}; Path=/; Max-Age=31536000; SameSite=Lax`
-    router.refresh()
+    const query = searchParams.toString()
+    const target = query ? `${normalizedPath}?${query}` : normalizedPath
+    window.location.assign(target)
   }
 
   const filteredItems = useMemo(() => {
