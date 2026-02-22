@@ -3,7 +3,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { Manrope } from "next/font/google"
 import { cookies } from "next/headers"
-import { source } from "@/lib/source"
+import { getDocsSource } from "@/lib/source"
 import { DocsSidebarNav } from "@/components/docs-sidebar-nav"
 import { DocsTopControls } from "@/components/docs-top-controls"
 import { DOCS_LANGUAGE_COOKIE, docsUi, localizeDocsLabel, normalizeDocsLanguage } from "@/lib/docs-i18n"
@@ -31,8 +31,9 @@ export default async function DocsRouteLayout({ children }: DocsRouteLayoutProps
   const cookieStore = await cookies()
   const language = normalizeDocsLanguage(cookieStore.get(DOCS_LANGUAGE_COOKIE)?.value)
   const ui = docsUi(language)
+  const docsSource = getDocsSource(language)
 
-  const pages = source
+  const pages = docsSource
     .getPages()
     .filter((page) => page.url.startsWith("/docs") && page.url !== "/docs/design-doctrine")
 
@@ -140,8 +141,8 @@ export default async function DocsRouteLayout({ children }: DocsRouteLayoutProps
       <div className="docs-frame">
         <aside className="docs-sidebar">
           <div className="docs-sidebar-head">
-            <p className="docs-sidebar-title">Docs Navigation</p>
-            <p className="docs-sidebar-subtitle">Install, integrate, and run the Agentra ecosystem.</p>
+            <p className="docs-sidebar-title">{ui.sidebarTitle}</p>
+            <p className="docs-sidebar-subtitle">{ui.sidebarSubtitle}</p>
           </div>
           <DocsSidebarNav groups={navGroups} />
         </aside>

@@ -55,8 +55,11 @@ export function docsUi(lang: DocsLanguage) {
     return {
       docsTitle: "Agentra Labs 文档",
       docsSubtitle: "公开文档",
+      sidebarTitle: "文档导航",
+      sidebarSubtitle: "安装、集成并运行 Agentra 生态。",
       searchPlaceholder: "搜索文档...",
       searchLabel: "搜索文档",
+      closeSearch: "关闭搜索",
       noSearchResults: "没有匹配的页面。",
       onThisPage: "本页内容",
       nav: {
@@ -76,8 +79,11 @@ export function docsUi(lang: DocsLanguage) {
   return {
     docsTitle: "Agentra Labs Docs",
     docsSubtitle: "Public Documentation",
+    sidebarTitle: "Docs Navigation",
+    sidebarSubtitle: "Install, integrate, and run the Agentra ecosystem.",
     searchPlaceholder: "Search documentation...",
     searchLabel: "Search docs",
+    closeSearch: "Close search",
     noSearchResults: "No matching pages.",
     onThisPage: "On this page",
     nav: {

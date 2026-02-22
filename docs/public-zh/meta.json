@@ -1,0 +1,17 @@
+{
+  "title": "Agentra Labs 文档",
+  "pages": [
+    "index",
+    "quickstart",
+    "installation",
+    "integrations",
+    "feedback",
+    "operations-autonomic-and-backup",
+    "system-architecture",
+    "use-case-playbooks",
+    "troubleshooting-matrix",
+    "security-and-data-boundaries",
+    "benchmarks-and-methodology",
+    "ecosystem-feature-reference"
+  ]
+}

@@ -1,0 +1,99 @@
+---
+title: 安装
+description: 各项目的安装渠道与回退行为说明。
+---
+
+<Callout type="info" title="首选建议">
+优先使用托管安装器。这样可在公开文档、README 与网站快速开始中保持一致行为。
+</Callout>
+
+## 托管安装器
+
+<CommandTabs
+  title="托管安装命令"
+  description="只安装你需要的运行时。所有项目都保持独立优先。"
+  items={[
+    { label: "Memory", code: "curl -fsSL https://agentralabs.tech/install/memory | bash" },
+    { label: "Vision", code: "curl -fsSL https://agentralabs.tech/install/vision | bash" },
+    { label: "Codebase", code: "curl -fsSL https://agentralabs.tech/install/codebase | bash" },
+  ]}
+/>
+
+## 按环境选择安装配置
+
+<CommandTabs
+  title="桌面模式（MCP 自动合并）"
+  description="为受支持的本地桌面客户端配置 MCP。"
+  items={[
+    { label: "Memory", code: "curl -fsSL https://agentralabs.tech/install/memory/desktop | bash" },
+    { label: "Vision", code: "curl -fsSL https://agentralabs.tech/install/vision/desktop | bash" },
+    { label: "Codebase", code: "curl -fsSL https://agentralabs.tech/install/codebase/desktop | bash" },
+  ]}
+/>
+
+<CommandTabs
+  title="终端模式（不写配置）"
+  description="仅安装二进制。"
+  items={[
+    { label: "Memory", code: "curl -fsSL https://agentralabs.tech/install/memory/terminal | bash" },
+    { label: "Vision", code: "curl -fsSL https://agentralabs.tech/install/vision/terminal | bash" },
+    { label: "Codebase", code: "curl -fsSL https://agentralabs.tech/install/codebase/terminal | bash" },
+  ]}
+/>
+
+<CommandTabs
+  title="服务器模式（远程主机）"
+  description="用于服务环境，不写桌面配置。"
+  items={[
+    { label: "Memory", code: "curl -fsSL https://agentralabs.tech/install/memory/server | bash" },
+    { label: "Vision", code: "curl -fsSL https://agentralabs.tech/install/vision/server | bash" },
+    { label: "Codebase", code: "curl -fsSL https://agentralabs.tech/install/codebase/server | bash" },
+  ]}
+/>
+
+## 回退行为
+
+当平台对应的发布产物不可用时，安装器会回退到源码安装（从官方仓库执行 `cargo install`）。
+
+<CliOutput
+  title="回退示例"
+  output={`[info] No GitHub release found; using source fallback.
+[info] Installing from source...
+[ok] Build complete.
+[ok] Binary installed in ~/.local/bin`}
+/>
+
+## 直接包渠道
+
+### Rust crates
+
+<CommandTabs
+  title="Rust 渠道"
+  description="适用于统一采用 cargo 管理二进制的环境。"
+  items={[
+    { label: "Memory", code: "cargo install agentic-memory agentic-memory-mcp" },
+    { label: "Vision", code: "cargo install agentic-vision-mcp" },
+    { label: "Codebase", code: "cargo install agentic-codebase" },
+  ]}
+/>
+
+### Python 辅助（memory 安装器）
+
+<Command
+  title="Python 渠道"
+  description="适用于以 Python 代理工具链为主的团队。"
+  code={`pip install amem-installer
+amem-install install --auto`}
+/>
+
+## 安装后应看到的结果
+
+- 平台识别摘要
+- 二进制安装路径
+- MCP 合并状态
+- 重启提示
+- 可选运行时验证命令
+
+<Callout type="warning" title="防护建议">
+如果输出与预期不一致，请保留完整终端输出并在 <a href="/docs/feedback">反馈与社区</a> 提交。
+</Callout>

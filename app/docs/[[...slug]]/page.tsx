@@ -5,7 +5,7 @@ import { notFound } from "next/navigation"
 import { createRelativeLink } from "fumadocs-ui/mdx"
 import type { TOCItemType } from "fumadocs-core/toc"
 import { getMDXComponents } from "@/mdx-components"
-import { source } from "@/lib/source"
+import { getDocsSource, source } from "@/lib/source"
 import { DOCS_LANGUAGE_COOKIE, docsUi, localizeDocsLabel, normalizeDocsLanguage } from "@/lib/docs-i18n"
 
 interface DocsPageProps {
@@ -67,7 +67,8 @@ export default async function Page({ params }: DocsPageProps) {
   const cookieStore = await cookies()
   const language = normalizeDocsLanguage(cookieStore.get(DOCS_LANGUAGE_COOKIE)?.value)
   const ui = docsUi(language)
-  const page = source.getPage(slug)
+  const docsSource = getDocsSource(language)
+  const page = docsSource.getPage(slug) ?? source.getPage(slug)
   if (!page) notFound()
 
   const data = page.data as DocsPageData
@@ -90,7 +91,7 @@ export default async function Page({ params }: DocsPageProps) {
         <div className="docs-content">
           <MDX
             components={getMDXComponents({
-              a: createRelativeLink(source, page),
+              a: createRelativeLink(docsSource, page),
             })}
           />
         </div>
@@ -116,7 +117,10 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: DocsPageProps): Promise<Metadata> {
   const { slug } = await params
-  const page = source.getPage(slug)
+  const cookieStore = await cookies()
+  const language = normalizeDocsLanguage(cookieStore.get(DOCS_LANGUAGE_COOKIE)?.value)
+  const docsSource = getDocsSource(language)
+  const page = docsSource.getPage(slug) ?? source.getPage(slug)
   if (!page) notFound()
   const data = page.data as { title?: string; description?: string }
 

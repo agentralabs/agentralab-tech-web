@@ -1,0 +1,112 @@
+---
+title: "运维：自治与备份"
+description: 安装后保护运行时工件、MCP 配置与自治行为。
+---
+
+<Callout type="info" title="为什么这一页重要">
+安装只是第一步。稳定性来自工件保护、配置备份与可预测的运维默认值。
+</Callout>
+
+## 你应重点保护的内容
+
+- `~/.brain.amem`（AgenticMemory 默认脑文件）
+- MCP 客户端配置（例如存在时的 `~/.claude/mcp.json`）
+- 工作区中的运行时工件（`.avis`、`.acb`）
+- 启用时的日志/健康快照
+
+## 快速备份流程（macOS/Linux）
+
+<Steps>
+  <Step number={1} title="创建备份目录">
+    <Command
+      title="准备备份目录"
+      description="按用途拆分运行时与配置备份。"
+      code={`mkdir -p "$HOME/.agentra-backups/memory"
+mkdir -p "$HOME/.agentra-backups/mcp"
+mkdir -p "$HOME/.agentra-backups/artifacts"`}
+    />
+  </Step>
+
+  <Step number={2} title="备份 memory 脑文件">
+    <Command
+      title="备份 ~/.brain.amem"
+      description="带时间戳，便于回滚与迁移。"
+      code={`cp "$HOME/.brain.amem" "$HOME/.agentra-backups/memory/brain-$(date +%F-%H%M%S).amem"`}
+    />
+  </Step>
+
+  <Step number={3} title="备份 MCP 配置">
+    <Command
+      title="备份 Claude MCP 配置（存在时）"
+      description="其他 MCP 客户端配置文件可套用同样模式。"
+      code={`if [ -f "$HOME/.claude/mcp.json" ]; then
+  cp "$HOME/.claude/mcp.json" "$HOME/.agentra-backups/mcp/claude-mcp-$(date +%F-%H%M%S).json"
+fi`}
+    />
+  </Step>
+
+  <Step number={4} title="备份工作区工件">
+    <Command
+      title="备份 .avis 与 .acb"
+      description="按你的项目输出路径调整搜索范围。"
+      code={`find "$PWD" -type f \( -name "*.avis" -o -name "*.acb" \) -maxdepth 4 -print0 | \
+  xargs -0 -I {} cp "{}" "$HOME/.agentra-backups/artifacts/"`}
+    />
+  </Step>
+</Steps>
+
+## 恢复流程
+
+<Command
+  title="恢复 memory 脑文件"
+  description="先停止活动客户端，再恢复目标备份。"
+  code={`cp "$HOME/.agentra-backups/memory/<backup-file>.amem" "$HOME/.brain.amem"`}
+/>
+
+<Command
+  title="恢复 MCP 配置"
+  description="恢复后重启桌面客户端。"
+  code={`cp "$HOME/.agentra-backups/mcp/<backup-file>.json" "$HOME/.claude/mcp.json"`}
+/>
+
+<Callout type="success" title="恢复后验证">
+执行二进制检查并发起一次 MCP 工具调用，确认状态健康。
+</Callout>
+
+## 安装后发现 MCP 文件
+
+如果不确定配置位置，可扫描常见目录：
+
+<Command
+  title="查找可能的 MCP 配置"
+  description="在常见 home/config 路径中查找 MCP 与桌面配置命名。"
+  code={`find "$HOME" -maxdepth 5 \( -name "*mcp*.json" -o -name "claude_desktop_config.json" -o -name "settings.json" \) 2>/dev/null | head -n 80`}
+/>
+
+<Command
+  title="查找 Agentra MCP 条目"
+  description="快速识别已写入 Agentra 条目的文件。"
+  code={`rg -n "agentic-memory|agentic-vision|acb-mcp|agentra" "$HOME/.claude" "$HOME/.config" "$HOME/Library/Application Support" 2>/dev/null`}
+/>
+
+## 自治与备份控制（Codebase 运行时）
+
+以下环境变量用于 codebase 运维姿态：
+
+- `ACB_AUTONOMIC_PROFILE`（`desktop`、`cloud`、`aggressive`）
+- `ACB_STORAGE_MIGRATION_POLICY`（`auto-safe`、`strict`、`off`）
+- `ACB_AUTO_BACKUP`
+- `ACB_AUTO_BACKUP_RETENTION`
+- `ACB_AUTO_BACKUP_DIR`
+- `ACB_COLLECTIVE_CACHE_MAINTENANCE_SECS`
+- `ACB_HEALTH_LEDGER_DIR`（或 `AGENTRA_HEALTH_LEDGER_DIR`）
+- `ACB_HEALTH_LEDGER_EMIT_SECS`
+- `ACB_SLA_MAX_REGISTRY_OPS_PER_MIN`
+
+默认健康账本目录：
+
+- `~/.agentra/health-ledger`
+
+<Callout type="warning" title="运维防护">
+把备份目录视为敏感数据：其中可能包含记忆上下文、运行时工件与配置详情。长期保存请使用加密存储。
+</Callout>

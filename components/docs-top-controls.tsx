@@ -115,7 +115,7 @@ export function DocsTopControls({ language, items }: DocsTopControlsProps) {
           <button
             type="button"
             className="docs-search-backdrop"
-            aria-label="Close search"
+            aria-label={copy.closeSearch}
             onClick={() => setSearchOpen(false)}
           />
           <div className="docs-search-panel">
