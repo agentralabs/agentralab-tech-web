@@ -35,11 +35,25 @@ jobs:
           cache: "pnpm"
 
       - name: Clone canonical ecosystem workspace
+        env:
+          AGENTRALABS_REPO_READ_TOKEN: ${{ secrets.AGENTRALABS_REPO_READ_TOKEN }}
         run: |
-          git clone --depth 1 https://github.com/agentralabs/agentralabs-tech.git "$RUNNER_TEMP/agentra-workspace"
-          git clone --depth 1 https://github.com/agentralabs/agentic-memory.git "$RUNNER_TEMP/agentra-workspace/agentic-memory"
-          git clone --depth 1 https://github.com/agentralabs/agentic-codebase.git "$RUNNER_TEMP/agentra-workspace/agentic-codebase"
-          git clone --depth 1 https://github.com/agentralabs/agentic-vision.git "$RUNNER_TEMP/agentra-workspace/agentic-vision"
+          if [ -z "${AGENTRALABS_REPO_READ_TOKEN}" ]; then
+            echo "::error::Missing secret AGENTRALABS_REPO_READ_TOKEN. Add a read-only PAT with access to agentralabs-tech and sister repos."
+            exit 1
+          fi
+
+          clone_with_token() {
+            local repo="$1"
+            local dest="$2"
+            git -c http.extraheader="AUTHORIZATION: bearer ${AGENTRALABS_REPO_READ_TOKEN}" \
+              clone --depth 1 "https://github.com/${repo}.git" "${dest}"
+          }
+
+          clone_with_token "agentralabs/agentralabs-tech" "$RUNNER_TEMP/agentra-workspace"
+          clone_with_token "agentralabs/agentic-memory" "$RUNNER_TEMP/agentra-workspace/agentic-memory"
+          clone_with_token "agentralabs/agentic-codebase" "$RUNNER_TEMP/agentra-workspace/agentic-codebase"
+          clone_with_token "agentralabs/agentic-vision" "$RUNNER_TEMP/agentra-workspace/agentic-vision"
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
