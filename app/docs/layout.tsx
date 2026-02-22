@@ -218,7 +218,7 @@ export default async function DocsRouteLayout({ children }: DocsRouteLayoutProps
   ].filter((group) => group.items.length > 0)
 
   return (
-    <div className={`docs-shell docs-shell-premium docs-variant-enterprise ${manrope.variable}`}>
+    <div className={`docs-shell docs-shell-premium docs-variant-mintlify ${manrope.variable}`}>
       <div className="docs-ambient docs-ambient-a" aria-hidden="true" />
       <div className="docs-ambient docs-ambient-b" aria-hidden="true" />
       <div className="docs-ambient docs-ambient-c" aria-hidden="true" />
