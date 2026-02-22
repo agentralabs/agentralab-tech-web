@@ -68,6 +68,34 @@ This page is the capability contract used across website, docs, and repository c
   </Step>
 </Steps>
 
+## New-sister README baseline
+
+Use this as the canonical baseline for any new sister README.
+
+<Callout type="tip" title="Baseline policy">
+Each sister must remain standalone by default. Workspace UX is optional.
+</Callout>
+
+<Command
+  title="Required install command set"
+  description="Every sister README should show the full profile matrix."
+  code={`curl -fsSL https://agentralabs.tech/install/<target> | bash\ncurl -fsSL https://agentralabs.tech/install/<target>/desktop | bash\ncurl -fsSL https://agentralabs.tech/install/<target>/terminal | bash\ncurl -fsSL https://agentralabs.tech/install/<target>/server | bash`}
+/>
+
+<Command
+  title="Optional workspace UX block"
+  description="This block is optional and must never be framed as required runtime dependency."
+  code={`cargo run --bin agentra status\ncargo run --bin agentra ui`}
+/>
+
+## Workspace orchestrator contract
+
+- Sisters remain independently installable and operable.
+- `agentra` (or any future orchestrator) is optional UX only, never a hard dependency.
+- Orchestrator UX must detect installed tooling and show actionable missing states.
+- Orchestrator UX may provide hints/status, but must not silently force bundled installs.
+- Shared workspace commands must remain functional when a workspace exists.
+
 ## Editorial guardrails
 
 - Keep canonical casing: `AgenticMemory`, `AgenticVision`, `AgenticCodebase`.
