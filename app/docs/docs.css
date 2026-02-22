@@ -614,6 +614,38 @@
   color: #111827;
 }
 
+.docs-code-shell {
+  position: relative;
+}
+
+.docs-code-shell pre {
+  padding-right: 88px;
+}
+
+.docs-copy-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 3;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  color: #334155;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  padding: 7px 10px;
+  cursor: pointer;
+  transition: all 120ms ease;
+}
+
+.docs-copy-button:hover {
+  color: #0f172a;
+  border-color: #94a3b8;
+  background: #f8fafc;
+}
+
 .docs-command-tabs .docs-command-tabbar {
   display: flex;
   align-items: center;

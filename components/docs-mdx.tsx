@@ -19,6 +19,7 @@ import {
   Wrench,
 } from "lucide-react"
 import { CommandTabs, type CommandTabItem } from "@/components/docs-command-tabs"
+import { DocsCopyButton } from "@/components/docs-copy-button"
 
 type CalloutType = "info" | "tip" | "success" | "warning"
 
@@ -115,6 +116,8 @@ export function Callout({ type = "info", title, children }: CalloutProps) {
 }
 
 export function Command({ title, description, code }: CommandProps) {
+  const content = code.trim()
+
   return (
     <div className="docs-command">
       <div className="docs-command-head">
@@ -123,7 +126,10 @@ export function Command({ title, description, code }: CommandProps) {
           {description ? <p className="docs-command-description">{description}</p> : null}
         </div>
       </div>
-      <pre className="docs-command-code"><code>{code.trim()}</code></pre>
+      <div className="docs-code-shell">
+        <DocsCopyButton value={content} />
+        <pre className="docs-command-code"><code>{content}</code></pre>
+      </div>
     </div>
   )
 }
@@ -133,18 +139,22 @@ export function CommandTabsBlock({ title, description, items }: CommandTabsProps
 }
 
 export function CliOutput({ title = "CLI Output", output }: CliOutputProps) {
-  const lines = output.trim().split("\n")
+  const content = output.trim()
+  const lines = content.split("\n")
 
   return (
     <div className="docs-cli">
       <p className="docs-cli-title"><Terminal size={14} /> {title}</p>
-      <pre>
-        {lines.map((line, index) => (
-          <div key={`${index}-${line}`} className={`docs-cli-line docs-cli-line-${lineTone(line)}`}>
-            {line}
-          </div>
-        ))}
-      </pre>
+      <div className="docs-code-shell">
+        <DocsCopyButton value={content} />
+        <pre>
+          {lines.map((line, index) => (
+            <div key={`${index}-${line}`} className={`docs-cli-line docs-cli-line-${lineTone(line)}`}>
+              {line}
+            </div>
+          ))}
+        </pre>
+      </div>
     </div>
   )
 }

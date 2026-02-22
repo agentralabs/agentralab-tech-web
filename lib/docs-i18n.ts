@@ -27,6 +27,11 @@ const LABEL_ZH: Record<string, string> = {
   Reference: "参考",
   "On this page": "本页内容",
   "Getting Started": "开始使用",
+  Welcome: "欢迎",
+  "What you can run today": "今日可运行项",
+  "Quick links": "快速链接",
+  Notes: "说明",
+  "Runtime screenshots": "运行截图",
   Quickstart: "快速开始",
   Installation: "安装",
   Integrations: "集成",
@@ -88,4 +93,3 @@ export function docsUi(lang: DocsLanguage) {
     },
   }
 }
-

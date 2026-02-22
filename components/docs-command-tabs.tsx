@@ -1,6 +1,7 @@
 "use client"
 
 import { useMemo, useState } from "react"
+import { DocsCopyButton } from "@/components/docs-copy-button"
 
 export interface CommandTabItem {
   label: string
@@ -21,6 +22,7 @@ export function CommandTabs({ title, description, items }: CommandTabsProps) {
   if (safeItems.length === 0) return null
 
   const selected = safeItems[Math.min(activeIndex, safeItems.length - 1)]
+  const content = selected.code.trim()
 
   return (
     <div className="docs-command docs-command-tabs" role="region" aria-label={title}>
@@ -47,7 +49,10 @@ export function CommandTabs({ title, description, items }: CommandTabsProps) {
         ))}
       </div>
 
-      <pre className="docs-command-code"><code>{selected.code.trim()}</code></pre>
+      <div className="docs-code-shell">
+        <DocsCopyButton value={content} />
+        <pre className="docs-command-code"><code>{content}</code></pre>
+      </div>
       {selected.description ? <p className="docs-command-tab-description">{selected.description}</p> : null}
     </div>
   )

@@ -19,6 +19,49 @@ interface DocsPageData {
   toc?: TOCItemType[]
 }
 
+function tocTitleToText(value: unknown, language: "en" | "zh"): string {
+  if (typeof value === "string" || typeof value === "number") {
+    const label = String(value)
+    return localizeDocsLabel(label, language)
+  }
+
+  if (Array.isArray(value)) {
+    const joined = value.map((item) => tocTitleToText(item, language)).join("").trim()
+    return localizeDocsLabel(joined, language)
+  }
+
+  if (value && typeof value === "object") {
+    const record = value as Record<string, unknown>
+    const localized = language === "zh" ? record.zh : record.en
+    if (typeof localized === "string") {
+      return localized
+    }
+
+    if ("props" in record && record.props && typeof record.props === "object") {
+      const props = record.props as Record<string, unknown>
+      const fromChildren = tocTitleToText(props.children, language)
+      if (fromChildren) return fromChildren
+    }
+
+    if ("children" in record) {
+      const fromChildren = tocTitleToText(record.children, language)
+      if (fromChildren) return fromChildren
+    }
+
+    if ("value" in record) {
+      const fromValue = tocTitleToText(record.value, language)
+      if (fromValue) return fromValue
+    }
+
+    if ("title" in record) {
+      const fromTitle = tocTitleToText(record.title, language)
+      if (fromTitle) return fromTitle
+    }
+  }
+
+  return ""
+}
+
 export default async function Page({ params }: DocsPageProps) {
   const { slug } = await params
   const cookieStore = await cookies()
@@ -58,7 +101,7 @@ export default async function Page({ params }: DocsPageProps) {
         <nav>
           {(data.toc ?? []).map((item) => (
             <a key={item.url} href={item.url}>
-              {localizeDocsLabel(String(item.title ?? ""), language)}
+              {tocTitleToText(item.title, language) || item.url}
             </a>
           ))}
         </nav>
