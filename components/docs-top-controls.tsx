@@ -78,7 +78,9 @@ export function DocsTopControls({ language, items }: DocsTopControlsProps) {
     setSearchOpen(false)
     localStorage.setItem(DOCS_LANGUAGE_STORAGE, next)
     document.cookie = `${DOCS_LANGUAGE_COOKIE}=${next}; Path=/; Max-Age=31536000; SameSite=Lax`
-    const query = searchParams.toString()
+    const params = new URLSearchParams(searchParams.toString())
+    params.set("lang", next)
+    const query = params.toString()
     const target = query ? `${normalizedPath}?${query}` : normalizedPath
     window.location.assign(target)
   }

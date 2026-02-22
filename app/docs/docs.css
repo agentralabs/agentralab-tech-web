@@ -1326,6 +1326,82 @@ body:has(.docs-shell) {
   color: #1f2937;
 }
 
+.docs-shell.docs-variant-aspen .docs-content > ol {
+  list-style: none;
+  margin: 20px 0 28px;
+  padding: 0;
+  counter-reset: aspen-flow-step;
+}
+
+.docs-shell.docs-variant-aspen .docs-content > ol > li {
+  counter-increment: aspen-flow-step;
+  position: relative;
+  margin: 0;
+  padding: 0 0 18px 54px;
+}
+
+.docs-shell.docs-variant-aspen .docs-content > ol > li::before {
+  content: counter(aspen-flow-step);
+  position: absolute;
+  left: 0;
+  top: 1px;
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  border: 1px solid #e5e7eb;
+  background: #f3f4f6;
+  color: #4b5563;
+  font-size: 12px;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.docs-shell.docs-variant-aspen .docs-content > ol > li::after {
+  content: "";
+  position: absolute;
+  left: 14px;
+  top: 34px;
+  bottom: 2px;
+  width: 1px;
+  background: #e5e7eb;
+}
+
+.docs-shell.docs-variant-aspen .docs-content > ol > li:last-child {
+  padding-bottom: 0;
+}
+
+.docs-shell.docs-variant-aspen .docs-content > ol > li:last-child::after {
+  display: none;
+}
+
+.docs-shell.docs-variant-aspen .docs-content > ol > li > p:first-child {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 30px;
+  line-height: 1.14;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.docs-shell.docs-variant-aspen .docs-content > ol > li > p {
+  margin: 8px 0;
+}
+
+.docs-shell.docs-variant-aspen .docs-content > ol > li .docs-command,
+.docs-shell.docs-variant-aspen .docs-content > ol > li .docs-command-tabs,
+.docs-shell.docs-variant-aspen .docs-content > ol > li pre {
+  margin-top: 10px;
+}
+
+.docs-shell.docs-variant-aspen .docs-content > blockquote {
+  border-left: 4px solid #4ade80;
+  border-radius: 10px;
+  background: linear-gradient(180deg, #f4fff8 0%, #ecfdf5 100%);
+  color: #14532d;
+}
+
 .docs-shell.docs-variant-aspen .docs-content h2 {
   margin-top: 34px;
   margin-bottom: 12px;
