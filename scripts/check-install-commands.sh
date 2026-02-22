@@ -36,14 +36,23 @@ require_literal() {
 }
 
 require_literal "curl -fsSL https://agentralabs.tech/install/memory | bash"
+require_literal "curl -fsSL https://agentralabs.tech/install/memory/desktop | bash"
+require_literal "curl -fsSL https://agentralabs.tech/install/memory/terminal | bash"
+require_literal "curl -fsSL https://agentralabs.tech/install/memory/server | bash"
 require_literal "pip install amem-installer && amem-install install --auto"
 require_literal "cargo install agentic-memory agentic-memory-mcp"
 
 require_literal "curl -fsSL https://agentralabs.tech/install/vision | bash"
+require_literal "curl -fsSL https://agentralabs.tech/install/vision/desktop | bash"
+require_literal "curl -fsSL https://agentralabs.tech/install/vision/terminal | bash"
+require_literal "curl -fsSL https://agentralabs.tech/install/vision/server | bash"
 require_literal "cargo install agentic-vision-mcp"
 require_literal "cargo add agentic-vision"
 
 require_literal "curl -fsSL https://agentralabs.tech/install/codebase | bash"
+require_literal "curl -fsSL https://agentralabs.tech/install/codebase/desktop | bash"
+require_literal "curl -fsSL https://agentralabs.tech/install/codebase/terminal | bash"
+require_literal "curl -fsSL https://agentralabs.tech/install/codebase/server | bash"
 require_literal "cargo install agentic-codebase"
 
 if find_regex "cargo install agentic-vision agentic-vision-mcp" "$FILE" >/dev/null; then
@@ -54,5 +63,6 @@ fi
 find_fixed "curl -fsSL https://agentralabs.tech/install/memory | bash" app/install/route.ts >/dev/null || fail "install route missing memory command"
 find_fixed "curl -fsSL https://agentralabs.tech/install/vision | bash" app/install/route.ts >/dev/null || fail "install route missing vision command"
 find_fixed "curl -fsSL https://agentralabs.tech/install/codebase | bash" app/install/route.ts >/dev/null || fail "install route missing codebase command"
+find_fixed "bash -s -- --profile=" "app/install/[target]/[profile]/route.ts" >/dev/null || fail "profile install route missing profile wrapper"
 
 echo "Install command guardrails passed (web)."

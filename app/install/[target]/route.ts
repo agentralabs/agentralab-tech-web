@@ -23,11 +23,12 @@ function withCacheBust(scriptUrl: string, request: NextRequest): string {
 }
 
 export async function GET(
-  _request: NextRequest,
+  request: NextRequest,
   { params }: { params: Promise<{ target: string }> }
 ) {
   const { target } = await params
   const scriptUrl = resolveTarget(target)
+  const profile = request.nextUrl.searchParams.get("profile")?.toLowerCase()
 
   if (!scriptUrl) {
     return NextResponse.json(
@@ -39,19 +40,29 @@ export async function GET(
     )
   }
 
-  return NextResponse.redirect(withCacheBust(scriptUrl, _request), 307)
+  if (profile && ["desktop", "terminal", "server"].includes(profile)) {
+    const url = new URL(`/install/${target}/${profile}`, request.url)
+    return NextResponse.redirect(url, 307)
+  }
+
+  return NextResponse.redirect(withCacheBust(scriptUrl, request), 307)
 }
 
 export async function HEAD(
-  _request: NextRequest,
+  request: NextRequest,
   { params }: { params: Promise<{ target: string }> }
 ) {
   const { target } = await params
   const scriptUrl = resolveTarget(target)
+  const profile = request.nextUrl.searchParams.get("profile")?.toLowerCase()
 
   if (!scriptUrl) {
     return new NextResponse(null, { status: 404 })
   }
 
-  return NextResponse.redirect(withCacheBust(scriptUrl, _request), 307)
+  if (profile && ["desktop", "terminal", "server"].includes(profile)) {
+    return new NextResponse(null, { status: 200 })
+  }
+
+  return NextResponse.redirect(withCacheBust(scriptUrl, request), 307)
 }

@@ -19,6 +19,38 @@ Use hosted installers first. They keep install behavior consistent across all pu
   ]}
 />
 
+## Install profiles by environment
+
+<CommandTabs
+  title="Desktop profile (MCP auto-merge)"
+  description="Desktop profile configures supported local desktop MCP clients."
+  items={[
+    { label: "Memory", code: "curl -fsSL https://agentralabs.tech/install/memory/desktop | bash" },
+    { label: "Vision", code: "curl -fsSL https://agentralabs.tech/install/vision/desktop | bash" },
+    { label: "Codebase", code: "curl -fsSL https://agentralabs.tech/install/codebase/desktop | bash" },
+  ]}
+/>
+
+<CommandTabs
+  title="Terminal profile (no config writes)"
+  description="Terminal profile installs binaries only."
+  items={[
+    { label: "Memory", code: "curl -fsSL https://agentralabs.tech/install/memory/terminal | bash" },
+    { label: "Vision", code: "curl -fsSL https://agentralabs.tech/install/vision/terminal | bash" },
+    { label: "Codebase", code: "curl -fsSL https://agentralabs.tech/install/codebase/terminal | bash" },
+  ]}
+/>
+
+<CommandTabs
+  title="Server profile (remote hosts)"
+  description="Server profile installs binaries for remote/service environments without desktop config writes."
+  items={[
+    { label: "Memory", code: "curl -fsSL https://agentralabs.tech/install/memory/server | bash" },
+    { label: "Vision", code: "curl -fsSL https://agentralabs.tech/install/vision/server | bash" },
+    { label: "Codebase", code: "curl -fsSL https://agentralabs.tech/install/codebase/server | bash" },
+  ]}
+/>
+
 ## Fallback behavior
 
 If a platform-specific release artifact is unavailable, installers fall back to source-based install (`cargo install` from canonical repo source).
