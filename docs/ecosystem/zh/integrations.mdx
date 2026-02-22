@@ -55,7 +55,7 @@ description: 将 MCP 服务连接到桌面客户端与本地代理运行时。
   title="MCP 服务条目"
   description="在客户端配置文件中为每个运行时添加一个服务项。"
   code={`{
-  "command": "/Users/<you>/.local/bin/agentic-vision-mcp",
+  "command": "/absolute/path/to/agentic-vision-mcp",
   "args": ["serve"]
 }`}
 />
@@ -70,7 +70,7 @@ description: 将 MCP 服务连接到桌面客户端与本地代理运行时。
   title="通用 MCP JSON 示例"
   description="在 MCP 兼容客户端中都可使用同一结构。"
   code={`{
-  "command": "/Users/<you>/.local/bin/agentic-memory-mcp",
+  "command": "/absolute/path/to/agentic-memory-mcp",
   "args": ["serve"],
   "env": {
     "AGENTRA_RUNTIME_MODE": "desktop"
@@ -91,10 +91,10 @@ which acb-mcp`}
 
 <CliOutput
   title="期望信号"
-  output={`[ok] /Users/<you>/.local/bin/amem
-[ok] /Users/<you>/.local/bin/agentic-vision-mcp
-[ok] /Users/<you>/.local/bin/acb
-[ok] /Users/<you>/.local/bin/acb-mcp`}
+  output={`[ok] /absolute/path/to/amem
+[ok] /absolute/path/to/agentic-vision-mcp
+[ok] /absolute/path/to/acb
+[ok] /absolute/path/to/acb-mcp`}
 />
 
 <Callout type="tip" title="验证后">

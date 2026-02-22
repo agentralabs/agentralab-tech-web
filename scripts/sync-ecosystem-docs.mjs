@@ -463,13 +463,8 @@ async function syncSisterReferencePages() {
       const cleanedBody = commandFocused
         ? normalized
         : stripCommandCodeFences(normalized)
-      const commandTrimmed = !commandFocused && cleanedBody !== normalized
-      const cleanEn = commandTrimmed
-        ? `${cleanedBody}\n\n> Command steps are centralized in Quickstart and Integration Guide for faster onboarding.`
-        : cleanedBody
-      const cleanZh = commandTrimmed
-        ? `${cleanedBody}\n\n> 为了避免重复，命令步骤集中在 Quickstart 与 Integration Guide 页面。`
-        : cleanedBody
+      const cleanEn = cleanedBody
+      const cleanZh = cleanedBody
 
       const enContent = withFrontMatter({
         title: titleEn,

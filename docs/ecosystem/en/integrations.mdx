@@ -55,7 +55,7 @@ For Cursor, VS Code, Windsurf, Cline, Codex Desktop, and generic MCP clients:
   title="MCP server entry"
   description="Add one server entry per runtime in your client config file."
   code={`{
-  "command": "/Users/<you>/.local/bin/agentic-vision-mcp",
+  "command": "/absolute/path/to/agentic-vision-mcp",
   "args": ["serve"]
 }`}
 />
@@ -70,7 +70,7 @@ Equivalent binaries:
   title="Portable MCP JSON (all clients)"
   description="Use the same shape across MCP-compatible clients."
   code={`{
-  "command": "/Users/<you>/.local/bin/agentic-memory-mcp",
+  "command": "/absolute/path/to/agentic-memory-mcp",
   "args": ["serve"],
   "env": {
     "AGENTRA_RUNTIME_MODE": "desktop"
@@ -91,10 +91,10 @@ which acb-mcp`}
 
 <CliOutput
   title="Expected signal"
-  output={`[ok] /Users/<you>/.local/bin/amem
-[ok] /Users/<you>/.local/bin/agentic-vision-mcp
-[ok] /Users/<you>/.local/bin/acb
-[ok] /Users/<you>/.local/bin/acb-mcp`}
+  output={`[ok] /absolute/path/to/amem
+[ok] /absolute/path/to/agentic-vision-mcp
+[ok] /absolute/path/to/acb
+[ok] /absolute/path/to/acb-mcp`}
 />
 
 <Callout type="tip" title="After validation">

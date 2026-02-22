@@ -29,5 +29,8 @@ jobs:
       - name: Lint
         run: pnpm lint
 
+      - name: Public docs quality guardrail
+        run: ./scripts/check-public-docs.sh
+
       - name: Build
         run: pnpm build
