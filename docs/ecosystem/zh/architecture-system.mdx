@@ -1,34 +1,61 @@
 ---
 title: "系统架构"
-description: "本页介绍了工作区编排和三姐妹如何结合在一起。"
+description: "This page shows how Agentra orchestration and the three sisters operate together across local and server runtime environments."
 ---
 
-本页介绍了工作区编排和三姐妹如何结合在一起。
+This page shows how Agentra orchestration and the three sisters operate together across local and server runtime environments.
 
-## 图层
+## Architecture overview flowchart
 
-1. **工作区协调器 (`agentra`)**
-：检测已安装的姐妹，控制接管状态，运行医生/预检，并管理备份/恢复。
-2. **姐妹运行时间**
-：`acb-mcp`、`agentic-memory-mcp`、`agentic-vision-mcp` 公开 MCP 工具和工件。
-3. **文物**
-：`.acb`（代码图）、`.amem`（认知图）、`.avis`（视觉记忆）。
-4. **MCP 客户端**
-：任何兼容的桌面/终端/服务器 MCP 客户端都可以连接。
+![Agentra Ecosystem Architecture 总览](/images/docs/architecture/architecture-overview.svg)
+
+The overview flow is:
+
+1. MCP client requests go through `agentra`.
+2. `agentra` coordinates sister runtimes (`acb-mcp`, `agentic-memory-mcp`, `agentic-vision-mcp`).
+3. Sister runtimes produce and consume artifacts (`.acb`, `.amem`, `.avis`).
+4. 运行time targets (desktop, terminal, server) execute under one contract.
+
+## Local runtime flowchart (desktop and terminal)
+
+![Local 运行time Flow (Desktop and Terminal)](/images/docs/architecture/local-runtime-flow.svg)
+
+Local runtime sequence:
+
+1. 安装 one or more sisters.
+2. Restart the MCP client so it reloads config.
+3. `agentra` detects binaries and artifact availability.
+4. Takeover policy applies (auto/prompt/manual or explicit control toggles).
+
+## Server handoff flowchart (auth + artifact sync)
+
+![Server Handoff Flow (Authentication and Artifact Sync)](/images/docs/architecture/server-handoff-flow.svg)
+
+Server mode adds two non-optional requirements:
+
+1. Explicit authentication (`AGENTIC_TOKEN` or `AGENTIC_TOKEN_FILE`).
+2. Artifact sync from local machine to server-accessible directories.
+
+## Layer model
+
+1. **Workspace orchestrator (`agentra`)**: detection, takeover state, doctor/preflight, backup and restore.
+2. **Sister runtimes**: `acb-mcp`, `agentic-memory-mcp`, and `agentic-vision-mcp` expose MCP tools.
+3. **Artifacts**: `.acb` (code graph), `.amem` (memory graph), `.avis` (visual memory).
+4. **MCP clients**: any compliant desktop, terminal, or server MCP client.
 
 ## 运行时间模式
 
-- **桌面/终端**：本地工件和本地 MCP 服务器。
-- **服务器**：经过身份验证的 MCP 以及同步工件；服务器无法直接读取笔记本电脑本地文件。
+- **Desktop and terminal**: local artifacts with local MCP servers.
+- **Server**: authenticated MCP with synced artifacts. Server runtimes cannot directly read laptop-local files.
 
 ## 控制模型
 
-- 当姐妹/文物存在时，自动检测可以进行接管。
-- 用户无需卸载即可释放或重新启用接管。
-- 每个姐妹的覆盖是非破坏性的并且运行时安全的。
+- Auto-detection can activate takeover when sisters or artifacts are present.
+- Users can release and re-enable control without uninstalling sisters.
+- Per-sister enable/disable remains non-destructive and runtime-safe.
 
 ## 规范保证
 
 - 每个姐妹仍然可以独立安装。
 - 姐妹之间没有严格的运行时依赖性。
-- Web 文档是从规范源文档生成的。
+- 文档 pages are generated from canonical source docs.
