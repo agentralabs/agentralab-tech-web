@@ -1,35 +1,46 @@
 ---
-title: "Quickstart"
-description: "curl -fsSL https://agentralabs.tech/install/codebase | bash"
+title: "快速开始"
+description: "卷曲-fsSL https://agentralabs.tech/install/codebase |巴什"
 ---
 
-## 1. Install
+## 1. 安装
 
 ```bash
 curl -fsSL https://agentralabs.tech/install/codebase | bash
 ```
 
-Profile-specific commands are listed in [Installation](/docs/codebase-installation).
+按配置文件区分的命令见[安装](/docs/zh/codebase-installation)。
 
-## 2. Compile a repository
+## 2. 编译仓库
 
 ```bash
-acb compile ./my-project -o project.acb
+acb compile ./my-project -o project.acb --coverage-report coverage.json
 acb info project.acb
 ```
 
-## 3. Run core queries
+## 3. 运行核心查询
 
 ```bash
 acb query project.acb symbol --name "main"
 acb query project.acb impact --unit-id 1
 acb query project.acb deps --unit-id 1 --depth 3
+acb query project.acb test-gap
+acb query project.acb hotspots
+acb query project.acb dead-code
 ```
 
-## 4. Start MCP server
+## 4. 运行健康与门禁检查
 
 ```bash
-$HOME/.local/bin/acb-mcp
+acb health project.acb
+acb gate project.acb --unit-id 1 --max-risk 0.60 --require-tests
+acb budget project.acb --horizon-years 20 --max-bytes 2147483648
 ```
 
-Use `Ctrl+C` to stop after startup verification.
+## 5.启动MCP服务
+
+```bash
+acb-mcp serve
+```
+
+启动验证完成后，使用`Ctrl+C`停止。

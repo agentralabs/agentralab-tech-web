@@ -1,32 +1,32 @@
 ---
-title: "Runtime, Install Output, and Sync Contract"
-description: "This page defines expected runtime behavior across installer output, CLI behavior, and web documentation."
+title: "运行、安装输出与同步契约"
+description: "此页面定义了安装程序输出、CLI 行为和 Web 文档的预期运行时行为。"
 ---
 
-This page defines expected runtime behavior across installer output, CLI behavior, and web documentation.
+此页面定义了安装程序输出、CLI 行为和 Web 文档的预期运行时行为。
 
-## Installer profiles
+## 安装者个人资料
 
-- `desktop`: installs `acb` and `acb-mcp`, then merges detected desktop MCP config.
-- `terminal`: installs `acb` and `acb-mcp` without desktop-specific UX assumptions.
-- `server`: installs `acb` and `acb-mcp` without desktop config writes.
+- `desktop`：安装 `acb` 和 `acb-mcp`，然后合并检测到的桌面 MCP 配置。
+- `terminal`：安装 `acb` 和 `acb-mcp`，无需桌面特定的 UX 假设。
+- `server`：安装 `acb` 和 `acb-mcp`，无需写入桌面配置。
 
-## Completion output contract
+## 完成产出合约
 
-Installer must print:
+安装者必须打印：
 
-1. Installed binary summary.
-2. MCP restart instruction.
-3. Server auth + artifact sync guidance when relevant.
-4. Optional feedback instruction.
+1.安装二进制摘要。
+2.MCP重启指令。
+3. 相关时的服务器身份验证+工件同步指导。
+4. 任选反馈指令。
 
-Expected completion marker:
+预期完成标记：
 
 ```text
 Install complete: AgenticCodebase (<profile>)
 ```
 
-## Universal MCP config
+## 通用 MCP 配置
 
 ```json
 {
@@ -39,10 +39,27 @@ Install complete: AgenticCodebase (<profile>)
 }
 ```
 
-## Server auth + sync
+## 服务器验证+同步
 
 ```bash
 export AGENTIC_TOKEN="$(openssl rand -hex 32)"
 ```
 
-Server deployments must sync `.acb/.amem/.avis` artifacts to server storage before runtime.
+服务器部署必须在运行前将 `.acb/.amem/.avis` 工件同步到服务器存储。
+
+## 长期存储预算策略
+
+要长期（例如 20 年）以约 1-2 GB 为目标，请配置：
+
+```bash
+export ACB_STORAGE_BUDGET_MODE=auto-rollup
+export ACB_STORAGE_BUDGET_BYTES=2147483648
+export ACB_STORAGE_BUDGET_HORIZON_YEARS=20
+export ACB_STORAGE_BUDGET_TARGET_FRACTION=0.85
+```
+
+模式:
+
+- `auto-rollup`：在检测到预算压力时修剪最旧的 `.acb` 备份沿袭。
+- `warn`：仅发出警告。
+- `off`：禁用策略。

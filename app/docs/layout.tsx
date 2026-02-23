@@ -6,7 +6,13 @@ import { cookies } from "next/headers"
 import { getDocsSource } from "@/lib/source"
 import { DocsSidebarNav } from "@/components/docs-sidebar-nav"
 import { DocsTopControls } from "@/components/docs-top-controls"
-import { DOCS_LANGUAGE_COOKIE, docsUi, localizeDocsLabel, normalizeDocsLanguage } from "@/lib/docs-i18n"
+import {
+  DOCS_LANGUAGE_COOKIE,
+  docsUi,
+  localizeDocsHref,
+  localizeDocsLabel,
+  normalizeDocsLanguage,
+} from "@/lib/docs-i18n"
 import "./docs.css"
 
 interface DocsRouteLayoutProps {
@@ -109,7 +115,7 @@ export default async function DocsRouteLayout({ children }: DocsRouteLayoutProps
     .getPages()
     .filter((page) => page.url.startsWith("/docs"))
     .map((page) => ({
-      href: page.url,
+      href: localizeDocsHref(page.url, language),
       label: localizeDocsLabel(titleFor(page.url, page.data.title), language),
       description: typeof page.data.description === "string" ? page.data.description : undefined,
     }))
@@ -221,7 +227,7 @@ export default async function DocsRouteLayout({ children }: DocsRouteLayoutProps
   return (
     <div className={`docs-shell docs-variant-aspen ${manrope.variable}`}>
       <header className="docs-topbar">
-        <Link href="/docs" className="docs-brand">
+        <Link href={localizeDocsHref("/docs", language)} className="docs-brand">
           <span className="docs-brand-mark">
             <Image
               src="/images/agentra-logo-current.svg"
@@ -237,7 +243,7 @@ export default async function DocsRouteLayout({ children }: DocsRouteLayoutProps
           </span>
         </Link>
         <nav className="docs-topnav">
-          <Link href="/docs">{localizeDocsLabel("Guides", language)}</Link>
+          <Link href={localizeDocsHref("/docs", language)}>{localizeDocsLabel("Guides", language)}</Link>
           {apiReferenceHref ? <Link href={apiReferenceHref}>{localizeDocsLabel("API Reference", language)}</Link> : null}
         </nav>
         <DocsTopControls language={language} items={orderedItems} />

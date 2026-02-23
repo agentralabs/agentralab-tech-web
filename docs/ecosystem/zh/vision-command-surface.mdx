@@ -1,15 +1,15 @@
 ---
-title: "Command Surface"
-description: "Install commands are documented in [Installation](/docs/vision-installation)."
+title: "命令面"
+description: "安装命令记录在[安装](/docs/vision-installation)中。"
 ---
 
-Install commands are documented in [Installation](/docs/vision-installation).
+安装命令记录在[安装](/docs/zh/vision-installation)中。
 
-## Binary
+## 二进制
 
 - `agentic-vision-mcp`
 
-## Top-level commands
+## 顶级命令
 
 ```bash
 agentic-vision-mcp serve
@@ -19,13 +19,35 @@ agentic-vision-mcp completions
 agentic-vision-mcp repl
 ```
 
-## Common options
+## 常用选项
 
 - `-v, --vision &lt;file.avis&gt;`
 - `--model &lt;clip_model.onnx&gt;`
 - `--log-level trace|debug|info|warn|error`
 
-## Universal MCP entry
+## 运行时间预算控制
+
+```bash
+export CORTEX_STORAGE_BUDGET_MODE=auto-rollup
+export CORTEX_STORAGE_BUDGET_BYTES=2147483648
+export CORTEX_STORAGE_BUDGET_HORIZON_YEARS=20
+export CORTEX_STORAGE_BUDGET_TARGET_FRACTION=0.85
+```
+
+## MCP 公开的关键工具
+
+- `vision_capture`（现在返回 `quality_score`）
+- `vision_query`（支持 `description_contains`、`min_quality`、`sort_by`）
+- `vision_health`（质量+陈旧性+链接摘要）
+- `vision_similar`
+- `vision_compare`
+- `vision_diff`
+- `vision_ocr`
+- `vision_link`
+- `session_start`
+- `session_end`
+
+## 通用 MCP 条目
 
 ```json
 {

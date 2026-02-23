@@ -1,13 +1,13 @@
 ---
-title: "Rust API Reference"
-description: "AgenticMemory is implemented in Rust. This document covers the core library API and the `amem` CLI tool."
+title: "Rust API 参考"
+description: "AgenticMemory 是用 Rust 实现的。本文档涵盖核心库 API 和 `amem` CLI 工具。"
 ---
 
-AgenticMemory is implemented in Rust. This document covers the core library API and the `amem` CLI tool.
+AgenticMemory 是用 Rust 实现的。本文档涵盖核心库 API 和 `amem` CLI 工具。
 
-## Library Crate
+## 图书馆箱
 
-Add to your `Cargo.toml`:
+添加到您的 `Cargo.toml`：
 
 ```toml
 [dependencies]
@@ -16,11 +16,11 @@ agentic-memory = "0.2"
 
 ---
 
-## CognitiveGraph
+## 认知图
 
-The in-memory representation of an agent's cognitive graph. This is the primary data structure for building and manipulating the graph before writing it to disk.
+代理认知图的内存表示。这是在将图形写入磁盘之前构建和操作图形的主要数据结构。
 
-### Constructor
+### 构造函数
 
 ```rust
 impl CognitiveGraph {
@@ -29,7 +29,7 @@ impl CognitiveGraph {
 }
 ```
 
-**Example:**
+**例子：**
 
 ```rust
 use agentic_memory::CognitiveGraph;
@@ -39,7 +39,7 @@ let mut graph = CognitiveGraph::new();
 
 ---
 
-### add_node()
+### 添加节点()
 
 ```rust
 pub fn add_node(
@@ -52,19 +52,19 @@ pub fn add_node(
 ) -> NodeId;
 ```
 
-Adds a cognitive event to the graph. Returns the unique `NodeId` for the new node.
+将认知事件添加到图表中。返回新节点的唯一 `NodeId`。
 
-**Parameters:**
+**参数：**
 
-| Parameter | Type | Description |
+|参数|类型 |描述 |
 |-----------|------|-------------|
-| `event_type` | `EventType` | One of: `Fact`, `Decision`, `Inference`, `Correction`, `Skill`, `Episode`. |
-| `content` | `&str` | The textual content of the event. |
-| `session` | `u32` | Session ID this event belongs to. |
-| `confidence` | `f32` | Confidence score between 0.0 and 1.0. |
-| `metadata` | `Option<HashMap<String, String>>` | Optional key-value metadata. |
+| `event_type` | `EventType` |以下之一：`Fact`、`Decision`、`Inference`、`Correction`、`Skill`、`Episode`。 |
+| `content` | `&str` |事件的文字内容。 |
+| `session` | `u32` |此事件所属的会话 ID。 |
+| `confidence` | `f32` |置信度得分介于 0.0 和 1.0 之间。 |
+| `metadata` | `Option<HashMap<String, String>>` | 任选键值元数据。 |
 
-**Example:**
+**例子：**
 
 ```rust
 use agentic_memory::{CognitiveGraph, EventType};
@@ -81,7 +81,7 @@ let fact_id = graph.add_node(
 
 ---
 
-### add_edge()
+### 添加边缘()
 
 ```rust
 pub fn add_edge(
@@ -93,18 +93,18 @@ pub fn add_edge(
 ) -> Result<EdgeId, GraphError>;
 ```
 
-Creates a directed, weighted edge between two nodes. Returns the `EdgeId` or an error if either node does not exist.
+在两个节点之间创建有向加权边。如果任一节点不存在，则返回 `EdgeId` 或错误。
 
-**Parameters:**
+**参数：**
 
-| Parameter | Type | Description |
+|参数|类型 |描述 |
 |-----------|------|-------------|
-| `source` | `NodeId` | Source node ID. |
-| `target` | `NodeId` | Target node ID. |
-| `edge_type` | `EdgeType` | One of: `CausedBy`, `Supports`, `Contradicts`, `Supersedes`, `RelatedTo`, `PartOf`, `TemporalNext`. |
-| `weight` | `f32` | Edge weight between 0.0 and 1.0. |
+| `source` | `NodeId` |源节点ID。 |
+| `target` | `NodeId` |目标节点ID。 |
+| `edge_type` | `EdgeType` |以下之一：`CausedBy`、`Supports`、`Contradicts`、`Supersedes`、`RelatedTo`、`PartOf`、`TemporalNext`。 |
+| `weight` | `f32` |边权重介于 0.0 和 1.0 之间。 |
 
-**Example:**
+**例子：**
 
 ```rust
 use agentic_memory::EdgeType;
@@ -115,17 +115,17 @@ graph.add_edge(decision_id, fact_id, EdgeType::Supports, 0.85)?;
 
 ---
 
-### node()
+### 节点()
 
 ```rust
 pub fn node(&self, id: NodeId) -> Option<&CognitiveNode>;
 ```
 
-Returns a reference to the node with the given ID, or `None` if it does not exist.
+返回对具有给定 ID 的节点的引用，如果不存在则返回 `None` 。
 
 ---
 
-### neighbors()
+### 邻居()
 
 ```rust
 pub fn neighbors(
@@ -135,18 +135,18 @@ pub fn neighbors(
 ) -> Vec<(NodeId, &CognitiveEdge)>;
 ```
 
-Returns all adjacent nodes and their connecting edges in the specified direction.
+返回指定方向上的所有相邻节点及其连接边。
 
-**Parameters:**
+**参数：**
 
-| Parameter | Type | Description |
+|参数|类型 |描述 |
 |-----------|------|-------------|
-| `id` | `NodeId` | The node to query neighbors of. |
-| `direction` | `Direction` | `Direction::Outgoing`, `Direction::Incoming`, or `Direction::Both`. |
+| `id` | `NodeId` |要查询其邻居的节点。 |
+| `direction` | `Direction` | `Direction::Outgoing`、`Direction::Incoming` 或 `Direction::Both`。 |
 
 ---
 
-### traverse()
+### 遍历()
 
 ```rust
 pub fn traverse(
@@ -157,54 +157,54 @@ pub fn traverse(
 ) -> TraversalResult;
 ```
 
-Performs a breadth-first traversal from the starting node up to the specified depth.
+从起始节点到指定深度执行广度优先遍历。
 
-**Parameters:**
+**参数：**
 
-| Parameter | Type | Description |
+|参数|类型 |描述 |
 |-----------|------|-------------|
-| `start` | `NodeId` | Starting node for traversal. |
-| `max_depth` | `usize` | Maximum depth to traverse. |
-| `edge_filter` | `Option<&[EdgeType]>` | If provided, only follow edges of these types. |
+| `start` | `NodeId` |遍历的起始节点。 |
+| `max_depth` | `usize` |最大遍历深度。 |
+| `edge_filter` | `Option<&[EdgeType]>` |如果提供，则仅遵循这些类型的边缘。 |
 
-**Returns:** `TraversalResult` containing visited nodes, traversed edges, and the depth reached.
+**返回：** `TraversalResult` 包含访问过的节点、遍历过的边以及到达的深度。
 
 ---
 
-### node_count() / edge_count()
+### 节点计数() / 边缘计数()
 
 ```rust
 pub fn node_count(&self) -> usize;
 pub fn edge_count(&self) -> usize;
 ```
 
-Return the total number of nodes and edges in the graph.
+返回图中节点和边的总数。
 
 ---
 
-### nodes_by_type()
+###nodes_by_type()
 
 ```rust
 pub fn nodes_by_type(&self, event_type: EventType) -> Vec<NodeId>;
 ```
 
-Returns all node IDs matching the given event type.
+返回与给定事件类型匹配的所有节点 ID。
 
 ---
 
-### nodes_by_session()
+###nodes_by_session()
 
 ```rust
 pub fn nodes_by_session(&self, session: u32) -> Vec<NodeId>;
 ```
 
-Returns all node IDs belonging to the given session.
+返回属于给定会话的所有节点 ID。
 
 ---
 
-## Types
+## 类型
 
-### EventType
+### 事件类型
 
 ```rust
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
@@ -218,7 +218,7 @@ pub enum EventType {
 }
 ```
 
-### EdgeType
+### 边缘类型
 
 ```rust
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
@@ -233,7 +233,7 @@ pub enum EdgeType {
 }
 ```
 
-### CognitiveNode
+### 认知节点
 
 ```rust
 pub struct CognitiveNode {
@@ -248,7 +248,7 @@ pub struct CognitiveNode {
 }
 ```
 
-### CognitiveEdge
+### 认知边缘
 
 ```rust
 pub struct CognitiveEdge {
@@ -259,7 +259,7 @@ pub struct CognitiveEdge {
 }
 ```
 
-### TraversalResult
+### 遍历结果
 
 ```rust
 pub struct TraversalResult {
@@ -269,7 +269,7 @@ pub struct TraversalResult {
 }
 ```
 
-### Direction
+＃＃＃ 方向
 
 ```rust
 pub enum Direction {
@@ -279,7 +279,7 @@ pub enum Direction {
 }
 ```
 
-### GraphError
+### 图错误
 
 ```rust
 #[derive(Debug, thiserror::Error)]
@@ -297,11 +297,11 @@ pub enum GraphError {
 
 ---
 
-## File I/O
+## 文件输入/输出
 
-### FileWriter
+### 文件写入器
 
-Serializes a `CognitiveGraph` to the `.amem` binary format.
+将 `CognitiveGraph` 序列化为 `.amem` 二进制格式。
 
 ```rust
 use agentic_memory::io::FileWriter;
@@ -313,7 +313,7 @@ impl FileWriter {
 }
 ```
 
-**Example:**
+**例子：**
 
 ```rust
 use agentic_memory::io::FileWriter;
@@ -322,9 +322,9 @@ use std::path::Path;
 FileWriter::write(&graph, Path::new("agent.amem"))?;
 ```
 
-### FileReader
+### 文件阅读器
 
-Deserializes a `.amem` file into a `CognitiveGraph`. Reads the entire file into memory.
+将 `.amem` 文件反序列化为 `CognitiveGraph`。将整个文件读入内存。
 
 ```rust
 use agentic_memory::io::FileReader;
@@ -335,7 +335,7 @@ impl FileReader {
 }
 ```
 
-**Example:**
+**例子：**
 
 ```rust
 use agentic_memory::io::FileReader;
@@ -347,7 +347,7 @@ println!("Loaded {} nodes", graph.node_count());
 
 ### MmapReader
 
-Memory-mapped read access. Does not load the entire file into memory -- pages are loaded on demand by the OS. Ideal for large brain files or read-heavy workloads.
+内存映射读访问。 Does not load the entire file into memory -- pages are loaded on demand by the OS. Ideal for large brain files or read-heavy workloads.
 
 ```rust
 use agentic_memory::io::MmapReader;
@@ -370,7 +370,7 @@ impl MmapReader {
 }
 ```
 
-**Example:**
+**例子：**
 
 ```rust
 use agentic_memory::io::MmapReader;
@@ -384,9 +384,9 @@ if let Some(node) = reader.node(NodeId(42)) {
 
 ---
 
-## QueryEngine
+## 查询引擎
 
-Provides indexed query operations on top of a `CognitiveGraph` or `MmapReader`.
+在 `CognitiveGraph` 或 `MmapReader` 之上提供索引查询操作。
 
 ```rust
 use agentic_memory::query::QueryEngine;
@@ -421,7 +421,7 @@ impl QueryEngine {
 }
 ```
 
-**Example:**
+**例子：**
 
 ```rust
 use agentic_memory::query::QueryEngine;
@@ -440,19 +440,19 @@ for (node_id, score) in results {
 
 ---
 
-## v0.2 Query Methods
+## v0.2 查询方法
 
-Added in v0.2.0. All methods are available on `QueryEngine`.
+v0.2.0 中添加。所有方法均可在 `QueryEngine` 上使用。
 
-### search_text()
+### 搜索文本()
 
 ```rust
 pub fn search_text(&self, query: &str, top_k: usize) -> Vec<TextMatch>;
 ```
 
-BM25 text search using the inverted term index. Falls back to full scan for v0.1 files without a TermIndex.
+使用倒排术语索引的 BM25 文本搜索。 Falls back to full scan for v0.1 files without a TermIndex.
 
-**Performance:** 1.58 ms @ 100K nodes (fast path), 122 ms (slow path).
+**性能：** 1.58 ms @ 100K 节点（快速路径），122 ms（慢速路径）。
 
 ---
 
@@ -468,25 +468,25 @@ pub fn search_hybrid(
 ) -> Vec<HybridMatch>;
 ```
 
-Combined BM25 + cosine similarity search with RRF (Reciprocal Rank Fusion). `alpha` controls the BM25/vector weight balance (0.0 = pure vector, 1.0 = pure BM25).
+将 BM25 + 余弦相似度搜索与 RRF（倒数排名融合）相结合。 `alpha` 控制 BM25/向量权重平衡（0.0 = 纯向量，1.0 = 纯 BM25）。
 
 **Performance:** 10.83 ms @ 100K nodes.
 
 ---
 
-### centrality()
+### 中心性()
 
 ```rust
 pub fn centrality(&self, metric: CentralityMetric) -> Vec<(NodeId, f64)>;
 ```
 
-Computes centrality scores for all nodes. Available metrics: `PageRank`, `Degree`, `Betweenness`.
+计算所有节点的中心性分数。可用指标：`PageRank`、`Degree`、`Betweenness`。
 
-**Performance:** PageRank 34.3 ms, Degree 20.7 ms, Betweenness 10.1 s @ 100K nodes.
+**性能：** PageRank 34.3 毫秒，度数 20.7 毫秒，介数 10.1 秒 @ 100K 节点。
 
 ---
 
-### shortest_path()
+###最短路径()
 
 ```rust
 pub fn shortest_path(
@@ -497,89 +497,89 @@ pub fn shortest_path(
 ) -> Option<PathResult>;
 ```
 
-Finds the shortest path between two nodes. Available algorithms: `BFS` (unweighted), `Dijkstra` (weighted).
+查找两个节点之间的最短路径。 Available algorithms: `BFS` (unweighted), `Dijkstra` (weighted).
 
-**Performance:** BFS 104 µs, Dijkstra 17.6 ms @ 100K nodes.
+**性能：** BFS 104 µs，Dijkstra 17.6 ms @ 100K 节点。
 
 ---
 
-### revise()
+＃＃＃ 修订（）
 
 ```rust
 pub fn revise(&self, node_id: NodeId) -> RevisionReport;
 ```
 
-Counterfactual belief revision: computes a cascade of what would change if the given node were retracted. Read-only — does not modify the graph.
+反事实信念修正：计算如果给定节点被撤回将会发生什么变化的级联。只读 - 不修改图表。
 
-**Performance:** 53.4 ms @ 100K nodes.
+**性能：** 100K 节点时为 53.4 毫秒。
 
 ---
 
-### gaps()
+### 间隙()
 
 ```rust
 pub fn gaps(&self) -> GapReport;
 ```
 
-Identifies reasoning weaknesses: unsupported decisions, isolated facts, contradictions without corrections, and weak inference chains.
+识别推理弱点：无支持的决策、孤立的事实、未经纠正的矛盾以及薄弱的推理链。
 
-**Performance:** 297 s @ 100K nodes (offline tier). Completes in &lt;3 s at 10K nodes.
+**性能：** 297 s @ 100K 节点（离线层）。在 10K 节点下，&lt;3 秒内完成。
 
 ---
 
-### analogy()
+### 类比()
 
 ```rust
 pub fn analogy(&self, node_id: NodeId, top_k: usize) -> Vec<Analogy>;
 ```
 
-Structural pattern matching: finds subgraph patterns similar to the local neighborhood of the given node.
+结构模式匹配：查找与给定节点的局部邻域相​​似的子图模式。
 
-**Performance:** 229 s @ 100K nodes (offline tier). Completes in &lt;3 s at 10K nodes.
+**性能：** 229 s @ 100K 节点（离线层）。在 10K 节点下，&lt;3 秒内完成。
 
 ---
 
-### consolidate()
+### 合并()
 
 ```rust
 pub fn consolidate(&self, dry_run: bool) -> ConsolidationReport;
 ```
 
-Graph maintenance: detects duplicate content, links contradictions, and suggests merges. When `dry_run` is true, returns the report without modifying the graph.
+图维护：检测重复内容、链接矛盾并建议合并。当 `dry_run` 为 true 时，返回报告而不修改图形。
 
-**Performance:** 43.6 s @ 100K nodes (periodic tier).
+**性能：** 43.6 s @ 100K 节点（周期层）。
 
 ---
 
-### drift()
+### 漂移()
 
 ```rust
 pub fn drift(&self) -> DriftReport;
 ```
 
-Analyzes supersedes chains to track how beliefs have evolved over time.
+分析取代链以追踪信念如何随时间演变。
 
-**Performance:** 68.4 ms @ 100K nodes.
+**性能：** 100K 节点时为 68.4 毫秒。
 
 ---
 
 ## CLI Reference: `amem`
 
-The `amem` binary provides command-line access to all core operations.
+`amem` 二进制文件提供对所有核心操作的命令行访问。
 
 ### amem create
 
-Creates a new, empty brain file.
+创建一个新的空大脑文件。
 
 ```
 amem create <PATH>
 ```
 
-| Argument | Description |
+|论证|描述 |
 |----------|-------------|
-| `PATH` | Path for the new `.amem` file. |
+| `PATH` |新 `.amem` 文件的路径。 |
 
-**Example:**
+**例子：**
 
 ```bash
 amem create project.amem
@@ -587,24 +587,24 @@ amem create project.amem
 
 ---
 
-### amem add
+### 添加
 
-Adds a cognitive event to a brain file.
+将认知事件添加到大脑文件中。
 
 ```
 amem add <PATH> <TYPE> <CONTENT> [OPTIONS]
 ```
 
-| Argument / Flag | Description |
+|参数/标志|描述 |
 |-----------------|-------------|
-| `PATH` | Path to the `.amem` file. |
-| `TYPE` | Event type: `fact`, `decision`, `inference`, `correction`, `skill`, `episode`. |
-| `CONTENT` | The text content of the event (quoted string). |
-| `--confidence &lt;FLOAT&gt;` | Confidence score, 0.0 to 1.0. Default: 1.0. |
-| `--session &lt;INT&gt;` | Session ID. Default: auto-assigned. |
-| `--meta <KEY=VALUE>` | Metadata key-value pair. Repeatable. |
+| `PATH` | `.amem` 文件的路径。 |
+| `TYPE` |事件类型：`fact`、`decision`、`inference`、`correction`、`skill`、`episode`。 |
+| `CONTENT` |事件的文本内容（带引号的字符串）。 |
+| `--confidence &lt;FLOAT&gt;` |置信度得分，0.0 到 1.0。默认值：1.0。 |
+| `--session &lt;INT&gt;` |会话 ID。默认值：自动分配。 |
+| `--meta <KEY=VALUE>` |元数据键值对。可重复。 |
 
-**Example:**
+**例子：**
 
 ```bash
 amem add project.amem fact "Rust 1.75 supports async traits" --confidence 0.95 --meta source=docs
@@ -612,23 +612,23 @@ amem add project.amem fact "Rust 1.75 supports async traits" --confidence 0.95 -
 
 ---
 
-### amem link
+### 链接
 
-Creates an edge between two events.
+在两个事件之间创建边缘。
 
 ```
 amem link <PATH> <SOURCE> <TARGET> <TYPE> [OPTIONS]
 ```
 
-| Argument / Flag | Description |
+|参数/标志|描述 |
 |-----------------|-------------|
-| `PATH` | Path to the `.amem` file. |
-| `SOURCE` | Source node ID (integer). |
-| `TARGET` | Target node ID (integer). |
-| `TYPE` | Edge type: `caused_by`, `supports`, `contradicts`, `supersedes`, `related_to`, `part_of`, `temporal_next`. |
-| `--weight &lt;FLOAT&gt;` | Edge weight, 0.0 to 1.0. Default: 1.0. |
+| `PATH` | `.amem` 文件的路径。 |
+| `SOURCE` |源节点 ID（整数）。 |
+| `TARGET` |目标节点 ID（整数）。 |
+| `TYPE` |边缘类型：`caused_by`、`supports`、`contradicts`、`supersedes`、`related_to`、`part_of`、`temporal_next`。 |
+| `--weight &lt;FLOAT&gt;` |边权重，0.0 到 1.0。默认值：1.0。 |
 
-**Example:**
+**例子：**
 
 ```bash
 amem link project.amem 0 1 supports --weight 0.9
@@ -636,21 +636,21 @@ amem link project.amem 0 1 supports --weight 0.9
 
 ---
 
-### amem info
+### 阿姆信息
 
-Displays summary information about a brain file.
+显示有关大脑文件的摘要信息。
 
 ```
 amem info <PATH> [OPTIONS]
 ```
 
-| Argument / Flag | Description |
+|参数/标志|描述 |
 |-----------------|-------------|
-| `PATH` | Path to the `.amem` file. |
-| `--sessions` | Show per-session breakdown. |
-| `--json` | Output as JSON. |
+| `PATH` | `.amem` 文件的路径。 |
+| `--sessions` |显示每个会话的细分。 |
+| `--json` |输出为 JSON。 |
 
-**Example:**
+**例子：**
 
 ```bash
 amem info project.amem --sessions
@@ -658,23 +658,23 @@ amem info project.amem --sessions
 
 ---
 
-### amem traverse
+### ame遍历
 
-Traverses the graph from a starting node and prints the results.
+从起始节点遍历图形并打印结果。
 
 ```
 amem traverse <PATH> <START_ID> [OPTIONS]
 ```
 
-| Argument / Flag | Description |
+|参数/标志|描述 |
 |-----------------|-------------|
-| `PATH` | Path to the `.amem` file. |
-| `START_ID` | Starting node ID. |
-| `--depth &lt;INT&gt;` | Maximum traversal depth. Default: 3. |
-| `--edge-type &lt;TYPE&gt;` | Filter to specific edge types. Repeatable. |
-| `--json` | Output as JSON. |
+| `PATH` | `.amem` 文件的路径。 |
+| `START_ID` |起始节点ID。 |
+| `--depth &lt;INT&gt;` |最大遍历深度。默认值：3。
+| `--edge-type &lt;TYPE&gt;` | Filter to specific edge types.可重复。 |
+| `--json` |输出为 JSON。 |
 
-**Example:**
+**例子：**
 
 ```bash
 amem traverse project.amem 0 --depth 5 --edge-type supports --edge-type caused_by
@@ -682,24 +682,24 @@ amem traverse project.amem 0 --depth 5 --edge-type supports --edge-type caused_b
 
 ---
 
-### amem query
+### 查询
 
-Queries events in the brain by type, session, or similarity search.
+按类型、会话或相似性搜索查询大脑中的事件。
 
 ```
 amem query <PATH> [OPTIONS]
 ```
 
-| Flag | Description |
+|旗帜|描述 |
 |------|-------------|
 | `--event-types &lt;TYPE&gt;` | Filter by event type. |
-| `--session &lt;INT&gt;` | Filter by session ID. |
+| `--session &lt;INT&gt;` |按会话 ID 过滤。 |
 | `--search &lt;TEXT&gt;` | Semantic similarity search query. |
-| `--top-k &lt;INT&gt;` | Number of results for similarity search. Default: 10. |
-| `--min-confidence &lt;FLOAT&gt;` | Minimum confidence threshold. |
-| `--json` | Output as JSON. |
+| `--top-k &lt;INT&gt;` |相似性搜索的结果数。默认值：10。
+| `--min-confidence &lt;FLOAT&gt;` |最小置信度阈值。 |
+| `--json` |输出为 JSON。 |
 
-**Example:**
+**例子：**
 
 ```bash
 amem query project.amem --event-types fact --min-confidence 0.8
@@ -710,100 +710,100 @@ amem query project.amem --search "database performance" --top-k 5
 
 ### amem mcp-serve
 
-Starts an MCP (Model Context Protocol) server that exposes the brain as a tool for AI coding assistants.
+启动 MCP（模型上下文协议）服务器，将大脑暴露为 AI 编码助手的工具。
 
 ```
 amem mcp-serve <PATH> [OPTIONS]
 ```
 
-| Argument / Flag | Description |
+|参数/标志|描述 |
 |-----------------|-------------|
-| `PATH` | Path to the `.amem` file. |
-| `--port &lt;INT&gt;` | Port to listen on. Default: 3100. |
-| `--host &lt;ADDR&gt;` | Host address to bind. Default: `127.0.0.1`. |
-| `--read-only` | Serve in read-only mode (no writes allowed). |
+| `PATH` | `.amem` 文件的路径。 |
+| `--port &lt;INT&gt;` |要侦听的端口。默认值：3100。
+| `--host &lt;ADDR&gt;` |要绑定的主机地址。默认值：`127.0.0.1`。 |
+| `--read-only` |以只读模式提供服务（不允许写入）。 |
 
-**Example:**
+**例子：**
 
 ```bash
 amem mcp-serve project.amem --port 3100
 ```
 
-This exposes the brain as MCP tools that Claude Code, Cursor, Windsurf, and other MCP-compatible editors can connect to. See the [Integration Guide](/docs/memory-integration-guide) for configuration details.
+这将大脑暴露为 Claude Code、Cursor、Windsurf 和其他 MCP 兼容编辑器可以连接的 MCP 工具。有关配置详细信息，请参阅[集成指南](/docs/zh/memory-integration-guide)。
 
 ---
 
-### v0.2 CLI Commands
+### v0.2 CLI 命令
 
-These commands were added in v0.2.0.
+这些命令是在 v0.2.0 中添加的。
 
-#### amem text-search
+#### amem 文本搜索
 
-BM25 text search.
+BM25 文本搜索。
 
 ```bash
 amem text-search <PATH> <QUERY> [--top-k <INT>]
 ```
 
-#### amem hybrid-search
+#### amem 混合搜索
 
-Hybrid BM25 + vector search with RRF fusion.
+混合 BM25 + 带 RRF 融合的矢量搜索。
 
 ```bash
 amem hybrid-search <PATH> <QUERY> [--top-k <INT>] [--alpha <FLOAT>]
 ```
 
-#### amem centrality
+#### aem中心性
 
-Compute centrality scores.
+计算中心性分数。
 
 ```bash
 amem centrality <PATH> --metric <pagerank|degree|betweenness> [--top-k <INT>] [--json]
 ```
 
-#### amem path
+#### 路径
 
-Find shortest path between two nodes.
+找到两个节点之间的最短路径。
 
 ```bash
 amem path <PATH> <SRC_ID> <DST_ID> [--algorithm <bfs|dijkstra>] [--json]
 ```
 
-#### amem revise
+#### 修改
 
-Run counterfactual belief revision cascade.
+运行反事实信念修正级联。
 
 ```bash
 amem revise <PATH> <NODE_ID> [--json]
 ```
 
-#### amem gaps
+#### 差距
 
-Detect reasoning gaps and weaknesses.
+检测推理差距和弱点。
 
 ```bash
 amem gaps <PATH> [--json]
 ```
 
-#### amem analogy
+####阿姆类比
 
-Find structural analogies for a node.
+查找节点的结构类比。
 
 ```bash
 amem analogy <PATH> <NODE_ID> [--top-k <INT>] [--json]
 ```
 
-#### amem consolidate
+#### aem 巩固
 
-Run graph consolidation (dedup, contradiction linking).
+运行图合并（重复数据删除、矛盾链接）。
 
 ```bash
 amem consolidate <PATH> [--dry-run] [--json]
 ```
 
-#### amem drift
+####阿姆漂移
 
-Detect belief drift through supersedes chains.
+检测取代链中的信念漂移。
 
 ```bash
 amem drift <PATH> [--json]

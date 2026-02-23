@@ -3,7 +3,7 @@ title: "Command Surface"
 description: "Install commands are documented in [Installation](/docs/memory-installation)."
 ---
 
-Install commands are documented in [Installation](/docs/memory-installation).
+Install commands are documented in [Installation](/docs/en/memory-installation).
 
 ## Binaries
 
@@ -27,6 +27,9 @@ amem export
 amem import
 amem decay
 amem stats
+amem quality
+amem runtime-sync
+amem budget
 amem text-search
 amem hybrid-search
 amem centrality
@@ -49,6 +52,29 @@ agentic-memory-mcp delete
 agentic-memory-mcp export
 agentic-memory-mcp compact
 agentic-memory-mcp stats
+```
+
+## New reliability commands
+
+```bash
+amem quality my_agent.amem
+amem quality my_agent.amem --low-confidence 0.4 --stale-decay 0.2 --limit 25
+
+amem runtime-sync my_agent.amem --workspace . --max-depth 4
+amem runtime-sync my_agent.amem --workspace . --write-episode
+amem budget my_agent.amem --horizon-years 20 --max-bytes 2147483648
+```
+
+## MCP quality tool
+
+- `memory_quality` returns a graph reliability summary (confidence, staleness, orphan nodes, unsupported decisions).
+
+## MCP runtime capture controls
+
+```bash
+export AMEM_AUTO_CAPTURE_MODE=safe
+export AMEM_AUTO_CAPTURE_REDACT=true
+export AMEM_AUTO_CAPTURE_MAX_CHARS=2048
 ```
 
 ## Universal MCP entry

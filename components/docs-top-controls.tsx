@@ -8,7 +8,9 @@ import {
   DOCS_LANGUAGE_STORAGE,
   type DocsLanguage,
   docsUi,
+  localizeDocsHref,
   normalizeDocsLanguage,
+  stripDocsLocalePrefix,
 } from "@/lib/docs-i18n"
 
 interface SearchItem {
@@ -65,23 +67,20 @@ export function DocsTopControls({ language, items }: DocsTopControlsProps) {
     return () => window.removeEventListener("keydown", onKeyDown)
   }, [])
 
-  function normalizePathForLanguage(path: string): string {
-    return path.replace(/^\/docs\/(?:en|zh)(?=\/|$)/, "/docs")
-  }
-
   function setLanguage(next: DocsLanguage) {
     const currentPath = pathname || "/docs"
-    const normalizedPath = normalizePathForLanguage(currentPath)
-    if (next === lang && normalizedPath === currentPath) return
+    const normalizedPath = stripDocsLocalePrefix(currentPath)
+    const targetPath = localizeDocsHref(normalizedPath, next)
+    if (next === lang && targetPath === currentPath) return
 
     setLang(next)
     setSearchOpen(false)
     localStorage.setItem(DOCS_LANGUAGE_STORAGE, next)
     document.cookie = `${DOCS_LANGUAGE_COOKIE}=${next}; Path=/; Max-Age=31536000; SameSite=Lax`
     const params = new URLSearchParams(searchParams.toString())
-    params.set("lang", next)
+    params.delete("lang")
     const query = params.toString()
-    const target = query ? `${normalizedPath}?${query}` : normalizedPath
+    const target = query ? `${targetPath}?${query}` : targetPath
     window.location.assign(target)
   }
 

@@ -1,11 +1,11 @@
 ---
-title: "Integration Guide"
-description: "AgenticVision is consumed through MCP. Any MCP client can use the same server entry."
+title: "集成指南"
+description: "AgenticVision 通过 MCP 使用。任何 MCP 客户端都可以使用相同的服务器条目。"
 ---
 
-## MCP (recommended)
+## MCP（推荐）
 
-AgenticVision is consumed through MCP. Any MCP client can use the same server entry.
+AgenticVision 通过 MCP 使用。任何 MCP 客户端都可以使用相同的服务器条目。
 
 ```json
 {
@@ -18,11 +18,11 @@ AgenticVision is consumed through MCP. Any MCP client can use the same server en
 }
 ```
 
-After adding the entry, restart the MCP client.
+添加条目后，重新启动MCP客户端。
 
-## With AgenticMemory
+## 使用 AgenticMemory
 
-Run both servers to link visual captures to cognitive nodes:
+运行两个服务器以将视觉捕获链接到认知节点：
 
 ```json
 {
@@ -39,8 +39,8 @@ Run both servers to link visual captures to cognitive nodes:
 }
 ```
 
-Use `vision_link` with a memory node ID to connect what the agent sees to what it remembers.
+使用 `vision_link` 和内存节点 ID 将代理看到的内容与它记住的内容联系起来。
 
-## Server runtime
+## 服务器运行时
 
-Cloud servers cannot read laptop-local artifacts directly. Sync `.avis/.amem/.acb` to server storage first, then start MCP services there.
+云服务器无法直接读取笔记本电脑本地工件。首先将 `.avis/.amem/.acb` 同步到服务器存储，然后在那里启动 MCP 服务。

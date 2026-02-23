@@ -1,62 +1,62 @@
 ---
-title: "Frequently Asked Questions"
-description: "Language servers (rust-analyzer, pylsp, tsserver) provide real-time IDE features: completions, go-to-definition, diagnostics. They are designed for interactive use and keep the ..."
+title: "常见问题"
+description: "语言服务器（rust-analyzer、pylsp、tsserver）提供实时 IDE 功能：完成、转到定义、诊断。它们专为交互式使用而设计，并保留..."
 ---
 
-## How is this different from a language server (LSP)?
+## 这与语言服务器 (LSP) 有什么不同？
 
-Language servers (rust-analyzer, pylsp, tsserver) provide real-time IDE features: completions, go-to-definition, diagnostics. They are designed for interactive use and keep the entire project in memory.
+语言服务器（rust-analyzer、pylsp、tsserver）提供实时 IDE 功能：完成、转到定义、诊断。它们专为交互式使用而设计，并将整个项目保存在内存中。
 
-AgenticCodebase is a **compilation step** that produces a persistent, portable artifact. The key differences:
+AgenticCodebase 是一个**编译步骤**，可生成持久的、可移植的工件。主要区别：
 
-- **Persistence.** An `.acb` file survives across sessions. An LSP server starts fresh every time.
-- **Portability.** An `.acb` file is a single binary. Copy it, store it, share it. LSP state is ephemeral.
-- **Multi-language.** One graph covers Python, Rust, TypeScript, and Go in a single file. LSP servers are typically language-specific.
-- **AI-native queries.** Impact analysis, code prophecy, coupling detection, and structural similarity are not LSP operations.
-- **Sub-microsecond.** Graph queries take nanoseconds to microseconds. LSP responses take milliseconds to seconds.
+- **持久性。** `.acb` 文件在会话中保留。 LSP 服务器每次都会重新启动。
+- **可移植性。** `.acb` 文件是单个二进制文件。复制它、存储它、分享它。 LSP 状态是短暂的。
+- **多语言。** 一张图涵盖单个文件中的 Python、Rust、TypeScript 和 Go。 LSP 服务器通常是特定于语言的。
+- **AI 原生查询。** 影响分析、代码预言、耦合检测和结构相似性不是 LSP 操作。
+- **亚微秒。** 图形查询需要纳秒到微秒。 LSP 响应需要几毫秒到几秒的时间。
 
-You can use both: LSP for real-time editing, AgenticCodebase for agent memory and batch analysis.
+您可以使用两者：LSP 用于实时编辑，AgenticCodebase 用于代理内存和批量分析。
 
-## How is this different from RAG over source code?
+## 这与源代码上的 RAG 有什么不同？
 
-RAG (Retrieval-Augmented Generation) over source code typically embeds code chunks as text vectors and retrieves the most similar chunks for a query.
+源代码上的 RAG（检索增强生成）通常将代码块嵌入为文本向量，并为查询检索最相似的块。
 
-AgenticCodebase is fundamentally different:
+AgenticCodebase 有着根本的不同：
 
-- **Structure, not text.** AgenticCodebase understands that `UserService.save()` calls `Database.insert()`. RAG sees them as two similar text blobs.
-- **Typed relationships.** The graph has 18 edge types (calls, imports, inherits, tests, etc.). RAG has no concept of relationships.
-- **Deterministic queries.** "What depends on module X?" returns an exact, complete answer. RAG returns approximate, possibly incomplete text matches.
-- **Impact analysis.** "What breaks if I change function Y?" requires traversing dependency chains. RAG cannot answer this.
-- **No embeddings needed.** AgenticCodebase uses structural analysis, not language model embeddings. No API calls, no token costs, no hallucinated connections.
+- **结构，而不是文本。** AgenticCodebase 理解 `UserService.save()` 调用 `Database.insert()`。 RAG 将它们视为两个相似的文本块。
+- **类型化关系。** 该图有 18 种边类型（调用、导入、继承、测试等）。 RAG 没有关系的概念。
+- **确定性查询。** “什么取决于模块 X？”返回准确、完整的答案。 RAG 返回近似的、可能不完整的文本匹配。
+- **影响分析。** “如果我更改功能 Y，会出现什么问题？”需要遍历依赖链。 RAG无法回答这个问题。
+- **不需要嵌入。** AgenticCodebase 使用结构分析，而不是语言模型嵌入。没有 API 调用，没有令牌成本，没有幻觉连接。
 
-You might use both: RAG for natural-language code search ("find the function that handles user authentication"), AgenticCodebase for structural queries ("what calls that function, and what tests cover it").
+您可以使用两者：RAG 进行自然语言代码搜索（“查找处理用户身份验证的函数”），AgenticCodebase 进行结构查询（“什么调用该函数，以及哪些测试覆盖它”）。
 
-## What languages are supported?
+## 支持哪些语言？
 
-Python, Rust, TypeScript, and Go. Each language is parsed using a tree-sitter grammar.
+Python、Rust、TypeScript 和 Go。每种语言都使用树保护语法进行解析。
 
-JavaScript files are parsed using the TypeScript grammar (since TypeScript is a superset of JavaScript).
+JavaScript 文件使用 TypeScript 语法进行解析（因为 TypeScript 是 JavaScript 的超集）。
 
-Adding a new language requires implementing a tree-sitter extractor (typically 200-400 lines of Rust). The architecture is designed for this -- see the `parse/extractors/` module.
+添加新语言需要实现一个树保护提取器（通常是 200-400 行 Rust）。该架构是为此而设计的——请参阅 `parse/extractors/` 模块。
 
-## What happens with large repositories?
+## 大型存储库会发生什么？
 
-AgenticCodebase handles large repositories efficiently:
+AgenticCodebase 可以有效地处理大型存储库：
 
-- **Tree-sitter parsing** runs in microseconds per file. A 10K-file repository parses in under a second.
-- **Memory-mapped I/O.** The `.acb` reader uses `mmap()` to access files without loading them entirely into memory.
-- **LZ4 compression.** String content is compressed at ~2.5x ratio while decompressing at memory bandwidth speeds.
-- **Fixed-size records.** Unit and edge records are fixed-size, so accessing unit N is a direct offset calculation -- O(1) regardless of graph size.
+- **Tree-sitter 解析** 每个文件的运行时间为微秒。 10K 文件存储库的解析时间不到一秒。
+- **内存映射 I/O。** `.acb` 读取器使用 `mmap()` 来访问文件，而不将它们完全加载到内存中。
+- **LZ4 压缩。** 字符串内容以约 2.5 倍的比率压缩，同时以内存带宽速度解压缩。
+- **固定大小的记录。** 单元和边缘记录是固定大小的，因此访问单元 N 是直接偏移计算 - 无论图大小如何，O(1) 。
 
-Practical limits:
+实际限制：
 
-- 1K units: sub-millisecond compile, ~100 KB file.
-- 10K units: ~4 ms compile, ~1 MB file. All queries under 15 us.
-- 50K units: ~20 ms compile, ~5 MB file. All queries under 50 us.
+- 1K 单位：亚毫秒级编译，~100 KB 文件。
+- 10K 单元：约 4 毫秒编译，约 1 MB 文件。所有查询均在 15 us 以内。
+- 50K 单元：约 20 毫秒编译，约 5 MB 文件。所有查询均低于 50 us。
 
-## Does it work with monorepos?
+## 它可以与 monorepos 一起使用吗？
 
-Yes. Compile the monorepo root (or specific subdirectories) and the graph captures cross-package relationships:
+是的。编译 monorepo 根目录（或特定子目录），图表捕获跨包关系：
 
 ```bash
 # Entire monorepo
@@ -70,9 +70,9 @@ acb compile ./monorepo/packages/web -o web.acb
 acb compile ./monorepo --exclude="**/node_modules/**" --exclude="**/vendor/**" -o project.acb
 ```
 
-## Can I use this in CI/CD?
+## 我可以在 CI/CD 中使用它吗？
 
-Yes. AgenticCodebase is designed for automation:
+是的。 AgenticCodebase 专为自动化而设计：
 
 ```bash
 # In your CI pipeline
@@ -80,26 +80,26 @@ acb compile ./src -o project.acb -f json   # JSON output for parsing
 acb query project.acb prophecy -f json     # Machine-readable predictions
 ```
 
-Common CI use cases:
+常见的 CI 用例：
 
-- **Impact analysis on PRs.** Compile before/after, compare impact of changed files.
-- **Stability monitoring.** Track prophecy scores over time. Alert when stability drops.
-- **Coupling detection.** Flag tightly coupled modules in code review.
-- **Dead code detection.** Identify unreachable code after refactoring.
+- **对 PR 的影响分析。** 编译之前/之后，比较更改文件的影响。
+- **稳定性监控。** 随着时间的推移跟踪预言分数。当稳定性下降时发出警报。
+- **耦合检测。** 在代码审查中标记紧密耦合的模块。
+- **死代码检测。**识别重构后无法访问的代码。
 
-## How does the MCP server work?
+## MCP 服务器如何工作？
 
-The `acb-mcp` binary implements the [Model Context Protocol](https://modelcontextprotocol.io/) over stdio. When an MCP-compatible client (Claude Desktop, VS Code, Cursor, Windsurf) connects, it receives:
+`acb-mcp` 二进制文件通过 stdio 实现了模型上下文协议。当与 MCP 兼容的客户端（Claude Desktop、VS Code、Cursor、Windsurf）连接时，它会收到：
 
-- **Tools**: Functions the LLM can call (`acb_compile`, `acb_query`, `acb_info`, etc.)
-- **Resources**: Data the LLM can read (`acb://graphs/project/units`, etc.)
-- **Prompts**: Pre-built prompt templates for common analysis tasks
+- **工具**：LLM 可以调用的函数（`acb_compile`、`acb_query`、`acb_info` 等）
+- **资源**：法学硕士可以读取的数据（`acb://graphs/project/units` 等）
+- **提示**：用于常见分析任务的预构建提示模板
 
-The MCP server manages graph state in-memory. Load a graph, query it multiple times, unload when done. All communication is JSON-RPC 2.0 over stdin/stdout.
+MCP 服务器管理内存中的图形状态。加载图表，多次查询，完成后卸载。所有通信都是通过 stdin/stdout 的 JSON-RPC 2.0。
 
-## Can I query the graph programmatically from Rust?
+## 我可以通过 Rust 以编程方式查询图表吗？
 
-Yes. AgenticCodebase is a library, not just a CLI:
+是的。 AgenticCodebase 是一个库，而不仅仅是一个 CLI：
 
 ```rust
 use agentic_codebase::format::AcbReader;
@@ -117,25 +117,25 @@ let params = SymbolLookupParams {
 let results = engine.symbol_lookup(&graph, params)?;
 ```
 
-See the [API Reference](/docs/codebase-api-reference) for the complete library API.
+有关完整的库 API，请参阅 [API 参考](/docs/zh/codebase-api-reference)。
 
-## Is the .acb format stable?
+## .acb 格式稳定吗？
 
-The `.acb` format is at version 1. The header includes a version field, so future versions can maintain backward compatibility. The format is designed to be forward-compatible -- new fields are appended, never reordered.
+`.acb` 格式为版本 1。标头包含版本字段，因此未来版本可以保持向后兼容性。该格式被设计为向前兼容——附加新字段，而不会重新排序。
 
-## How does code prophecy work?
+## 代码预言如何运作？
 
-Code prophecy predicts which units are most likely to cause issues based on:
+代码预言根据以下因素预测哪些单元最有可能导致问题：
 
-1. **Stability score** -- Low-stability units (high complexity, high coupling, no tests) are higher risk.
-2. **Graph topology** -- Units at the center of dependency chains have higher blast radius.
-3. **Test coverage** -- Untested units in critical paths are flagged.
-4. **Coupling strength** -- Tightly coupled pairs where one unit changes frequently.
+1. **稳定性评分**——低稳定性单元（高复杂性、高耦合性、无测试）风险较高。
+2. **图拓扑** -- 依赖链中心的单位具有更高的爆炸半径。
+3. **测试覆盖率** -- 标记关键路径中未经测试的单元。
+4. **耦合强度** -- 紧密耦合的对，其中一个单元频繁变化。
 
-Prophecy is a heuristic, not a guarantee. It is most useful for prioritizing code review and test writing.
+预言只是一种启发，而不是保证。它对于确定代码审查和测试编写的优先级最有用。
 
-## Does it support incremental compilation?
+## 是否支持增量编译？
 
-Not yet. Currently, `acb compile` rebuilds the entire graph from scratch. For most repositories (under 50K units), full compilation takes under 20 ms, so incremental compilation is rarely needed.
+还没有。目前，`acb compile` 从头开始​​重建整个图。对于大多数存储库（低于 50K 单元），完整编译需要不到 20 毫秒，因此很少需要增量编译。
 
-Incremental compilation is planned for a future version to support very large repositories and watch-mode workflows.
+计划在未来版本中进行增量编译，以支持非常大的存储库和监视模式工作流程。

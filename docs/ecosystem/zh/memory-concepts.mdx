@@ -1,25 +1,25 @@
 ---
-title: "Core Concepts"
-description: "AgenticMemory models an AI agent's knowledge as a **cognitive graph** -- a directed, weighted graph where nodes represent discrete cognitive events and edges capture the relatio..."
+title: "核心概念"
+description: "AgenticMemory 将人工智能代理的知识建模为**认知图**——一个有向加权图，其中节点代表离散的认知事件，边缘捕获关系..."
 ---
 
-AgenticMemory models an AI agent's knowledge as a **cognitive graph** -- a directed, weighted graph where nodes represent discrete cognitive events and edges capture the relationships between them. This document explains the foundational ideas behind the system.
+AgenticMemory 将人工智能代理的知识建模为**认知图**——一个有向加权图，其中节点代表离散的认知事件，边捕获它们之间的关系。本文档解释了该系统背后的基本思想。
 
-## Why a Graph?
+## 为什么是图表？
 
-Most agent memory systems store flat lists of text chunks or key-value pairs. This works for simple retrieval but fails to capture how knowledge actually relates: facts support decisions, decisions cause outcomes, new information supersedes old information, and errors get corrected.
+大多数代理内存系统存储文本块或键值对的平面列表。这适用于简单的检索，但无法捕获知识的实际关联：事实支持决策，决策导致结果，新信息取代旧信息，错误得到纠正。
 
-A graph structure preserves these relationships explicitly. When an agent recalls a decision, it can also traverse to the facts that supported it, the inferences that led to it, and any corrections that followed. This makes agent reasoning auditable, debuggable, and improvable.
+图结构明确地保留了这些关系。当智能体回忆起某个决定时，它还可以遍历支持该决定的事实、导致该决定的推论以及随后的任何更正。这使得代理推理可审计、可调试和可改进。
 
-Compared to vector databases, which answer "what is similar?", a cognitive graph answers richer questions: "what caused this?", "what does this contradict?", "what superseded this?", and "what was the chain of reasoning?"
+与回答“什么相似？”的矢量数据库相比，认知图回答了更丰富的问题​​：“是什么导致了这个？”，“这与什么相矛盾？”，“什么取代了这个？”以及“推理链是什么？”
 
-## Cognitive Events (Nodes)
+## 认知事件（节点）
 
-Every node in the graph is a **cognitive event** -- something the agent observed, concluded, decided, corrected, learned, or experienced. There are six event types, each serving a distinct purpose.
+图中的每个节点都是一个**认知事件**——代理观察、得出结论、决定、纠正、学习或经历的事情。有六种事件类型，每种类型都有不同的目的。
 
-### Fact
+＃＃＃ 事实
 
-A piece of external information the agent has received or observed. Facts originate from user input, API responses, document parsing, or sensor data. They represent the agent's ground truth about the world.
+代理收到或观察到的一条外部信息。事实源自用户输入、API 响应、文档解析或传感器数据。它们代表了智能体关于世界的基本事实。
 
 ```python
 brain.add_fact(
@@ -29,11 +29,11 @@ brain.add_fact(
 )
 ```
 
-**When to use:** The agent receives information from an external source that it treats as true (with some confidence level). Facts are the raw inputs to the agent's reasoning process.
+**何时使用：** 代理从外部源接收信息，并将其视为真实信息（具有一定的置信度）。事实是智能体推理过程的原始输入。
 
-### Decision
+＃＃＃ 决定
 
-A choice the agent has made. Decisions record what the agent chose to do and implicitly capture the context in which the choice was made. Linking decisions to their supporting facts and inferences creates an auditable decision trail.
+代理人做出的选择。决策记录了智能体选择做什么，并隐含地捕获了做出选择的上下文。将决策与其支持事实和推论联系起来，创建可审计的决策轨迹。
 
 ```python
 brain.add_decision(
@@ -43,11 +43,11 @@ brain.add_decision(
 )
 ```
 
-**When to use:** The agent commits to a course of action, selects between alternatives, or makes a judgment call. Decisions are the outputs of the agent's reasoning process.
+**何时使用：** 代理承诺采取一系列行动，在备选方案之间进行选择，或做出判断。决策是智能体推理过程的输出。
 
-### Inference
+### 推论
 
-A conclusion the agent has drawn from existing knowledge. Inferences are derived from facts, other inferences, or combinations of both. They represent the agent's reasoning -- the bridge between raw observations and decisions.
+代理根据现有知识得出的结论。推论源自事实、其他推论或两者的组合。它们代表了智能体的推理——原始观察和决策之间的桥梁。
 
 ```python
 brain.add_inference(
@@ -57,11 +57,11 @@ brain.add_inference(
 )
 ```
 
-**When to use:** The agent combines existing knowledge to reach a new conclusion. Inferences should typically be linked (via `caused_by` or `supports`) to the events they were derived from.
+**何时使用：** 智能体结合现有知识得出新结论。推论通常应（通过 `caused_by` 或 `supports`）链接到它们所源自的事件。
 
-### Correction
+### 更正
 
-An update that revises or invalidates previous knowledge. Corrections are how the agent handles changing information, mistakes, or refined understanding. They should be linked to the event they correct via a `supersedes` edge.
+修改先前知识或使其无效的更新。更正是代理处理不断变化的信息、错误或精炼理解的方式。它们应该通过 `supersedes` 边缘链接到它们更正的事件。
 
 ```python
 correction = brain.add_correction(
@@ -72,11 +72,11 @@ correction = brain.add_correction(
 brain.link(correction.id, original_fact.id, "supersedes")
 ```
 
-**When to use:** Previously stored information turns out to be wrong, outdated, or imprecise. Always create a `supersedes` edge from the correction to the event it replaces. The original event is preserved for auditability but `resolve()` will follow the supersedes chain to return the latest version.
+**何时使用：** 以前存储的信息被证明是错误的、过时的或不精确的。始终从校正到其替换的事件创建 `supersedes` 边缘。保留原始事件以供审核，但 `resolve()` 将遵循取代链返回最新版本。
 
-### Skill
+＃＃＃ 技能
 
-A learned capability or procedure. Skills record how to do something -- reusable knowledge that the agent can apply across contexts. Unlike facts (which describe the world) or decisions (which are contextual choices), skills represent transferable know-how.
+习得的能力或过程。技能记录了如何做某事——代理可以跨上下文应用的可重用知识。与事实（描述世界）或决策（情境选择）不同，技能代表可转移的专业知识。
 
 ```python
 brain.add_skill(
@@ -87,11 +87,11 @@ brain.add_skill(
 )
 ```
 
-**When to use:** The agent learns a reusable procedure, technique, or pattern. Skills are particularly valuable across sessions -- they let the agent carry forward operational knowledge.
+**何时使用：** 代理学习可重用的过程、技术或模式。技能在整个会话中特别有价值——它们让座席能够继承操作知识。
 
-### Episode
+### 剧集
 
-A narrative record of a complete interaction or experience. Episodes capture the full arc of an event sequence -- what happened, in what order, and what the outcome was. They provide context that individual facts and decisions cannot.
+完整互动或经历的叙述性记录。剧集捕捉事件序列的完整弧线——发生了什么、发生的顺序以及结果是什么。它们提供了个人事实和决策无法提供的背景。
 
 ```python
 brain.add_episode(
@@ -103,165 +103,165 @@ brain.add_episode(
 )
 ```
 
-**When to use:** An interaction or task completes and the agent should record a summary of the experience. Episodes are useful for learning from past experiences and providing context for future similar situations.
+**何时使用：** 交互或任务完成，代理应记录体验摘要。情节对于从过去的经验中学习并为未来类似情况提供背景很有用。
 
-## Edges (Relationships)
+## 边（关系）
 
-Edges are directed and weighted. The direction indicates the semantic relationship (A `caused_by` B means "A was caused by B"), and the weight (0.0 to 1.0) indicates the strength of the relationship.
+边缘被定向和加权。方向表示语义关系（A `caused_by` B 表示“A 是由 B 引起的”），权重（0.0 到 1.0）表示关系的强度。
 
-### caused_by
+### 造成的
 
-Indicates that one event was caused by or directly resulted from another.
+表示一个事件是由另一事件引起或直接导致的。
 
 ```
 "Server crashed" --caused_by--> "Memory leak in image processor"
 ```
 
-**When to use:** There is a direct causal relationship. Event A happened because of Event B. Use for tracing root causes and understanding chains of consequence.
+**何时使用：** 存在直接因果关系。事件 A 因事件 B 而发生。用于追踪根本原因并了解后果链。
 
-### supports
+### 支持
 
-Indicates that one event provides evidence for or justification of another.
+表示一个事件为另一事件提供证据或理由。
 
 ```
 "Use PostgreSQL" --supports--> "PostgreSQL handles 10K concurrent connections"
 ```
 
-**When to use:** Event B provides evidence, reasoning, or justification that led to or strengthens Event A. Common between decisions and the facts/inferences that back them.
+**何时使用：** 事件 B 提供了导致或加强事件 A 的证据、推理或理由。在决策和支持决策的事实/推论之间常见。
 
-### contradicts
+### 矛盾
 
-Indicates that two events are in tension or conflict.
+表示两个事件处于紧张或冲突状态。
 
 ```
 "System is production-ready" --contradicts--> "3 critical bugs remain unfixed"
 ```
 
-**When to use:** Two pieces of knowledge cannot both be fully true, or one undermines the other. Contradictions are signals that the agent needs to resolve conflicting information.
+**何时使用：** 两种知识不可能都完全正确，或者一种知识会破坏另一种知识。矛盾是代理需要解决冲突信息的信号。
 
-### supersedes
+### 取代
 
-Indicates that one event replaces or updates another. This is the primary mechanism for knowledge evolution.
+表示一个事件替换或更新另一个事件。这是知识演化的主要机制。
 
 ```
 "Deadline is April 1" --supersedes--> "Deadline is March 15"
 ```
 
-**When to use:** New information replaces old information. The `resolve()` method follows supersedes chains to find the most current version. The original event is preserved -- supersedes does not delete, it deprecates.
+**何时使用：** 新信息取代旧信息。 `resolve()` 方法遵循取代链来查找最新版本。原始事件被保留 - 取代不会删除，它会被弃用。
 
-### related_to
+###相关
 
-A general association between events that does not fit the more specific edge types.
+事件之间的一般关联，不适合更具体的边缘类型。
 
 ```
 "Team prefers TypeScript" --related_to--> "Frontend rewrite planned"
 ```
 
-**When to use:** Two events are meaningfully connected but the relationship is not causal, supportive, contradictory, or sequential. Use sparingly -- prefer more specific edge types when they apply.
+**何时使用：** 两个事件有意义地相关，但这种关系不是因果关系、支持关系、矛盾关系或顺序关系。谨慎使用——在应用时更喜欢更具体的边缘类型。
 
-### part_of
+### 部分
 
-Indicates that one event is a component, phase, or sub-element of another.
+指示一个事件是另一个事件的组件、阶段或子元素。
 
 ```
 "Design database schema" --part_of--> "Backend API implementation"
 ```
 
-**When to use:** Event A is a constituent part of Event B. Common for breaking episodes or complex decisions into their components.
+**何时使用：** 事件 A 是事件 B 的组成部分。通常用于将事件或复杂决策分解为其组件。
 
-### temporal_next
+### 时间_下一个
 
-Indicates chronological sequence -- one event followed another in time.
+表示时间顺序——一个事件在时间上紧接着另一个事件。
 
 ```
 "Deployed to staging" --temporal_next--> "Ran integration tests"
 ```
 
-**When to use:** Capturing the order of events matters. Use to build timelines within episodes or to record workflow sequences.
+**何时使用：** 捕获事件的顺序很重要。用于在剧集内构建时间线或记录工作流程序列。
 
-## Sessions
+## 会议
 
-A **session** groups events that were created during a single interaction or conversation. Every event belongs to exactly one session. Sessions are created automatically -- each time you open a brain, a new session begins.
+**会话**对在单个交互或对话期间创建的事件进行分组。每个事件都属于一个会话。会话是自动创建的——每次你打开大脑，一个新的会话就会开始。
 
-Sessions serve multiple purposes:
+会话有多种用途：
 
-- **Context isolation:** Events from one conversation are grouped together, making it easy to review what happened during a specific interaction.
-- **Temporal organization:** Sessions provide a natural chronological grouping on top of individual event timestamps.
-- **Scope control:** Queries can be filtered to a specific session when you only care about events from a particular interaction.
+- **上下文隔离：** 一次对话中的事件被分组在一起，从而可以轻松查看特定交互期间发生的情况。
+- **时间组织：** 会话在单个事件时间戳之上提供自然的时间顺序分组。
+- **范围控制：** 当您只关心特定交互中的事件时，可以将查询过滤到特定会话。
 
 ```python
 info = brain.session_info(session_id=3)
 print(f"Session 3: {info.node_count} events, started at {info.start_time}")
 ```
 
-## Corrections and Supersedes Chains
+## 修正和取代链
 
-Knowledge changes. Deadlines move, requirements shift, mistakes are discovered. AgenticMemory handles this through **correction events** linked by **supersedes edges**, forming a chain of revisions.
+知识发生变化。截止日期改变，需求改变，错误被发现。 AgenticMemory 通过由 **取代边缘** 链接的 **纠正事件** 来处理此问题，形成修订链。
 
 ```
 Correction C  --supersedes-->  Correction B  --supersedes-->  Original Fact A
 ```
 
-Calling `brain.resolve(A.id)` traverses the supersedes chain and returns Event C -- the most current version. The entire chain is preserved, so you can always audit how knowledge evolved.
+调用 `brain.resolve(A.id)` 会遍历取代链并返回事件 C——最新版本。整个链条都被保留下来，因此您可以随时审核知识的演变过程。
 
-This design avoids the problems of in-place mutation:
-- The agent never silently loses information.
-- You can always trace why a piece of knowledge changed.
-- Multiple agents can independently correct the same fact, and the graph records both correction paths.
+这种设计避免了就地突变的问题：
+- 代理永远不会默默地丢失信息。
+- 您始终可以追踪某条知识发生变化的原因。
+- 多个智能体可以独立纠正同一事实，并且图表记录了两条纠正路径。
 
-## Confidence and Decay
+## 信心与衰退
 
-Every event carries a **confidence** score between 0.0 and 1.0, representing how certain the agent is about the information. Confidence is set at creation time and can inform downstream reasoning:
+每个事件都有一个介于 0.0 和 1.0 之间的 **置信度** 分数，代表代理对该信息的确定程度。置信度是在创建时设置的，可以通知下游推理：
 
-- **0.9 -- 1.0:** Near-certain. Directly observed or from highly trusted sources.
-- **0.7 -- 0.9:** Confident. Well-supported inferences or reliable sources.
-- **0.5 -- 0.7:** Moderate. Plausible but not fully verified.
-- **Below 0.5:** Uncertain. Speculative or from unreliable sources.
+- **0.9 -- 1.0：** 几乎确定。直接观察或来自高度可信的来源。
+- **0.7 -- 0.9：** 有信心。有充分支持的推论或可靠的来源。
+- **0.5 -- 0.7：** 中等。看似合理，但尚未完全验证。
+- **低于 0.5：** 不确定。推测或来源不可靠。
 
-Confidence is stored as part of the node record and is available for filtering and ranking during queries. Agents can implement their own confidence decay policies on top of the raw values -- for example, reducing confidence on facts that have not been reconfirmed after a certain period.
+置信度作为节点记录的一部分存储，可用于在查询期间进行过滤和排名。代理可以在原始值的基础上实施自己的置信度衰减策略，例如，降低对在一段时间后尚未再次确认的事实的置信度。
 
-## Episodes and Narrative Memory
+## 情节和叙事记忆
 
-While facts, decisions, and inferences capture discrete pieces of knowledge, **episodes** capture the narrative of an experience. An episode is a higher-level summary that ties together what happened during a task or interaction.
+事实、决策和推论捕捉离散的知识片段，而**情节**捕捉体验的叙述。情节是将任务或交互过程中发生的事情联系在一起的更高级别的摘要。
 
-Episodes are particularly valuable for:
+剧集对于以下方面特别有价值：
 
-- **Learning from experience:** An agent can search past episodes to find situations similar to the current one.
-- **Context setting:** Before starting a new task, an agent can review relevant episodes to refresh its understanding.
-- **Debugging:** When something goes wrong, episodes provide a human-readable summary of what the agent was doing and why.
+- **从经验中学习：** 代理可以搜索过去的事件以查找与当前事件类似的情况。
+- **上下文设置：** 在开始新任务之前，代理可以查看相关事件以刷新其理解。
+- **调试：** 当出现问题时，情节会提供一个人类可读的摘要，说明代理正在做什么以及为什么。
 
-A well-structured episode links to the individual events it summarizes via `part_of` edges, creating a two-level view: the high-level narrative and the detailed event graph.
+结构良好的剧集通过 `part_of` 边链接到它总结的各个事件，从而创建一个两层视图：高级叙述和详细事件图。
 
-## Memory Formation Pipeline
+## 内存形成管道
 
-When using the `MemoryAgent` class with an LLM provider, memory formation follows a four-stage pipeline:
+当将 `MemoryAgent` 类与 LLM 提供程序一起使用时，内存形成遵循四阶段管道：
 
-### 1. Observe
+### 1. 观察
 
-The agent receives input -- a user message, an API response, a document, or any other external data. This is raw, unprocessed information.
+代理接收输入——用户消息、API 响应、文档或任何其他外部数据。这是原始的、未经处理的信息。
 
-### 2. Extract
+### 2.提取
 
-The LLM analyzes the input and identifies discrete cognitive events: facts stated, decisions made, inferences drawn. The provider prompt instructs the LLM to categorize each piece of extracted knowledge by type and assign a confidence score.
+法学硕士分析输入并识别离散的认知事件：陈述事实、做出决策、得出推论。提供者提示指示法学硕士按类型对每条提取的知识进行分类并分配置信度分数。
 
-### 3. Store
+### 3.商店
 
-Extracted events are written to the brain as typed nodes. Each node gets a unique ID, a session assignment, a timestamp, and its 128-dimensional feature vector (computed from the content for similarity search).
+提取的事件作为类型节点写入大脑。每个节点都有一个唯一的 ID、一个会话分配、一个时间戳及其 128 维特征向量（根据相似性搜索的内容计算）。
 
-### 4. Relate
+### 4.关联
 
-The LLM (or application logic) identifies relationships between the new events and existing knowledge. Edges are created to connect new events to relevant prior events -- linking new facts to existing facts they relate to, new decisions to the inferences that support them, and corrections to the events they supersede.
+LLM（或应用程序逻辑）识别新事件和现有知识之间的关系。创建边缘是为了将新事件与相关的先前事件联系起来——将新事实与它们相关的现有事实联系起来，将新决策与支持它们的推论联系起来，以及对它们取代的事件进行更正。
 
-This pipeline runs automatically in `MemoryAgent.chat()`. When using the `Brain` class directly, you control each stage manually.
+该管道在 `MemoryAgent.chat()` 中自动运行。直接使用 `Brain` 类时，您可以手动控制每个阶段。
 
-## Why Binary Over JSON?
+## 为什么使用二进制而不是 JSON？
 
-The `.amem` file format is a custom binary format rather than JSON, SQLite, or another text-based format. The reasons:
+`.amem` 文件格式是自定义二进制格式，而不是 JSON、SQLite 或其他基于文本的格式。原因：
 
-- **Performance:** Binary records are fixed-size and cache-friendly. Reading a node is a single offset calculation and memory read -- no parsing required. At 100K nodes, this matters enormously.
-- **Memory-mapped I/O:** The format is designed for `mmap()` access. The OS manages paging, so you can work with brain files larger than available RAM. This is not practical with JSON.
-- **Compact size:** LZ4 compression on content blocks and contiguous vector storage minimize file size. A brain with 100K nodes and 128-dim vectors is roughly 50--60 MB in `.amem` versus 300+ MB in JSON.
-- **Portability:** The format is self-contained. A single `.amem` file can be copied between machines, shared between agents, or archived. No database server, no directory structure, no dependencies.
-- **Atomic writes:** The format supports atomic write operations. A crash during a write will not corrupt the existing data.
+- **性能：** 二进制记录是固定大小且易于缓存的。读取节点是一次偏移计算和内存读取——无需解析。对于 100K 节点，这一点非常重要。
+- **内存映射 I/O：** 该格式专为 `mmap()` 访问而设计。操作系统管理分页，因此您可以处理大于可用 RAM 的大脑文件。这对于 JSON 来说是不切实际的。
+- **紧凑的尺寸：** 对内容块进行 LZ4 压缩和连续向量存储可最大限度地减少文件大小。具有 100K 个节点和 128 维向量的大脑在 `.amem` 中大约为 50--60 MB，而在 JSON 中则为 300+ MB。
+- **可移植性：** 该格式是独立的。单个 `.amem` 文件可以在计算机之间复制、在代理之间共享或存档。没有数据库服务器，没有目录结构，没有依赖关系。
+- **原子写入：** 该格式支持原子写入操作。写入期间发生崩溃不会损坏现有数据。
 
-See the [File Format Specification](/docs/memory-file-format) for the complete binary layout.
+完整的二进制布局请参见[文件规范格式](/docs/zh/memory-file-format)。

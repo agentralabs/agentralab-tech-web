@@ -1,141 +1,141 @@
 ---
-title: "Benchmarks"
-description: "Performance measurements for AgenticMemory's core operations across various graph sizes. All benchmarks use the Rust engine directly; Python SDK overhead is negligible for I/O-b..."
+title: "基准测试"
+description: "AgenticMemory 跨各种图形大小的核心操作的性能测量。所有基准测试都直接使用 Rust 引擎； Python SDK 开销对于 I/O-b 来说可以忽略不计..."
 ---
 
-Performance measurements for AgenticMemory's core operations across various graph sizes. All benchmarks use the Rust engine directly; Python SDK overhead is negligible for I/O-bound operations and adds approximately 5-15 microseconds per FFI call for compute-bound operations.
+AgenticMemory 跨各种图形大小的核心操作的性能测量。所有基准测试都直接使用 Rust 引擎；对于 I/O 密集型操作，Python SDK 开销可以忽略不计，并且对于计算密集型操作，每个 FFI 调用会增加大约 5-15 微秒。
 
-## Test Environment
+## 测试环境
 
-| Parameter | Value |
+|参数|价值|
 |-----------|-------|
-| Hardware | Apple M4 Pro (ARM64), 64 GB unified memory |
-| OS | macOS (Darwin) |
-| Rust | 1.90.0 (release profile, `--release`) |
-| Benchmark framework | `criterion.rs` 0.5 |
-| Iterations | 100 per measurement (minimum), with statistical warm-up |
-| Feature vectors | 128-dimensional, f32 |
+|硬件| Apple M4 Pro (ARM64)，64 GB 统一内存 |
+|操作系统 | macOS（达尔文）|
+|铁锈| 1.90.0（发布配置文件，`--release`）|
+|基准框架| __AGENTRA_代码_0__ 0.5 |
+|迭代|每次测量 100 次（最少），带有统计预热 |
+|特征向量| 128 维，f32 |
 
-All benchmarks are run with `cargo bench` using release-mode compilation with link-time optimization. Results represent the median of 100 iterations after warm-up, with 95% confidence intervals.
+所有基准测试均使用 `cargo bench` 使用发布模式编译和链接时优化来运行。结果代表预热后 100 次迭代的中值，置信区间为 95%。
 
-## Summary Results
+## 结果总结
 
-Headline numbers measured at 10K nodes, 50K edges:
+在 10K 个节点、50K 个边上测量的标题数量：
 
-| Operation | Median | Description |
+|运营|中位数 |描述 |
 |-----------|--------|-------------|
-| Add node | 276 ns | Insert a single node into the in-memory graph |
-| Add edge | 1.2 ms | Insert an edge with adjacency list update |
-| Traverse (depth 5) | 3.4 ms | BFS traversal from a single node, depth limit 5 |
-| Similarity search (top-10) | 9 ms | Brute-force cosine similarity across all vectors |
-| File write | 32.6 ms | Serialize 10K nodes + 50K edges to .amem with LZ4 |
-| File read | 3.7 ms | Deserialize the same file into memory |
+|添加节点 | 276 纳秒 |将单个节点插入内存图中 |
+|添加边缘| 1.2 毫秒 |插入一条带有邻接表更新的边 |
+|遍历（深度 5）| 3.4 毫秒 | BFS从单节点开始遍历，深度限制5 |
+|相似性搜索（前 10 名）| 9 毫秒 |所有向量的强力余弦相似度 |
+|文件写入 | 32.6 毫秒 |使用 LZ4 将 10K 节点 + 50K 边序列化为 .amem |
+|文件读取 | 3.7 毫秒 |将同一个文件反序列化到内存中 |
 
-## Detailed Results by Graph Size
+## 按图形大小划分的详细结果
 
-### Add Node
+### 添加节点
 
-Time to insert a single cognitive event (fact with 200-character content and metadata) into the in-memory graph.
+是时候将单个认知事件（具有 200 个字符的内容和元数据的事实）插入到内存图中了。
 
-| Graph Size | Median | Std Dev | Notes |
+|图形尺寸|中位数 |标准差 |笔记|
 |------------|--------|---------|-------|
-| 1K nodes | 248 ns | 12 ns | Cache-hot, all data fits in L1 |
-| 10K nodes | 276 ns | 18 ns | Marginal increase from hash map growth |
-| 100K nodes | 312 ns | 25 ns | Occasional hash map resize amortized |
+| 1K 节点 | 248纳秒| 12 纳秒 |缓存热，所有数据都适合 L1 |
+| 10K 节点 | 276 纳秒 | 18 纳秒 |哈希图增长带来的边际增长 |
+| 10万个节点 | 312 纳秒 | 25 纳秒 |偶尔调整哈希映射大小摊销 |
 
-Node insertion is O(1) amortized. Performance is dominated by the hash map insertion for the node ID and the timestamp syscall.
+节点插入是 O(1) 摊销的。性能主要由节点 ID 的哈希映射插入和时间戳系统调用决定。
 
-### Add Edge
+### 添加边缘
 
-Time to insert a single edge and update both source and target adjacency lists.
+是时候插入一条边并更新源和目标邻接列表了。
 
-| Graph Size | Median | Std Dev | Notes |
+|图形尺寸|中位数 |标准差 |笔记|
 |------------|--------|---------|-------|
-| 1K nodes, 5K edges | 0.9 ms | 0.08 ms | Adjacency lists are small |
-| 10K nodes, 50K edges | 1.2 ms | 0.11 ms | Average 5 edges per node |
-| 100K nodes, 500K edges | 1.8 ms | 0.15 ms | Adjacency list growth |
+| 1K 个节点，5K 个边 | 0.9 毫秒 | 0.08 毫秒 |邻接表很小 |
+| 10K 个节点，50K 个边 | 1.2 毫秒 | 0.11 毫秒 |每个节点平均 5 条边 |
+| 100K 个节点，500K 个边 | 1.8 毫秒 | 0.15 毫秒 |邻接表增长 |
 
-Edge insertion is O(1) amortized for the edge itself, with O(degree) for adjacency list management. The higher absolute time compared to node insertion comes from updating two adjacency lists and validating both endpoints.
+边插入对于边本身来说是 O(1) 分摊的，对于邻接表管理来说是 O( Degree ) 。与节点插入相比，更高的绝对时间来自于更新两个邻接列表并验证两个端点。
 
-### Graph Traversal (BFS)
+### 图遍历（BFS）
 
-Time for a breadth-first traversal from a single starting node. Graph has average degree 10 (5 outgoing, 5 incoming edges per node).
+从单个起始节点开始进行广度优先遍历的时间。图的平均度为 10（每个节点 5 个传出边、5 个传入边）。
 
-| Graph Size | Depth 3 | Depth 5 | Depth 7 |
+|图形尺寸|深度 3 |深度 5 |深度 7 |
 |------------|---------|---------|---------|
-| 1K nodes | 0.4 ms | 0.8 ms | 1.1 ms |
-| 10K nodes | 1.2 ms | 3.4 ms | 8.7 ms |
-| 100K nodes | 3.1 ms | 12.4 ms | 45.2 ms |
+| 1K 节点 | 0.4 毫秒 | 0.8 毫秒 | 1.1 毫秒 |
+| 10K 节点 | 1.2 毫秒 | 3.4 毫秒 | 8.7 毫秒 |
+| 10万个节点 | 3.1 毫秒 | 12.4 毫秒 | 45.2 毫秒 |
 
-Traversal time depends on the number of nodes visited, which grows exponentially with depth (bounded by graph size and degree). The visited-set check (hash set lookup) is the primary cost per node.
+遍历时间取决于访问的节点数量，该数量随着深度（受图大小和度数限制）呈指数增长。访问集检查（哈希集查找）是每个节点的主要成本。
 
-### Similarity Search
+### 相似性搜索
 
-Brute-force cosine similarity search across all 128-dimensional feature vectors. Returns top-k results.
+对所有 128 维特征向量进行强力余弦相似度搜索。返回前 k 个结果。
 
-| Graph Size | Top-5 | Top-10 | Top-50 |
+|图形尺寸|前 5 名 |前 10 名 |前 50 名 |
 |------------|-------|--------|--------|
-| 1K nodes | 0.9 ms | 1.0 ms | 1.1 ms |
-| 10K nodes | 8.2 ms | 9.0 ms | 9.4 ms |
-| 100K nodes | 82 ms | 84 ms | 87 ms |
+| 1K 节点 | 0.9 毫秒 | 1.0 毫秒 | 1.1 毫秒 |
+| 10K 节点 | 8.2 毫秒 | 9.0 毫秒 | 9.4 毫秒 |
+| 10万个节点 | 82 毫秒 | 84 毫秒 | 87 毫秒 |
 
-Similarity search is O(N * D) where N is node count and D is vector dimension. The contiguous vector layout enables SIMD auto-vectorization -- the compiler generates NEON instructions on ARM that process 4 floats per cycle. The top-k selection adds minimal overhead (binary heap, O(N log k)).
+相似性搜索的时间复杂度为 O(N * D)，其中 N 是节点数，D 是向量维度。连续向量布局支持 SIMD 自动向量化——编译器在 ARM 上生成 NEON 指令，每个周期处理 4 个浮点数。 top-k 选择增加了最小的开销（二叉堆，O(N log k)）。
 
-At 100K nodes, the cluster map index (when enabled) reduces search to approximately 15-20 ms by scanning only relevant clusters.
+在 100K 节点上，集群映射索引（启用后）通过仅扫描相关集群，将搜索时间减少到大约 15-20 毫秒。
 
-### File Write
+### 文件写入
 
-Time to serialize the complete graph to a `.amem` file, including LZ4 content compression and vector block construction.
+是时候将完整的图序列化为 `.amem` 文件了，包括 LZ4 内容压缩和向量块构建。
 
-| Graph Size | Median | File Size | Throughput |
+|图形尺寸|中位数 |文件大小 |吞吐量|
 |------------|--------|-----------|------------|
-| 1K nodes, 5K edges | 4.1 ms | 0.7 MB | 170 MB/s |
-| 10K nodes, 50K edges | 32.6 ms | 7.1 MB | 218 MB/s |
-| 100K nodes, 500K edges | 310 ms | 71 MB | 229 MB/s |
+| 1K 个节点，5K 个边 | 4.1 毫秒 | 0.7 MB | 170MB/秒|
+| 10K 个节点，50K 个边 | 32.6 毫秒 | 7.1 MB | 218 MB/秒 |
+| 100K 个节点，500K 个边 | 310 毫秒 | 71 MB | 229 MB/秒 |
 
-Write time is dominated by LZ4 compression of the content block and sequential writes. The format's sequential layout (no random seeks during write) maximizes throughput.
+写入时间主要由内容块的 LZ4 压缩和顺序写入决定。该格式的顺序布局（写入期间无随机查找）可最大限度地提高吞吐量。
 
-### File Read
+### 文件读取
 
-Time to deserialize a `.amem` file into the in-memory graph, including LZ4 decompression.
+是时候将 `.amem` 文件反序列化到内存图中，包括 LZ4 解压缩。
 
-| Graph Size | Median | File Size | Throughput |
+|图形尺寸|中位数 |文件大小 |吞吐量|
 |------------|--------|-----------|------------|
-| 1K nodes | 0.5 ms | 0.7 MB | 1.4 GB/s |
-| 10K nodes | 3.7 ms | 7.1 MB | 1.9 GB/s |
-| 100K nodes | 34 ms | 71 MB | 2.1 GB/s |
+| 1K 节点 | 0.5 毫秒 | 0.7 MB | 1.4 GB/秒 |
+| 10K 节点 | 3.7 毫秒 | 7.1 MB | 1.9 GB/秒 |
+| 10万个节点 | 34 毫秒 | 71 MB | 2.1 GB/秒 |
 
-Read performance benefits from LZ4's fast decompression (>3 GB/s) and the sequential file layout. Throughput increases at larger sizes because the fixed overhead (header parsing, allocation) is amortized.
+读取性能受益于 LZ4 的快速解压缩（>3 GB/s）和顺序文件布局。吞吐量随着大小的增加而增加，因为固定开销（标头解析、分配）被摊销。
 
-### Memory-Mapped Read (MmapReader)
+### 内存映射读取 (MmapReader)
 
-Time to open a file and access a single random node via memory-mapped I/O.
+是时候打开文件并通过内存映射 I/O 访问单个随机节点了。
 
-| Graph Size | Open | Random Node Access | Notes |
+|图形尺寸|打开|随机节点访问 |笔记|
 |------------|------|--------------------|-------|
-| 1K nodes | 0.1 ms | 0.3 us | Entire file in page cache |
-| 10K nodes | 0.1 ms | 0.4 us | Entire file in page cache |
-| 100K nodes | 0.2 ms | 0.5 us | May trigger page fault |
+| 1K 节点 | 0.1 毫秒 | 0.3 我们 |页面缓存中的整个文件 |
+| 10K 节点 | 0.1 毫秒 | 0.4 我们 |页面缓存中的整个文件 |
+| 10万个节点 | 0.2 毫秒 | 0.5 我们 |可能会触发页面错误 |
 
-Memory-mapped access avoids reading the entire file upfront. Node access is a direct pointer dereference after the initial page fault. This is ideal for applications that read a small subset of nodes from a large brain.
+内存映射访问避免预先读取整个文件。节点访问是初始页面错误后的直接指针取消引用。这对于从大大脑中读取一小部分节点的应用程序来说是理想的选择。
 
-## Comparison Context
+## 比较上下文
 
-These benchmarks are intended for understanding AgenticMemory's performance profile. Direct comparisons with other systems require careful methodology because they solve different problems.
+这些基准测试旨在了解 AgenticMemory 的性能概况。与其他系统的直接比较需要仔细的方法，因为它们解决不同的问题。
 
-**Key architectural differences from vector databases:**
-- AgenticMemory is an embedded library, not a client-server system. There is no network round-trip.
-- The graph structure (edges, traversal) is not present in pure vector databases.
-- The binary file format is optimized for single-writer workloads, not concurrent multi-writer access.
+**与矢量数据库的主要架构差异：**
+- AgenticMemory 是一个嵌入式库，而不是客户端-服务器系统。没有网络往返。
+- 纯矢量数据库中不存在图结构（边、遍历）。
+- 二进制文件格式针对单写入器工作负载进行了优化，而不是针对并发多写入器访问。
 
-**Key architectural differences from graph databases (Neo4j, etc.):**
-- AgenticMemory is a file, not a server. No query language parsing, no transaction management.
-- The fixed-size node records and contiguous layout are more cache-friendly than pointer-heavy graph representations.
-- The trade-off is less flexibility: no ad-hoc queries, no schema migrations, no ACID transactions.
+**与图数据库（Neo4j 等）的主要架构差异：**
+- AgenticMemory 是一个文件，而不是服务器。没有查询语言解析，没有事务管理。
+- 固定大小的节点记录和连续布局比指针密集型图形表示更适合缓存。
+- 代价是灵活性较低：没有临时查询、没有架构迁移、没有 ACID 事务。
 
-## Reproducing Benchmarks
+## 重现基准测试
 
-### Prerequisites
+### 先决条件
 
 ```bash
 # Rust toolchain
@@ -146,15 +146,15 @@ git clone https://github.com/anthropic/agentic-memory.git
 cd agentic-memory
 ```
 
-### Running All Benchmarks
+### 运行全部 基准测试
 
 ```bash
 cargo bench
 ```
 
-Results are written to `target/criterion/` with HTML reports including statistical analysis, throughput charts, and regression detection.
+结果通过 HTML 报告写入 `target/criterion/`，包括统计分析、吞吐量图表和回归检测。
 
-### Running Specific Benchmarks
+### 运行特定基准测试
 
 ```bash
 # Only node operations
@@ -168,91 +168,91 @@ cargo bench -- file_read
 cargo bench -- similarity_search
 ```
 
-### Generating a Report
+### 生成报告
 
 ```bash
 cargo bench -- --save-baseline my_hardware
 ```
 
-The HTML report at `target/criterion/report/index.html` includes:
-- Distribution plots for each benchmark
-- Mean, median, and standard deviation
-- Throughput calculations
-- Change detection vs. previous runs
+`target/criterion/report/index.html` 处的 HTML 报告包括：
+- 每个基准的分布图
+- 平均值、中位数和标准差
+- 吞吐量计算
+- 与之前运行相比的变化检测
 
-### Custom Graph Sizes
+### 自定义图形大小
 
-The benchmarks accept environment variables to control graph size:
+基准测试接受环境变量来控制图形大小：
 
 ```bash
 BENCH_NODES=50000 BENCH_EDGES=250000 cargo bench
 ```
 
-### Profiling
+### 分析
 
-For detailed profiling, use `cargo-flamegraph`:
+如需详细分析，请使用 `cargo-flamegraph`：
 
 ```bash
 cargo install flamegraph
 cargo flamegraph --bench core_benchmarks -- --bench
 ```
 
-This generates an SVG flamegraph showing where time is spent during benchmark execution.
+这会生成一个 SVG 火焰图，显示基准测试执行期间花费的时间。
 
 ---
 
-## v0.2 Query Expansion Benchmarks
+## v0.2 查询扩展基准测试
 
-All v0.2 query types benchmarked on 100K-node synthetic graphs (300K edges, 3 edges/node average). Measured with Criterion (100 samples) except where noted.
+所有 v0.2 查询类型均以 100K 节点合成图为基准（300K 边，平均 3 条边/节点）。除非另有说明，均采用 Criterion（100 个样品）进行测量。
 
-### All Query Types at 100K Nodes
+### 100K 节点上的所有查询类型
 
-| Category | Query | Latency | Notes |
+|类别 |查询 |延迟|笔记|
 |----------|-------|---------|-------|
-| Retrieval | BM25 text search (fast path) | **1.58 ms** | Uses TermIndex |
-| Retrieval | BM25 text search (slow path) | **122 ms** | Full scan fallback for v0.1 files |
-| Retrieval | Hybrid search (BM25 + vector) | **10.83 ms** | RRF fusion |
-| Structure | PageRank (alpha=0.85) | **34.3 ms** | Iterative convergence |
-| Structure | Degree centrality | **20.7 ms** | Normalized degree |
-| Structure | Betweenness centrality | **10.1 s** | Brandes' algorithm, sampled |
-| Structure | Shortest path (BFS) | **104 us** | Bidirectional BFS |
-| Structure | Shortest path (Dijkstra) | **17.6 ms** | Binary heap |
-| Cognitive | Belief revision | **53.4 ms** | Counterfactual cascade |
-| Cognitive | Gap detection | **297 s** | Single-run measurement |
-| Cognitive | Analogical query | **229 s** | Single-run measurement |
-| Maintenance | Consolidation (dry run) | **43.6 s** | Single-run measurement |
-| Maintenance | Drift detection | **68.4 ms** | Supersedes chain analysis |
+|检索| BM25 文本搜索（快速路径）| **1.58 毫秒** |使用术语索引 |
+|检索| BM25 文本搜索（慢路径）| **122 毫秒** | v0.1 文件的全面扫描后备 |
+|检索|混合搜索（BM25 + 矢量）| **10.83 毫秒** | RRF融合|
+|结构| PageRank (alpha=0.85) | **34.3 毫秒** |迭代收敛|
+|结构|度中心性 | **20.7 毫秒** |归一化度|
+|结构|介数中心性 | **10.1 秒** |布兰德斯算法，采样 |
+|结构|最短路径（BFS）| **104 我们** |双向 BFS |
+|结构|最短路径（Dijkstra）| **17.6 毫秒** |二叉堆 |
+|认知|信念修正 | **53.4 毫秒** |反事实级联|
+|认知|间隙检测| **297 秒** |单次测量 |
+|认知|类比查询| **229秒** |单次测量 |
+|保养|整合（试运行）| **43.6 秒** |单次测量 |
+|保养|漂移检测| **68.4 毫秒** |取代链分析 |
 
-### Scaling from 10K to 100K Nodes
+### 从 10K 节点扩展到 100K 节点
 
-| Query | 10K | 100K | Scaling Ratio |
+|查询 | 10K | 10万 |缩放比例|
 |-------|-----|------|---------------|
-| BM25 (fast) | 186 us | 1.58 ms | 8.5x |
-| Hybrid | 1.00 ms | 10.83 ms | 10.8x |
-| PageRank | 2.53 ms | 34.3 ms | 13.6x |
-| Degree centrality | 1.73 ms | 20.7 ms | 12.0x |
-| Betweenness centrality | 6.43 s | 10.1 s | 1.6x |
-| BFS shortest path | 7.9 us | 104 us | 13.2x |
-| Dijkstra shortest path | 888 us | 17.6 ms | 19.8x |
-| Belief revision | 6.26 ms | 53.4 ms | 8.5x |
-| Gap detection | 1.53 s | 297 s | 194x |
-| Analogical | 2.40 s | 229 s | 95x |
-| Consolidation | 352 ms | 43.6 s | 124x |
-| Drift detection | 5.84 ms | 68.4 ms | 11.7x |
+| BM25（快速）| 186 我们 | 1.58 毫秒 | 8.5 倍 |
+|混合动力| 1.00 毫秒 | 10.83 毫秒 | 10.8 倍 |
+|网页排名 | 2.53 毫秒 | 34.3 毫秒 | 13.6 倍 |
+|度中心性 | 1.73 毫秒 | 20.7 毫秒 | 12.0x | 12.0x
+|介数中心性 | 6.43 秒 | 10.1 秒 | 1.6 倍 |
+| BFS最短路径| 7.9 我们 | 104 我们 | 13.2 倍 |
+| Dijkstra最短路径| 888 我们 | 17.6 毫秒 | 19.8 倍 |
+|信念修正 | 6.26 毫秒 | 53.4 毫秒 | 8.5 倍 |
+|间隙检测| 1.53 秒 | 297 秒 | 194x |
+|类比| 2.40 秒 | 229 秒 | 95x |
+|整合| 352 毫秒 | 43.6 秒 | 124x | 124x
+|漂移检测| 5.84 毫秒 | 68.4 毫秒 | 11.7 倍 |
 
-### Performance Tiers
+### 性能等级
 
-Queries divide into three tiers at 100K nodes:
+查询在 100K 个节点上分为三层：
 
-- **Interactive (&lt;100 ms):** BM25, hybrid, PageRank, degree, BFS, Dijkstra, belief revision, drift -- suitable for per-query use during conversations
-- **Periodic (1-60 s):** Betweenness centrality, consolidation -- run once per session or on a schedule
-- **Offline (>60 s):** Gap detection, analogical reasoning -- designed for batch analysis of large graphs; both complete in &lt;3s at 10K nodes
+- **交互式（&lt;100 ms）：** BM25、混合、PageRank、学位、BFS、Dijkstra、信念修正、漂移 - 适合对话期间每个查询使用
+- **周期性（1-60 秒）：** 介数中心性、整合——每个会话或按计划运行一次
+- **离线（>60 s）：** 间隙检测、类比推理——专为大图批量分析而设计；在 10K 节点上，两者均在 3 秒内完成
 
-### BM25 Index Acceleration
+### BM25 指数加速
 
-| Graph Size | Fast Path (TermIndex) | Slow Path (full scan) | Speedup |
+|图形尺寸|快速路径（术语索引）|慢速路径（全面扫描）|加速|
 |------------|----------------------|-----------------------|---------|
-| 10K nodes | 186 us | 8.59 ms | 46x |
-| 100K nodes | 1.58 ms | 122 ms | 77x |
+| 10K 节点 | 186 我们 | 8.59 毫秒 | 46x |
+| 10万个节点 | 1.58 毫秒 | 122 毫秒 | 77x |
 
-The inverted index speedup grows with graph size because the fast path cost depends on posting list size (sub-linear in n) while the slow path is always O(n).
+倒排索引加速随着图的大小而增长，因为快速路径成本取决于发布列表大小（n 中的次线性），而慢速路径始终为 O(n)。

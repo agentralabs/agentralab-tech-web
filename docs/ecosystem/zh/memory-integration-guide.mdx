@@ -1,13 +1,13 @@
 ---
-title: "Integration Guide"
-description: "This guide covers how to integrate AgenticMemory into various environments: direct Python usage, LLM providers, agent frameworks, AI coding assistants via MCP, and custom provid..."
+title: "集成指南"
+description: "本指南介绍了如何将 AgenticMemory 集成到各种环境中：直接使用 Python、LLM 提供程序、代理框架、通过 MCP 的 AI 编码助手以及自定义提供..."
 ---
 
-This guide covers how to integrate AgenticMemory into various environments: direct Python usage, LLM providers, agent frameworks, AI coding assistants via MCP, and custom provider implementations.
+本指南介绍了如何将 AgenticMemory 集成到各种环境中：直接使用 Python、LLM 提供程序、代理框架、通过 MCP 的 AI 编码助手以及自定义提供程序实现。
 
-## Direct Python Usage
+## 直接使用Python
 
-The simplest integration uses the `Brain` class directly without any LLM. You control what gets stored and how events are linked.
+最简单的集成直接使用 `Brain` 类，无需任何 LLM。您可以控制存储的内容以及事件的链接方式。
 
 ```python
 from agentic_memory import Brain, EventType
@@ -25,24 +25,24 @@ results = brain.search("rate limiting", top_k=5)
 related = brain.traverse(fact.id, depth=3)
 ```
 
-This approach works well when:
-- You have structured data and know exactly what to store.
-- You want full control over the memory formation process.
-- You are building a pipeline where events are extracted by external logic.
+这种方法在以下情况下效果很好：
+- 您拥有结构化数据并确切知道要存储什么。
+- 你想要完全控制记忆形成过程。
+- 您正在构建一个管道，其中事件由外部逻辑提取。
 
 ---
 
-## With Anthropic Claude
+## 与人类克劳德
 
-The `AnthropicProvider` connects AgenticMemory to Claude models for automatic memory extraction.
+`AnthropicProvider` 将 AgenticMemory 连接到 Claude 模型以进行自动内存提取。
 
-### Setup
+＃＃＃ 设置
 
 ```bash
 pip install agentic-brain anthropic
 ```
 
-### Basic Usage
+### 基本用法
 
 ```python
 from agentic_memory import Brain, MemoryAgent
@@ -65,7 +65,7 @@ for event in agent.last_extraction:
     print(f"  [{event.event_type.value}] {event.content} (confidence: {event.confidence})")
 ```
 
-### Using Environment Variables
+### 使用环境变量
 
 ```bash
 export ANTHROPIC_API_KEY="sk-ant-..."
@@ -75,9 +75,9 @@ export ANTHROPIC_API_KEY="sk-ant-..."
 provider = AnthropicProvider()  # Picks up ANTHROPIC_API_KEY automatically
 ```
 
-### Multi-turn Conversations
+### 多轮对话
 
-The `MemoryAgent` accumulates context across calls within a session. Each `chat()` call retrieves relevant past memories and adds them to the LLM context.
+`MemoryAgent` 累积会话内调用之间的上下文。每个 `chat()` 调用都会检索相关的过去记忆并将它们添加到 LLM 上下文中。
 
 ```python
 agent.chat("My name is Alice and I'm a backend engineer at Acme Corp.")
@@ -88,17 +88,17 @@ agent.chat("What database setup would you recommend for our new microservice?")
 
 ---
 
-## With OpenAI GPT
+## 使用 OpenAI GPT
 
-The `OpenAIProvider` works with GPT-4o, GPT-4, and other OpenAI models.
+`OpenAIProvider` 适用于 GPT-4o、GPT-4 和其他 OpenAI 模型。
 
-### Setup
+＃＃＃ 设置
 
 ```bash
 pip install agentic-brain openai
 ```
 
-### Usage
+＃＃＃ 用法
 
 ```python
 from agentic_memory import Brain, MemoryAgent
@@ -114,7 +114,7 @@ agent = MemoryAgent(brain, provider)
 response = agent.chat("Let's plan the architecture for a real-time chat application.")
 ```
 
-### Custom Model Selection
+### 自定义模型选择
 
 ```python
 # Use GPT-4 Turbo for more complex extraction
@@ -126,11 +126,11 @@ provider = OpenAIProvider(model="gpt-4o-mini")
 
 ---
 
-## With Local Ollama Models
+## 当地 Ollama 模特
 
-The `OllamaProvider` connects to locally-running Ollama models. No API keys required, all data stays on your machine.
+`OllamaProvider` 连接到本地运行的 Ollama 模型。无需 API 密钥，所有数据都保留在您的计算机上。
 
-### Setup
+＃＃＃ 设置
 
 ```bash
 # Install Ollama (macOS)
@@ -147,7 +147,7 @@ ollama serve
 pip install agentic-brain
 ```
 
-### Usage
+＃＃＃ 用法
 
 ```python
 from agentic_memory import Brain, MemoryAgent
@@ -163,30 +163,30 @@ agent = MemoryAgent(brain, provider)
 response = agent.chat("Track my project milestones: MVP by March, beta by May, launch by July.")
 ```
 
-### Recommended Models
+### 推荐型号
 
-| Model | Size | Extraction Quality | Speed |
+|型号|尺寸|提取质量|速度|
 |-------|------|-------------------|-------|
-| `llama3.1:70b` | 40 GB | Excellent | Slow |
-| `llama3.1` (8B) | 4.7 GB | Good | Fast |
-| `mistral` (7B) | 4.1 GB | Good | Fast |
-| `phi3:medium` | 7.9 GB | Good | Moderate |
+| `llama3.1:70b` | 40GB|优秀|慢|
+| `llama3.1` (8B) | `llama3.1` (8B) | 4.7GB|好 |快|
+| `mistral` (7B) | `mistral` (7B) | 4.1GB|好 |快|
+| `phi3:medium` | 7.9 GB | 7.9 GB好 |中等|
 
-Larger models produce better extraction results but require more VRAM and run slower.
+较大的模型可产生更好的提取结果，但需要更多 VRAM 并且运行速度更慢。
 
 ---
 
-## LangChain Integration
+## 浪链集成
 
-AgenticMemory can be used as a memory backend for LangChain chains and agents via a thin wrapper.
+AgenticMemory 可通过薄包装器用作 LangChain 链和代理的内存后端。
 
-### Setup
+＃＃＃ 设置
 
 ```bash
 pip install agentic-brain langchain langchain-anthropic
 ```
 
-### As a LangChain Memory Backend
+### 作为 LangChain 内存后端
 
 ```python
 from agentic_memory import Brain
@@ -207,7 +207,7 @@ response = chain.invoke({"input": "What's my favorite language?"})
 # Memory is retrieved and included in context
 ```
 
-### Custom Retrieval in LangChain
+### LangChain自定义检索
 
 ```python
 from langchain.schema import BaseRetriever, Document
@@ -234,17 +234,17 @@ class AgenticMemoryRetriever(BaseRetriever):
 
 ---
 
-## CrewAI Integration
+## CrewAI 集成
 
-AgenticMemory can serve as persistent memory for CrewAI agents.
+AgenticMemory 可以作为 CrewAI 代理的持久内存。
 
-### Setup
+＃＃＃ 设置
 
 ```bash
 pip install agentic-brain crewai
 ```
 
-### Usage
+＃＃＃ 用法
 
 ```python
 from agentic_memory import Brain
@@ -275,51 +275,36 @@ print(f"Stored {brain.info().node_count} events")
 
 ---
 
-## MCP Server (Claude Desktop, Claude Code, VS Code, Cursor, Windsurf)
+## MCP 服务器（Claude Desktop、Claude Code、VS Code、Cursor、Windsurf）
 
-The `agentic-memory-mcp` crate is a dedicated MCP server that exposes the full AgenticMemory engine over the [Model Context Protocol](https://modelcontextprotocol.io) (JSON-RPC 2.0). It provides 12 tools, 6 resources, and 4 prompt templates to any MCP-compatible client.
+`agentic-memory-mcp` 箱是一个专用的 MCP 服务器，它通过 [模型上下文协议](https://modelcontextprotocol.io) (JSON-RPC 2.0) 公开完整的 AgenticMemory 引擎。它为任何 MCP 兼容客户端提供 12 个工具、6 个资源和 4 个提示模板。
 
-### Install
+### 安装
 
 ```bash
 cargo install agentic-memory-mcp
 ```
 
-### Available MCP Tools
+### 可用的 MCP 工具
 
-| Tool | Description |
+|工具|描述 |
 |------|-------------|
-| `memory_add` | Add a cognitive event (fact, decision, inference, correction, skill, episode) |
-| `memory_query` | Pattern query for matching nodes |
-| `memory_traverse` | Walk graph following typed edges |
-| `memory_correct` | Record a correction to a past belief |
-| `memory_resolve` | Follow supersedes chain to current truth |
-| `memory_context` | Get subgraph around a node |
-| `memory_similar` | Vector similarity search |
-| `memory_causal` | Causal impact analysis |
-| `memory_temporal` | Compare knowledge across time periods |
-| `memory_stats` | Graph statistics |
-| `session_start` | Begin a new interaction session |
-| `session_end` | End session and create episode summary |
+| `memory_add` |添加认知事件（事实、决定、推理、纠正、技能、情节）|
+| `memory_query` |匹配节点的模式查询 |
+| `memory_traverse` |沿着键入的边缘行走图 |
+| `memory_correct` |记录对过去信念的修正|
+| `memory_resolve` |跟随取代链了解当前真相 |
+| `memory_context` |获取节点周围的子图 |
+| `memory_similar` |向量相似度搜索 |
+| `memory_causal` |因果影响分析|
+| `memory_temporal` |比较不同时期的知识 |
+| `memory_stats` |图表统计|
+| `session_start` |开始新的交互会话 |
+| `session_end` |结束会话并创建剧集摘要 |
 
-### Configure Claude Desktop
+### 配置克劳德桌面
 
-Add to `~/Library/Application Support/Claude/claude_desktop_config.json`:
-
-```json
-{
-  "mcpServers": {
-    "agentic-memory": {
-      "command": "agentic-memory-mcp",
-      "args": ["serve"]
-    }
-  }
-}
-```
-
-### Configure Claude Code
-
-Add to `~/.claude/mcp.json`:
+添加到`~/Library/Application Support/Claude/claude_desktop_config.json`：
 
 ```json
 {
@@ -332,9 +317,24 @@ Add to `~/.claude/mcp.json`:
 }
 ```
 
-### Configure VS Code / Cursor
+### 配置克劳德代码
 
-Add to `.vscode/settings.json`:
+添加到`~/.claude/mcp.json`：
+
+```json
+{
+  "mcpServers": {
+    "agentic-memory": {
+      "command": "agentic-memory-mcp",
+      "args": ["serve"]
+    }
+  }
+}
+```
+
+### 配置 VS Code / 光标
+
+添加到`.vscode/settings.json`：
 
 ```json
 {
@@ -347,9 +347,9 @@ Add to `.vscode/settings.json`:
 }
 ```
 
-### Configure Windsurf
+### 配置风帆
 
-Add to `~/.codeium/windsurf/mcp_config.json`:
+添加到`~/.codeium/windsurf/mcp_config.json`：
 
 ```json
 {
@@ -362,25 +362,25 @@ Add to `~/.codeium/windsurf/mcp_config.json`:
 }
 ```
 
-> Zero-config: defaults to `~/.brain.amem`. Override with `"args": ["--memory", "/path/to/brain.amem", "serve"]`.
+> 零配置：默认为 `~/.brain.amem`。使用 `"args": ["--memory", "/path/to/brain.amem", "serve"]` 覆盖。
 
-### Verifying the Connection
+### 验证连接
 
-After configuring, restart your editor. You should see the memory tools available in the tool list. Test by asking the assistant to store a fact:
+配置完成后，重新启动编辑器。您应该在工具列表中看到可用的内存工具。通过要求助手存储一个事实来进行测试：
 
-> "Remember that this project uses PostgreSQL 16 with pgvector for embeddings."
+>“请记住，该项目使用 PostgreSQL 16 和 pgvector 进行嵌入。”
 
-The assistant should call `memory_add` and confirm the event was stored.
+助理应致电 `memory_add` 并确认事件已存储。
 
-See the [MCP server README](../crates/agentic-memory-mcp/README.md) for the full reference including resources, prompts, and CLI commands.
+请参阅 [MCP 服务器自述文件](../crates/agentic-memory-mcp/README.md) 以获取完整参考，包括资源、提示和 CLI 命令。
 
 ---
 
-## Building a Custom LLMProvider
+## 构建自定义 LLMProvider
 
-If your LLM is not covered by the built-in providers, implement the `LLMProvider` interface.
+如果内置提供商未涵盖您的 LLM，请实现 `LLMProvider` 接口。
 
-### Required Methods
+### 所需方法
 
 ```python
 from agentic_memory.integrations import LLMProvider, ProviderError
@@ -439,9 +439,9 @@ class MyProvider(LLMProvider):
             raise ProviderError(f"Failed to parse extraction: {err}")
 ```
 
-### Optional: Custom Embeddings
+### 任选：自定义嵌入
 
-Override the `embed()` method if your LLM provides embeddings:
+如果您的 LLM 提供嵌入，请覆盖 `embed()` 方法：
 
 ```python
     def embed(self, text: str) -> list[float] | None:
@@ -461,7 +461,7 @@ Override the `embed()` method if your LLM provides embeddings:
         return vector[:128]  # Ensure correct dimension
 ```
 
-### Using Your Custom Provider
+### 使用您的自定义提供程序
 
 ```python
 from agentic_memory import Brain, MemoryAgent
@@ -473,9 +473,9 @@ agent = MemoryAgent(brain, provider)
 response = agent.chat("Store some information for me.")
 ```
 
-### Testing Your Provider
+### 测试您的提供商
 
-AgenticMemory includes a provider test suite you can run against your implementation:
+AgenticMemory 包含一个提供程序测试套件，您可以针对您的实现运行：
 
 ```python
 from agentic_memory.testing import run_provider_tests
@@ -485,8 +485,8 @@ results = run_provider_tests(provider)
 print(results.summary())
 ```
 
-This tests:
-- Basic completion works.
-- Event extraction returns valid typed events.
-- Embedding vectors (if provided) have the correct dimension.
-- Error handling for API failures.
+这测试：
+- 基本竣工工程。
+- 事件提取返回有效的类型化事件。
+- 嵌入向量（如果提供）具有正确的维度。
+- API 失败的错误处理。

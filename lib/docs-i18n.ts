@@ -7,6 +7,17 @@ export function normalizeDocsLanguage(value: string | undefined | null): DocsLan
   return value === "zh" ? "zh" : "en"
 }
 
+export function stripDocsLocalePrefix(path: string): string {
+  return path.replace(/^\/docs\/(?:en|zh)(?=\/|$)/, "/docs")
+}
+
+export function localizeDocsHref(href: string, lang: DocsLanguage): string {
+  if (!href.startsWith("/docs")) return href
+  const normalized = stripDocsLocalePrefix(href)
+  const suffix = normalized.slice("/docs".length)
+  return `/docs/${lang}${suffix}`
+}
+
 const LABEL_ZH: Record<string, string> = {
   "Public Documentation": "公开文档",
   Documentation: "文档",

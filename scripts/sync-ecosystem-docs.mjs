@@ -6,6 +6,7 @@ import path from "node:path"
 const repoRoot = process.cwd()
 const args = process.argv.slice(2)
 const strict = args.includes("--strict")
+const liveTranslate = args.includes("--live-translate")
 const workspaceFlagIndex = args.indexOf("--workspace")
 const workspaceFromArg = workspaceFlagIndex >= 0 ? args[workspaceFlagIndex + 1] : undefined
 const workspaceRoot = path.resolve(
@@ -14,6 +15,7 @@ const workspaceRoot = path.resolve(
 
 const EN_OUT_DIR = path.join(repoRoot, "docs", "ecosystem", "en")
 const ZH_OUT_DIR = path.join(repoRoot, "docs", "ecosystem", "zh")
+const ZH_TRANSLATION_CACHE = path.join(repoRoot, "scripts", "data", "zh-translation-cache.json")
 
 const DOC_SPECS = [
   {
@@ -144,6 +146,241 @@ const PAGE_ORDER_SUFFIX = [
   "system-architecture",
   "use-case-playbooks",
 ]
+
+const ZH_PHRASES = [
+  ["Documentation", "文档"],
+  ["Quickstart", "快速开始"],
+  ["Overview", "总览"],
+  ["Installation", "安装"],
+  ["Installation Guide", "安装指南"],
+  ["Command Surface", "命令面"],
+  ["Integration Guide", "集成指南"],
+  ["Core Concepts", "核心概念"],
+  ["Concepts", "概念"],
+  ["API Reference", "API 参考"],
+  ["Python API Reference", "Python API 参考"],
+  ["Rust API Reference", "Rust API 参考"],
+  ["File Format Specification", "文件格式规范"],
+  [".amem File Format Specification", ".amem 文件格式规范"],
+  ["Benchmarks", "基准测试"],
+  ["Frequently Asked Questions", "常见问题"],
+  ["FAQ", "常见问题"],
+  ["Known Limitations", "已知限制"],
+  ["Runtime, Install Output, and Sync Contract", "运行、安装输出与同步契约"],
+  ["Canonical Sister Kit (Agentra)", "标准 Sister 套件（Agentra）"],
+  ["AgenticCodebase Overview", "AgenticCodebase 总览"],
+  ["AgenticVision Overview", "AgenticVision 总览"],
+  ["Agentra Workspace How-To", "Agentra 工作区操作手册"],
+  ["Agentra Runtime + Operations Update", "Agentra 运行时与运维更新"],
+  ["Server Runtime Auth and Artifact Sync", "服务端鉴权与工件同步"],
+  ["Feedback and Community", "反馈与社区"],
+  ["System Architecture", "系统架构"],
+  ["Use-Case Playbooks", "用例手册"],
+  ["Get Started", "开始使用"],
+  ["Sections", "章节"],
+  ["Install all sisters locally", "本地安装所有 sisters"],
+  ["Verify detection and MCP wiring", "验证检测与 MCP 接线"],
+  ["Toggle sisters and full control", "切换 sisters 与完全控制"],
+  ["Start the dashboard", "启动仪表盘"],
+  ["Operations backup and restore", "运维备份与恢复"],
+  ["Troubleshooting Matrix", "故障排查矩阵"],
+  ["OpenClaw TUI command namespace", "OpenClaw TUI 命令命名空间"],
+  ["Run local AI smoke test", "运行本地 AI 冒烟测试"],
+  ["Build and package", "构建与打包"],
+  ["Screenshot evidence (sisters running)", "截图证据（sisters 运行中）"],
+  ["Install", "安装"],
+  ["Create a brain", "创建脑文件"],
+  ["Add and query memory", "添加并查询记忆"],
+  ["Start MCP server", "启动 MCP 服务"],
+  ["Validate MCP quality output", "验证 MCP 质量输出"],
+  ["Enable automatic long-horizon budget enforcement", "启用自动长期预算约束"],
+  ["Enable prompt and feedback auto-capture", "启用提示词与反馈自动采集"],
+  ["Compile a repository", "编译仓库"],
+  ["Run core queries", "运行核心查询"],
+  ["Run health and gate checks", "运行健康与门禁检查"],
+  ["Validate artifact path", "验证工件路径"],
+  ["Inspect capabilities", "检查能力"],
+  ["Query quality-aware results", "查询质量感知结果"],
+  ["Use `Ctrl+C` to stop after startup verification.", "启动验证完成后，使用 `Ctrl+C` 停止。"],
+  ["Profile-specific commands are listed in", "按 profile 区分的命令见"],
+  ["Expected tools include", "预期工具包括"],
+  ["Expected tool list includes", "预期工具列表包括"],
+  ["Run", "运行"],
+  ["Optional", "可选"],
+  ["Modes", "模式"],
+  ["When enabled, maintenance ticks auto-roll up completed sessions into episode summaries when budget pressure is detected.", "启用后，在检测到预算压力时，维护周期会自动将已完成会话汇总为情节摘要。"],
+  ["Hosted/cloud runtimes cannot directly read files on your laptop.", "托管/云运行时无法直接读取你本机的文件。"],
+  ["Sync artifacts to server-accessible paths and configure auth first.", "请先将工件同步到服务端可访问路径并完成鉴权配置。"],
+  ["Required environment", "必需环境变量"],
+  ["Sync artifacts", "同步工件"],
+  ["Run strict preflight", "运行严格预检"],
+  ["Start MCP runtimes on the server host", "在服务端主机启动 MCP 运行时"],
+  ["Client-side validation (any MCP client)", "客户端验证（任意 MCP 客户端）"],
+  ["Protocol parity", "协议一致性"],
+  ["Desktop and server use the same MCP contract.", "桌面与服务端使用相同的 MCP 契约。"],
+  ["Server mode only adds explicit auth and artifact-sync requirements.", "服务端模式仅增加显式鉴权与工件同步要求。"],
+  ["Create snapshot", "创建快照"],
+  ["List snapshots", "列出快照"],
+  ["Verify latest snapshot", "验证最新快照"],
+  ["Restore examples", "恢复示例"],
+  ["Retention", "保留策略"],
+  ["Controls", "控制键"],
+  ["Release/re-enable full control", "释放/重新启用完全控制"],
+  ["Disable individual sisters", "关闭单个 sister"],
+  ["Re-enable", "重新启用"],
+  ["Settings persist in", "设置会持久化在"],
+  ["Expected tool states are `OK`, `DISABLED`, or `MISSING` with hints.", "预期工具状态为 `OK`、`DISABLED` 或 `MISSING`，并附带提示信息。"],
+  ["Public source documentation for", "公开来源文档："],
+]
+
+const ZH_REPLACEMENTS = [...ZH_PHRASES].sort((a, b) => b[0].length - a[0].length)
+
+function needsTranslation(value) {
+  if (!value) return false
+  return /[A-Za-z]/.test(value)
+}
+
+async function loadTranslationCache() {
+  try {
+    const raw = await fs.readFile(ZH_TRANSLATION_CACHE, "utf8")
+    const parsed = JSON.parse(raw)
+    if (parsed && typeof parsed === "object") {
+      return parsed
+    }
+  } catch {
+    // Ignore missing or malformed cache.
+  }
+  return {}
+}
+
+async function saveTranslationCache(cache) {
+  await ensureDir(path.dirname(ZH_TRANSLATION_CACHE))
+  const sortedKeys = Object.keys(cache).sort((a, b) => a.localeCompare(b))
+  const sorted = {}
+  for (const key of sortedKeys) {
+    sorted[key] = cache[key]
+  }
+  await writeIfChanged(ZH_TRANSLATION_CACHE, `${JSON.stringify(sorted, null, 2)}\n`)
+}
+
+function protectInlineCode(value) {
+  const placeholders = []
+  const text = value.replace(/`[^`]+`/g, (match) => {
+    const token = `__AGENTRA_CODE_${placeholders.length}__`
+    placeholders.push(match)
+    return token
+  })
+  return { text, placeholders }
+}
+
+function restoreInlineCode(value, placeholders) {
+  let out = value
+  placeholders.forEach((match, index) => {
+    out = out.split(`__AGENTRA_CODE_${index}__`).join(match)
+  })
+  return out
+}
+
+async function remoteTranslateEnToZh(value) {
+  const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=zh-CN&dt=t&q=${encodeURIComponent(value)}`
+  const response = await fetch(url, { signal: AbortSignal.timeout(8000) })
+  if (!response.ok) {
+    throw new Error(`translate_http_${response.status}`)
+  }
+
+  const payload = await response.json()
+  const translated = Array.isArray(payload?.[0])
+    ? payload[0].map((part) => (Array.isArray(part) ? String(part[0] ?? "") : "")).join("")
+    : ""
+  return translated || value
+}
+
+async function translateZhText(value, cacheState) {
+  if (!value) return value
+  const input = String(value)
+  if (cacheState.cache[input]) {
+    return cacheState.cache[input]
+  }
+
+  let result = input
+  for (const [en, zh] of ZH_REPLACEMENTS) {
+    result = result.split(en).join(zh)
+  }
+
+  if (cacheState.cache[result]) {
+    return cacheState.cache[result]
+  }
+
+  if (!liveTranslate || !needsTranslation(result)) {
+    return result
+  }
+
+  const { text, placeholders } = protectInlineCode(result)
+  let translated = text
+  try {
+    translated = await remoteTranslateEnToZh(text)
+    if (translated && translated !== text) {
+      translated = restoreInlineCode(translated, placeholders)
+      cacheState.cache[input] = translated
+      cacheState.dirty = true
+      cacheState.translated += 1
+      if (liveTranslate && cacheState.translated % 100 === 0) {
+        console.log(`[sync] zh cache translated entries: ${cacheState.translated}`)
+      }
+      return translated
+    }
+  } catch {
+    return result
+  }
+
+  return result
+}
+
+async function translateZhMarkdown(markdown, cacheState) {
+  const lines = markdown.split("\n")
+  let inFence = false
+  const out = []
+
+  for (const line of lines) {
+    const trimmed = line.trimStart()
+    if (trimmed.startsWith("```")) {
+      inFence = !inFence
+      out.push(line)
+      continue
+    }
+    if (inFence) {
+      out.push(line)
+      continue
+    }
+
+    const translatedLinks = await replaceAsync(line, /\[([^\]]+)\]\(([^)]+)\)/g, async (_, text, href) => {
+      const translatedText = await translateZhText(text, cacheState)
+      return `[${translatedText}](${href})`
+    })
+
+    out.push(await translateZhText(translatedLinks, cacheState))
+  }
+
+  return out.join("\n")
+}
+
+async function replaceAsync(input, pattern, replacer) {
+  const matches = [...input.matchAll(pattern)]
+  if (!matches.length) return input
+
+  let cursor = 0
+  const chunks = []
+  for (const match of matches) {
+    const [full, ...groups] = match
+    const index = match.index ?? 0
+    chunks.push(input.slice(cursor, index))
+    // eslint-disable-next-line no-await-in-loop
+    chunks.push(await replacer(full, ...groups))
+    cursor = index + full.length
+  }
+  chunks.push(input.slice(cursor))
+  return chunks.join("")
+}
 
 function normalizePath(value) {
   return value.replaceAll("\\", "/")
@@ -278,6 +515,12 @@ function rewriteLocalLinks(markdown, currentId, idToSlug) {
   })
 }
 
+function localizeMarkdownDocsLinks(markdown, language) {
+  return markdown.replace(/\]\(\/docs\/(?!en\/|zh\/)([^)]+)\)/g, (_full, suffix) => {
+    return `](/docs/${language}/${suffix})`
+  })
+}
+
 async function ensureDir(dir) {
   await fs.mkdir(dir, { recursive: true })
 }
@@ -344,7 +587,7 @@ function sortDocEntries(entries, key) {
   })
 }
 
-async function buildDocPages(spec) {
+async function buildDocPages(spec, cacheState) {
   const exists = await pathExists(spec.docsPublicDir)
   if (!exists) {
     const message = `[sync] Missing public docs directory: ${spec.docsPublicDir}`
@@ -439,22 +682,41 @@ async function buildDocPages(spec) {
   for (const item of ordered) {
     enPages.set(
       item.slug,
-      mdxPage({ title: item.title, description: item.description, body: item.body }),
+      mdxPage({
+        title: item.title,
+        description: item.description,
+        body: localizeMarkdownDocsLinks(item.body, "en"),
+      }),
     )
+
+    // eslint-disable-next-line no-await-in-loop
+    const zhTitle = await translateZhText(item.title, cacheState)
+    // eslint-disable-next-line no-await-in-loop
+    const zhDescription = await translateZhText(item.description, cacheState)
+    // eslint-disable-next-line no-await-in-loop
+    const zhBody = await translateZhMarkdown(item.body, cacheState)
 
     zhPages.set(
       item.slug,
-      mdxPage({ title: item.title, description: item.description, body: item.body }),
+      mdxPage({
+        title: zhTitle,
+        description: zhDescription,
+        body: escapeUnsafeAngles(localizeMarkdownDocsLinks(zhBody, "zh")),
+      }),
     )
   }
 
   const linksEn = ordered
-    .map((item) => `- [${item.title}](/docs/${item.slug})`)
+    .map((item) => `- [${item.title}](/docs/en/${item.slug})`)
     .join("\n")
 
-  const linksZh = ordered
-    .map((item) => `- [${item.title}](/docs/${item.slug})`)
-    .join("\n")
+  const linksZhParts = []
+  for (const item of ordered) {
+    // eslint-disable-next-line no-await-in-loop
+    const translatedTitle = await translateZhText(item.title, cacheState)
+    linksZhParts.push(`- [${translatedTitle}](/docs/zh/${item.slug})`)
+  }
+  const linksZh = linksZhParts.join("\n")
 
   const includeLanding = spec.includeLanding !== false
   const landingSlug = includeLanding ? `${spec.key}-docs` : ""
@@ -496,6 +758,12 @@ async function pruneOutput(dir, keepFiles) {
 }
 
 async function main() {
+  const cacheState = {
+    cache: await loadTranslationCache(),
+    dirty: false,
+    translated: 0,
+  }
+
   const sourceChecks = await Promise.all(
     DOC_SPECS.map(async (spec) => ({
       spec,
@@ -518,7 +786,7 @@ async function main() {
   const docResults = []
   for (const spec of DOC_SPECS) {
     // eslint-disable-next-line no-await-in-loop
-    docResults.push({ spec, ...(await buildDocPages(spec)) })
+    docResults.push({ spec, ...(await buildDocPages(spec, cacheState)) })
   }
 
   const enFiles = new Map()
@@ -532,7 +800,7 @@ async function main() {
     ...docResults
       .map(({ spec, landingSlug, entries }) => {
         const target = landingSlug || entries[0]?.slug
-        return target ? `- [${spec.name}](/docs/${target})` : ""
+        return target ? `- [${spec.name}](/docs/en/${target})` : ""
       })
       .filter(Boolean),
   ].join("\n")
@@ -542,12 +810,14 @@ async function main() {
     "",
     "## 分组",
     "",
-    ...docResults
-      .map(({ spec, landingSlug, entries }) => {
+    ...await Promise.all(
+      docResults.map(async ({ spec, landingSlug, entries }) => {
         const target = landingSlug || entries[0]?.slug
-        return target ? `- [${spec.name}](/docs/${target})` : ""
-      })
-      .filter(Boolean),
+        if (!target) return ""
+        const label = await translateZhText(spec.name, cacheState)
+        return `- [${label}](/docs/zh/${target})`
+      }),
+    ).then((items) => items.filter(Boolean)),
   ].join("\n")
 
   enFiles.set(
@@ -608,10 +878,16 @@ async function main() {
     await writeIfChanged(path.join(ZH_OUT_DIR, name), content)
   }
 
+  if (cacheState.dirty) {
+    await saveTranslationCache(cacheState.cache)
+  }
+
   await pruneOutput(EN_OUT_DIR, new Set(enFiles.keys()))
   await pruneOutput(ZH_OUT_DIR, new Set(zhFiles.keys()))
 
-  console.log("[sync] docs generated from canonical sources")
+  console.log(
+    `[sync] docs generated from canonical sources${liveTranslate ? " (live zh translation refresh)" : ""}`,
+  )
 }
 
 main().catch((error) => {

@@ -3,7 +3,7 @@ title: "Command Surface"
 description: "Install commands are documented in [Installation](/docs/vision-installation)."
 ---
 
-Install commands are documented in [Installation](/docs/vision-installation).
+Install commands are documented in [Installation](/docs/en/vision-installation).
 
 ## Binary
 
@@ -24,6 +24,28 @@ agentic-vision-mcp repl
 - `-v, --vision &lt;file.avis&gt;`
 - `--model &lt;clip_model.onnx&gt;`
 - `--log-level trace|debug|info|warn|error`
+
+## Runtime budget controls
+
+```bash
+export CORTEX_STORAGE_BUDGET_MODE=auto-rollup
+export CORTEX_STORAGE_BUDGET_BYTES=2147483648
+export CORTEX_STORAGE_BUDGET_HORIZON_YEARS=20
+export CORTEX_STORAGE_BUDGET_TARGET_FRACTION=0.85
+```
+
+## Key tools exposed by MCP
+
+- `vision_capture` (now returns `quality_score`)
+- `vision_query` (supports `description_contains`, `min_quality`, `sort_by`)
+- `vision_health` (quality + staleness + linkage summary)
+- `vision_similar`
+- `vision_compare`
+- `vision_diff`
+- `vision_ocr`
+- `vision_link`
+- `session_start`
+- `session_end`
 
 ## Universal MCP entry
 

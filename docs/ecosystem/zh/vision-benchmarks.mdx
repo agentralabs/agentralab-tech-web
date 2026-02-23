@@ -1,20 +1,20 @@
 ---
-title: "Benchmarks"
-description: "Measured on Apple Silicon with release builds."
+title: "基准测试"
+description: "在 Apple Silicon 上通过发布版本进行测量。"
 ---
 
-Measured on Apple Silicon with release builds.
+在 Apple Silicon 上通过发布版本进行测量。
 
-| Operation | Typical Time |
+|运营|典型时间 |
 |:--|--:|
-| Image capture (file -> embed -> store) | ~47 ms |
-| Similarity search (top-5) | ~1-2 ms |
-| Visual diff | &lt;1 ms |
-| MCP tool round-trip | ~7 ms |
+|图像捕获（文件 -> 嵌入 -> 存储）| ~47 毫秒 |
+|相似性搜索（前 5 名）| ~1-2 毫秒 |
+|视觉差异 | &lt;1 毫秒 |
+| MCP工具往返 | ~7 毫秒 |
 
-These numbers are directional and depend on hardware, model path, and image size.
+这些数字是有方向性的，取决于硬件、模型路径和图像大小。
 
-Run local validation:
+运行本地验证：
 
 ```bash
 cargo test --workspace

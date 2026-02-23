@@ -1,16 +1,16 @@
 ---
-title: "Command Surface"
-description: "Install commands are documented in [Installation](/docs/memory-installation)."
+title: "命令面"
+description: "安装命令记录在[安装](/docs/memory-installation)中。"
 ---
 
-Install commands are documented in [Installation](/docs/memory-installation).
+安装命令记录在[安装](/docs/zh/memory-installation)中。
 
-## Binaries
+## 二进制文件
 
-- `amem` (CLI engine)
-- `agentic-memory-mcp` (MCP server)
+- `amem`（CLI 引擎）
+- `agentic-memory-mcp`（MCP 服务器）
 
-## `amem` top-level
+## `amem` 顶级
 
 ```bash
 amem create
@@ -27,6 +27,9 @@ amem export
 amem import
 amem decay
 amem stats
+amem quality
+amem runtime-sync
+amem budget
 amem text-search
 amem hybrid-search
 amem centrality
@@ -39,7 +42,7 @@ amem drift
 amem completions
 ```
 
-## `agentic-memory-mcp` commands
+## `agentic-memory-mcp` 命令
 
 ```bash
 agentic-memory-mcp serve
@@ -51,7 +54,30 @@ agentic-memory-mcp compact
 agentic-memory-mcp stats
 ```
 
-## Universal MCP entry
+## 新的可靠性命令
+
+```bash
+amem quality my_agent.amem
+amem quality my_agent.amem --low-confidence 0.4 --stale-decay 0.2 --limit 25
+
+amem runtime-sync my_agent.amem --workspace . --max-depth 4
+amem runtime-sync my_agent.amem --workspace . --write-episode
+amem budget my_agent.amem --horizon-years 20 --max-bytes 2147483648
+```
+
+## MCP 质量工具
+
+- `memory_quality` 返回图形可靠性摘要（置信度、陈旧性、孤立节点、不受支持的决策）。
+
+## MCP 运行时捕获控件
+
+```bash
+export AMEM_AUTO_CAPTURE_MODE=safe
+export AMEM_AUTO_CAPTURE_REDACT=true
+export AMEM_AUTO_CAPTURE_MAX_CHARS=2048
+```
+
+## 通用 MCP 条目
 
 ```json
 {
@@ -64,6 +90,6 @@ agentic-memory-mcp stats
 }
 ```
 
-## Artifact
+＃＃ 人工制品
 
-- Primary artifact: `.amem`
+- 主要工件：`.amem`

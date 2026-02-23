@@ -1,29 +1,29 @@
 ---
-title: "Quickstart"
-description: "curl -fsSL https://agentralabs.tech/install/vision | bash"
+title: "快速开始"
+description: "卷曲-fsSL https://agentralabs.tech/install/vision |巴什"
 ---
 
-## 1. Install
+## 1. 安装
 
 ```bash
 curl -fsSL https://agentralabs.tech/install/vision | bash
 ```
 
-Profile-specific commands are listed in [Installation](/docs/vision-installation).
+按配置文件区分的命令见[安装](/docs/zh/vision-installation)。
 
-## 2. Validate artifact path
+## 2. 验证工件路径
 
 ```bash
 agentic-vision-mcp -v ~/.vision.avis validate
 ```
 
-## 3. Inspect capabilities
+## 3. 检查能力
 
 ```bash
 agentic-vision-mcp info
 ```
 
-Expected tool list includes:
+预期工具列表包括:
 
 - `vision_capture`
 - `vision_query`
@@ -32,11 +32,38 @@ Expected tool list includes:
 - `vision_diff`
 - `vision_ocr`
 - `vision_link`
+- `vision_health`
 
-## 4. Start MCP server
+## 4.启动MCP服务
 
 ```bash
 $HOME/.local/bin/agentic-vision-mcp serve
 ```
 
-Use `Ctrl+C` to stop after startup verification.
+启动验证完成后，使用`Ctrl+C`停止。
+
+## 5. 查询质量感知结果
+
+使用 MCP `vision_query` 参数：
+
+```json
+{
+  "description_contains": "error",
+  "min_quality": 0.5,
+  "sort_by": "quality",
+  "max_results": 10
+}
+```
+
+定期运行 `vision_health` 来监视过时的捕获、未标记的捕获和未链接的内存引用。
+
+## 6. 启用自动长期预算约束
+
+```bash
+export CORTEX_STORAGE_BUDGET_MODE=auto-rollup
+export CORTEX_STORAGE_BUDGET_BYTES=2147483648
+export CORTEX_STORAGE_BUDGET_HORIZON_YEARS=20
+export CORTEX_STORAGE_BUDGET_TARGET_FRACTION=0.85
+```
+
+启用后，运行时会在检测到预算压力时自动从已完成的会话中删除最早的低价值捕获。

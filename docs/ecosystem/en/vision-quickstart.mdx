@@ -9,7 +9,7 @@ description: "curl -fsSL https://agentralabs.tech/install/vision | bash"
 curl -fsSL https://agentralabs.tech/install/vision | bash
 ```
 
-Profile-specific commands are listed in [Installation](/docs/vision-installation).
+Profile-specific commands are listed in [Installation](/docs/en/vision-installation).
 
 ## 2. Validate artifact path
 
@@ -32,6 +32,7 @@ Expected tool list includes:
 - `vision_diff`
 - `vision_ocr`
 - `vision_link`
+- `vision_health`
 
 ## 4. Start MCP server
 
@@ -40,3 +41,29 @@ $HOME/.local/bin/agentic-vision-mcp serve
 ```
 
 Use `Ctrl+C` to stop after startup verification.
+
+## 5. Query quality-aware results
+
+Use MCP `vision_query` args:
+
+```json
+{
+  "description_contains": "error",
+  "min_quality": 0.5,
+  "sort_by": "quality",
+  "max_results": 10
+}
+```
+
+Run `vision_health` periodically to monitor stale captures, unlabeled captures, and unlinked memory references.
+
+## 6. Enable automatic long-horizon budget enforcement
+
+```bash
+export CORTEX_STORAGE_BUDGET_MODE=auto-rollup
+export CORTEX_STORAGE_BUDGET_BYTES=2147483648
+export CORTEX_STORAGE_BUDGET_HORIZON_YEARS=20
+export CORTEX_STORAGE_BUDGET_TARGET_FRACTION=0.85
+```
+
+When enabled, runtime automatically prunes oldest low-value captures from completed sessions when budget pressure is detected.

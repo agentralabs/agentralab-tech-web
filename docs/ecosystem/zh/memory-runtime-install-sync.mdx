@@ -1,32 +1,32 @@
 ---
-title: "Runtime, Install Output, and Sync Contract"
-description: "This page defines expected runtime behavior across installer output, CLI behavior, and web documentation."
+title: "运行、安装输出与同步契约"
+description: "此页面定义了安装程序输出、CLI 行为和 Web 文档的预期运行时行为。"
 ---
 
-This page defines expected runtime behavior across installer output, CLI behavior, and web documentation.
+此页面定义了安装程序输出、CLI 行为和 Web 文档的预期运行时行为。
 
-## Installer profiles
+## 安装者个人资料
 
-- `desktop`: installs binaries and merges detected desktop MCP config.
-- `terminal`: installs binaries without desktop-specific UX assumptions.
-- `server`: installs binaries without desktop config writes.
+- `desktop`：安装二进制文件并合并检测到的桌面 MCP 配置。
+- `terminal`：安装二进制文件，无需特定于桌面的 UX 假设。
+- `server`：安装二进制文件，无需写入桌面配置。
 
-## Completion output contract
+## 完成产出合约
 
-Installer must print:
+安装者必须打印：
 
-1. Installed binary summary.
-2. MCP restart instruction.
-3. Server auth + artifact sync guidance when relevant.
-4. Optional feedback instruction.
+1.安装二进制摘要。
+2.MCP重启指令。
+3. 相关时的服务器身份验证+工件同步指导。
+4. 任选反馈指令。
 
-Expected completion marker:
+预期完成标记：
 
 ```text
 Install complete: AgenticMemory (<profile>)
 ```
 
-## Universal MCP config
+## 通用 MCP 配置
 
 ```json
 {
@@ -39,10 +39,43 @@ Install complete: AgenticMemory (<profile>)
 }
 ```
 
-## Server auth + sync
+## 服务器验证+同步
 
 ```bash
 export AGENTIC_TOKEN="$(openssl rand -hex 32)"
 ```
 
-Server deployments must sync `.amem/.acb/.avis` artifacts to server storage before runtime.
+服务器部署必须在运行前将 `.amem/.acb/.avis` 工件同步到服务器存储。
+
+## 长期存储预算策略
+
+要长期（例如 20 年）以约 1-2 GB 为目标，请配置：
+
+```bash
+export AMEM_STORAGE_BUDGET_MODE=auto-rollup
+export AMEM_STORAGE_BUDGET_BYTES=2147483648
+export AMEM_STORAGE_BUDGET_HORIZON_YEARS=20
+export AMEM_STORAGE_BUDGET_TARGET_FRACTION=0.85
+```
+
+模式:
+
+- `auto-rollup`：当检测到预算压力时，将已完成的会话自动存档到剧集摘要中。
+- `warn`：仅发出警告。
+- `off`：禁用策略。
+
+## 提示和反馈捕获政策
+
+要自动将提示/上下文保留到 `.amem` 中，请配置：
+
+```bash
+export AMEM_AUTO_CAPTURE_MODE=safe
+export AMEM_AUTO_CAPTURE_REDACT=true
+export AMEM_AUTO_CAPTURE_MAX_CHARS=2048
+```
+
+模式:
+
+- `safe`：以最小的噪音捕获提示模板输入和反馈式字段。
+- `full`：捕获更广泛的工具输入上下文（直接 `memory_add` 重复除外）。
+- `off`：禁用自动捕获。

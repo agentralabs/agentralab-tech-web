@@ -1,17 +1,17 @@
 ---
-title: "Installation Guide"
-description: "curl -fsSL https://agentralabs.tech/install/memory | bash"
+title: "安装指南"
+description: "卷曲-fsSL https://agentralabs.tech/install/memory |巴什"
 ---
 
-## Quick Install (one-liner)
+## 快速安装（一行）
 
 ```bash
 curl -fsSL https://agentralabs.tech/install/memory | bash
 ```
 
-Downloads a pre-built `agentic-memory-mcp` binary, installs to `~/.local/bin/`, and merges the MCP server config into Claude Desktop and Claude Code. Memory defaults to `~/.brain.amem`. Requires `curl` and `jq`.
+下载预构建的 `agentic-memory-mcp` 二进制文件，安装到 `~/.local/bin/`，并将 MCP 服务器配置合并到 Claude Desktop 和 Claude Code 中。内存默认为 `~/.brain.amem`。需要 `curl` 和 `jq`。
 
-### Install by environment
+### 按环境安装
 
 ```bash
 # Desktop MCP clients (auto-merge Claude configs)
@@ -24,28 +24,28 @@ curl -fsSL https://agentralabs.tech/install/memory/terminal | bash
 curl -fsSL https://agentralabs.tech/install/memory/server | bash
 ```
 
-### Server auth and artifact sync
+### 服务器身份验证和工件同步
 
-Cloud/server runtime cannot read files from your laptop directly.
+云/服务器运行时无法直接从您的笔记本电脑读取文件。
 
 ```bash
 export AGENTIC_TOKEN="$(openssl rand -hex 32)"
 ```
 
-All MCP clients must send `Authorization: Bearer &lt;same-token&gt;`.
-If `.amem/.acb/.avis` artifacts were created elsewhere, sync them to the server first.
+所有 MCP 客户端必须发送 `Authorization: Bearer &lt;same-token&gt;`。
+如果 `.amem/.acb/.avis` 工件是在其他地方创建的，请首先将它们同步到服务器。
 
 ---
 
-## 1. Python SDK (recommended for most users)
+## 1. Python SDK（推荐给大多数用户）
 
-The Python SDK gives you the `Brain` class and LLM integrations. Requires **Python 3.10+**.
+Python SDK 为您提供 `Brain` 类和 LLM 集成。需要 **Python 3.10+**。
 
 ```bash
 pip install agentic-brain
 ```
 
-### With LLM provider integrations
+### 与 LLM 提供商集成
 
 ```bash
 pip install agentic-brain[anthropic]   # Claude
@@ -54,7 +54,7 @@ pip install agentic-brain[ollama]      # Local models
 pip install agentic-brain[all]         # All providers
 ```
 
-### Verify
+＃＃＃ 核实
 
 ```python
 from agentic_memory import Brain
@@ -64,21 +64,21 @@ brain.add_fact("Installation successful", session=1)
 print(brain.facts())
 ```
 
-> **Note:** The Python SDK requires the `amem` binary (Rust core engine). Install it via Step 2 below, or build from source via Step 3.
+> **注意：** Python SDK 需要 `amem` 二进制文件（Rust 核心引擎）。 通过下面的步骤 2 安装它，或通过步骤 3 从源代码构建。
 
 ---
 
-## 2. Rust CLI
+## 2.Rust CLI
 
-The `amem` binary is the core engine. Use it standalone or as the backend for the Python SDK. Requires **Rust 1.70+**.
+`amem` 二进制文件是核心引擎。独立使用它或作为 Python SDK 的后端。需要 **Rust 1.70+**。
 
 ```bash
 cargo install agentic-memory
 ```
 
-This installs the `amem` command-line tool.
+这将安装 `amem` 命令行工具。
 
-### Verify
+＃＃＃ 核实
 
 ```bash
 amem --help
@@ -87,53 +87,53 @@ amem add test.amem fact "Installation successful" --session 1
 amem info test.amem
 ```
 
-### Available commands
+### 可用命令
 
-**Core commands:**
+**核心命令：**
 
-| Command | Description |
+|命令|描述 |
 |:---|:---|
-| `amem create` | Create a new empty `.amem` file |
-| `amem add` | Add a cognitive event (fact, decision, inference, correction, skill, episode) |
-| `amem link` | Add an edge between two nodes |
-| `amem info` | Display file information |
-| `amem traverse` | Run a graph traversal from a starting node |
-| `amem search` | Find nodes matching conditions |
-| `amem impact` | Run causal impact analysis |
-| `amem resolve` | Follow SUPERSEDES chains to current truth |
-| `amem export` | Export graph as JSON |
-| `amem import` | Import from JSON |
-| `amem stats` | Detailed graph statistics |
+| `amem create` |创建一个新的空 `.amem` 文件 |
+| `amem add` |添加认知事件（事实、决定、推理、纠正、技能、情节）|
+| `amem link` |在两个节点之间添加边 |
+| `amem info` |显示文件信息 |
+| `amem traverse` | 从起始节点开始进行图遍历 |
+| `amem search` |查找符合条件的节点 |
+| `amem impact` | 运行因果影响分析|
+| `amem resolve` |跟随 SUPERSEDES 链了解当前真相 |
+| `amem export` |将图表导出为 JSON |
+| `amem import` |从 JSON 导入 |
+| `amem stats` |详细图表统计 |
 
-**v0.2 query commands (9 new):**
+**v0.2查询命令（新增9个）：**
 
-| Command | Description |
+|命令|描述 |
 |:---|:---|
-| `amem text-search` | BM25 text search (1.58 ms @ 100K with index) |
-| `amem hybrid-search` | Combined BM25 + vector search via RRF |
-| `amem centrality` | PageRank, degree, or betweenness centrality |
-| `amem path` | Shortest path (BFS or Dijkstra) between two nodes |
-| `amem revise` | Counterfactual belief revision analysis |
-| `amem gaps` | Detect reasoning weaknesses and gaps |
-| `amem analogy` | Find structurally similar past patterns |
-| `amem consolidate` | Dedup, contradiction linking, inference promotion |
-| `amem drift` | Track belief evolution over time |
+| `amem text-search` | BM25 文本搜索（1.58 ms @ 100K，带索引）|
+| `amem hybrid-search` |通过 RRF 组合 BM25 + 矢量搜索 |
+| `amem centrality` | PageRank、程度或介数中心性 |
+| `amem path` |两个节点之间的最短路径（BFS 或 Dijkstra）|
+| `amem revise` |反事实信念修正分析|
+| `amem gaps` |检测推理弱点和差距|
+| `amem analogy` |查找过去结构相似的模式 |
+| `amem consolidate` |去重、矛盾链接、推理提升 |
+| `amem drift` |追踪信念随时间的演变 |
 
-All commands support `--json` output for programmatic consumption.
+所有命令都支持 `--json` 输出以供编程使用。
 
 ---
 
-## 3. MCP Server (for Claude Desktop, VS Code, Cursor, Windsurf)
+## 3. MCP 服务器（用于 Claude Desktop、VS Code、Cursor、Windsurf）
 
-The MCP server exposes a brain as 12 tools, 6 resources, and 4 prompts to any MCP-compatible LLM client.
+MCP 服务器将大脑作为 12 个工具、6 个资源和 4 个提示向任何 MCP 兼容的 LLM 客户端公开。
 
 ```bash
 cargo install agentic-memory-mcp
 ```
 
-### Configure Claude Desktop
+### 配置克劳德桌面
 
-Add to `~/Library/Application Support/Claude/claude_desktop_config.json`:
+添加到`~/Library/Application Support/Claude/claude_desktop_config.json`：
 
 ```json
 {
@@ -146,11 +146,11 @@ Add to `~/Library/Application Support/Claude/claude_desktop_config.json`:
 }
 ```
 
-> Zero-config: defaults to `~/.brain.amem`. Override with `"args": ["--memory", "/path/to/brain.amem", "serve"]`.
+> 零配置：默认为 `~/.brain.amem`。使用 `"args": ["--memory", "/path/to/brain.amem", "serve"]` 覆盖。
 
-### Configure VS Code / Cursor
+### 配置 VS Code / 光标
 
-Add to `.vscode/settings.json`:
+添加到`.vscode/settings.json`：
 
 ```json
 {
@@ -163,27 +163,27 @@ Add to `.vscode/settings.json`:
 }
 ```
 
-### Verify
+＃＃＃ 核实
 
-Once connected, the LLM gains access to tools like `memory_add`, `memory_query`, `memory_traverse`, `memory_correct`, `memory_resolve`, `memory_similar`, and more. Test by asking the LLM to store a fact:
+连接后，法学硕士即可访问 `memory_add`、`memory_query`、`memory_traverse`、`memory_correct`、`memory_resolve`、`memory_similar` 等工具。通过要求 LLM 存储事实进行测试：
 
-> "Remember that this project uses PostgreSQL 16."
+>“请记住，该项目使用 PostgreSQL 16。”
 
-The LLM should call `memory_add` and confirm the event was stored.
+LLM 应调用 `memory_add` 并确认事件已存储。
 
-See the [MCP server README](crates/agentic-memory-mcp/README.md) for the full tool/resource/prompt reference.
+有关完整的工具/资源/提示参考，请参阅 [MCP 服务器自述文件](crates/agentic-memory-mcp/README.md)。
 
 ---
 
-## 4. Auto-Installer (connects all your AI tools)
+## 4. Auto-installer（连接所有AI工具）
 
-The auto-installer scans your machine for AI tools and connects them all to a shared AgenticMemory brain file.
+自动安装程序会扫描您的计算机中的 AI 工具，并将它们全部连接到共享的 AgenticMemory Brain 文件。
 
 ```bash
 pip install amem-installer
 ```
 
-### Usage
+＃＃＃ 用法
 
 ```bash
 # Auto-detect and configure all tools
@@ -202,32 +202,32 @@ amem-install uninstall
 amem-install update
 ```
 
-### What it does
+### 它的作用
 
-1. Scans your system for installed AI tools
-2. Creates a shared brain file at `~/.brain.amem`
-3. Configures each tool to use the shared brain (via MCP servers, config files, or wrapper scripts)
-4. Backs up all modified configs before making changes
+1. 扫描系统中已安装的 AI 工具
+2. 在 `~/.brain.amem` 创建共享大脑文件
+3. 配置每个工具以使用共享大脑（通过 MCP 服务器、配置文件或包装脚本）
+4. 在进行更改之前备份所有修改的配置
 
-All modifications are additive — existing configurations are never deleted.
+所有修改都是附加的 - 现有配置永远不会被删除。
 
-### Supported tools
+### 支持的工具
 
-| Tool | Detection | Integration |
+|工具|检测|整合|
 |:---|:---|:---|
-| Claude Code | Config file | MCP server |
-| Claude Desktop | Config file | MCP server |
-| Cursor | Config file | MCP server |
-| Windsurf | Config file | MCP server |
-| Continue | Config file | Context provider |
-| OpenClaw | Config file | YAML config |
-| Ollama | HTTP service | Wrapper script |
-| LM Studio | HTTP service | Config file |
-| LangChain | requirements.txt | Instructions |
-| CrewAI | requirements.txt | Instructions |
-| AutoGen | requirements.txt | Instructions |
+|克劳德·代码 |配置文件 | MCP服务器|
+|克劳德桌面|配置文件 | MCP服务器|
+|光标|配置文件 | MCP服务器|
+|风帆冲浪 |配置文件 | MCP服务器|
+|继续 |配置文件 |上下文提供者 |
+|开爪|配置文件 | YAML 配置 |
+|奥拉玛 | HTTP 服务 |包装脚本 |
+| LM工作室| HTTP 服务 |配置文件 |
+|浪链 |要求.txt |说明 |
+|船员人工智能 |要求.txt |说明 |
+| AutoGen |要求.txt |说明 |
 
-### Example output
+### 输出示例
 
 ```
 AgenticMemory Installer
@@ -254,9 +254,9 @@ All 5 tools now share persistent memory.
 
 ---
 
-## 5. Remote Server (coming in v0.2.0)
+## 5. 远程服务器（v0.2.0 版本）
 
-> **Preview** — these features are under development. Track progress in [#1](https://github.com/agentralabs/agentic-memory/issues/1).
+> **预览** - 这些功能正在开发中。在 [#1](https://github.com/agentralabs/agentic-memory/issues/1) 中跟踪进度。
 
 ```bash
 # Remote single-user
@@ -273,11 +273,11 @@ agentic-memory-mcp serve-http \
   --token "secret123"
 ```
 
-Docker compose with Caddy reverse proxy will also be available. See the [v0.2.0 roadmap](https://github.com/agentralabs/agentic-memory/issues/1) for details.
+Docker compose 与 Caddy 反向代理也将可用。详情请参见 [v0.2.0 路线图](https://github.com/agentralabs/agentic-memory/issues/1)。
 
 ---
 
-## Build from Source
+## 从源代码构建
 
 ```bash
 git clone https://github.com/agentralabs/agentic-memory.git
@@ -301,7 +301,7 @@ cd ../installer
 pip install -e ".[dev]"
 ```
 
-### Run tests
+### 运行测试
 
 ```bash
 # All workspace tests (core + MCP + bridge: 314 tests)
@@ -325,70 +325,70 @@ cd ../installer && pytest tests/ -v
 
 ---
 
-## Package Registry Links
+## 包注册表链接
 
-| Package | Registry | Install |
+|套餐 |登记处 | 安装 |
 |:---|:---|:---|
-| **agentic-memory** | [crates.io](https://crates.io/crates/agentic-memory) | `cargo install agentic-memory` |
-| **agentic-memory-mcp** | [crates.io](https://crates.io/crates/agentic-memory-mcp) | `cargo install agentic-memory-mcp` |
-| **agentic-brain** | [PyPI](https://pypi.org/project/agentic-brain/) | `pip install agentic-brain` |
-| **amem-installer** | [PyPI](https://pypi.org/project/amem-installer/) | `pip install amem-installer` |
+| **主体记忆** | [crates.io](https://crates.io/crates/agentic-memory) | `cargo install agentic-memory` |
+| **代理内存-mcp** | [crates.io](https://crates.io/crates/agentic-memory-mcp) | `cargo install agentic-memory-mcp` |
+| **代理脑** | [皮伊](https://pypi.org/project/agentic-brain/) | `pip install agentic-brain` |
+| **amem-安装程序** | [皮伊](https://pypi.org/project/amem-installer/) | `pip install amem-installer` |
 
 ---
 
-## Requirements
+＃＃ 要求
 
-| Component | Minimum version |
+|组件|最低版本 |
 |:---|:---|
-| Python | 3.10+ |
-| Rust | 1.70+ (only for building from source or `cargo install`) |
-| OS | macOS, Linux, Windows |
+|蟒蛇 | 3.10+ |
+|铁锈| 1.70+（仅适用于从源代码或 `cargo install` 构建）|
+|操作系统 | macOS、Linux、Windows |
 
 ---
 
-## Troubleshooting
+## 故障排除
 
 ### `pip: command not found`
 
-Use `pip3` instead, or the full path to your Python:
+请改用 `pip3` 或 Python 的完整路径：
 
 ```bash
 python3 -m pip install agentic-brain
 ```
 
-### `amem: command not found` after `cargo install`
+### `amem: command not found` 在 `cargo install` 之后
 
-Make sure `~/.cargo/bin` is in your PATH:
+确保 `~/.cargo/bin` 在您的路径中：
 
 ```bash
 export PATH="$HOME/.cargo/bin:$PATH"
 ```
 
-Add this line to your `~/.zshrc` or `~/.bashrc` to make it permanent.
+将此行添加到您的 `~/.zshrc` 或 `~/.bashrc` 中以使其永久化。
 
-### `amem-install: command not found` after `pip install`
+### `amem-install: command not found` 在 `pip install` 之后
 
-The script may be installed to a user-local bin directory. Try:
+该脚本可以安装到用户本地 bin 目录。尝试：
 
 ```bash
 python3 -m amem_installer.cli install --auto
 ```
 
-Or find where pip installed it:
+或者找到 pip 安装的位置：
 
 ```bash
 python3 -m pip show amem-installer
 ```
 
-### Python SDK says "amem binary not found"
+### Python SDK 显示“未找到 amem 二进制文件”
 
-Install the Rust core engine first:
+首先安装 Rust 核心引擎：
 
 ```bash
 cargo install agentic-memory
 ```
 
-Or build from source if you don't have Rust:
+或者如果您没有 Rust，则从源代码构建：
 
 ```bash
 git clone https://github.com/agentralabs/agentic-memory.git

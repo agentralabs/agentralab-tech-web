@@ -1,18 +1,18 @@
 ---
-title: "Server Runtime Auth and Artifact Sync"
-description: "How hosted agents authenticate and consume local sister artifacts safely."
+title: "服务端鉴权与工件同步"
+description: "托管代理如何安全地验证和使用本地姐妹工件。"
 ---
 
-How hosted agents authenticate and consume local sister artifacts safely.
+托管代理如何安全地验证和使用本地姐妹工件。
 
-## Cloud Boundary
+## 云边界
 
-Hosted runtimes cannot directly read files from your laptop.  
-Sync artifacts to server-accessible storage, then authenticate server MCP calls.
+托管运行时无法直接从笔记本电脑读取文件。
+同步工件到服务器可访问的存储，然后验证服务器 MCP 调用。
 
-## 1) Enable Server Mode
+## 1) 启用服务器模式
 
-Required environment:
+必需环境变量:
 
 ```bash
 export AGENTRA_RUNTIME_MODE=server
@@ -22,28 +22,28 @@ export AGENTRA_ARTIFACT_DIRS="/srv/agentra:/data/brains"
 # export AGENTIC_TOKEN_FILE="/etc/agentra/token"
 ```
 
-Run strict preflight:
+运行严格预检:
 
 ```bash
 agentra server preflight --strict
 ```
 
-## 2) Sync Local Artifacts to Server
+## 2) 将本地工件同步到服务器
 
-Push runtime artifacts before expecting server takeover:
+在服务器接管之前推送运行时工件：
 
 ```bash
 ./sync_artifacts.sh --target=<server-path-or-rsync-target>
 ```
 
-Sync includes:
+同步包括：
 
 - `.amem`
 - `.avis`
 - `.acb`
-- optional `~/.brain.amem`
+- 可选 `~/.brain.amem`
 
-## 3) Start MCP Runtimes on Server Host
+## 3) 在服务器主机上启动 MCP 运行时间
 
 ```bash
 agentic-memory-mcp serve
@@ -51,7 +51,7 @@ agentic-vision-mcp serve
 acb-mcp serve
 ```
 
-Expected install + restart signal:
+预期安装+重启信号：
 
 ```text
 [####################################] 100% Install complete
@@ -60,9 +60,9 @@ Install complete: <runtime>
 [tip] Optional feedback: https://agentralabs.tech/docs/feedback
 ```
 
-## 4) Validate from Any MCP Client
+## 4) 从任何 MCP 客户端进行验证
 
-Client-side checklist:
+客户端清单：
 
 ```bash
 which agentic-memory-mcp
@@ -71,13 +71,13 @@ which acb-mcp
 # then trigger first MCP tool call from your client
 ```
 
-## Protocol Parity
+## 协议奇偶校验
 
-Desktop and server follow the same MCP contract.  
-Server mode only adds explicit authentication and artifact-sync requirements.
+桌面和服务器遵循相同的 MCP 合同。
+服务器模式仅添加显式身份验证和工件同步要求。
 
-## Operational Notes
+## 操作注意事项
 
-- Keep `AGENTIC_TOKEN` secret; prefer `AGENTIC_TOKEN_FILE` in production.
-- Treat synced artifact directories as sensitive data stores.
-- Re-run `agentra server preflight --strict` after deploys, token rotation, or path changes.
+- 对 `AGENTIC_TOKEN` 保密；在生产中更喜欢 `AGENTIC_TOKEN_FILE` 。
+- 将同步工件目录视为敏感数据存储。
+- 部署、令牌轮换或路径更改后重新运行 `agentra server preflight --strict`。

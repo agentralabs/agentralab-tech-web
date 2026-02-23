@@ -1,81 +1,81 @@
 ---
-title: "Frequently Asked Questions"
-description: "Vector databases (Pinecone, Weaviate, Qdrant, Chroma, etc.) solve one problem: find the most similar vectors to a query. They are retrieval systems. You put embeddings in, you g..."
+title: "常见问题"
+description: "向量数据库（Pinecone、Weaviate、Qdrant、Chroma 等）解决一个问题：找到与查询最相似的向量。它们是检索系统。你把嵌入放进去，你..."
 ---
 
-## How is this different from a vector database?
+## 这与矢量数据库有何不同？
 
-Vector databases (Pinecone, Weaviate, Qdrant, Chroma, etc.) solve one problem: find the most similar vectors to a query. They are retrieval systems. You put embeddings in, you get nearest neighbors out.
+向量数据库（Pinecone、Weaviate、Qdrant、Chroma 等）解决一个问题：找到与查询最相似的向量。它们是检索系统。你放入嵌入，你就得到最近的邻居。
 
-AgenticMemory is a **cognitive graph** -- it stores typed knowledge (facts, decisions, inferences, corrections, skills, episodes) and the **relationships** between them (causal, supportive, contradictory, temporal). It happens to support vector similarity search as one of several query mechanisms, but that is not its primary purpose.
+AgenticMemory 是一个**认知图**——它存储类型化知识（事实、决策、推论、更正、技能、情节）以及它们之间的**关系**（因果关系、支持关系、矛盾关系、时间关系）。它恰好支持向量相似性搜索作为几种查询机制之一，但这不是它的主要目的。
 
-The key differences:
+主要区别：
 
-- **Typed nodes.** A vector database treats all entries as equivalent blobs with embeddings. AgenticMemory distinguishes between a fact and a decision, a skill and an episode. This typing enables structured queries ("show me all decisions from session 3") that vector databases cannot express.
+- **类型化节点。** 矢量数据库将所有条目视为具有嵌入的等效 blob。 AgenticMemory 区分事实和决定、技能和情节。这种类型可以实现向量数据库无法表达的结构化查询（“显示会话 3 中的所有决策”）。
 
-- **Edges.** AgenticMemory stores explicit relationships. You can traverse from a decision to the facts that supported it, or from a correction to the fact it superseded. Vector databases have no concept of relationships between entries.
+- **边。** AgenticMemory 存储显式关系。您可以从一个决定遍历到支持该决定的事实，或者从更正遍历到它所取代的事实。矢量数据库没有条目之间关系的概念。
 
-- **Supersedes chains.** When knowledge changes, AgenticMemory creates a correction linked by a `supersedes` edge. You can resolve to the latest version while preserving the full history. In a vector database, you would overwrite the old entry or maintain multiple conflicting entries with no way to express which is current.
+- **取代链。** 当知识发生变化时，AgenticMemory 会创建由 `supersedes` 边缘链接的更正。您可以解析到最新版本，同时保留完整的历史记录。在矢量数据库中，您将覆盖旧条目或维护多个冲突条目，而无法表达哪个条目是当前条目。
 
-- **Embedded, not a server.** AgenticMemory is a library and a file. There is no server to run, no network latency, no deployment complexity. A vector database is typically a separate service.
+- **嵌入式，而不是服务器。** AgenticMemory 是一个库和一个文件。无需运行服务器，无网络延迟，无部署复杂性。矢量数据库通常是一项单独的服务。
 
-- **Portability.** A brain is a single `.amem` file. Copy it, email it, commit it to git, back it up. Moving data between vector database instances is significantly more involved.
+- **可移植性。** 大脑是单个 `.amem` 文件。复制它，通过电子邮件发送，提交到 git，备份。在矢量数据库实例之间移动数据的过程要复杂得多。
 
-You might use both in the same system: a vector database for large-scale document retrieval (millions of chunks), and AgenticMemory for the agent's working knowledge (thousands to hundreds of thousands of cognitive events).
+您可以在同一个系统中使用这两种数据库：用于大规模文档检索（数百万个块）的矢量数据库，以及用于代理工作知识（数千到数十万个认知事件）的 AgenticMemory。
 
-## Can I use this with my framework?
+## 我可以在我的框架中使用它吗？
 
-Most likely yes. AgenticMemory is designed to be framework-agnostic.
+很可能是的。 AgenticMemory 被设计为与框架无关。
 
-**Direct support:**
-- Raw Python (`Brain` class) -- works anywhere Python runs.
-- Anthropic Claude -- `AnthropicProvider` built in.
-- OpenAI GPT -- `OpenAIProvider` built in.
-- Ollama -- `OllamaProvider` built in.
-- LangChain -- wrapper integration available.
-- CrewAI -- tool integration available.
-- Claude Desktop, Claude Code, VS Code, Cursor, Windsurf -- MCP server integration via `agentic-memory-mcp`.
+**直接支持：**
+- 原始 Python（`Brain` 类）——可以在任何 Python 运行的地方工作。
+- 人类克劳德 -- 内置 `AnthropicProvider`。
+- OpenAI GPT -- 内置 `OpenAIProvider`。
+- Ollama -- 内置 `OllamaProvider`。
+- LangChain——可用的包装器集成。
+- CrewAI——可用的工具集成。
+- Claude Desktop、Claude Code、VS Code、Cursor、Windsurf - 通过 `agentic-memory-mcp` 集成 MCP 服务器。
 
-**Easy to integrate with:**
-- AutoGen, Agency Swarm, Semantic Kernel, Haystack, LlamaIndex, or any Python-based agent framework. Use the `Brain` class directly or implement a thin adapter.
-- Any system that supports MCP (Model Context Protocol) -- install `agentic-memory-mcp` (`cargo install agentic-memory-mcp`) and connect via stdio.
+**易于集成：**
+- AutoGen、Agency Swarm、Semantic Kernel、Haystack、LlamaIndex 或任何基于 Python 的代理框架。直接使用 `Brain` 类或实现瘦适配器。
+- 任何支持 MCP（模型上下文协议）的系统 -- 安装 `agentic-memory-mcp` (`cargo install agentic-memory-mcp`) 并通过 stdio 连接。
 
-**Building a custom integration:**
-If your framework is not listed, you have two options:
-1. Use the `Brain` class directly in your framework's memory or tool layer.
-2. Implement the `LLMProvider` interface to connect any LLM backend.
+**构建自定义集成：**
+如果您的框架未列出，您有两种选择：
+1. 直接在框架的内存或工具层中使用 `Brain` 类。
+2. 实现 `LLMProvider` 接口以连接任何 LLM 后端。
 
-See the [Integration Guide](/docs/memory-integration-guide) for detailed examples.
+有关详细示例，请参阅[集成指南](/docs/zh/memory-integration-guide)。
 
-## What happens when the file gets really big?
+## 当文件变得非常大时会发生什么？
 
-AgenticMemory handles large files efficiently through several mechanisms:
+AgenticMemory 通过多种机制有效处理大文件：
 
-**Memory-mapped I/O.** The `MmapReader` uses `mmap()` to access the file without loading it entirely into memory. The operating system pages data in and out as needed. You can work with brain files larger than your available RAM.
+**内存映射 I/O。** `MmapReader` 使用 `mmap()` 访问文件，而不将其完全加载到内存中。操作系统根据需要将数据分页输入和输出。您可以使用大于可用 RAM 的大脑文件。
 
-**LZ4 compression.** Content is compressed with LZ4, which achieves 2-3x compression on natural language text while decompressing at memory bandwidth speeds (3-5 GB/s). A brain with 100K nodes and average 200-byte content stores roughly 71 MB on disk instead of 300+ MB in JSON.
+**LZ4 压缩。** 内容使用 LZ4 进行压缩，可实现自然语言文本的 2-3 倍压缩，同时以内存带宽速度（3-5 GB/s）解压缩。具有 100K 节点和平均 200 字节内容的大脑在磁盘上存储大约 71 MB，而不是在 JSON 中存储 300+ MB。
 
-**Fixed-size records.** Node and edge records are fixed-size (64 bytes and 13 bytes respectively), so accessing node N is a direct offset calculation with no scanning or parsing. This is O(1) regardless of file size.
+**固定大小的记录。** 节点和边缘记录是固定大小的（分别为 64 字节和 13 字节），因此访问节点 N 是直接偏移计算，无需扫描或解析。无论文件大小如何，这都是 O(1)。
 
-**Practical limits:**
-- 1K nodes: sub-megabyte file, all operations under 1 ms.
-- 10K nodes: ~7 MB file, all operations under 35 ms.
-- 100K nodes: ~71 MB file, most operations under 100 ms. Similarity search may reach 80-85 ms without indexing.
-- 1M nodes: ~700 MB file. Memory-mapped access is strongly recommended. Similarity search benefits from the cluster map index.
+**实际限制：**
+- 1K 节点：亚兆字节文件，所有操作均在 1 毫秒内。
+- 10K 节点：约 7 MB 文件，所有操作均在 35 毫秒内完成。
+- 100K 节点：~71 MB 文件，大多数操作不到 100 毫秒。如果没有索引，相似性搜索可能会达到 80-85 毫秒。
+- 1M 节点：约 700 MB 文件。强烈建议使用内存映射访问。相似性搜索受益于聚类图索引。
 
-If your use case exceeds a million nodes, consider partitioning across multiple brain files (e.g., one per project, one per agent, or one per time period).
+如果您的用例超过一百万个节点，请考虑跨多个大脑文件进行分区（例如，每个项目一个、每个代理一个或每个时间段一个）。
 
-## Is it thread-safe?
+## 线程安全吗？
 
-**Rust core:** The `CognitiveGraph` struct is `Send` but not `Sync`. You can move it between threads but cannot share a mutable reference across threads without external synchronization (e.g., `Mutex&lt;CognitiveGraph&gt;`). The `MmapReader` is both `Send` and `Sync` -- multiple threads can read concurrently.
+**Rust 核心：** `CognitiveGraph` 结构是 `Send` 但不是 `Sync`。您可以在线程之间移动它，但不能在没有外部同步的情况下跨线程共享可变引用（例如，`Mutex&lt;CognitiveGraph&gt;`）。 `MmapReader` 既是 `Send` 又是 `Sync` —— 多个线程可以同时读取。
 
-**Python SDK:** The `Brain` class uses an internal lock for thread safety. Multiple threads can call methods on the same `Brain` instance, but writes are serialized. This is sufficient for most agent architectures where one thread handles conversation and another handles background processing.
+**Python SDK：** `Brain` 类使用内部锁来保证线程安全。多个线程可以调用同一 `Brain` 实例上的方法，但写入是序列化的。这对于大多数代理架构来说已经足够了，其中一个线程处理对话，另一个线程处理后台处理。
 
-**File-level:** The `.amem` file format supports single-writer, multiple-reader access. One process can write while other processes read via `MmapReader`. Concurrent writes from multiple processes to the same file are not supported and will corrupt data.
+**文件级：** `.amem` 文件格式支持单写入器、多读取器访问。一个进程可以通过 `MmapReader` 进行写入，而其他进程可以进行读取。不支持从多个进程并发写入同一文件，这会损坏数据。
 
-## Can multiple agents write to the same brain?
+## 多个代理可以写入同一个大脑吗？
 
-**Same process:** Yes. Multiple `MemoryAgent` instances can share a single `Brain` object. Writes are serialized by the internal lock. Each agent should use a different session ID for attribution.
+**相同的过程：** 是的。多个 `MemoryAgent` 实例可以共享单个 `Brain` 对象。写入由内部锁串行化。每个代理应使用不同的会话 ID 进行归因。
 
 ```python
 brain = Brain("shared.amem")
@@ -84,15 +84,15 @@ agent_b = MemoryAgent(brain, provider_b)
 # Both agents write to the same brain file
 ```
 
-**Different processes:** Not simultaneously to the same file. The `.amem` format is single-writer. Options for multi-process scenarios:
+**不同的进程：**不同时处理同一个文件。 `.amem` 格式是单写入器。多进程场景的选项：
 
-1. **Separate files, merge later.** Each agent writes to its own brain file. Periodically merge them.
-2. **MCP server.** Run `agentic-memory-mcp serve` as a single-writer gateway. Multiple agents connect as MCP clients, and the server serializes writes.
-3. **Write lock.** Use OS-level file locking (e.g., `flock`) to ensure only one process writes at a time.
+1. **单独的文件，稍后合并。** 每个智能体都会写入自己的大脑文件。定期合并它们。
+2. **MCP 服务器。** 作为单写入器网关运行 `agentic-memory-mcp serve`。多个代理作为 MCP 客户端连接，服务器串行写入。
+3. **写锁。** 使用操作系统级文件锁定（例如，`flock`）以确保一次只有一个进程进行写入。
 
-## How do I back up my brain?
+## 我如何备份我的大脑？
 
-A brain is a single `.amem` file. Back it up the same way you would any file:
+大脑是单个 `.amem` 文件。像备份任何文件一样备份它：
 
 ```bash
 # Simple copy
@@ -109,53 +109,53 @@ git commit -m "Brain snapshot after session 42"
 rsync agent.amem user@backup-server:/backups/
 ```
 
-The file is self-contained -- no external dependencies, no database server state, no separate index files. A copied `.amem` file is a complete, valid brain.
+该文件是独立的——没有外部依赖项，没有数据库服务器状态，没有单独的索引文件。复制的 `.amem` 文件是一个完整、有效的大脑。
 
-For automated backups, copy the file between sessions (when no writes are in progress) or use the `MmapReader` to take a consistent snapshot while the brain is open.
+对于自动备份，请在会话之间复制文件（当没有正在进行写入时）或使用 `MmapReader` 在大脑打开时拍摄一致的快照。
 
-## Does it work on Windows?
+## 它可以在 Windows 上运行吗？
 
-Yes. AgenticMemory supports Windows (x86_64) with the following notes:
+是的。 AgenticMemory 支持 Windows (x86_64)，但有以下注意事项：
 
-**Python SDK:** Pre-built wheels are available for Windows via `pip install agentic-brain`. No Rust toolchain needed.
+**Python SDK：** 通过 `pip install agentic-brain` 可在 Windows 上使用预构建的轮子。不需要 Rust 工具链。
 
-**Rust CLI:** Build from source with `cargo install agentic-memory` or `cargo build --release`. All tests pass on Windows. Memory-mapped I/O uses `CreateFileMapping`/`MapViewOfFile` under the hood.
+**Rust CLI：** 使用 `cargo install agentic-memory` 或 `cargo build --release` 从源代码构建。所有测试都在 Windows 上通过。内存映射 I/O 在底层使用 `CreateFileMapping`/`MapViewOfFile` 。
 
-**Known differences:**
-- File paths use backslashes. The SDK handles path normalization, but if you pass paths to the CLI, use Windows-style paths or forward slashes (both work).
-- Memory-mapped file size may be limited by the virtual address space on 32-bit Windows. Use 64-bit Windows for brain files larger than ~1 GB.
-- The MCP server (`agentic-memory-mcp serve`) works on Windows but requires port configuration if the default port is in use.
+**已知差异：**
+- 文件路径使用反斜杠。 SDK 处理路径规范化，但如果将路径传递给 CLI，请使用 Windows 样式路径或正斜杠（两者都可以）。
+- 内存映射文件大小可能受到 32 位 Windows 上虚拟地址空间的限制。对于大于 ~1 GB 的大脑文件，请使用 64 位 Windows。
+- MCP 服务器 (`agentic-memory-mcp serve`) 可在 Windows 上运行，但如果使用默认端口，则需要进行端口配置。
 
-The CI pipeline runs the full test suite (440 tests) on Windows, macOS, and Linux for every release.
+CI 管道在 Windows、macOS 和 Linux 上为每个版本运行完整的测试套件（440 个测试）。
 
-## How do embeddings work?
+## 嵌入是如何工作的？
 
-Each cognitive event can have a 128-dimensional feature vector (embedding) associated with it. These vectors enable semantic similarity search -- finding events whose meaning is close to a query, even if the exact words differ.
+每个认知事件都可以有一个与其关联的 128 维特征向量（嵌入）。这些向量支持语义相似性搜索——查找含义与查询接近的事件，即使确切的单词不同。
 
-**How vectors are generated:**
+**矢量是如何生成的：**
 
-1. **Default (built-in).** AgenticMemory includes a lightweight embedding model that runs locally. When you add an event, the content is automatically embedded. No API calls, no external dependencies.
+1. **默认（内置）。** AgenticMemory 包括一个在本地运行的轻量级嵌入模型。添加事件时，内容会自动嵌入。没有 API 调用，没有外部依赖。
 
-2. **Provider embeddings.** If your `LLMProvider` implements the `embed()` method, the provider's embedding model is used instead. This lets you use OpenAI's `text-embedding-3-small`, Anthropic's embeddings, or any other model.
+2. **提供程序嵌入。** 如果您的 `LLMProvider` 实现 `embed()` 方法，则使用提供程序的嵌入模型。这使您可以使用 OpenAI 的 `text-embedding-3-small`、Anthropic 的嵌入或任何其他模型。
 
-3. **Manual.** For advanced use cases, you can provide pre-computed vectors directly via the Rust API (`CognitiveNode.vector` field).
+3. **手动。** 对于高级用例，您可以直接通过 Rust API（`CognitiveNode.vector` 字段）提供预先计算的向量。
 
-**Why 128 dimensions?**
+**为什么是 128 维？**
 
-The 128-dim default balances quality and performance:
-- Storage: 512 bytes per vector (128 * 4 bytes per f32).
-- Search speed: 128 floats fit comfortably in SIMD registers. At 100K nodes, brute-force search takes ~85 ms.
-- Quality: 128 dimensions capture semantic relationships effectively for the typical scale of agent memory (thousands to hundreds of thousands of events). Higher dimensions (768, 1536) provide marginal quality improvement at significantly higher storage and search cost.
+128 点默认值平衡了质量和性能：
+- 存储：每个向量 512 字节（每个 f32 128 * 4 字节）。
+- 搜索速度：SIMD 寄存器可以轻松容纳 128 个浮点数。在 100K 节点下，暴力搜索大约需要 85 毫秒。
+- 质量：128 个维度可有效捕获典型规模的代理内存（数千到数十万个事件）的语义关系。更高的维度（768、1536）以显着更高的存储和搜索成本提供边际质量改进。
 
-**How search works:**
+**搜索的工作原理：**
 
-Similarity search computes the cosine similarity between the query vector and every stored vector, then returns the top-k results. The vectors are stored contiguously in the `.amem` file, enabling cache-friendly sequential access and SIMD auto-vectorization.
+相似度搜索计算查询向量与每个存储向量之间的余弦相似度，然后返回前 k 个结果。矢量连续存储在 `.amem` 文件中，从而实现缓存友好的顺序访问和 SIMD 自动矢量化。
 
-For brains larger than ~50K nodes, the cluster map index (k-means clustering of vectors) accelerates search by scanning only relevant clusters, reducing search time by roughly 4-5x.
+对于大于约 50K 节点的大脑，聚类图索引（向量的 k 均值聚类）通过仅扫描相关聚类来加速搜索，从而将搜索时间减少大约 4-5 倍。
 
-## Can I use it without any LLM?
+## 我可以在没有法学硕士的情况下使用它吗？
 
-Absolutely. The `Brain` class works entirely without an LLM. You control what gets stored, how events are linked, and how queries are performed.
+绝对地。 `Brain` 课程完全不需要法学硕士。您可以控制存储的内容、事件的链接方式以及查询的执行方式。
 
 ```python
 from agentic_memory import Brain
@@ -171,29 +171,29 @@ facts = brain.facts()
 results = brain.search("rate limiting")
 ```
 
-The LLM is only needed for:
-- **Automatic extraction** (`MemoryAgent.chat()`) -- the LLM identifies what facts, decisions, and inferences are present in a conversation.
-- **Automatic linking** (`auto_link=True` in `MemoryAgent`) -- the LLM suggests edges between new events and existing knowledge.
+LLM 仅适用于：
+- **自动提取** (`MemoryAgent.chat()`) -- LLM 识别对话中存在哪些事实、决策和推论。
+- **自动链接**（`MemoryAgent` 中的 `auto_link=True`）——法学硕士建议新事件和现有知识之间的边缘。
 
-If your application has structured input (API responses, database records, sensor data), you likely do not need an LLM at all. Store events directly and build your own extraction logic.
+如果您的应用程序具有结构化输入（API 响应、数据库记录、传感器数据），您可能根本不需要法学硕士。直接存储事件并构建您自己的提取逻辑。
 
-The `amem` CLI also works entirely without an LLM. The separate MCP server (`agentic-memory-mcp`) does not use an LLM itself -- it just exposes the brain as tools for an external LLM client.
+`amem` CLI 也可以完全在没有法学硕士的情况下工作。单独的 MCP 服务器 (`agentic-memory-mcp`) 本身不使用 LLM——它只是将大脑暴露为外部 LLM 客户端的工具。
 
-## What about privacy and security?
+## 隐私和安全怎么样？
 
-**Data stays local.** Brain files are stored on your filesystem. The `Brain` class never sends data to any external service. The Rust engine has no network capabilities.
+**数据保留在本地。** Brain 文件存储在您的文件系统上。 `Brain` 类从不将数据发送到任何外部服务。 Rust 引擎没有网络功能。
 
-**LLM providers see conversation data.** When using `MemoryAgent` with a cloud provider (Anthropic, OpenAI), conversation text is sent to the provider's API for completion and extraction. The extracted events are then stored locally in the brain file. If privacy is a concern:
-- Use `OllamaProvider` with a local model. No data leaves your machine.
-- Use the `Brain` class directly without any LLM provider.
+**LLM 提供商查看对话数据。** 当将 `MemoryAgent` 与云提供商（Anthropic、OpenAI）一起使用时，对话文本将发送到提供商的 API 进行完成和提取。然后提取的事件被本地存储在大脑文件中。如果担心隐私：
+- 将 `OllamaProvider` 与本地模型一起使用。没有数据离开您的机器。
+- 直接使用 `Brain` 类，无需任何 LLM 提供商。
 
-**File encryption.** The `.amem` format does not include encryption. If you need encryption at rest, use filesystem-level encryption (FileVault on macOS, BitLocker on Windows, LUKS on Linux) or encrypt the file with a tool like `age` or `gpg` before archiving.
+**文件加密。** `.amem` 格式不包括加密。如果需要静态加密，请在归档之前使用文件系统级加密（macOS 上的 FileVault、Windows 上的 BitLocker、Linux 上的 LUKS）或使用 `age` 或 `gpg` 等工具加密文件。
 
-**Access control.** The brain file uses standard filesystem permissions. Set appropriate permissions on the file (`chmod 600 brain.amem` on Unix) to restrict access.
+**访问控制。** Brain 文件使用标准文件系统权限。对文件（Unix 上的 `chmod 600 brain.amem`）设置适当的权限以限制访问。
 
-**Sensitive data.** Be mindful of what your agent stores. If conversations contain sensitive information (passwords, API keys, personal data), that information may be extracted and stored in the brain file. Consider:
-- Using metadata tags to mark sensitive events.
-- Implementing a sanitization step before storage.
-- Periodically auditing brain contents with `amem search`.
+**敏感数据。** 请注意您的代理存储的内容。如果对话包含敏感信息（密码、API 密钥、个人数据），该信息可能会被提取并存储在 Brain 文件中。考虑：
+- 使用元数据标签来标记敏感事件。
+- 储存前实施消毒步骤。
+- 使用 `amem search` 定期审核大脑内容。
 
-**MCP server.** When running `agentic-memory-mcp serve`, the server binds to `127.0.0.1` by default (localhost only). It does not expose the brain to the network. If you need remote access, use an SSH tunnel or VPN rather than binding to `0.0.0.0`.
+**MCP 服务器。** 运行 `agentic-memory-mcp serve` 时，服务器默认绑定到 `127.0.0.1`（仅限本地主机）。它不会将大脑暴露在网络中。如果您需要远程访问，请使用 SSH 隧道或 VPN，而不是绑定到 `0.0.0.0`。

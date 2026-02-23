@@ -1,126 +1,126 @@
 ---
-title: "Benchmarks"
-description: "Performance measurements for AgenticCodebase's core operations across various graph sizes. All benchmarks use the Rust engine with release-mode compilation and link-time optimiz..."
+title: "基准测试"
+description: "AgenticCodebase 跨各种图形大小的核心操作的性能测量。所有基准测试都使用 Rust 引擎，具有发布模式编译和链接时优化..."
 ---
 
-Performance measurements for AgenticCodebase's core operations across various graph sizes. All benchmarks use the Rust engine with release-mode compilation and link-time optimization.
+AgenticCodebase 跨各种图形大小的核心操作的性能测量。所有基准测试都使用带有发布模式编译和链接时优化的 Rust 引擎。
 
-## Test Environment
+## 测试环境
 
-| Parameter | Value |
+|参数|价值|
 |:---|:---|
-| Hardware | Apple M4 Pro (ARM64), 64 GB unified memory |
-| OS | macOS (Darwin) |
-| Rust | 1.90.0 (release profile, `--release`, LTO enabled) |
-| Benchmark framework | `criterion.rs` 0.5 |
-| Iterations | 100 per measurement (minimum), with statistical warm-up |
-| Feature vectors | 64-dimensional, f32 |
+|硬件| Apple M4 Pro (ARM64)，64 GB 统一内存 |
+|操作系统 | macOS（达尔文）|
+|铁锈| 1.90.0（发布配置文件，`--release`，启用 LTO）|
+|基准框架| __AGENTRA_代码_0__ 0.5 |
+|迭代|每次测量 100 次（最少），带有统计预热 |
+|特征向量| 64 维，f32 |
 
-All benchmarks are run with `cargo bench` using release-mode compilation. Results represent the median of 100 iterations after warm-up, with 95% confidence intervals.
+所有基准测试均使用发布模式编译通过 `cargo bench` 运行。结果代表预热后 100 次迭代的中值，置信区间为 95%。
 
-## Summary Results
+## 结果总结
 
-Headline numbers measured at 10K units, 30K edges:
+以 10K 单位、30K 边缘测量的标题数量：
 
-| Operation | Median | Description |
+|运营|中位数 |描述 |
 |:---|---:|:---|
-| Graph build | 3.77 ms | Parse + semantic analysis + edge resolution |
-| Write .acb | 2.29 ms | Serialize to binary with LZ4 compression |
-| Read .acb | 4.91 ms | Deserialize from memory-mapped file |
-| Symbol lookup | 14.3 us | Hash-based name search |
-| Dependency graph (depth 5) | 925 ns | BFS traversal |
-| Impact analysis | 1.46 us | With risk scoring and test coverage |
-| Call graph (depth 3) | 1.27 us | Bidirectional traversal |
+|图表构建 | 3.77 毫秒 |解析+语义分析+边缘解析 |
+|写入.acb | 2.29 毫秒 |使用 LZ4 压缩序列化为二进制 |
+|阅读 .acb | 4.91 毫秒 |从内存映射文件反序列化 |
+|符号查找 | 14.3 我们 |基于哈希的名称搜索 |
+| Dependency graph (depth 5) | 925纳秒| BFS遍历|
+|影响分析| 1.46 我们 |具有风险评分和测试覆盖率|
+|调用图（深度 3）| 1.27 我们 |双向遍历 |
 
-## Detailed Results by Graph Size
+## 按图形大小划分的详细结果
 
-### Graph Build
+### 图形构建
 
-Time to construct a `CodeGraph` from parsed code units, including semantic analysis and edge resolution.
+是时候从解析的代码单元构造 `CodeGraph` 了，包括语义分析和边缘解析。
 
-| Graph Size | Median | Std Dev | Notes |
+|图形尺寸|中位数 |标准差 |笔记|
 |:---|---:|---:|:---|
-| 1K units | 388 us | 15 us | All data fits in L2 cache |
-| 10K units | 3.77 ms | 0.12 ms | Primary working set |
-| 50K units | 19.8 ms | 0.8 ms | Extrapolated from scaling |
+| 1K 单位 | 388 我们 | 15 我们 |所有数据都适合二级缓存 |
+| 10K 单位 | 3.77 毫秒 | 0.12 毫秒 |主要工作集|
+| 50K 单位 | 19.8 毫秒 | 0.8 毫秒 |从缩放推断 |
 
-Graph build is O(N + E) where N is units and E is edges. The dominant cost is cross-reference resolution during semantic analysis.
+图构建的时间复杂度为 O(N + E)，其中 N 是单位，E 是边。主要成本是语义分析期间的交叉引用解析。
 
-### Write .acb
+### 写入.acb
 
-Time to serialize a graph to the binary `.acb` format with LZ4-compressed string pool.
+是时候使用 LZ4 压缩字符串池将图序列化为二进制 `.acb` 格式了。
 
-| Graph Size | Median | Std Dev | File Size | Notes |
+|图形尺寸|中位数 |标准差 |文件大小 |笔记|
 |:---|---:|---:|---:|:---|
-| 1K units | 169 us | 8 us | 112 KB | Small, fully cached |
-| 10K units | 2.29 ms | 0.09 ms | 1.1 MB | LZ4 compression ~2.5x ratio |
+| 1K 单位 | 169 我们 | 8 我们 | 112 KB |体积小，完全缓存 |
+| 10K 单位 | 2.29 毫秒 | 0.09 毫秒 | 1.1 MB | LZ4 压缩率 ~2.5 倍 |
 
-Write is O(N + E + S) where S is total string content. LZ4 compression runs at memory bandwidth speeds (3-5 GB/s).
+写入的时间复杂度为 O(N + E + S)，其中 S 是字符串总内容。 LZ4 压缩以内存带宽速度 (3-5 GB/s) 运行。
 
-### Read .acb
+### 读取.acb
 
-Time to deserialize a graph from an `.acb` file into memory.
+是时候将图形从 `.acb` 文件反序列化到内存中了。
 
-| Graph Size | Median | Std Dev | Notes |
+|图形尺寸|中位数 |标准差 |笔记|
 |:---|---:|---:|:---|
-| 1K units | 473 us | 18 us | File fits in page cache |
-| 10K units | 4.91 ms | 0.15 ms | Includes LZ4 decompression |
+| 1K 单位 | 473 我们 | 18 我们 |文件适合页面缓存 |
+| 10K 单位 | 4.91 毫秒 | 0.15 毫秒 |包含LZ4减压|
 
-Read is dominated by LZ4 decompression of the string pool and construction of in-memory adjacency lists.
+读取主要是字符串池的 LZ4 解压和内存中邻接表的构建。
 
-### Symbol Lookup
+### 符号查找
 
-Time to find code units by name using substring matching.
+是时候使用子字符串匹配按名称查找代码单元了。
 
-| Graph Size | Median | Std Dev | Notes |
+|图形尺寸|中位数 |标准差 |笔记|
 |:---|---:|---:|:---|
-| 1K units | 4.2 us | 0.3 us | Linear scan, all in cache |
-| 10K units | 14.3 us | 0.8 us | Linear scan |
+| 1K 单位 | 4.2 我们 | 0.3 我们 |线性扫描，全部在缓存中 |
+| 10K 单位 | 14.3 我们 | 0.8 我们 |线性扫描|
 
-Symbol lookup is O(N) where N is total units. For exact-match queries, performance is independent of graph size (hash-based).
+符号查找的时间复杂度为 O(N)，其中 N 是总单位数。对于精确匹配查询，性能与图大小（基于哈希）无关。
 
-### Dependency Graph (BFS)
+### 依赖图（BFS）
 
-Time for a breadth-first traversal from a single starting unit.
+是时候从单个起始单元进行广度优先遍历了。
 
-| Graph Size | Depth | Median | Std Dev | Notes |
+|图形尺寸|深度|中位数 |标准差 |笔记|
 |:---|---:|---:|---:|:---|
-| 10K units | 3 | 612 ns | 25 ns | Average fan-out 3 |
-| 10K units | 5 | 925 ns | 40 ns | Deeper traversal |
-| 10K units | 10 | 1.8 us | 80 ns | Near-complete reachability |
+| 10K 单位 | 3 | 612纳秒| 25 纳秒 |平均扇出 3 |
+| 10K 单位 | 5 | 925纳秒| 40 纳秒 |更深层次的遍历 |
+| 10K 单位 | 10 | 10 1.8 我们 | 80 纳秒 |近乎完全可达 |
 
-BFS traversal is O(V + E) where V and E are the reachable vertices and edges. The adjacency list representation enables efficient neighbor iteration.
+BFS 遍历是 O(V + E)，其中 V 和 E 是可达的顶点和边。邻接列表表示可以实现高效的邻居迭代。
 
-### Impact Analysis
+### 影响分析
 
-Time for impact analysis including risk scoring and test coverage detection.
+进行影响分析的时间，包括风险评分和测试覆盖率检测。
 
-| Graph Size | Median | Std Dev | Notes |
+|图形尺寸|中位数 |标准差 |笔记|
 |:---|---:|---:|:---|
-| 1K units | 0.8 us | 0.05 us | Small reachable set |
-| 10K units | 1.46 us | 0.07 us | Includes risk computation |
+| 1K 单位 | 0.8 我们 | 0.05 我们 |小型可达集 |
+| 10K 单位 | 1.46 我们 | 0.07 我们 |包括风险计算 |
 
-Impact analysis builds on BFS but adds per-unit risk score computation based on depth, test coverage, and structural factors.
+影响分析建立在 BFS 的基础上，但增加了基于深度、测试覆盖率和结构因素的每单位风险评分计算。
 
-### Call Graph
+### 调用图
 
-Time for bidirectional call graph exploration (callers + callees).
+双向调用图探索（调用者 + 被调用者）的时间。
 
-| Graph Size | Depth | Median | Std Dev | Notes |
+|图形尺寸|深度|中位数 |标准差 |笔记|
 |:---|---:|---:|---:|:---|
-| 10K units | 3 | 1.27 us | 0.06 us | Bidirectional |
-| 10K units | 5 | 2.1 us | 0.09 us | Deeper traversal |
+| 10K 单位 | 3 | 1.27 我们 | 0.06 我们 |双向|
+| 10K 单位 | 5 | 2.1 我们 | 0.09 我们 |更深层次的遍历 |
 
-## Comparison with Alternatives
+## 与替代方案的比较
 
-| Tool | Symbol Lookup | Dependency Trace | Persists | Format |
+|工具|符号查找|依赖跟踪 |坚持 |格式|
 |:---|---:|:---:|:---:|:---|
-| grep/ripgrep | ~1 ms | No | No | Text |
-| tree-sitter (raw) | N/A | No | No | AST |
-| rust-analyzer | ~10 ms | Partial | No | In-memory |
-| **AgenticCodebase** | **14 us** | **Yes** | **Yes** | **Binary .acb** |
+| grep/ripgrep | ~1 毫秒 |没有 |没有 |文字|
+|树保姆（原始）|不适用 |没有 |没有 |谷草转氨酶 |
+|锈迹分析仪| 〜10 毫秒 |部分|没有 |内存中 |
+| **代理代码库** | **14 我们** | **是** | **是** | **二进制.acb** |
 
-## Running Benchmarks
+## 运行基准测试
 
 ```bash
 # Run all benchmarks
@@ -133,4 +133,4 @@ cargo bench -- "symbol_lookup"
 cargo bench -- --output-format html
 ```
 
-Benchmark source is in `benches/benchmarks.rs`. Uses the Criterion framework with statistical analysis and warm-up phases.
+基准源位于 `benches/benchmarks.rs` 中。使用具有统计分析和预热阶段的标准框架。

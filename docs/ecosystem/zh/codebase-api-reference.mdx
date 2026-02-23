@@ -1,11 +1,11 @@
 ---
-title: "Rust API Reference"
-description: "Complete reference for the `agentic_codebase` Rust library (v0.1.0). Install with `cargo add agentic-codebase`."
+title: "Rust API 参考"
+description: "`agentic_codebase` Rust 库 (v0.1.0) 的完整参考。 使用 `cargo add agentic-codebase` 安装。"
 ---
 
-Complete reference for the `agentic_codebase` Rust library (v0.1.0). Install with `cargo add agentic-codebase`.
+`agentic_codebase` Rust 库 (v0.1.0) 的完整参考。 使用 `cargo add agentic-codebase` 安装。
 
-## Module Structure
+## 模块结构
 
 ```
 agentic_codebase
@@ -22,11 +22,11 @@ agentic_codebase
 
 ---
 
-## parse::parser
+## 解析::解析器
 
-### Parser
+### 解析器
 
-The main entry point for parsing source files.
+解析源文件的主要入口点。
 
 ```rust
 use agentic_codebase::parse::parser::{Parser, ParseOptions, ParseResult};
@@ -37,22 +37,22 @@ let result = parser.parse_directory("./src", &ParseOptions::default())?;
 
 #### `Parser::new() -> Self`
 
-Create a new parser instance. Initializes tree-sitter grammars for all supported languages.
+创建一个新的解析器实例。初始化所有支持语言的树守护者语法。
 
 #### `Parser::parse_directory(path, options) -> Result&lt;ParseResult&gt;`
 
-Recursively scan a directory and parse all supported source files.
+递归扫描目录并解析所有支持的源文件。
 
-**Parameters:**
+**参数：**
 
-| Parameter | Type | Description |
+|参数|类型 |描述 |
 |:---|:---|:---|
-| `path` | `&Path` | Root directory to scan |
-| `options` | `&ParseOptions` | Parsing configuration |
+| `path` | `&Path` |要扫描的根目录 |
+| `options` | `&ParseOptions` |解析配置|
 
-**Returns:** `ParseResult` containing extracted units, parse errors, and statistics.
+**返回：** `ParseResult` 包含提取的单元、解析错误和统计信息。
 
-### ParseOptions
+### 解析选项
 
 ```rust
 pub struct ParseOptions {
@@ -62,7 +62,7 @@ pub struct ParseOptions {
 }
 ```
 
-### ParseResult
+### 解析结果
 
 ```rust
 pub struct ParseResult {
@@ -74,11 +74,11 @@ pub struct ParseResult {
 
 ---
 
-## semantic::analyzer
+## 语义::分析器
 
-### SemanticAnalyzer
+### 语义分析器
 
-Performs semantic analysis on parsed units to build a fully-connected graph.
+对解析单元执行语义分析以构建全连接图。
 
 ```rust
 use agentic_codebase::semantic::analyzer::{SemanticAnalyzer, AnalyzeOptions};
@@ -89,9 +89,9 @@ let graph = analyzer.analyze(parse_result.units, &AnalyzeOptions::default())?;
 
 #### `SemanticAnalyzer::analyze(units, options) -> Result&lt;CodeGraph&gt;`
 
-Analyze a collection of code units, resolve cross-references, infer relationships, and build the concept graph.
+分析代码单元的集合、解决交叉引用、推断关系并构建概念图。
 
-### AnalyzeOptions
+### 分析选项
 
 ```rust
 pub struct AnalyzeOptions {
@@ -103,11 +103,11 @@ pub struct AnalyzeOptions {
 
 ---
 
-## graph
+## 图表
 
-### CodeGraph
+### 代码图
 
-The central data structure. A directed graph of code units connected by typed edges.
+中央数据结构。由类型边连接的代码单元的有向图。
 
 ```rust
 use agentic_codebase::graph::CodeGraph;
@@ -116,22 +116,22 @@ let graph: CodeGraph = /* from analyzer or reader */;
 println!("Units: {}, Edges: {}", graph.unit_count(), graph.edge_count());
 ```
 
-#### Key methods
+#### 关键方法
 
-| Method | Returns | Description |
+|方法|返回|描述 |
 |:---|:---|:---|
-| `unit_count()` | `usize` | Total number of code units |
-| `edge_count()` | `usize` | Total number of edges |
-| `units()` | `&[CodeUnit]` | Slice of all units |
-| `edges()` | `&[CodeEdge]` | Slice of all edges |
-| `get_unit(id)` | `Option<&CodeUnit>` | Look up unit by ID |
-| `edges_from(id)` | `Vec<&CodeEdge>` | Outgoing edges from unit |
-| `edges_to(id)` | `Vec<&CodeEdge>` | Incoming edges to unit |
-| `languages()` | `Vec&lt;Language&gt;` | Distinct languages in graph |
+| `unit_count()` | `usize` |代码单元总数|
+| `edge_count()` | `usize` |边总数 |
+| `units()` | `&[CodeUnit]` |所有单位的切片 |
+| `edges()` | `&[CodeEdge]` |所有边的切片 |
+| `get_unit(id)` | `Option<&CodeUnit>` |按 ID 查找单位 |
+| `edges_from(id)` | `Vec<&CodeEdge>` |单元的传出边缘 |
+| `edges_to(id)` | `Vec<&CodeEdge>` |传入单元的边缘 |
+| `languages()` | `Vec&lt;Language&gt;` |图中不同的语言 |
 
-### CodeUnit
+### 代码单元
 
-A single code element (function, class, module, etc.).
+单个代码元素（函数、类、模块等）。
 
 ```rust
 pub struct CodeUnit {
@@ -153,9 +153,9 @@ pub struct CodeUnit {
 }
 ```
 
-### CodeEdge
+### 代码边缘
 
-A directed relationship between two units.
+两个单位之间的直接关系。
 
 ```rust
 pub struct CodeEdge {
@@ -168,9 +168,9 @@ pub struct CodeEdge {
 
 ---
 
-## types
+## 类型
 
-### UnitType
+### 单位类型
 
 ```rust
 pub enum UnitType {
@@ -180,7 +180,7 @@ pub enum UnitType {
 }
 ```
 
-### EdgeType
+### 边缘类型
 
 ```rust
 pub enum EdgeType {
@@ -196,7 +196,7 @@ pub enum EdgeType {
 }
 ```
 
-### Language
+＃＃＃ 语言
 
 ```rust
 pub enum Language {
@@ -206,11 +206,11 @@ pub enum Language {
 
 ---
 
-## format
+＃＃ 格式
 
 ### AcbWriter
 
-Serialize a `CodeGraph` to the binary `.acb` format.
+将 `CodeGraph` 序列化为二进制 `.acb` 格式。
 
 ```rust
 use agentic_codebase::format::AcbWriter;
@@ -221,7 +221,7 @@ writer.write_to_file(&graph, "project.acb")?;
 
 ### AcbReader
 
-Deserialize a `CodeGraph` from an `.acb` file.
+从 `.acb` 文件反序列化 `CodeGraph`。
 
 ```rust
 use agentic_codebase::format::AcbReader;
@@ -231,11 +231,11 @@ let graph = AcbReader::read_from_file("project.acb")?;
 
 ---
 
-## engine::query
+## 引擎::查询
 
-### QueryEngine
+### 查询引擎
 
-The query engine provides 24 query types over a `CodeGraph`.
+查询引擎通过 `CodeGraph` 提供 24 种查询类型。
 
 ```rust
 use agentic_codebase::engine::query::QueryEngine;
@@ -243,7 +243,7 @@ use agentic_codebase::engine::query::QueryEngine;
 let engine = QueryEngine::new();
 ```
 
-### Symbol Lookup
+### 符号查找
 
 ```rust
 use agentic_codebase::engine::query::{SymbolLookupParams, MatchMode};
@@ -257,7 +257,7 @@ let params = SymbolLookupParams {
 let results: Vec<&CodeUnit> = engine.symbol_lookup(&graph, params)?;
 ```
 
-### Dependency Graph
+### 依赖图
 
 ```rust
 use agentic_codebase::engine::query::DependencyParams;
@@ -271,7 +271,7 @@ let params = DependencyParams {
 let result = engine.dependency_graph(&graph, params)?;
 ```
 
-### Impact Analysis
+### 影响分析
 
 ```rust
 use agentic_codebase::engine::query::ImpactParams;
@@ -285,7 +285,7 @@ let result = engine.impact_analysis(&graph, params)?;
 println!("Risk: {:.2}, Impacted: {}", result.overall_risk, result.impacted.len());
 ```
 
-### Call Graph
+### 调用图
 
 ```rust
 use agentic_codebase::engine::query::{CallGraphParams, CallDirection};
@@ -298,7 +298,7 @@ let params = CallGraphParams {
 let result = engine.call_graph(&graph, params)?;
 ```
 
-### Similarity
+### 相似度
 
 ```rust
 use agentic_codebase::engine::query::SimilarityParams;
@@ -311,7 +311,7 @@ let params = SimilarityParams {
 let results = engine.similarity(&graph, params)?;
 ```
 
-### Prophecy
+### 预言
 
 ```rust
 use agentic_codebase::engine::query::ProphecyParams;
@@ -326,7 +326,7 @@ for pred in &result.predictions {
 }
 ```
 
-### Stability Analysis
+### 稳定性分析
 
 ```rust
 let result = engine.stability_analysis(&graph, 42)?;
@@ -336,7 +336,7 @@ for factor in &result.factors {
 }
 ```
 
-### Coupling Detection
+### 耦合检测
 
 ```rust
 use agentic_codebase::engine::query::CouplingParams;
@@ -350,9 +350,9 @@ let results = engine.coupling_detection(&graph, params)?;
 
 ---
 
-## temporal
+## 时间
 
-Git history analysis for temporal queries. Requires the repository to be a git repository.
+用于时间查询的 Git 历史记录分析。要求存储库是 git 存储库。
 
 ```rust
 use agentic_codebase::temporal::TemporalAnalyzer;
@@ -363,9 +363,9 @@ let history = analyzer.analyze_unit_history(unit_id)?;
 
 ---
 
-## collective
+##集体
 
-Cross-repository intelligence: delta compression, pattern extraction, and privacy-preserving sharing between graphs.
+跨存储库智能：增量压缩、模式提取和图之间的隐私保护共享。
 
 ```rust
 use agentic_codebase::collective::CollectiveEngine;
@@ -376,8 +376,8 @@ let delta = engine.compute_delta(&graph_old, &graph_new)?;
 
 ---
 
-## Next Steps
+## 后续步骤
 
-- **[Quickstart Guide](/docs/codebase-quickstart)** -- Get started in 5 minutes.
-- **[Core Concepts](/docs/codebase-concepts)** -- Understand the graph model and query tiers.
-- **[Benchmarks](/docs/codebase-benchmarks)** -- Performance characteristics at various scales.
+- **[快速开始指南](/docs/zh/codebase-quickstart)** -- 5 分钟内开始。
+- **[核心概念](/docs/zh/codebase-concepts)** -- 了解图模型和查询层。
+- **[基准测试](/docs/zh/codebase-benchmarks)** -- 各种规模的性能特征。

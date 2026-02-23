@@ -1,84 +1,84 @@
 ---
-title: "Agentra Runtime + Operations Update"
-description: "**Date:** February 22, 2026"
+title: "Agentra运行时间与运维更新"
+description: "**日期：** 2026 年 2 月 22 日"
 ---
 
-**Date:** February 22, 2026  
-**Scope:** OpenClaw TUI takeover behavior, universal MCP wiring, Agentra command UX, and operational backup/recovery.
+**日期：** 2026 年 2 月 22 日
+**范围：** OpenClaw TUI 接管行为、通用 MCP 接线、Agentra 命令 UX 和操作备份/恢复。
 
-## 1) Runtime Takeover and Session Resync
+## 1) 运行时间接管和会话重新同步
 
-Implemented runtime behavior so Agentra takeover is automatic and repeatable at session start.
+实现了运行时行为，因此 Agentra 接管在会话启动时是自动且可重复的。
 
-- `openclaw tui` now auto-detects sister presence from artifacts and binaries.
-- Detection supports artifacts: `.acb`, `.amem`, `.avis`.
-- Detection supports binaries: `acb`, `acb-mcp`, `amem`, `agentic-memory-mcp`, `agentic-vision-mcp`.
-- Runtime resync runs continuously (periodic re-detection) so footer state updates when environment changes.
-- Full-control status is derived from active sisters (not only 3/3 scenarios).
-- User can always release/re-enable control without uninstalling anything.
+- `openclaw tui` 现在自动检测工件和二进制文件中姐妹的存在。
+- 检测支持工件：`.acb`、`.amem`、`.avis`。
+- 检测支持二进制文件：`acb`、`acb-mcp`、`amem`、`agentic-memory-mcp`、`agentic-vision-mcp`。
+- 运行时间重新同步连续运行（定期重新检测），因此当环境发生变化时页脚状态会更新。
+- 完全控制状态源自活跃姐妹（不仅是3/3场景）。
+- 用户可以随时释放/重新启用控制，而无需卸载任何内容。
 
-## 2) Dynamic Per-Sister Disable/Enable Overrides
+## 2) 动态每姐妹禁用/启用覆盖
 
-Added non-destructive per-sister control at runtime.
+在运行时添加了非破坏性的每姐妹控制。
 
-- Supports disabling any sister independently: `codebase`, `memory`, `vision`.
-- Disable override takes precedence over artifact/binary detection.
-- Backed by config file:
-  - `~/.openclaw/sisters-disable.json`
-- Optional env overrides:
-  - `OPENCLAW_SISTERS_DISABLE_FILE`
-  - `OPENCLAW_SISTERS_DISABLE` (and `OPENCLAW_DISABLE_SISTERS`)
+- 支持独立禁用任何姐妹：`codebase`、`memory`、`vision`。
+- 禁用覆盖优先于工件/二进制检测。
+- 由配置文件支持：
+- `~/.openclaw/sisters-disable.json`
+- 任选环境覆盖：
+- `OPENCLAW_SISTERS_DISABLE_FILE`
+- `OPENCLAW_SISTERS_DISABLE`（和 `OPENCLAW_DISABLE_SISTERS`）
 
-Result: users can keep installations intact, temporarily disable a sister, and re-enable instantly.
+结果：用户可以保持安装完整，暂时禁用姐妹，然后立即重新启用。
 
-## 3) TUI Footer and Runtime Messaging Improvements
+## 3) TUI 页脚和运行时消息传递改进
 
-Status output is now explicit and operationally useful.
+状态输出现在是明确的并且在操作上有用。
 
-- Footer shows:
-  - connected/disconnected state
-  - sister states (`On/Off`)
-  - detection source tags (`PATH`, `artifact`, `artifact+PATH`, `disabled`, `none`)
-  - full-control count (`N/3 enabled`)
-- Added diagnostics command:
-  - `/agentra where` (legacy alias supported)
-- Runtime update messaging now uses Agentra wording:
-  - `Agentra sisters takeover enabled: ...`
-  - `Agentra sisters resynced: codebase=..., memory=..., vision=...`
-  - `Agentra sisters runtime update: codebase=..., memory=..., vision=...`
+- 页脚显示：
+- 连接/断开状态
+- 姐妹州 (`On/Off`)
+- 检测源标签（`PATH`、`artifact`、`artifact+PATH`、`disabled`、`none`）
+- 完全控制计数 (`N/3 enabled`)
+- 添加了诊断命令：
+- `/agentra where`（支持旧别名）
+- 运行时更新消息现在使用 Agentra 措辞：
+- `Agentra sisters takeover enabled: ...`
+- `Agentra sisters resynced: codebase=..., memory=..., vision=...`
+- `Agentra sisters runtime update: codebase=..., memory=..., vision=...`
 
-## 4) Slash Command UX: Agentra as Primary Namespace
+## 4) Slash Command UX：Agentra 作为主命名空间
 
-Moved command UX from `sisters` naming to `agentra` naming, with backward compatibility.
+将命令 UX 从 `sisters` 命名移至 `agentra` 命名，并具有向后兼容性。
 
-Primary commands:
+主要命令：
 
 - `/agentra <status|where|on|off|resync|disable|enable>`
 - `/agentra-status`
 - `/agentra-where`
 
-Legacy aliases still supported:
+仍然支持旧别名：
 
 - `/sisters ...`
 - `/sisters-status`
 - `/sisters-where`
 
-Result: cleaner naming for users while preserving existing workflows.
+结果：为用户提供更清晰的命名，同时保留现有的工作流程。
 
-## 5) Universal MCP Wiring (No Client Favoritism)
+## 5) 通用 MCP 接线（不偏袒客户）
 
-Standardized MCP auto-configuration behavior across discovered clients.
+跨已发现客户端的标准化 MCP 自动配置行为。
 
-- Client detection and merge now target common MCP config patterns across desktop and terminal environments.
-- Codex MCP registration/repair flow integrated alongside JSON-based MCP configs.
-- `agentra doctor --fix` validates and repairs stale/missing sister MCP entries.
-- Server profile remains the only mode requiring explicit auth hardening guidance.
+- 客户端检测和合并现在针对桌面和终端环境中的常见 MCP 配置模式。
+- Codex MCP 注册/修复流程与基于 JSON 的 MCP 配置集成。
+- `agentra doctor --fix` 验证并修复过时/丢失的姐妹 MCP 条目。
+- 服务器配置文件仍然是唯一需要明确的身份验证强化指导的模式。
 
-## 6) New Native Operations Commands: Backup + Recovery
+## 6) 新的本机操作命令：备份+恢复
 
-Implemented first-class backup operations in `agentra-cli`.
+在 `agentra-cli` 中实现了一流的备份操作。
 
-### Added command group
+### 添加命令组
 
 - `agentra backup run`
 - `agentra backup list`
@@ -86,74 +86,74 @@ Implemented first-class backup operations in `agentra-cli`.
 - `agentra backup restore`
 - `agentra backup prune`
 
-### Backup behavior
+### 备份行为
 
-`agentra backup run` creates timestamped snapshots under:
+`agentra backup run` 在以下位置创建带时间戳的快照：
 
-- default root: `~/.agentra-backups`
-- snapshot format: `snapshot-&lt;unix-seconds&gt;`
+- 默认根：`~/.agentra-backups`
+- 快照格式：`snapshot-&lt;unix-seconds&gt;`
 
-Each snapshot contains:
+每个快照包含：
 
-- memory:
-  - `~/.brain.amem` (when present)
-- MCP configs:
-  - discovered MCP client config files
-- runtime artifacts:
-  - `.acb`, `.amem`, `.avis` from workspace scan
-- health ledger files:
-  - from `ACB_HEALTH_LEDGER_DIR` / `AGENTRA_HEALTH_LEDGER_DIR` / default `~/.agentra/health-ledger`
+- 记忆：
+- `~/.brain.amem`（如果存在）
+- MCP 配置：
+- 发现MCP客户端配置文件
+- 运行时工件：
+- 工作区扫描中的 `.acb`、`.amem`、`.avis`
+- 健康分类档案：
+- 来自 `ACB_HEALTH_LEDGER_DIR` / `AGENTRA_HEALTH_LEDGER_DIR` / 默认 `~/.agentra/health-ledger`
 
-Each snapshot writes:
+每个快照都写：
 
 - `meta/manifest.json`
 - `meta/SHA256SUMS.txt`
 
-### Verify behavior
+### 验证行为
 
-`agentra backup verify` re-hashes all entries and checks against manifest checksums.
+`agentra backup verify` 重新散列所有条目并对照清单校验和进行检查。
 
-### Restore behavior
+### 恢复行为
 
-`agentra backup restore &lt;snapshot&gt;` supports selective restore:
+`agentra backup restore &lt;snapshot&gt;` 支持选择性恢复：
 
 - `--memory`
 - `--mcp`
 - `--artifacts`
 
-Safety behavior:
+安全行为：
 
-- Existing target files are backed up as `.agentra.bak.&lt;timestamp&gt;` before overwrite (unless `--force`).
+- 现有目标文件在覆盖之前备份为 `.agentra.bak.&lt;timestamp&gt;`（除非 `--force`）。
 
-### Retention behavior
+### 保留策略行为
 
-`agentra backup prune --keep &lt;N&gt;` removes older managed snapshots and keeps newest `N`.
+`agentra backup prune --keep &lt;N&gt;` 删除较旧的托管快照并保留最新的 `N`。
 
-- Optional `--dry-run` previews deletion.
-- Prunes only managed snapshot directories (`snapshot-*`).
+- 任选 `--dry-run` 预览删除。
+- 仅修剪托管快照目录 (`snapshot-*`)。
 
-## 7) Installer Post-Install UX Update
+## 7) 安装者安装后 UX 更新
 
-After install completes (`100% Install complete`), users now get consistent next-step guidance.
+安装完成 (`100% 安装 complete`) 后，用户现在可以获得一致的下一步指导。
 
-- restart MCP client/system
-- verify sister server appears
-- optional feedback link
+- 重新启动MCP客户端/系统
+- 验证姐妹服务器是否出现
+- 可选的反馈链接
 
-This reduces ambiguity and first-run friction.
+这减少了歧义和首次运行的摩擦。
 
-## 8) Validation Performed
+## 8) 执行验证
 
-Validated through local runs and tests:
+通过本地运行和测试验证：
 
-- TUI command and runtime tests passed.
-- `agentra-cli` tests passed after backup/prune additions.
-- Live command checks performed for:
-  - `agentra backup run/list/verify/restore`
-  - `agentra backup prune --dry-run` and real prune
-- Global OpenClaw runtime rebuild/reinstall and gateway restart performed during TUI updates.
+- TUI 命令和运行时测试已通过。
+- 备份/修剪添加后通过了 `agentra-cli` 测试。
+- 执行实时命令检查：
+- `agentra backup run/list/verify/restore`
+- `agentra backup prune --dry-run` 和真正的修剪
+- TUI 更新期间执行全局 OpenClaw 运行时重建/重新安装和网关重启。
 
-## 9) Quick Command Reference
+## 9) 快速命令参考
 
 ```bash
 # Agentra runtime controls in OpenClaw TUI
@@ -174,38 +174,38 @@ agentra backup prune --keep 20 --dry-run
 agentra backup prune --keep 20
 ```
 
-## 10) Recommended Docs Placement
+## 10) 推荐的文档放置位置
 
-This update can be split into docs pages:
+此更新可以分为文档页面：
 
-- Runtime takeover + command UX
-- Universal MCP behavior
-- Operations: backup/verify/restore/prune
-- Troubleshooting with `agentra doctor --fix`
+- 运行时间接管+命令UX
+- 通用 MCP 行为
+- 操作：备份/验证/恢复/修剪
+- 使用 `agentra doctor --fix` 进行故障排除
 
 
-## 11) Server Runtime Auth + Artifact Sync (Implemented)
+## 11) 服务器运行时身份验证+工件同步（已实现）
 
-Added executable server-runtime checks and aligned sync guidance.
+添加了可执行的服务器运行时检查和对齐的同步指导。
 
-- New command:
-  - `agentra server preflight [--strict] [--artifact-dir &lt;path&gt;]...`
-- Preflight validates:
-  - server mode enabled (`AGENTRA_RUNTIME_MODE=server`)
-  - auth token configured (`AGENTIC_TOKEN` or token file)
-  - artifact dirs configured and existing
-  - synced artifacts present in server dirs (`.acb/.amem/.avis`)
-  - sister MCP binaries resolvable on host (`acb-mcp`, `agentic-memory-mcp`, `agentic-vision-mcp`)
-- Strict mode exits non-zero on failures.
+- 新命令：
+- `agentra server preflight [--strict] [--artifact-dir &lt;path&gt;]...`
+- 预检验证：
+- 启用服务器模式 (`AGENTRA_RUNTIME_MODE=server`)
+- 配置身份验证令牌（`AGENTIC_TOKEN` 或令牌文件）
+- 配置和现有的工件目录
+- 服务器目录中存在的同步工件 (`.acb/.amem/.avis`)
+- 可在主机上解析的姊妹 MCP 二进制文件（`acb-mcp`、`agentic-memory-mcp`、`agentic-vision-mcp`）
+- 严格模式在失败时退出非零。
 
-Also updated `sync_artifacts.sh` output with next-step signals:
+还使用下一步信号更新了 `sync_artifacts.sh` 输出：
 
-- run `agentra server preflight --strict`
-- restart MCP host/client
-- optional feedback link
+- 运行`agentra server preflight --strict`
+- 重新启动MCP主机/客户端
+- 可选的反馈链接
 
-Docs updated:
+文档更新：
 
-- `docs/how-to.md` server section now uses preflight + sync + parity wording.
-- New standalone doc source:
-  - `SERVER_RUNTIME_AUTH_ARTIFACT_SYNC.md`
+- `docs/how-to.md` 服务器部分现在使用预检+同步+奇偶校验措辞。
+- 新的独立文档源：
+- `SERVER_RUNTIME_AUTH_ARTIFACT_SYNC.md`

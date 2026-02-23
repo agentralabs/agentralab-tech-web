@@ -6,7 +6,13 @@ import { createRelativeLink } from "fumadocs-ui/mdx"
 import type { TOCItemType } from "fumadocs-core/toc"
 import { getMDXComponents } from "@/mdx-components"
 import { getDocsSource, source } from "@/lib/source"
-import { DOCS_LANGUAGE_COOKIE, docsUi, localizeDocsLabel, normalizeDocsLanguage } from "@/lib/docs-i18n"
+import {
+  DOCS_LANGUAGE_COOKIE,
+  docsUi,
+  localizeDocsHref,
+  localizeDocsLabel,
+  normalizeDocsLanguage,
+} from "@/lib/docs-i18n"
 
 interface DocsPageProps {
   params: Promise<{ slug?: string[] }>
@@ -86,10 +92,30 @@ function isInvalidTocLabel(label: string): boolean {
   return false
 }
 
+function parseDocsLanguageFromSlug(
+  slug: string[] | undefined,
+  fallback: "en" | "zh",
+): { language: "en" | "zh"; normalizedSlug: string[] | undefined } {
+  if (!slug?.length) {
+    return { language: fallback, normalizedSlug: slug }
+  }
+
+  const [first, ...rest] = slug
+  if (first === "en" || first === "zh") {
+    return {
+      language: first,
+      normalizedSlug: rest.length ? rest : undefined,
+    }
+  }
+
+  return { language: fallback, normalizedSlug: slug }
+}
+
 export default async function Page({ params }: DocsPageProps) {
-  const { slug } = await params
+  const { slug: rawSlug } = await params
   const cookieStore = await cookies()
-  const language = normalizeDocsLanguage(cookieStore.get(DOCS_LANGUAGE_COOKIE)?.value)
+  const fallbackLanguage = normalizeDocsLanguage(cookieStore.get(DOCS_LANGUAGE_COOKIE)?.value)
+  const { language, normalizedSlug: slug } = parseDocsLanguageFromSlug(rawSlug, fallbackLanguage)
   const ui = docsUi(language)
   const docsSource = getDocsSource(language)
   const page = docsSource.getPage(slug) ?? source.getPage(slug)
@@ -116,8 +142,8 @@ export default async function Page({ params }: DocsPageProps) {
     <div className="docs-article-wrap">
       <article className="docs-article">
         <p className="docs-eyebrow">{localizeDocsLabel(sectionLabel, language)}</p>
-        <h1>{data.title}</h1>
-        {data.description ? <p className="docs-description">{data.description}</p> : null}
+        <h1>{data.title ? localizeDocsLabel(data.title, language) : data.title}</h1>
+        {data.description ? <p className="docs-description">{localizeDocsLabel(data.description, language)}</p> : null}
         <div className="docs-content">
           <MDX
             components={getMDXComponents({
@@ -154,17 +180,18 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: DocsPageProps): Promise<Metadata> {
-  const { slug } = await params
+  const { slug: rawSlug } = await params
   const cookieStore = await cookies()
-  const language = normalizeDocsLanguage(cookieStore.get(DOCS_LANGUAGE_COOKIE)?.value)
+  const fallbackLanguage = normalizeDocsLanguage(cookieStore.get(DOCS_LANGUAGE_COOKIE)?.value)
+  const { language, normalizedSlug: slug } = parseDocsLanguageFromSlug(rawSlug, fallbackLanguage)
   const docsSource = getDocsSource(language)
   const page = docsSource.getPage(slug) ?? source.getPage(slug)
   if (!page) notFound()
   const data = page.data as { title?: string; description?: string }
 
   return {
-    title: data.title,
-    description: data.description,
-    alternates: { canonical: page.url },
+    title: data.title ? localizeDocsLabel(data.title, language) : data.title,
+    description: data.description ? localizeDocsLabel(data.description, language) : data.description,
+    alternates: { canonical: localizeDocsHref(page.url, language) },
   }
 }

@@ -1,17 +1,17 @@
 ---
-title: "Integration Guide"
-description: "This guide covers how to integrate AgenticCodebase into various environments: MCP-compatible AI tools, CI/CD pipelines, custom Rust applications, and the broader Agentic ecosystem."
+title: "集成指南"
+description: "本指南介绍了如何将 AgenticCodebase 集成到各种环境中：兼容 MCP 的 AI 工具、CI/CD 管道、自定义 Rust 应用程序以及更广泛的 Agentic 生态系统。"
 ---
 
-This guide covers how to integrate AgenticCodebase into various environments: MCP-compatible AI tools, CI/CD pipelines, custom Rust applications, and the broader Agentic ecosystem.
+本指南介绍了如何将 AgenticCodebase 集成到各种环境中：兼容 MCP 的 AI 工具、CI/CD 管道、自定义 Rust 应用程序以及更广泛的 Agentic 生态系统。
 
-## MCP Server Integration
+## MCP 服务器集成
 
-The MCP server (`acb-mcp`) exposes AgenticCodebase to any LLM client that supports the [Model Context Protocol](https://modelcontextprotocol.io/).
+MCP 服务器 (`acb-mcp`) 将 AgenticCodebase 公开给任何支持模型上下文协议的 LLM 客户端(https://modelcontextprotocol.io/)。
 
-### Claude Desktop
+### 克劳德桌面
 
-Add to `~/Library/Application Support/Claude/claude_desktop_config.json`:
+添加到`~/Library/Application Support/Claude/claude_desktop_config.json`：
 
 ```json
 {
@@ -24,11 +24,11 @@ Add to `~/Library/Application Support/Claude/claude_desktop_config.json`:
 }
 ```
 
-Restart Claude Desktop. The LLM now has access to code analysis tools.
+重新启动克劳德桌面。法学硕士现在可以使用代码分析工具。
 
-### VS Code / Cursor
+### VS 代码/光标
 
-Add to `.vscode/settings.json`:
+添加到`.vscode/settings.json`：
 
 ```json
 {
@@ -41,9 +41,9 @@ Add to `.vscode/settings.json`:
 }
 ```
 
-### Windsurf
+### 风帆冲浪
 
-Add to `~/.codeium/windsurf/mcp_config.json`:
+添加到`~/.codeium/windsurf/mcp_config.json`：
 
 ```json
 {
@@ -56,37 +56,37 @@ Add to `~/.codeium/windsurf/mcp_config.json`:
 }
 ```
 
-### MCP Tools Reference
+### MCP 工具参考
 
-The MCP server exposes these tools:
+MCP 服务器公开了这些工具：
 
-| Tool | Description |
+|工具|描述 |
 |:---|:---|
-| `acb_compile` | Compile a source directory into a graph |
-| `acb_load` | Load a pre-compiled `.acb` file into memory |
-| `acb_unload` | Unload a graph from memory |
-| `acb_info` | Get graph metadata (units, edges, languages) |
-| `acb_query` | Run any of the 24 query types |
-| `acb_get` | Get detailed info about a specific code unit |
+| `acb_compile` |将源目录编译成图表 |
+| `acb_load` |将预编译的 `.acb` 文件加载到内存中 |
+| `acb_unload` |从内存中卸载图表 |
+| `acb_info` |获取图元数据（单位、边、语言）|
+| `acb_query` | 运行 24 种查询类型中的任意一种 |
+| `acb_get` |获取有关特定代码单元的详细信息 |
 
-### MCP Resources
+### MCP 资源
 
-Loaded graphs expose resources via `acb://` URIs:
+加载的图表通过 `acb://` URI 公开资源：
 
-| URI Pattern | Description |
+| URI 模式 |描述 |
 |:---|:---|
-| `acb://graphs` | List all loaded graphs |
-| `acb://graphs/{name}/info` | Graph metadata |
-| `acb://graphs/{name}/units` | Unit listing |
-| `acb://graphs/{name}/units/{id}` | Specific unit details |
+| `acb://graphs` |列出所有加载的图表 |
+| `acb://graphs/{name}/info` |图表元数据 |
+| `acb://graphs/{name}/units` |单位列表 |
+| `acb://graphs/{name}/units/{id}` |具体单位详情|
 
 ---
 
-## CI/CD Integration
+## CI/CD 集成
 
-AgenticCodebase is designed for automated pipelines. All commands support `--format json` for machine-readable output.
+AgenticCodebase 专为自动化管道而设计。所有命令都支持 `--format json` 以实现机器可读的输出。
 
-### Impact Analysis on Pull Requests
+### 对 Pull 请求的影响分析
 
 ```bash
 #!/bin/bash
@@ -106,7 +106,7 @@ acb -f json query current.acb symbol --name "$changed_function" | \
   done
 ```
 
-### Stability Monitoring
+### 稳定性监控
 
 ```bash
 #!/bin/bash
@@ -124,7 +124,7 @@ if [ "$high_risk" -gt 0 ]; then
 fi
 ```
 
-### Coupling Gate
+### 耦合门
 
 ```bash
 #!/bin/bash
@@ -143,16 +143,16 @@ fi
 
 ---
 
-## Rust Library Integration
+## Rust 库集成
 
-Use AgenticCodebase as a dependency in your Rust project:
+使用 AgenticCodebase 作为 Rust 项目中的依赖项：
 
 ```toml
 [dependencies]
 agentic-codebase = "0.1"
 ```
 
-### Basic workflow
+### 基本工作流程
 
 ```rust
 use agentic_codebase::parse::parser::{Parser, ParseOptions};
@@ -196,7 +196,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 }
 ```
 
-### Custom query pipelines
+### 自定义查询管道
 
 ```rust
 use agentic_codebase::engine::query::{ImpactParams, ProphecyParams};
@@ -223,9 +223,9 @@ for pred in &prophecy.predictions {
 
 ---
 
-## Agentic Ecosystem Integration
+## 代理生态系统集成
 
-AgenticCodebase works alongside [AgenticMemory](https://github.com/agentralabs/agentic-memory) and [AgenticVision](https://github.com/agentralabs/agentic-vision). Run all three MCP servers for an agent with full cognitive, visual, and code capabilities:
+AgenticCodebase 与 [主体记忆](https://github.com/agentralabs/agentic-memory) 和 [代理视觉](https://github.com/agentralabs/agentic-vision) 一起工作。 为具有完整认知、视觉和代码功能的代理运行所有三个 MCP 服务器：
 
 ```json
 {
@@ -246,21 +246,21 @@ AgenticCodebase works alongside [AgenticMemory](https://github.com/agentralabs/a
 }
 ```
 
-### Cross-system workflows
+### 跨系统工作流程
 
-An agent with all three systems can:
+拥有所有三个系统的代理可以：
 
-1. **Remember decisions** (AgenticMemory) -- "We chose PostgreSQL for the backend."
-2. **See UI changes** (AgenticVision) -- "The login page layout changed since yesterday."
-3. **Understand code structure** (AgenticCodebase) -- "The `AuthService` depends on `DatabasePool` and is tested by `test_auth_flow`."
+1. **记住决定** (AgenticMemory) ——“我们选择 PostgreSQL 作为后端。”
+2. **查看 UI 更改** (AgenticVision) --“登录页面布局自昨天以来发生了变化。”
+3. **了解代码结构** (AgenticCodebase) --“`AuthService` 依赖于 `DatabasePool` 并由 `test_auth_flow` 进行测试。”
 
-The MCP protocol enables the LLM to seamlessly combine tools from all three servers in a single conversation.
+MCP 协议使 LLM 能够在单个对话中无缝组合来自所有三个服务器的工具。
 
 ---
 
-## Next Steps
+## 后续步骤
 
-- **[Quickstart Guide](/docs/codebase-quickstart)** -- Get started in 5 minutes.
-- **[API Reference](/docs/codebase-api-reference)** -- Complete Rust library reference.
-- **[Core Concepts](/docs/codebase-concepts)** -- Understand the graph model.
-- **[FAQ](/docs/codebase-faq)** -- Common questions and answers.
+- **[快速开始指南](/docs/zh/codebase-quickstart)** -- 5 分钟内开始。
+- **[API 参考](/docs/zh/codebase-api-reference)** -- 完整的 Rust 库参考。
+- **[核心概念](/docs/zh/codebase-concepts)** -- 了解图模型。
+- **[常见问题](/docs/zh/codebase-faq)** -- 常见问题和解答。

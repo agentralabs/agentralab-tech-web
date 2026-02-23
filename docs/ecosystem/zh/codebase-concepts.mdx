@@ -1,25 +1,25 @@
 ---
-title: "Core Concepts"
-description: "AgenticCodebase models source code as a **typed concept graph** -- a directed, weighted graph where nodes represent discrete code units and edges capture the semantic relationsh..."
+title: "核心概念"
+description: "AgenticCodebase 将源代码建模为**类型化概念图**——一种有向加权图，其中节点表示离散代码单元，边捕获语义关系..."
 ---
 
-AgenticCodebase models source code as a **typed concept graph** -- a directed, weighted graph where nodes represent discrete code units and edges capture the semantic relationships between them. This document explains the foundational ideas behind the system.
+AgenticCodebase 将源代码建模为**类型化概念图**——一种有向加权图，其中节点表示离散代码单元，边捕获它们之间的语义关系。本文档解释了该系统背后的基本思想。
 
-## Why a Graph?
+## 为什么是图表？
 
-Most code analysis tools provide flat search: find files matching a pattern, find text matching a regex. This works for simple lookups but fails to capture how code actually relates: functions call other functions, classes inherit from base classes, modules import other modules, tests cover specific implementations.
+大多数代码分析工具都提供平面搜索：查找与模式匹配的文件，查找与正则表达式匹配的文本。这适用于简单的查找，但无法捕获代码的实际关联方式：函数调用其他函数、类从基类继承、模块导入其他模块、测试涵盖特定实现。
 
-A concept graph preserves these relationships explicitly. When an agent finds a function, it can also traverse to the functions it calls, the modules that import it, the tests that cover it, and the classes that contain it. This makes code navigation structured, predictive, and auditable.
+概念图明确地保留了这些关系。当代理找到一个函数时，它还可以遍历它调用的函数、导入它的模块、覆盖它的测试以及包含它的类。这使得代码导航变得结构化、可预测且可审计。
 
-Compared to embedding-based RAG, which answers "what text is similar?", a concept graph answers richer questions: "what depends on this?", "what breaks if I change this?", "what calls this?", and "what is the full inheritance chain?"
+与回答“什么文本相似？”的基于嵌入的 RAG 相比，概念图回答了更丰富的问题​​：“什么取决于这个？”、“如果我改变这个会破坏什么？”、“什么叫这个？”以及“完整的继承链是什么？”
 
-## Code Units (Nodes)
+## 代码单元（节点）
 
-Every node in the graph is a **CodeUnit** -- a discrete, named element of source code. There are 13 unit types, each serving a distinct purpose.
+图中的每个节点都是一个**CodeUnit**——源代码的离散的、命名的元素。有 13 种单位类型，每种类型都有不同的用途。
 
-### Function
+＃＃＃ 功能
 
-A standalone callable unit of code. Functions are the most common unit type in most codebases.
+独立的可调用代码单元。函数是大多数代码库中最常见的单元类型。
 
 ```rust
 // Rust
@@ -31,183 +31,183 @@ pub fn process_payment(amount: f64) -> Result<Receipt> { ... }
 def process_payment(amount: float) -> Receipt: ...
 ```
 
-### Method
+＃＃＃ 方法
 
-A function attached to a class, struct, or trait. Methods have an implicit receiver (`self`, `this`) and belong to a containing type.
+附加到类、结构或特征的函数。方法具有隐式接收器（`self`、`this`）并且属于包含类型。
 
-### Class
+＃＃＃ 班级
 
-An object-oriented type definition. Classes may contain methods, fields, and nested types.
+面向对象的类型定义。类可以包含方法、字段和嵌套类型。
 
-### Struct
+### 结构
 
-A data structure type. In Rust, structs are the primary composite type. In other languages, this maps to value types or data classes.
+一种数据结构类型。在 Rust 中，结构是主要的复合类型。在其他语言中，这映射到值类型或数据类。
 
-### Enum
+### 枚举
 
-An enumeration type with named variants.
+具有命名变体的枚举类型。
 
-### Interface / Trait
+### 界面/特征
 
-A contract that types can implement. In Rust, this is a `trait`. In TypeScript, an `interface`. In Python, an abstract base class.
+类型可以执行的合同。在 Rust 中，这是一个 `trait`。在 TypeScript 中，是 `interface`。在Python中，一个抽象基类。
 
-### Module
+＃＃＃ 模块
 
-A file-level or namespace-level container. Every source file creates at least one module unit.
+文件级或命名空间级容器。每个源文件至少创建一个模块单元。
 
-### Import
+＃＃＃ 进口
 
-A dependency declaration. Imports create edges between the importing module and the imported unit.
+依赖声明。导入在导入模块和导入单元之间创建边缘。
 
-### Variable / Constant
+### 变量/常量
 
-Named bindings at module scope. Constants are immutable; variables may be reassigned.
+模块范围内的命名绑定。常量是不可变的；变量可以被重新分配。
 
-### TypeAlias
+### 类型别名
 
-A named alias for another type.
+另一种类型的命名别名。
 
-### Macro
+### 宏
 
-A metaprogramming construct (Rust macros, Python decorators with code generation).
+元编程构造（Rust 宏、具有代码生成功能的 Python 装饰器）。
 
-## Edges (Relationships)
+## 边（关系）
 
-Every edge in the graph connects two code units with a typed, weighted relationship. There are 18 edge types organized in symmetric pairs.
+图中的每条边都通过类型化、加权的关系连接两个代码单元。有 18 种边类型，以对称对的形式组织。
 
-### Call Edges
+### 呼叫边
 
-- **Calls** / **CalledBy** -- Function A calls Function B.
+- **Calls** / **CalledBy** -- 函数 A 调用函数 B。
 
-### Import Edges
+### 导入边
 
-- **Imports** / **ImportedBy** -- Module A imports Unit B.
+- **导入** / **导入者** -- 模块 A 导入单元 B。
 
-### Containment Edges
+### 遏制边缘
 
-- **Contains** / **ContainedBy** -- Class A contains Method B, Module A contains Function B.
+- **Contains** / **ContainedBy** -- 类 A 包含方法 B，模块 A 包含函数 B。
 
-### Inheritance Edges
+### 继承边缘
 
-- **Inherits** / **InheritedBy** -- Class A extends Class B.
+- **继承** / **继承者** -- A 类扩展 B 类。
 
-### Implementation Edges
+### 实施优势
 
-- **Implements** / **ImplementedBy** -- Struct A implements Trait B.
+- **Implements** / **ImplementedBy** -- 结构 A 实现特征 B。
 
-### Usage Edges
+### 使用边缘
 
-- **Uses** / **UsedBy** -- Function A references Type B in its signature or body.
+- **Uses** / **UsedBy** -- 函数 A 在其签名或主体中引用类型 B。
 
-### Return / Accept Edges
+### 返回/接受边
 
-- **Returns** -- Function A returns Type B.
-- **Accepts** -- Function A accepts Type B as a parameter.
+- **返回** -- 函数 A 返回类型 B。
+- **接受** -- 函数 A 接受类型 B 作为参数。
 
-### Override Edges
+### 覆盖边缘
 
-- **Overrides** / **OverriddenBy** -- Method A overrides Method B from a parent class.
+- **Overrides** / **OverriddenBy** -- 方法 A 覆盖父类中的方法 B。
 
-### Test Edges
+### 测试边缘
 
-- **Tests** / **TestedBy** -- Test function A tests Implementation B.
+- **测试** / **测试者** -- 测试功能 A 测试实现 B。
 
-## Edge Weights
+## 边权重
 
-Every edge carries a floating-point weight (0.0 to 1.0) representing confidence or strength. Weights are assigned during semantic analysis based on heuristics:
+每条边都带有一个浮点权重（0.0 到 1.0），表示置信度或强度。在语义分析期间根据启发式分配权重：
 
-- Direct function calls: 1.0 (definite)
-- Type usage in signatures: 0.9 (strong)
-- Type usage in function bodies: 0.7 (moderate)
-- Inferred relationships: 0.5 (speculative)
+- 直接函数调用：1.0（确定）
+- 签名中的类型使用：0.9（强）
+- 函数体中的类型使用：0.7（中等）
+- 推断关系：0.5（推测）
 
-## The Compilation Pipeline
+## 编译管道
 
-AgenticCodebase transforms source files into a queryable graph through four stages:
+AgenticCodebase 通过四个阶段将源文件转换为可查询的图：
 
-### 1. Parsing (tree-sitter)
+### 1. 解析（树守护者）
 
-Each source file is parsed using a language-specific tree-sitter grammar. The parser extracts structural elements: function definitions, class declarations, import statements, etc. Parsing is language-aware but produces a uniform `CodeUnit` representation.
+每个源文件都使用特定于语言的树保护语法进行解析。解析器提取结构元素：函数定义、类声明、导入语句等。解析是语言感知的，但会生成统一的 `CodeUnit` 表示形式。
 
-**Supported languages:** Python, Rust, TypeScript, Go.
+**支持的语言：** Python、Rust、TypeScript、Go。
 
-### 2. Semantic Analysis
+### 2.语义分析
 
-The semantic analyzer processes raw parse results to:
+语义分析器将原始解析结果处理为：
 
-- Resolve cross-file references (imports, qualified names)
-- Infer call relationships from function bodies
-- Build containment hierarchies (module > class > method)
-- Detect inheritance and implementation chains
-- Compute feature vectors for structural similarity
+- 解决跨文件引用（导入、限定名称）
+- 从函数体推断调用关系
+- 构建包含层次结构（模块>类>方法）
+- 检测继承和实现链
+- 计算结构相似性的特征向量
 
-### 3. Graph Building
+### 3. 图表构建
 
-Analyzed units and their relationships are assembled into a `CodeGraph` -- an in-memory directed graph with adjacency lists for fast traversal.
+分析的单元及其关系被组装成 `CodeGraph` —— 一个内存中的有向图，带有用于快速遍历的邻接列表。
 
-### 4. Binary Serialization (.acb)
+### 4. 二进制序列化 (.acb)
 
-The graph is written to a compact binary `.acb` file:
+该图被写入紧凑的二进制 `.acb` 文件中：
 
-| Section | Record Size | Access Pattern |
+|部分|记录大小|访问模式|
 |:---|:---|:---|
-| Header | 128 bytes (fixed) | Direct read |
-| Unit Table | 96 bytes per unit | O(1) by unit ID |
-| Edge Table | 40 bytes per edge | Sequential scan or indexed |
-| String Pool | Variable (LZ4) | Decompressed on read |
-| Feature Vectors | Variable (f32) | Memory-mapped |
+|标题 | 128 字节（固定）|直接阅读 |
+|单位表 |每单元 96 字节 | O(1) 按单元 ID |
+|边桌|每边 40 字节 |顺序扫描或索引|
+|字符串池 |变量（LZ4）|读取时解压 |
+|特征向量|变量 (f32) |内存映射 |
 
-The binary format supports O(1) random access to any unit by ID, making queries extremely fast.
+二进制格式支持通过 ID 对任何单元进行 O(1) 随机访问，使得查询速度极快。
 
-## Query Tiers
+## 查询层
 
-Queries are organized into three tiers based on complexity:
+根据复杂性，查询分为三层：
 
-### Core (8 queries)
+### 核心（8 个查询）
 
-Direct graph operations. Constant or linear time. Sub-microsecond latency.
+直接图形操作。恒定或线性时间。亚微秒延迟。
 
-Symbol lookup, Dependency graph, Reverse dependency, Call graph, Similarity search, Type hierarchy, Containment, Pattern matching.
+符号查找、依赖图、反向依赖、调用图、相似性搜索、类型层次结构、包含、模式匹配。
 
-### Built (5 queries)
+### 已构建（5 个查询）
 
-Composed from core operations. Linear to quadratic time. Microsecond latency.
+由核心业务组成。线性到二次时间。微秒级延迟。
 
-Impact analysis, Coverage mapping, Execution trace, Shortest path, Reverse chains.
+影响分析、覆盖映射、执行跟踪、最短路径、反向链。
 
-### Novel (11 queries)
+### 小说（11 条查询）
 
-Advanced analysis combining graph structure with heuristics. Millisecond latency.
+将图形结构与启发式相结合的高级分析。毫秒延迟。
 
-Collective intelligence, Temporal evolution, Stability scoring, Coupling detection, Dead code, Code prophecy, Concept clustering, Migration planning, Test gap analysis, Drift detection, Hotspot analysis.
+集体智慧、时间演化、稳定性评分、耦合检测、死代码、代码预言、概念聚类、迁移规划、测试差距分析、漂移检测、热点分析。
 
-## Feature Vectors
+## 特征向量
 
-Every code unit has an associated feature vector (default: 64 dimensions, f32). These vectors encode structural properties:
+每个代码单元都有一个关联的特征向量（默认值：64 维，f32）。这些向量编码结构特性：
 
-- Complexity metrics (cyclomatic, nesting depth)
-- Connectivity metrics (in-degree, out-degree, fan-out)
-- Size metrics (line count, parameter count)
-- Type distribution (what kinds of units it relates to)
+- 复杂度指标（圈数、嵌套深度）
+- 连接性指标（入度、出度、扇出）
+- 大小指标（行数、参数数）
+- 类型分布（与哪些类型的单位相关）
 
-Feature vectors enable the **similarity** query: find code units that are structurally similar even if they have different names and live in different files.
+特征向量支持**相似性**查询：查找结构相似的代码单元，即使它们具有不同的名称并且位于不同的文件中。
 
-## Stability Scoring
+## 稳定性评分
 
-Each unit receives a stability score (0.0 to 1.0) based on multiple factors:
+每个单元都会根据多个因素获得稳定性评分（0.0 到 1.0）：
 
-- **Complexity factor** -- High cyclomatic complexity reduces stability
-- **Coupling factor** -- High fan-in or fan-out reduces stability
-- **Test factor** -- Having tests increases stability
-- **Size factor** -- Very large units are less stable
-- **Depth factor** -- Deeply nested units are less stable
+- **复杂度因素** -- 高圈复杂度会降低稳定性
+- **耦合系数** -- 高扇入或扇出会降低稳定性
+- **测试因素** -- 进行测试可以提高稳定性
+- **尺寸因素** -- 非常大的单位稳定性较差
+- **深度因素** -- 深度嵌套的单元不太稳定
 
-The `prophecy` query uses stability scores combined with graph topology to predict which units are most likely to cause issues during development.
+`prophecy` 查询使用稳定性分数与图形拓扑相结合来预测哪些单元最有可能在开发过程中引起问题。
 
 ---
 
-## Next Steps
+## 后续步骤
 
-- **[Quickstart Guide](/docs/codebase-quickstart)** -- Hands-on tutorial in 5 minutes.
-- **[API Reference](/docs/codebase-api-reference)** -- Complete Rust library reference.
-- **[Benchmarks](/docs/codebase-benchmarks)** -- Performance at various scales.
+- **[快速开始指南](/docs/zh/codebase-quickstart)** -- 5 分钟内的实践教程。
+- **[API 参考](/docs/zh/codebase-api-reference)** -- 完整的 Rust 库参考。
+- **[基准测试](/docs/zh/codebase-benchmarks)** -- 各种规模的性能。

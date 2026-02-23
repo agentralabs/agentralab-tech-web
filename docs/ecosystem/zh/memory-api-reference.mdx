@@ -1,31 +1,31 @@
 ---
-title: "Python API Reference"
-description: "Complete reference for the `agentic_memory` Python package (v0.2.0). Install with `pip install agentic-brain`."
+title: "Python API 参考"
+description: "`agentic_memory` Python 包 (v0.2.0) 的完整参考。 使用 `pip install agentic-brain` 安装。"
 ---
 
-Complete reference for the `agentic_memory` Python package (v0.2.0). Install with `pip install agentic-brain`.
+`agentic_memory` Python 包 (v0.2.0) 的完整参考。 使用 `pip install agentic-brain` 安装。
 
-## Brain
+＃＃ 脑
 
-The primary class for interacting with an AgenticMemory graph. Each `Brain` instance corresponds to a single `.amem` file.
+用于与 AgenticMemory 图交互的主要类。每个 `Brain` 实例对应于一个 `.amem` 文件。
 
-### Constructor
+### 构造函数
 
 ```python
 Brain(path: str | Path)
 ```
 
-Opens an existing brain file or creates a new one at the given path. A new session is started automatically on each instantiation.
+打开现有的 Brain 文件或在给定路径创建新文件。每次实例化时都会自动启动一个新会话。
 
-**Parameters:**
+**参数：**
 
-| Parameter | Type | Description |
+|参数|类型 |描述 |
 |-----------|------|-------------|
-| `path` | `str \| Path` | Path to the `.amem` file. Created if it does not exist. |
+| `path` | `str \| Path` | `.amem` 文件的路径。如果不存在则创建。 |
 
-**Raises:** `BrainError` if the file exists but is corrupted or has an incompatible version.
+**引发：** `BrainError` 如果文件存在但已损坏或版本不兼容。
 
-**Example:**
+**例子：**
 
 ```python
 from agentic_memory import Brain
@@ -46,17 +46,17 @@ Brain.add_fact(
 ) -> Event
 ```
 
-Stores a fact event -- externally observed or received information.
+存储事实事件——外部观察到或接收到的信息。
 
-**Parameters:**
+**参数：**
 
-| Parameter | Type | Default | Description |
+|参数|类型 |默认 |描述 |
 |-----------|------|---------|-------------|
-| `content` | `str` | *required* | The textual content of the fact. |
-| `confidence` | `float` | `1.0` | Confidence score between 0.0 and 1.0. |
-| `metadata` | `dict[str, str] \| None` | `None` | Optional key-value metadata. |
+| `content` | `str` | *必填* |事实的文本内容。 |
+| `confidence` | `float` | `1.0` |置信度得分介于 0.0 和 1.0 之间。 |
+| `metadata` | `dict[str, str] \| None` | `None` | 任选键值元数据。 |
 
-**Returns:** `Event` -- the newly created event with its assigned ID.
+**返回：** `Event` -- 新创建的事件及其分配的 ID。
 
 ---
 
@@ -70,11 +70,11 @@ Brain.add_decision(
 ) -> Event
 ```
 
-Stores a decision event -- a choice or judgment the agent has made.
+存储决策事件——代理做出的选择或判断。
 
-**Parameters:** Same as `add_fact()`.
+**参数：** 与 `add_fact()` 相同。
 
-**Returns:** `Event`
+**返回：** `Event`
 
 ---
 
@@ -88,15 +88,15 @@ Brain.add_inference(
 ) -> Event
 ```
 
-Stores an inference event -- a conclusion derived from existing knowledge.
+存储推理事件——从现有知识得出的结论。
 
-**Parameters:** Same as `add_fact()`.
+**参数：** 与 `add_fact()` 相同。
 
-**Returns:** `Event`
+**返回：** `Event`
 
 ---
 
-### add_correction()
+### 添加校正()
 
 ```python
 Brain.add_correction(
@@ -106,15 +106,15 @@ Brain.add_correction(
 ) -> Event
 ```
 
-Stores a correction event -- an update that revises previous knowledge. Typically followed by a `supersedes` edge linking the correction to the event it replaces.
+存储修正事件——修改先前知识的更新。通常后跟 `supersedes` 边缘，将校正链接到它所替换的事件。
 
-**Parameters:** Same as `add_fact()`.
+**参数：** 与 `add_fact()` 相同。
 
-**Returns:** `Event`
+**返回：** `Event`
 
 ---
 
-### add_skill()
+### 添加技能()
 
 ```python
 Brain.add_skill(
@@ -124,11 +124,11 @@ Brain.add_skill(
 ) -> Event
 ```
 
-Stores a skill event -- a learned capability or reusable procedure.
+存储技能事件——学习的能力或可重用的过程。
 
-**Parameters:** Same as `add_fact()`.
+**参数：** 与 `add_fact()` 相同。
 
-**Returns:** `Event`
+**返回：** `Event`
 
 ---
 
@@ -142,15 +142,15 @@ Brain.add_episode(
 ) -> Event
 ```
 
-Stores an episode event -- a narrative summary of an interaction or experience.
+存储情节事件——交互或体验的叙述性摘要。
 
-**Parameters:** Same as `add_fact()`.
+**参数：** 与 `add_fact()` 相同。
 
-**Returns:** `Event`
+**返回：** `Event`
 
 ---
 
-### link()
+＃＃＃ 关联（）
 
 ```python
 Brain.link(
@@ -161,56 +161,56 @@ Brain.link(
 ) -> Edge
 ```
 
-Creates a directed, weighted edge between two events.
+在两个事件之间创建有向的加权边缘。
 
-**Parameters:**
+**参数：**
 
-| Parameter | Type | Default | Description |
+|参数|类型 |默认 |描述 |
 |-----------|------|---------|-------------|
-| `source` | `int` | *required* | ID of the source event. |
-| `target` | `int` | *required* | ID of the target event. |
-| `edge_type` | `str \| EdgeType` | *required* | One of: `"caused_by"`, `"supports"`, `"contradicts"`, `"supersedes"`, `"related_to"`, `"part_of"`, `"temporal_next"`. |
-| `weight` | `float` | `1.0` | Edge weight between 0.0 and 1.0. |
+| `source` | `int` | *必填* |源事件的 ID。 |
+| `target` | `int` | *必填* |目标事件的ID。 |
+| `edge_type` | `str \| EdgeType` | *必填* |以下之一：`"caused_by"`、`"supports"`、`"contradicts"`、`"supersedes"`、`"related_to"`、`"part_of"`、`"temporal_next"`。 |
+| `weight` | `float` | `1.0` |边权重介于 0.0 和 1.0 之间。 |
 
-**Returns:** `Edge`
+**返回：** `Edge`
 
-**Raises:** `BrainError` if either node ID does not exist, or if the edge type is invalid.
+**引发：** 如果任一节点 ID 不存在，或者边类型无效，则 `BrainError` 。
 
 ---
 
-### facts()
+### 事实()
 
 ```python
 Brain.facts(session: int | None = None) -> list[Event]
 ```
 
-Returns all fact events, optionally filtered to a specific session.
+返回所有事实事件，可以选择过滤到特定会话。
 
-**Parameters:**
+**参数：**
 
-| Parameter | Type | Default | Description |
+|参数|类型 |默认 |描述 |
 |-----------|------|---------|-------------|
-| `session` | `int \| None` | `None` | If provided, only return facts from this session. |
+| `session` | `int \| None` | `None` |如果提供，则仅返回此会话中的事实。 |
 
-**Returns:** `list[Event]`
+**返回：** `list[Event]`
 
 ---
 
-### decisions()
+### 决定()
 
 ```python
 Brain.decisions(session: int | None = None) -> list[Event]
 ```
 
-Returns all decision events, optionally filtered to a specific session.
+返回所有决策事件，可以选择过滤到特定会话。
 
-**Parameters:** Same as `facts()`.
+**参数：** 与 `facts()` 相同。
 
-**Returns:** `list[Event]`
+**返回：** `list[Event]`
 
 ---
 
-### traverse()
+### 遍历()
 
 ```python
 Brain.traverse(
@@ -220,90 +220,90 @@ Brain.traverse(
 ) -> TraversalResult
 ```
 
-Performs a breadth-first traversal of the graph starting from the given node.
+从给定节点开始对图执行广度优先遍历。
 
-**Parameters:**
+**参数：**
 
-| Parameter | Type | Default | Description |
+|参数|类型 |默认 |描述 |
 |-----------|------|---------|-------------|
-| `start` | `int` | *required* | ID of the starting node. |
-| `depth` | `int` | `3` | Maximum traversal depth. |
-| `edge_types` | `list[str \| EdgeType] \| None` | `None` | If provided, only follow edges of these types. |
+| `start` | `int` | *必填* |起始节点ID。 |
+| `depth` | `int` | `3` |最大遍历深度。 |
+| `edge_types` | `list[str \| EdgeType] \| None` | `None` |如果提供，则仅遵循这些类型的边缘。 |
 
-**Returns:** `TraversalResult`
+**返回：** `TraversalResult`
 
 ---
 
-### resolve()
+＃＃＃ 解决（）
 
 ```python
 Brain.resolve(event_id: int) -> Event
 ```
 
-Follows the `supersedes` chain from the given event to find the most current version. If no supersedes edge exists, returns the original event.
+遵循给定事件中的 `supersedes` 链来查找最新版本。如果不存在取代边，则返回原始事件。
 
-**Parameters:**
+**参数：**
 
-| Parameter | Type | Description |
+|参数|类型 |描述 |
 |-----------|------|-------------|
-| `event_id` | `int` | ID of the event to resolve. |
+| `event_id` | `int` |要解决的事件的 ID。 |
 
-**Returns:** `Event` -- the most current version in the supersedes chain.
+**返回：** `Event` -- 取代链中的最新版本。
 
 ---
 
-### impact()
+＃＃＃ 影响（）
 
 ```python
 Brain.impact(event_id: int, depth: int = 5) -> ImpactResult
 ```
 
-Analyzes the downstream impact of an event by traversing all outgoing edges (reverse direction). Returns all events that depend on, were caused by, or reference the given event.
+通过遍历所有传出边缘（反向）来分析事件的下游影响。返回依赖于给定事件、由给定事件引起或引用给定事件的所有事件。
 
-**Parameters:**
+**参数：**
 
-| Parameter | Type | Default | Description |
+|参数|类型 |默认 |描述 |
 |-----------|------|---------|-------------|
-| `event_id` | `int` | *required* | ID of the event to analyze. |
-| `depth` | `int` | `5` | Maximum traversal depth. |
+| `event_id` | `int` | *必填* |要分析的事件的 ID。 |
+| `depth` | `int` | `5` |最大遍历深度。 |
 
-**Returns:** `ImpactResult`
+**返回：** `ImpactResult`
 
 ---
 
-### info()
+### 信息()
 
 ```python
 Brain.info() -> BrainInfo
 ```
 
-Returns summary information about the brain.
+返回有关大脑的摘要信息。
 
-**Returns:** `BrainInfo`
+**返回：** `BrainInfo`
 
 ---
 
-### session_info()
+### 会话信息()
 
 ```python
 Brain.session_info(session: int) -> SessionInfo
 ```
 
-Returns detailed information about a specific session.
+返回有关特定会话的详细信息。
 
-**Parameters:**
+**参数：**
 
-| Parameter | Type | Description |
+|参数|类型 |描述 |
 |-----------|------|-------------|
-| `session` | `int` | The session ID to query. |
+| `session` | `int` |要查询的会话 ID。 |
 
-**Returns:** `SessionInfo`
+**返回：** `SessionInfo`
 
-**Raises:** `BrainError` if the session does not exist.
+**引发：** `BrainError` 如果会话不存在。
 
 ---
 
-### search()
+＃＃＃ 搜索（）
 
 ```python
 Brain.search(
@@ -315,27 +315,27 @@ Brain.search(
 ) -> list[SearchResult]
 ```
 
-Performs semantic similarity search across all events using 128-dimensional feature vectors.
+使用 128 维特征向量对所有事件执行语义相似性搜索。
 
-**Parameters:**
+**参数：**
 
-| Parameter | Type | Default | Description |
+|参数|类型 |默认 |描述 |
 |-----------|------|---------|-------------|
-| `query` | `str` | *required* | Natural language search query. |
-| `top_k` | `int` | `10` | Maximum number of results to return. |
-| `event_type` | `str \| EventType \| None` | `None` | Filter results to a specific event type. |
-| `session` | `int \| None` | `None` | Filter results to a specific session. |
-| `min_confidence` | `float` | `0.0` | Minimum confidence threshold. |
+| `query` | `str` | *必填* |自然语言搜索查询。 |
+| `top_k` | `int` | `10` |返回的最大结果数。 |
+| `event_type` | `str \| EventType \| None` | `None` |将结果过滤为特定事件类型。 |
+| `session` | `int \| None` | `None` |将结果过滤到特定会话。 |
+| `min_confidence` | `float` | `0.0` |最小置信度阈值。 |
 
-**Returns:** `list[SearchResult]` -- results sorted by descending similarity score.
+**返回：** `list[SearchResult]` -- 按相似度分数降序排序的结果。
 
 ---
 
-## v0.2 Query Expansion Methods
+## v0.2 查询扩展方法
 
-The following nine methods were added in v0.2.0. All operate through the Rust CLI backend.
+v0.2.0 中添加了以下九个方法。所有操作都通过 Rust CLI 后端进行。
 
-### search_text()
+### 搜索文本()
 
 ```python
 Brain.search_text(
@@ -345,13 +345,13 @@ Brain.search_text(
 ) -> list[TextMatch]
 ```
 
-BM25 text search over node content. Uses the TermIndex fast path when available (1.58 ms @ 100K nodes), falls back to full-scan slow path on v0.1 files (122 ms @ 100K).
+BM25 对节点内容的文本搜索。在可用时使用 TermIndex 快速路径（1.58 ms @ 100K 节点），在 v0.1 文件上回退到全扫描慢速路径（122 ms @ 100K）。
 
-**Returns:** `list[TextMatch]` -- results with BM25 scores.
+**返回：** `list[TextMatch]` -- BM25 分数的结果。
 
 ---
 
-### search() (hybrid)
+### search() （混合）
 
 ```python
 Brain.search(
@@ -360,13 +360,13 @@ Brain.search(
 ) -> list[HybridMatch]
 ```
 
-Hybrid search combining BM25 and vector similarity via Reciprocal Rank Fusion (RRF). Measured at 10.83 ms on 100K-node graphs.
+通过倒数排名融合 (RRF) 结合 BM25 和向量相似度的混合搜索。在 100K 节点图表上以 10.83 毫秒测量。
 
-**Returns:** `list[HybridMatch]` -- results with combined, BM25, and vector scores.
+**返回：** `list[HybridMatch]` -- 组合分数、BM25 分数和向量分数的结果。
 
 ---
 
-### centrality()
+### 中心性()
 
 ```python
 Brain.centrality(
@@ -375,13 +375,13 @@ Brain.centrality(
 ) -> list[CentralityResult]
 ```
 
-Graph centrality analysis. Supported metrics: `"pagerank"` (34.3 ms @ 100K), `"degree"` (20.7 ms @ 100K), `"betweenness"` (10.1 s @ 100K).
+图中心性分析。支持的指标：`"pagerank"` (34.3 ms @ 100K)、`"degree"` (20.7 ms @ 100K)、`"betweenness"` (10.1 s @ 100K)。
 
-**Returns:** `list[CentralityResult]` -- nodes ranked by centrality score.
+**返回：** `list[CentralityResult]` -- 按中心性得分排名的节点。
 
 ---
 
-### shortest_path()
+###最短路径()
 
 ```python
 Brain.shortest_path(
@@ -391,25 +391,25 @@ Brain.shortest_path(
 ) -> PathResult
 ```
 
-Finds shortest path between two nodes. Uses bidirectional BFS for unweighted graphs (104 us @ 100K) or Dijkstra for weighted (17.6 ms @ 100K).
+查找两个节点之间的最短路径。对未加权图使用双向 BFS (104 us @ 100K) 或对加权图使用 Dijkstra (17.6 ms @ 100K)。
 
-**Returns:** `PathResult` -- the path as a sequence of node IDs and total cost.
+**返回：** `PathResult` -- 作为节点 ID 和总成本序列的路径。
 
 ---
 
-### revise()
+＃＃＃ 修订（）
 
 ```python
 Brain.revise(node_id: int) -> RevisionReport
 ```
 
-Counterfactual belief revision. Computes the downstream cascade if the given node were retracted. Read-only -- no mutations. Measured at 53.4 ms @ 100K nodes.
+反事实信念修正。如果给定节点被撤回，则计算下游级联。只读——无突变。在 100K 节点时测量为 53.4 毫秒。
 
-**Returns:** `RevisionReport` -- affected nodes, confidence losses, unsupported inferences.
+**返回：** `RevisionReport` -- 受影响的节点、置信度损失、不支持的推论。
 
 ---
 
-### gaps()
+### 间隙()
 
 ```python
 Brain.gaps(
@@ -418,13 +418,13 @@ Brain.gaps(
 ) -> GapReport
 ```
 
-Identifies five categories of reasoning weaknesses: unjustified decisions, single-source inferences, low-confidence foundations, unstable knowledge, and stale evidence.
+确定五类推理弱点：不合理的决策、单一来源的推论、低置信度基础、不稳定的知识和陈旧的证据。
 
-**Returns:** `GapReport` -- gaps ordered by severity, with health score.
+**返回：** `GapReport` -- 按严重性排序的差距以及健康评分。
 
 ---
 
-### analogy()
+### 类比()
 
 ```python
 Brain.analogy(
@@ -433,13 +433,13 @@ Brain.analogy(
 ) -> list[Analogy]
 ```
 
-Finds structurally similar past reasoning patterns using structural fingerprints (in-degree, out-degree, edge-type distribution) combined with content similarity.
+使用结构指纹（入度、出度、边缘类型分布）结合内容相似性来查找结构相似的过去推理模式。
 
-**Returns:** `list[Analogy]` -- top-k analogous nodes with similarity scores.
+**返回：** `list[Analogy]` -- 具有相似性分数的前 k 个类似节点。
 
 ---
 
-### consolidate()
+### 合并()
 
 ```python
 Brain.consolidate(
@@ -447,13 +447,13 @@ Brain.consolidate(
 ) -> ConsolidationReport
 ```
 
-Graph maintenance: deduplication, contradiction linking, inference promotion, orphan detection. Dry-run mode (default) reports proposed changes without modifying the graph.
+图维护：去重、矛盾链接、推理提升、孤儿检测。试运行模式（默认）报告建议的更改而不修改图表。
 
-**Returns:** `ConsolidationReport` -- proposed or applied changes.
+**返回：** `ConsolidationReport` -- 提议或应用的更改。
 
 ---
 
-### drift()
+### 漂移()
 
 ```python
 Brain.drift(
@@ -461,15 +461,15 @@ Brain.drift(
 ) -> DriftReport
 ```
 
-Tracks belief evolution over time by analyzing supersedes chains and confidence trajectories. Measured at 68.4 ms @ 100K nodes.
+通过分析取代链和信心轨迹来跟踪信念随时间的演变。在 100K 节点时测量为 68.4 毫秒。
 
-**Returns:** `DriftReport` -- per-topic stability scores, drift direction, revision frequency.
+**返回：** `DriftReport` -- 每个主题的稳定性分数、漂移方向、修订频率。
 
 ---
 
-## v0.2 Result Dataclasses
+## v0.2 结果数据类
 
-### TextMatch
+### 文本匹配
 
 ```python
 @dataclass
@@ -480,7 +480,7 @@ class TextMatch:
     event_type: str
 ```
 
-### HybridMatch
+### 混合匹配
 
 ```python
 @dataclass
@@ -492,7 +492,7 @@ class HybridMatch:
     vector_score: float
 ```
 
-### CentralityResult
+### 中心性结果
 
 ```python
 @dataclass
@@ -502,7 +502,7 @@ class CentralityResult:
     content: str
 ```
 
-### PathResult
+### 路径结果
 
 ```python
 @dataclass
@@ -512,7 +512,7 @@ class PathResult:
     found: bool
 ```
 
-### RevisionReport
+### 修订报告
 
 ```python
 @dataclass
@@ -524,7 +524,7 @@ class RevisionReport:
     total_impact: float
 ```
 
-### GapReport
+### 差距报告
 
 ```python
 @dataclass
@@ -534,7 +534,7 @@ class GapReport:
     total_gaps: int
 ```
 
-### Analogy
+### 类比
 
 ```python
 @dataclass
@@ -545,7 +545,7 @@ class Analogy:
     combined_score: float
 ```
 
-### ConsolidationReport
+### 合并报告
 
 ```python
 @dataclass
@@ -557,7 +557,7 @@ class ConsolidationReport:
     dry_run: bool
 ```
 
-### DriftReport
+### 漂移报告
 
 ```python
 @dataclass
@@ -568,11 +568,11 @@ class DriftReport:
 
 ---
 
-## MemoryAgent
+## 内存代理
 
-Connects a `Brain` to an LLM provider for automatic memory extraction from conversations.
+将 `Brain` 连接到 LLM 提供程序，以便从对话中自动提取内存。
 
-### Constructor
+### 构造函数
 
 ```python
 MemoryAgent(
@@ -583,18 +583,18 @@ MemoryAgent(
 )
 ```
 
-**Parameters:**
+**参数：**
 
-| Parameter | Type | Default | Description |
+|参数|类型 |默认 |描述 |
 |-----------|------|---------|-------------|
-| `brain` | `Brain` | *required* | The brain to store extracted memories in. |
-| `provider` | `LLMProvider` | *required* | An LLM provider instance. |
-| `auto_link` | `bool` | `True` | Automatically create edges between extracted events and relevant existing events. |
-| `extraction_prompt` | `str \| None` | `None` | Custom system prompt for memory extraction. Uses a sensible default if not provided. |
+| `brain` | `Brain` | *必填* |大脑存储提取的记忆。
+| `provider` | `LLMProvider` | *必填* | LLM 提供商实例。 |
+| `auto_link` | `bool` | `True` |自动在提取的事件和相关现有事件之间创建边。 |
+| `extraction_prompt` | `str \| None` | `None` |自定义系统提示内存提取。如果未提供，则使用合理的默认值。 |
 
 ---
 
-### chat()
+＃＃＃ 聊天（）
 
 ```python
 MemoryAgent.chat(
@@ -603,34 +603,34 @@ MemoryAgent.chat(
 ) -> str
 ```
 
-Sends a message to the LLM with relevant memory context, returns the response, and extracts new cognitive events from the conversation.
+向 LLM 发送包含相关记忆上下文的消息，返回响应，并从对话中提取新的认知事件。
 
-**Parameters:**
+**参数：**
 
-| Parameter | Type | Default | Description |
+|参数|类型 |默认 |描述 |
 |-----------|------|---------|-------------|
-| `message` | `str` | *required* | The user message to process. |
-| `context` | `list[Event] \| None` | `None` | Additional events to include in the LLM context. If `None`, relevant events are retrieved automatically via similarity search. |
+| `message` | `str` | *必填* |要处理的用户消息。 |
+| `context` | `list[Event] \| None` | `None` | LLM 背景中包含的其他事件。如果 `None`，则通过相似性搜索自动检索相关事件。 |
 
-**Returns:** `str` -- the LLM's response text.
+**返回：** `str` -- LLM 的响应文本。
 
 ---
 
-### last_extraction
+### 最后提取
 
 ```python
 MemoryAgent.last_extraction: list[Event]
 ```
 
-A read-only property containing the list of events extracted from the most recent `chat()` call. Empty if no extraction occurred.
+只读属性，包含从最近的 `chat()` 调用中提取的事件列表。如果没有发生提取则为空。
 
 ---
 
-## Data Classes
+## 数据类
 
-### Event
+＃＃＃ 事件
 
-Represents a single cognitive event in the graph.
+代表图中的单个认知事件。
 
 ```python
 @dataclass
@@ -644,9 +644,9 @@ class Event:
     metadata: dict[str, str]         # Optional key-value metadata
 ```
 
-### Edge
+＃＃＃ 边缘
 
-Represents a directed, weighted relationship between two events.
+表示两个事件之间的定向、加权关系。
 
 ```python
 @dataclass
@@ -657,9 +657,9 @@ class Edge:
     weight: float                    # Edge weight (0.0 to 1.0)
 ```
 
-### BrainInfo
+### 脑信息
 
-Summary information about a brain.
+有关大脑的摘要信息。
 
 ```python
 @dataclass
@@ -672,9 +672,9 @@ class BrainInfo:
     version: int                     # File format version
 ```
 
-### SessionInfo
+### 会话信息
 
-Detailed information about a single session.
+有关单个会话的详细信息。
 
 ```python
 @dataclass
@@ -687,9 +687,9 @@ class SessionInfo:
     event_types: dict[str, int]      # Count of each event type
 ```
 
-### TraversalResult
+### 遍历结果
 
-Result of a graph traversal operation.
+图遍历操作的结果。
 
 ```python
 @dataclass
@@ -699,9 +699,9 @@ class TraversalResult:
     depth_reached: int               # Maximum depth actually reached
 ```
 
-### ImpactResult
+### 影响结果
 
-Result of an impact analysis.
+影响分析的结果。
 
 ```python
 @dataclass
@@ -711,9 +711,9 @@ class ImpactResult:
     total_affected: int              # Total count of affected events
 ```
 
-### SearchResult
+### 搜索结果
 
-A single result from a similarity search.
+相似性搜索的单个结果。
 
 ```python
 @dataclass
@@ -724,9 +724,9 @@ class SearchResult:
 
 ---
 
-## Enums
+## 枚举
 
-### EventType
+### 事件类型
 
 ```python
 class EventType(str, Enum):
@@ -738,7 +738,7 @@ class EventType(str, Enum):
     EPISODE = "episode"
 ```
 
-### EdgeType
+### 边缘类型
 
 ```python
 class EdgeType(str, Enum):
@@ -753,9 +753,9 @@ class EdgeType(str, Enum):
 
 ---
 
-## Exceptions
+## 例外情况
 
-### BrainError
+### 大脑错误
 
 ```python
 class BrainError(Exception):
@@ -763,7 +763,7 @@ class BrainError(Exception):
     pass
 ```
 
-### CLIError
+### CLI错误
 
 ```python
 class CLIError(Exception):
@@ -771,7 +771,7 @@ class CLIError(Exception):
     pass
 ```
 
-### ProviderError
+### 提供者错误
 
 ```python
 class ProviderError(Exception):
@@ -781,9 +781,9 @@ class ProviderError(Exception):
 
 ---
 
-## LLMProvider (Abstract Base)
+## LLMProvider（抽象基础）
 
-Base class for implementing custom LLM providers.
+用于实现自定义 LLM 提供商的基类。
 
 ```python
 from abc import ABC, abstractmethod
@@ -840,7 +840,7 @@ class LLMProvider(ABC):
         return None
 ```
 
-### Implementing a Custom Provider
+### 实现自定义提供程序
 
 ```python
 from agentic_memory.integrations import LLMProvider, ProviderError
@@ -875,9 +875,9 @@ agent = MemoryAgent(brain, provider)
 
 ---
 
-## Built-in Providers
+## 内置提供程序
 
-### AnthropicProvider
+### 人类提供者
 
 ```python
 from agentic_memory.integrations import AnthropicProvider

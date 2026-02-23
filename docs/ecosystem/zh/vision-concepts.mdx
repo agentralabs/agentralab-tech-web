@@ -1,26 +1,26 @@
 ---
-title: "Concepts"
-description: "AgenticVision stores visual observations in `.avis` so agents can reuse them across sessions."
+title: "概念"
+description: "AgenticVision 将视觉观察结果存储在 `.avis` 中，以便代理可以在会话中重复使用它们。"
 ---
 
-## Persistent visual memory
+## 持久视觉记忆
 
-AgenticVision stores visual observations in `.avis` so agents can reuse them across sessions.
+AgenticVision 将视觉观察结果存储在 `.avis` 中，以便代理可以在会话中重复使用它们。
 
-## Capture lifecycle
+## 捕获生命周期
 
-1. Capture image input.
-2. Generate embedding.
-3. Store metadata and thumbnail.
-4. Query by time, description, or similarity.
+1. 捕获图像输入。
+2. 生成嵌入。
+3. 存储元数据和缩略图。
+4. 按时间、描述或相似度查询。
 
-## Artifact model
+## 神器模型
 
-- `.avis` is portable, local-first storage.
-- It is designed for fast read/query in agent workflows.
+- `.avis` 是可移植的、本地优先的存储。
+- 它专为在代理工作流程中快速读取/查询而设计。
 
-## MCP-first architecture
+## MCP优先架构
 
-`agentic-vision-mcp` exposes tools/resources/prompts over stdio MCP.
+`agentic-vision-mcp` 通过 stdio MCP 公开工具/资源/提示。
 
-Any MCP client can consume the same interface without vendor-specific behavior.
+任何 MCP 客户端都可以使用相同的接口，而无需特定于供应商的行为。
