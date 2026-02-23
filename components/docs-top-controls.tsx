@@ -109,14 +109,18 @@ export function DocsTopControls({ language, items }: DocsTopControlsProps) {
       <div className="docs-lang-toggle" aria-label="Language toggle">
         <button
           type="button"
+          className="docs-lang-option"
           data-active={lang === "en" ? "true" : "false"}
+          aria-pressed={lang === "en"}
           onClick={() => setLanguage("en")}
         >
           EN
         </button>
         <button
           type="button"
+          className="docs-lang-option"
           data-active={lang === "zh" ? "true" : "false"}
+          aria-pressed={lang === "zh"}
           onClick={() => setLanguage("zh")}
         >
           中文

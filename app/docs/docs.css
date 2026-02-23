@@ -135,31 +135,46 @@
 .docs-lang-toggle {
   display: inline-flex;
   align-items: center;
-  border: 1px solid #dbe0e8;
-  border-radius: 10px;
-  overflow: hidden;
-  background: #fff;
+  gap: 3px;
+  border: 1px solid #d1d9e4;
+  border-radius: 12px;
+  background: linear-gradient(180deg, #f8fafd 0%, #f1f5f9 100%);
+  padding: 3px;
+  min-height: 40px;
 }
 
 .docs-lang-toggle button {
   border: 0;
   background: transparent;
-  padding: 8px 10px;
+  padding: 8px 14px;
+  min-width: 68px;
+  border-radius: 9px;
   font-size: 12px;
-  font-weight: 800;
-  color: #475569;
+  font-weight: 700;
+  color: #5b6778;
   cursor: pointer;
-  transition: background 120ms ease, color 120ms ease;
+  letter-spacing: 0.01em;
+  transition: background 160ms ease, color 160ms ease, box-shadow 160ms ease, transform 120ms ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .docs-lang-toggle button[data-active="true"] {
   background: #0f172a;
   color: #fff;
+  box-shadow: 0 1px 1px rgba(15, 23, 42, 0.12), 0 6px 14px rgba(15, 23, 42, 0.14);
 }
 
 .docs-lang-toggle button:not([data-active="true"]):hover {
-  background: #f8fafc;
+  background: #e8eef5;
   color: #0f172a;
+  transform: translateY(-1px);
+}
+
+.docs-lang-toggle button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px #1f2937;
 }
 
 .docs-search-overlay {
@@ -1192,6 +1207,10 @@ body:has(.docs-shell) {
 
 .docs-shell.docs-variant-aspen .docs-lang-toggle button[data-active="true"] {
   background: #111827;
+}
+
+.docs-shell.docs-variant-aspen .docs-lang-toggle {
+  border-color: #d6deea;
 }
 
 .docs-shell.docs-variant-aspen .docs-frame {
