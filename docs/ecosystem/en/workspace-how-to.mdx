@@ -1,11 +1,11 @@
 ---
 title: "Agentra Workspace How-To"
-description: "From your workspace root (`&lt;agentra-workspace&gt;`):"
+description: "From your workspace root (`<agentra-workspace>`):"
 ---
 
 ## 1. Install all sisters locally
 
-From your workspace root (`&lt;agentra-workspace&gt;`):
+From your workspace root (`<agentra-workspace>`):
 
 ```bash
 ./install_all.sh
@@ -163,7 +163,7 @@ Protocol parity:
 | MCP client does not show sister tools | Client config not reloaded | Inspect MCP config and process state | Restart MCP client after install/repair |
 | Server preflight fails token check | Missing `AGENTIC_TOKEN` or token file | `echo $AGENTIC_TOKEN`, inspect token file path | Set token env or `AGENTIC_TOKEN_FILE`, rerun preflight |
 | Server preflight fails artifact check | Artifacts not synced to server dirs | Inspect `AGENTRA_ARTIFACT_DIRS` and target directory contents | Run `./sync_artifacts.sh --target=...`, rerun preflight |
-| Takeover does not activate | Sisters disabled or control off | `agentra status`, check toggle state | `agentra toggle &lt;sister&gt; on`, `agentra control on`, then `agentra doctor` |
+| Takeover does not activate | Sisters disabled or control off | `agentra status`, check toggle state | `agentra toggle <sister> on`, `agentra control on`, then `agentra doctor` |
 | Backup verify fails | Snapshot corruption or partial copy | `agentra backup verify` output | Restore previous valid snapshot, rerun backup |
 | Doc command mismatch suspected | Old docs cache | Compare against `--help` output of current binaries | Use the command surface pages and regenerate docs sync |
 

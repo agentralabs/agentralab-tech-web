@@ -244,9 +244,9 @@ All v0.2 query types benchmarked on 100K-node synthetic graphs (300K edges, 3 ed
 
 Queries divide into three tiers at 100K nodes:
 
-- **Interactive (&lt;100 ms):** BM25, hybrid, PageRank, degree, BFS, Dijkstra, belief revision, drift -- suitable for per-query use during conversations
+- **Interactive (\<100 ms):** BM25, hybrid, PageRank, degree, BFS, Dijkstra, belief revision, drift -- suitable for per-query use during conversations
 - **Periodic (1-60 s):** Betweenness centrality, consolidation -- run once per session or on a schedule
-- **Offline (>60 s):** Gap detection, analogical reasoning -- designed for batch analysis of large graphs; both complete in &lt;3s at 10K nodes
+- **Offline (>60 s):** Gap detection, analogical reasoning -- designed for batch analysis of large graphs; both complete in \<3s at 10K nodes
 
 ### BM25 Index Acceleration
 

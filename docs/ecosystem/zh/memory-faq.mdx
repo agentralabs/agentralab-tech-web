@@ -67,7 +67,7 @@ AgenticMemory 通过多种机制有效处理大文件：
 
 ## 线程安全吗？
 
-**Rust 核心：** `CognitiveGraph` 结构是 `Send` 但不是 `Sync`。您可以在线程之间移动它，但不能在没有外部同步的情况下跨线程共享可变引用（例如，`Mutex&lt;CognitiveGraph&gt;`）。 `MmapReader` 既是 `Send` 又是 `Sync` —— 多个线程可以同时读取。
+**Rust core:** The `CognitiveGraph` struct is `Send` but not `Sync`. You can move it between threads but cannot share a mutable reference across threads without external synchronization (e.g., `Mutex<CognitiveGraph>`). The `MmapReader` is both `Send` and `Sync` -- multiple threads can read concurrently.
 
 **Python SDK：** `Brain` 类使用内部锁来保证线程安全。多个线程可以调用同一 `Brain` 实例上的方法，但写入是序列化的。这对于大多数代理架构来说已经足够了，其中一个线程处理对话，另一个线程处理后台处理。
 

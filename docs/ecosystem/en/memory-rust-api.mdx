@@ -523,7 +523,7 @@ pub fn gaps(&self) -> GapReport;
 
 Identifies reasoning weaknesses: unsupported decisions, isolated facts, contradictions without corrections, and weak inference chains.
 
-**Performance:** 297 s @ 100K nodes (offline tier). Completes in &lt;3 s at 10K nodes.
+**Performance:** 297 s @ 100K nodes (offline tier). Completes in \<3 s at 10K nodes.
 
 ---
 
@@ -535,7 +535,7 @@ pub fn analogy(&self, node_id: NodeId, top_k: usize) -> Vec<Analogy>;
 
 Structural pattern matching: finds subgraph patterns similar to the local neighborhood of the given node.
 
-**Performance:** 229 s @ 100K nodes (offline tier). Completes in &lt;3 s at 10K nodes.
+**Performance:** 229 s @ 100K nodes (offline tier). Completes in \<3 s at 10K nodes.
 
 ---
 
@@ -600,8 +600,8 @@ amem add <PATH> <TYPE> <CONTENT> [OPTIONS]
 | `PATH` | Path to the `.amem` file. |
 | `TYPE` | Event type: `fact`, `decision`, `inference`, `correction`, `skill`, `episode`. |
 | `CONTENT` | The text content of the event (quoted string). |
-| `--confidence &lt;FLOAT&gt;` | Confidence score, 0.0 to 1.0. Default: 1.0. |
-| `--session &lt;INT&gt;` | Session ID. Default: auto-assigned. |
+| `--confidence <FLOAT>` | Confidence score, 0.0 to 1.0. Default: 1.0. |
+| `--session <INT>` | Session ID. Default: auto-assigned. |
 | `--meta <KEY=VALUE>` | Metadata key-value pair. Repeatable. |
 
 **Example:**
@@ -626,7 +626,7 @@ amem link <PATH> <SOURCE> <TARGET> <TYPE> [OPTIONS]
 | `SOURCE` | Source node ID (integer). |
 | `TARGET` | Target node ID (integer). |
 | `TYPE` | Edge type: `caused_by`, `supports`, `contradicts`, `supersedes`, `related_to`, `part_of`, `temporal_next`. |
-| `--weight &lt;FLOAT&gt;` | Edge weight, 0.0 to 1.0. Default: 1.0. |
+| `--weight <FLOAT>` | Edge weight, 0.0 to 1.0. Default: 1.0. |
 
 **Example:**
 
@@ -670,8 +670,8 @@ amem traverse <PATH> <START_ID> [OPTIONS]
 |-----------------|-------------|
 | `PATH` | Path to the `.amem` file. |
 | `START_ID` | Starting node ID. |
-| `--depth &lt;INT&gt;` | Maximum traversal depth. Default: 3. |
-| `--edge-type &lt;TYPE&gt;` | Filter to specific edge types. Repeatable. |
+| `--depth <INT>` | Maximum traversal depth. Default: 3. |
+| `--edge-type <TYPE>` | Filter to specific edge types. Repeatable. |
 | `--json` | Output as JSON. |
 
 **Example:**
@@ -692,11 +692,11 @@ amem query <PATH> [OPTIONS]
 
 | Flag | Description |
 |------|-------------|
-| `--event-types &lt;TYPE&gt;` | Filter by event type. |
-| `--session &lt;INT&gt;` | Filter by session ID. |
-| `--search &lt;TEXT&gt;` | Semantic similarity search query. |
-| `--top-k &lt;INT&gt;` | Number of results for similarity search. Default: 10. |
-| `--min-confidence &lt;FLOAT&gt;` | Minimum confidence threshold. |
+| `--event-types <TYPE>` | Filter by event type. |
+| `--session <INT>` | Filter by session ID. |
+| `--search <TEXT>` | Semantic similarity search query. |
+| `--top-k <INT>` | Number of results for similarity search. Default: 10. |
+| `--min-confidence <FLOAT>` | Minimum confidence threshold. |
 | `--json` | Output as JSON. |
 
 **Example:**
@@ -719,8 +719,8 @@ amem mcp-serve <PATH> [OPTIONS]
 | Argument / Flag | Description |
 |-----------------|-------------|
 | `PATH` | Path to the `.amem` file. |
-| `--port &lt;INT&gt;` | Port to listen on. Default: 3100. |
-| `--host &lt;ADDR&gt;` | Host address to bind. Default: `127.0.0.1`. |
+| `--port <INT>` | Port to listen on. Default: 3100. |
+| `--host <ADDR>` | Host address to bind. Default: `127.0.0.1`. |
 | `--read-only` | Serve in read-only mode (no writes allowed). |
 
 **Example:**

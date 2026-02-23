@@ -11,7 +11,7 @@ This document is the single baseline contract for all current and future sisters
 ## 1. Release Artifact Contract
 
 - Publish deterministic release artifacts per supported platform.
-- Naming format is mandatory: `&lt;project&gt;-&lt;version&gt;-&lt;os&gt;-&lt;arch&gt;.tar.gz`.
+- Naming format is mandatory: `<project>-<version>-<os>-<arch>.tar.gz`.
 - Artifact contents must match README/install claims exactly.
 - If a repo publishes multiple binaries, all required binaries must be present in the same release set.
 - Release assets must remain stable enough for installer automation (no ad-hoc filename changes).
@@ -19,10 +19,10 @@ This document is the single baseline contract for all current and future sisters
 ## 2. Install Contract Spec
 
 - Canonical install surfaces are required:
-  - `curl -fsSL https://agentralabs.tech/install/&lt;target&gt; | bash` (backward-compatible default; desktop profile)
-  - `curl -fsSL https://agentralabs.tech/install/&lt;target&gt;/desktop | bash`
-  - `curl -fsSL https://agentralabs.tech/install/&lt;target&gt;/terminal | bash`
-  - `curl -fsSL https://agentralabs.tech/install/&lt;target&gt;/server | bash`
+  - `curl -fsSL https://agentralabs.tech/install/<target> | bash` (backward-compatible default; desktop profile)
+  - `curl -fsSL https://agentralabs.tech/install/<target>/desktop | bash`
+  - `curl -fsSL https://agentralabs.tech/install/<target>/terminal | bash`
+  - `curl -fsSL https://agentralabs.tech/install/<target>/server | bash`
 - Installer must attempt release artifact install first; source build fallback is required.
 - MCP config behavior is merge-only, never destructive overwrite.
 - Installer must print a consistent completion block:

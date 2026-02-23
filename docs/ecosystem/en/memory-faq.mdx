@@ -67,7 +67,7 @@ If your use case exceeds a million nodes, consider partitioning across multiple 
 
 ## Is it thread-safe?
 
-**Rust core:** The `CognitiveGraph` struct is `Send` but not `Sync`. You can move it between threads but cannot share a mutable reference across threads without external synchronization (e.g., `Mutex&lt;CognitiveGraph&gt;`). The `MmapReader` is both `Send` and `Sync` -- multiple threads can read concurrently.
+**Rust core:** The `CognitiveGraph` struct is `Send` but not `Sync`. You can move it between threads but cannot share a mutable reference across threads without external synchronization (e.g., `Mutex<CognitiveGraph>`). The `MmapReader` is both `Send` and `Sync` -- multiple threads can read concurrently.
 
 **Python SDK:** The `Brain` class uses an internal lock for thread safety. Multiple threads can call methods on the same `Brain` instance, but writes are serialized. This is sufficient for most agent architectures where one thread handles conversation and another handles background processing.
 

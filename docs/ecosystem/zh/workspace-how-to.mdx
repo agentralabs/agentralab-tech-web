@@ -1,11 +1,11 @@
 ---
 title: "Agentra 工作区操作手册"
-description: "从您的工作区根目录 (`&lt;agentra-workspace&gt;`)："
+description: "From your workspace root (`<agentra-workspace>`):"
 ---
 
 ## 1.本地安装所有姐妹
 
-从您的工作区根目录 (`&lt;agentra-workspace&gt;`)：
+From your workspace root (`<agentra-workspace>`):
 
 ```bash
 ./install_all.sh
@@ -163,7 +163,7 @@ which acb-mcp
 | MCP客户端不显示姐妹工具|客户端配置未重新加载 |检查 MCP 配置和进程状态 |安装/修复后重新启动 MCP 客户端 |
 |服务器预检失败令牌检查 |缺少 `AGENTIC_TOKEN` 或令牌文件 | `echo $AGENTIC_TOKEN`，检查令牌文件路径 |设置令牌 env 或 `AGENTIC_TOKEN_FILE`，重新运行预检 |
 |服务器预检失败工件检查 |工件未同步到服务器目录 |检查 `AGENTRA_ARTIFACT_DIRS` 和目标目录内容 | 运行 `./sync_artifacts.sh --target=...`，重新运行预检 |
-|接管未激活 |姐妹禁用或控制关闭| `agentra status`，检查切换状态 | `agentra toggle &lt;sister&gt; on`、`agentra control on`，然后 `agentra doctor` |
+| Takeover does not activate | Sisters disabled or control off | `agentra status`, check toggle state | `agentra toggle <sister> on`, `agentra control on`, then `agentra doctor` |
 |备份验证失败 |快照损坏或部分复制 | `agentra backup verify` 输出 |恢复以前的有效快照，重新运行备份 |
 |怀疑 Doc 命令不匹配 |旧文档缓存 |与当前二进制文件的 `--help` 输出进行比较 |使用命令表面页面并重新生成文档sync |
 

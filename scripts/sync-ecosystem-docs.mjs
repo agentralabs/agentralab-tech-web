@@ -470,9 +470,15 @@ function escapeUnsafeAngles(markdown) {
         return line
       }
       if (inFence) return line
-      return line
-        .replace(/<(?=\s*\d)/g, "&lt;")
-        .replace(/<([A-Za-z0-9_.-]+)>/g, (_, token) => `&lt;${token}&gt;`)
+
+      // Keep inline code untouched so placeholders like `<agentra-workspace>`
+      // render naturally in code spans after docs sync.
+      const { text, placeholders } = protectInlineCode(line)
+      const escaped = text
+        // MDX treats raw "<1" style text as invalid JSX; escape as markdown.
+        .replace(/(?<!\\)<(?=\s*\d)/g, "\\<")
+        .replace(/(?<!\\)<([A-Za-z0-9_.-]+)>/g, (_, token) => `&lt;${token}&gt;`)
+      return restoreInlineCode(escaped, placeholders)
     })
     .join("\n")
 }

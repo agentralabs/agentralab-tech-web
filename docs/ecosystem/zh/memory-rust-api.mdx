@@ -523,7 +523,7 @@ pub fn gaps(&self) -> GapReport;
 
 识别推理弱点：无支持的决策、孤立的事实、未经纠正的矛盾以及薄弱的推理链。
 
-**性能：** 297 s @ 100K 节点（离线层）。在 10K 节点下，&lt;3 秒内完成。
+**Performance:** 297 s @ 100K nodes (offline tier). Completes in \<3 s at 10K nodes.
 
 ---
 
@@ -535,7 +535,7 @@ pub fn analogy(&self, node_id: NodeId, top_k: usize) -> Vec<Analogy>;
 
 结构模式匹配：查找与给定节点的局部邻域相​​似的子图模式。
 
-**性能：** 229 s @ 100K 节点（离线层）。在 10K 节点下，&lt;3 秒内完成。
+**Performance:** 229 s @ 100K nodes (offline tier). Completes in \<3 s at 10K nodes.
 
 ---
 
@@ -600,8 +600,8 @@ amem add <PATH> <TYPE> <CONTENT> [OPTIONS]
 | `PATH` | `.amem` 文件的路径。 |
 | `TYPE` |事件类型：`fact`、`decision`、`inference`、`correction`、`skill`、`episode`。 |
 | `CONTENT` |事件的文本内容（带引号的字符串）。 |
-| `--confidence &lt;FLOAT&gt;` |置信度得分，0.0 到 1.0。默认值：1.0。 |
-| `--session &lt;INT&gt;` |会话 ID。默认值：自动分配。 |
+| `--confidence <FLOAT>` | Confidence score, 0.0 to 1.0. Default: 1.0. |
+| `--session <INT>` | Session ID. Default: auto-assigned. |
 | `--meta <KEY=VALUE>` |元数据键值对。可重复。 |
 
 **例子：**
@@ -626,7 +626,7 @@ amem link <PATH> <SOURCE> <TARGET> <TYPE> [OPTIONS]
 | `SOURCE` |源节点 ID（整数）。 |
 | `TARGET` |目标节点 ID（整数）。 |
 | `TYPE` |边缘类型：`caused_by`、`supports`、`contradicts`、`supersedes`、`related_to`、`part_of`、`temporal_next`。 |
-| `--weight &lt;FLOAT&gt;` |边权重，0.0 到 1.0。默认值：1.0。 |
+| `--weight <FLOAT>` | Edge weight, 0.0 to 1.0. Default: 1.0. |
 
 **例子：**
 
@@ -670,8 +670,8 @@ amem traverse <PATH> <START_ID> [OPTIONS]
 |-----------------|-------------|
 | `PATH` | `.amem` 文件的路径。 |
 | `START_ID` |起始节点ID。 |
-| `--depth &lt;INT&gt;` |最大遍历深度。默认值：3。
-| `--edge-type &lt;TYPE&gt;` | Filter to specific edge types.可重复。 |
+| `--depth <INT>` | Maximum traversal depth. Default: 3. |
+| `--edge-type <TYPE>` | Filter to specific edge types. Repeatable. |
 | `--json` |输出为 JSON。 |
 
 **例子：**
@@ -692,11 +692,11 @@ amem query <PATH> [OPTIONS]
 
 |旗帜|描述 |
 |------|-------------|
-| `--event-types &lt;TYPE&gt;` | Filter by event type. |
-| `--session &lt;INT&gt;` |按会话 ID 过滤。 |
-| `--search &lt;TEXT&gt;` | Semantic similarity search query. |
-| `--top-k &lt;INT&gt;` |相似性搜索的结果数。默认值：10。
-| `--min-confidence &lt;FLOAT&gt;` |最小置信度阈值。 |
+| `--event-types <TYPE>` | Filter by event type. |
+| `--session <INT>` | Filter by session ID. |
+| `--search <TEXT>` | Semantic similarity search query. |
+| `--top-k <INT>` | Number of results for similarity search. Default: 10. |
+| `--min-confidence <FLOAT>` | Minimum confidence threshold. |
 | `--json` |输出为 JSON。 |
 
 **例子：**
@@ -719,8 +719,8 @@ amem mcp-serve <PATH> [OPTIONS]
 |参数/标志|描述 |
 |-----------------|-------------|
 | `PATH` | `.amem` 文件的路径。 |
-| `--port &lt;INT&gt;` |要侦听的端口。默认值：3100。
-| `--host &lt;ADDR&gt;` |要绑定的主机地址。默认值：`127.0.0.1`。 |
+| `--port <INT>` | Port to listen on. Default: 3100. |
+| `--host <ADDR>` | Host address to bind. Default: `127.0.0.1`. |
 | `--read-only` |以只读模式提供服务（不允许写入）。 |
 
 **例子：**

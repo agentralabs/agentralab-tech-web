@@ -91,7 +91,7 @@ description: "**日期：** 2026 年 2 月 22 日"
 `agentra backup run` 在以下位置创建带时间戳的快照：
 
 - 默认根：`~/.agentra-backups`
-- 快照格式：`snapshot-&lt;unix-seconds&gt;`
+- snapshot format: `snapshot-<unix-seconds>`
 
 每个快照包含：
 
@@ -115,7 +115,7 @@ description: "**日期：** 2026 年 2 月 22 日"
 
 ### 恢复行为
 
-`agentra backup restore &lt;snapshot&gt;` 支持选择性恢复：
+`agentra backup restore <snapshot>` supports selective restore:
 
 - `--memory`
 - `--mcp`
@@ -123,11 +123,11 @@ description: "**日期：** 2026 年 2 月 22 日"
 
 安全行为：
 
-- 现有目标文件在覆盖之前备份为 `.agentra.bak.&lt;timestamp&gt;`（除非 `--force`）。
+- Existing target files are backed up as `.agentra.bak.<timestamp>` before overwrite (unless `--force`).
 
 ### 保留策略行为
 
-`agentra backup prune --keep &lt;N&gt;` 删除较旧的托管快照并保留最新的 `N`。
+`agentra backup prune --keep <N>` removes older managed snapshots and keeps newest `N`.
 
 - 任选 `--dry-run` 预览删除。
 - 仅修剪托管快照目录 (`snapshot-*`)。
@@ -189,7 +189,7 @@ agentra backup prune --keep 20
 添加了可执行的服务器运行时检查和对齐的同步指导。
 
 - 新命令：
-- `agentra server preflight [--strict] [--artifact-dir &lt;path&gt;]...`
+  - `agentra server preflight [--strict] [--artifact-dir <path>]...`
 - 预检验证：
 - 启用服务器模式 (`AGENTRA_RUNTIME_MODE=server`)
 - 配置身份验证令牌（`AGENTIC_TOKEN` 或令牌文件）

@@ -244,9 +244,9 @@ cargo flamegraph --bench core_benchmarks -- --bench
 
 查询在 100K 个节点上分为三层：
 
-- **交互式（&lt;100 ms）：** BM25、混合、PageRank、学位、BFS、Dijkstra、信念修正、漂移 - 适合对话期间每个查询使用
+- **Interactive (\<100 ms):** BM25, hybrid, PageRank, degree, BFS, Dijkstra, belief revision, drift -- suitable for per-query use during conversations
 - **周期性（1-60 秒）：** 介数中心性、整合——每个会话或按计划运行一次
-- **离线（>60 s）：** 间隙检测、类比推理——专为大图批量分析而设计；在 10K 节点上，两者均在 3 秒内完成
+- **Offline (>60 s):** Gap detection, analogical reasoning -- designed for batch analysis of large graphs; both complete in \<3s at 10K nodes
 
 ### BM25 指数加速
 

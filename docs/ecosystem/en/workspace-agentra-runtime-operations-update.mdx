@@ -91,7 +91,7 @@ Implemented first-class backup operations in `agentra-cli`.
 `agentra backup run` creates timestamped snapshots under:
 
 - default root: `~/.agentra-backups`
-- snapshot format: `snapshot-&lt;unix-seconds&gt;`
+- snapshot format: `snapshot-<unix-seconds>`
 
 Each snapshot contains:
 
@@ -115,7 +115,7 @@ Each snapshot writes:
 
 ### Restore behavior
 
-`agentra backup restore &lt;snapshot&gt;` supports selective restore:
+`agentra backup restore <snapshot>` supports selective restore:
 
 - `--memory`
 - `--mcp`
@@ -123,11 +123,11 @@ Each snapshot writes:
 
 Safety behavior:
 
-- Existing target files are backed up as `.agentra.bak.&lt;timestamp&gt;` before overwrite (unless `--force`).
+- Existing target files are backed up as `.agentra.bak.<timestamp>` before overwrite (unless `--force`).
 
 ### Retention behavior
 
-`agentra backup prune --keep &lt;N&gt;` removes older managed snapshots and keeps newest `N`.
+`agentra backup prune --keep <N>` removes older managed snapshots and keeps newest `N`.
 
 - Optional `--dry-run` previews deletion.
 - Prunes only managed snapshot directories (`snapshot-*`).
@@ -189,7 +189,7 @@ This update can be split into docs pages:
 Added executable server-runtime checks and aligned sync guidance.
 
 - New command:
-  - `agentra server preflight [--strict] [--artifact-dir &lt;path&gt;]...`
+  - `agentra server preflight [--strict] [--artifact-dir <path>]...`
 - Preflight validates:
   - server mode enabled (`AGENTRA_RUNTIME_MODE=server`)
   - auth token configured (`AGENTIC_TOKEN` or token file)

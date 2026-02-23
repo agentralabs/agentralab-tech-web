@@ -105,6 +105,7 @@ export function Callout({ type = "info", title, children }: CalloutProps) {
     type === "tip" || type === "hint" ? <Lightbulb size={16} /> :
     type === "success" ? <CircleCheckBig size={16} /> :
     type === "warning" ? <TriangleAlert size={16} /> :
+    type === "note" ? <BookOpen size={16} /> :
     <Info size={16} />
 
   const resolvedTitle =
@@ -118,8 +119,11 @@ export function Callout({ type = "info", title, children }: CalloutProps) {
           : "Note")
 
   return (
-    <div className={`docs-callout docs-callout-${type}`}>
-      <div className="docs-callout-title">{icon}<span>{resolvedTitle}</span></div>
+    <div className={`docs-callout docs-callout-${type}`} data-callout={type}>
+      <div className="docs-callout-title">
+        <span className="docs-callout-icon" aria-hidden="true">{icon}</span>
+        <span>{resolvedTitle}</span>
+      </div>
       <div className="docs-callout-body">{children}</div>
     </div>
   )

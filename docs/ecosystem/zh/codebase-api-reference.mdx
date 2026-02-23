@@ -39,7 +39,7 @@ let result = parser.parse_directory("./src", &ParseOptions::default())?;
 
 创建一个新的解析器实例。初始化所有支持语言的树守护者语法。
 
-#### `Parser::parse_directory(path, options) -> Result&lt;ParseResult&gt;`
+#### `Parser::parse_directory(path, options) -> Result<ParseResult>`
 
 递归扫描目录并解析所有支持的源文件。
 
@@ -87,7 +87,7 @@ let analyzer = SemanticAnalyzer::new();
 let graph = analyzer.analyze(parse_result.units, &AnalyzeOptions::default())?;
 ```
 
-#### `SemanticAnalyzer::analyze(units, options) -> Result&lt;CodeGraph&gt;`
+#### `SemanticAnalyzer::analyze(units, options) -> Result<CodeGraph>`
 
 分析代码单元的集合、解决交叉引用、推断关系并构建概念图。
 
@@ -127,7 +127,7 @@ println!("Units: {}, Edges: {}", graph.unit_count(), graph.edge_count());
 | `get_unit(id)` | `Option<&CodeUnit>` |按 ID 查找单位 |
 | `edges_from(id)` | `Vec<&CodeEdge>` |单元的传出边缘 |
 | `edges_to(id)` | `Vec<&CodeEdge>` |传入单元的边缘 |
-| `languages()` | `Vec&lt;Language&gt;` |图中不同的语言 |
+| `languages()` | `Vec<Language>` | Distinct languages in graph |
 
 ### 代码单元
 

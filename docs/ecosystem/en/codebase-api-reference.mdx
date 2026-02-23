@@ -39,7 +39,7 @@ let result = parser.parse_directory("./src", &ParseOptions::default())?;
 
 Create a new parser instance. Initializes tree-sitter grammars for all supported languages.
 
-#### `Parser::parse_directory(path, options) -> Result&lt;ParseResult&gt;`
+#### `Parser::parse_directory(path, options) -> Result<ParseResult>`
 
 Recursively scan a directory and parse all supported source files.
 
@@ -87,7 +87,7 @@ let analyzer = SemanticAnalyzer::new();
 let graph = analyzer.analyze(parse_result.units, &AnalyzeOptions::default())?;
 ```
 
-#### `SemanticAnalyzer::analyze(units, options) -> Result&lt;CodeGraph&gt;`
+#### `SemanticAnalyzer::analyze(units, options) -> Result<CodeGraph>`
 
 Analyze a collection of code units, resolve cross-references, infer relationships, and build the concept graph.
 
@@ -127,7 +127,7 @@ println!("Units: {}, Edges: {}", graph.unit_count(), graph.edge_count());
 | `get_unit(id)` | `Option<&CodeUnit>` | Look up unit by ID |
 | `edges_from(id)` | `Vec<&CodeEdge>` | Outgoing edges from unit |
 | `edges_to(id)` | `Vec<&CodeEdge>` | Incoming edges to unit |
-| `languages()` | `Vec&lt;Language&gt;` | Distinct languages in graph |
+| `languages()` | `Vec<Language>` | Distinct languages in graph |
 
 ### CodeUnit
 

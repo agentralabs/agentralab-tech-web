@@ -11,7 +11,7 @@ description: "状态：规范（规范）"
 ## 1. 发布神器合约
 
 - 根据支持的平台发布确定性版本工件。
-- 命名格式是强制性的：`&lt;project&gt;-&lt;version&gt;-&lt;os&gt;-&lt;arch&gt;.tar.gz`。
+- Naming format is mandatory: `<project>-<version>-<os>-<arch>.tar.gz`.
 - 工件内容必须与自述文件/安装声明完全匹配。
 - 如果存储库发布多个二进制文件，则所有必需的二进制文件必须存在于同一版本集中。
 - 发布资产必须保持足够稳定以实现安装程序自动化（无临时文件名更改）。
@@ -19,10 +19,10 @@ description: "状态：规范（规范）"
 ## 2. 安装合同规范
 
 - 需要规范的安装表面：
-- `curl -fsSL https://agentralabs.tech/install/&lt;target&gt; | bash`（向后兼容默认值；桌面配置文件）
-- `curl -fsSL https://agentralabs.tech/install/&lt;target&gt;/desktop | bash`
-- `curl -fsSL https://agentralabs.tech/install/&lt;target&gt;/terminal | bash`
-- `curl -fsSL https://agentralabs.tech/install/&lt;target&gt;/server | bash`
+  - `curl -fsSL https://agentralabs.tech/install/<target> | bash` (backward-compatible default; desktop profile)
+  - `curl -fsSL https://agentralabs.tech/install/<target>/desktop | bash`
+  - `curl -fsSL https://agentralabs.tech/install/<target>/terminal | bash`
+  - `curl -fsSL https://agentralabs.tech/install/<target>/server | bash`
 - 安装者必须首先尝试安装发布工件；需要源构建回退。
 - MCP 配置行为仅合并，绝不破坏性覆盖。
 - 安装者必须打印一致的完成块：
