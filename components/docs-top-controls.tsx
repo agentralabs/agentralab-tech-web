@@ -2,15 +2,9 @@
 
 import Link from "next/link"
 import { useEffect, useMemo, useRef, useState } from "react"
-import { usePathname, useSearchParams } from "next/navigation"
 import {
-  DOCS_LANGUAGE_COOKIE,
-  DOCS_LANGUAGE_STORAGE,
   type DocsLanguage,
   docsUi,
-  localizeDocsHref,
-  normalizeDocsLanguage,
-  stripDocsLocalePrefix,
 } from "@/lib/docs-i18n"
 
 interface SearchItem {
@@ -25,25 +19,10 @@ interface DocsTopControlsProps {
 }
 
 export function DocsTopControls({ language, items }: DocsTopControlsProps) {
-  const pathname = usePathname()
-  const searchParams = useSearchParams()
-  const [lang, setLang] = useState<DocsLanguage>(language)
   const [searchOpen, setSearchOpen] = useState(false)
   const [query, setQuery] = useState("")
   const searchInputRef = useRef<HTMLInputElement>(null)
-  const copy = docsUi(lang)
-
-  useEffect(() => {
-    setLang(language)
-  }, [language])
-
-  useEffect(() => {
-    const saved = normalizeDocsLanguage(localStorage.getItem(DOCS_LANGUAGE_STORAGE))
-    if (saved !== language) {
-      setLanguage(saved)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  const copy = docsUi(language)
 
   useEffect(() => {
     if (!searchOpen) return
@@ -67,23 +46,6 @@ export function DocsTopControls({ language, items }: DocsTopControlsProps) {
     return () => window.removeEventListener("keydown", onKeyDown)
   }, [])
 
-  function setLanguage(next: DocsLanguage) {
-    const currentPath = pathname || "/docs"
-    const normalizedPath = stripDocsLocalePrefix(currentPath)
-    const targetPath = localizeDocsHref(normalizedPath, next)
-    if (next === lang && targetPath === currentPath) return
-
-    setLang(next)
-    setSearchOpen(false)
-    localStorage.setItem(DOCS_LANGUAGE_STORAGE, next)
-    document.cookie = `${DOCS_LANGUAGE_COOKIE}=${next}; Path=/; Max-Age=31536000; SameSite=Lax`
-    const params = new URLSearchParams(searchParams.toString())
-    params.delete("lang")
-    const query = params.toString()
-    const target = query ? `${targetPath}?${query}` : targetPath
-    window.location.assign(target)
-  }
-
   const filteredItems = useMemo(() => {
     const term = query.trim().toLowerCase()
     if (!term) return items
@@ -105,27 +67,6 @@ export function DocsTopControls({ language, items }: DocsTopControlsProps) {
         <span>{copy.searchPlaceholder}</span>
         <kbd>⌘/Ctrl K</kbd>
       </button>
-
-      <div className="docs-lang-toggle" aria-label="Language toggle">
-        <button
-          type="button"
-          className="docs-lang-option"
-          data-active={lang === "en" ? "true" : "false"}
-          aria-pressed={lang === "en"}
-          onClick={() => setLanguage("en")}
-        >
-          EN
-        </button>
-        <button
-          type="button"
-          className="docs-lang-option"
-          data-active={lang === "zh" ? "true" : "false"}
-          aria-pressed={lang === "zh"}
-          onClick={() => setLanguage("zh")}
-        >
-          中文
-        </button>
-      </div>
 
       {searchOpen ? (
         <div className="docs-search-overlay" role="dialog" aria-modal="true" aria-label={copy.searchLabel}>
