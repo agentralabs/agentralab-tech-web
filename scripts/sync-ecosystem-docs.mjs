@@ -434,6 +434,17 @@ function stripLeadingH1(markdown) {
   return markdown.replace(/^#\s+.+\n+/m, "")
 }
 
+function normalizeDescriptionText(value) {
+  return value
+    .replace(/`([^`]+)`/g, "$1")
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, "$1")
+    .replace(/\*\*([^*]+)\*\*/g, "$1")
+    .replace(/\*([^*]+)\*/g, "$1")
+    .replace(/^(\d+)\.\s+/, "")
+    .replace(/\s+/g, " ")
+    .trim()
+}
+
 function extractDescription(markdown) {
   const lines = markdown.split("\n")
   for (const line of lines) {
@@ -443,7 +454,9 @@ function extractDescription(markdown) {
     if (trimmed.startsWith("```")) continue
     if (trimmed.startsWith("- ") || trimmed.startsWith("* ")) continue
     if (trimmed.startsWith(">")) continue
-    return trimmed.length > 180 ? `${trimmed.slice(0, 177)}...` : trimmed
+    const normalized = normalizeDescriptionText(trimmed)
+    if (!normalized) continue
+    return normalized.length > 180 ? `${normalized.slice(0, 177)}...` : normalized
   }
   return undefined
 }
@@ -573,7 +586,7 @@ async function walkMarkdownFiles(rootDir) {
 
 function mdxPage({ title, description, body }) {
   const safeTitle = JSON.stringify(String(title))
-  const safeDescription = JSON.stringify(String(description))
+  const safeDescription = JSON.stringify(normalizeDescriptionText(String(description)))
   return `---\ntitle: ${safeTitle}\ndescription: ${safeDescription}\n---\n\n${body}\n`
 }
 
