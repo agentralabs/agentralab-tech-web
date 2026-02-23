@@ -571,6 +571,12 @@ function mdxPage({ title, description, body }) {
   return `---\ntitle: ${safeTitle}\ndescription: ${safeDescription}\n---\n\n${body}\n`
 }
 
+function assertEnglishOutputHasNoHan(filename, content) {
+  if (/[\u4E00-\u9FFF]/.test(content)) {
+    throw new Error(`[sync] english output contains CJK characters: ${filename}`)
+  }
+}
+
 function sortDocEntries(entries, key) {
   const rank = new Map(PAGE_ORDER_SUFFIX.map((value, index) => [value, index]))
   const prefix = `${key}-`
@@ -870,6 +876,7 @@ async function main() {
   )
 
   for (const [name, content] of enFiles.entries()) {
+    assertEnglishOutputHasNoHan(name, content)
     // eslint-disable-next-line no-await-in-loop
     await writeIfChanged(path.join(EN_OUT_DIR, name), content)
   }
