@@ -47,15 +47,18 @@ export function proxy(request: NextRequest) {
   const { localeInPath, remainder } = splitDocsPath(nextUrl.pathname)
 
   if (localeInPath) {
-    const response = NextResponse.next()
     if (cookieLang !== localeInPath) {
+      const redirectUrl = nextUrl.clone()
+      const response = NextResponse.redirect(redirectUrl)
       response.cookies.set(DOCS_LANGUAGE_COOKIE, localeInPath, {
         path: "/",
         maxAge: 60 * 60 * 24 * 365,
         sameSite: "lax",
       })
+      return response
     }
-    return response
+
+    return NextResponse.next()
   }
 
   const targetLang = nextUrl.searchParams.has("lang") ? requestedLang : cookieLang
