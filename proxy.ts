@@ -41,12 +41,23 @@ export function proxy(request: NextRequest) {
     return NextResponse.next()
   }
 
-  const requestedLang = normalizeLanguage(nextUrl.searchParams.get("lang") ?? undefined)
   const cookieValue = request.cookies.get(DOCS_LANGUAGE_COOKIE)?.value
   const cookieLang = normalizeLanguage(cookieValue)
   const { localeInPath, remainder } = splitDocsPath(nextUrl.pathname)
 
   if (localeInPath) {
+    if (localeInPath === "zh") {
+      const redirectUrl = nextUrl.clone()
+      redirectUrl.pathname = `${DOCS_ROOT}/en${remainder}`
+      const response = NextResponse.redirect(redirectUrl)
+      response.cookies.set(DOCS_LANGUAGE_COOKIE, "en", {
+        path: "/",
+        maxAge: 60 * 60 * 24 * 365,
+        sameSite: "lax",
+      })
+      return response
+    }
+
     if (cookieLang !== localeInPath) {
       const redirectUrl = nextUrl.clone()
       const response = NextResponse.redirect(redirectUrl)
@@ -61,7 +72,7 @@ export function proxy(request: NextRequest) {
     return NextResponse.next()
   }
 
-  const targetLang = nextUrl.searchParams.has("lang") ? requestedLang : "en"
+  const targetLang = "en"
   const redirectUrl = nextUrl.clone()
   redirectUrl.pathname = `${DOCS_ROOT}/${targetLang}${remainder}`
   redirectUrl.searchParams.delete("lang")
