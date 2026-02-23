@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { Navbar } from "@/components/navbar"
 import { HeroSection } from "@/components/hero-section"
+import { ValueProofSection } from "@/components/value-proof-section"
 import { FeatureGrid } from "@/components/feature-grid"
 import { AboutSection } from "@/components/about-section"
 import { PricingSection } from "@/components/pricing-section"
@@ -12,7 +13,7 @@ import { siteConfig } from "@/lib/site"
 export const metadata: Metadata = {
   title: "Home",
   description:
-    "AGENTRA LABS builds open-source agentic infrastructure: AgenticMemory for persistent cognition, AgenticVision for browserless web cartography, and AgenticCodebase for semantic code intelligence.",
+    "AGENTRA LABS builds open-source agentic infrastructure: AgenticMemory for long-horizon memory retention, AgenticVision for queryable visual operations, and AgenticCodebase for semantic code risk intelligence.",
   alternates: {
     canonical: "/",
   },
@@ -33,6 +34,7 @@ export default function Page() {
       <Navbar />
       <main>
         <HeroSection />
+        <ValueProofSection />
         <FeatureGrid />
         <AboutSection />
         <PricingSection />
