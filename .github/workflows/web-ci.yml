@@ -32,5 +32,8 @@ jobs:
       - name: Public docs quality guardrail
         run: ./scripts/check-public-docs.sh
 
+      - name: Docs navigation contract guardrail
+        run: node scripts/check-docs-nav-contract.mjs
+
       - name: Build
         run: pnpm build

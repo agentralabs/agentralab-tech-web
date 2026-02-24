@@ -13,6 +13,7 @@ import {
   localizeDocsLabel,
   normalizeDocsLanguage,
 } from "@/lib/docs-i18n"
+import navContract from "@/docs/ecosystem/navigation-contract.json"
 import "./docs.css"
 
 interface DocsRouteLayoutProps {
@@ -55,7 +56,13 @@ const SUFFIX_ORDER = [
   "use-case-playbooks",
 ]
 
-const suffixOrderMap = new Map(SUFFIX_ORDER.map((value, index) => [value, index]))
+const CORE_GROUP_ORDER = [
+  "Overview",
+  "Workspace",
+  "Feedback and Community",
+  "System Architecture",
+  "Use-Case Playbooks",
+] as const
 
 function titleFor(url: string, title?: string) {
   if (title) return title
@@ -75,12 +82,6 @@ function slugFromUrl(url: string) {
 function suffixForPrefix(slug: string, prefix: string) {
   if (!slug.startsWith(prefix)) return ""
   return slug.slice(prefix.length)
-}
-
-function prefixForSlug(slug: string) {
-  const index = slug.indexOf("-")
-  if (index <= 0) return ""
-  return `${slug.slice(0, index)}-`
 }
 
 function toSisterGroupLabel(rawLabel: string, language: "en" | "zh") {
@@ -135,6 +136,15 @@ export default async function DocsRouteLayout({ children }: DocsRouteLayoutProps
     }))
 
   const reservedPrefixes = ["workspace-", "feedback-", "architecture-", "playbooks-"]
+  const sisterOrderByPrefix = new Map<string, number>(
+    (Array.isArray(navContract?.sisters) ? navContract.sisters : [])
+      .filter((sister) => sister?.enabled !== false && typeof sister?.key === "string")
+      .map((sister, index) => [
+        `${String(sister.key).toLowerCase()}-`,
+        Number.isFinite(sister.order) ? sister.order : 1000 + index,
+      ]),
+  )
+
   const sisterPrefixOrder: string[] = []
 
   for (const item of allItems) {
@@ -170,6 +180,8 @@ export default async function DocsRouteLayout({ children }: DocsRouteLayoutProps
       if (items.length === 0) return null
 
       const landing = items.find((item) => slugFromUrl(item.href) === `${prefix}docs`)
+      if (!landing) return null
+
       const derivedLabel = landing
         ? toSisterGroupLabel(landing.label, language)
         : localizeDocsLabel(
@@ -183,11 +195,16 @@ export default async function DocsRouteLayout({ children }: DocsRouteLayoutProps
 
       return {
         prefix,
+        order: sisterOrderByPrefix.get(prefix) ?? Number.POSITIVE_INFINITY,
         label: derivedLabel,
         items,
       }
     })
-    .filter((group): group is { prefix: string; label: string; items: DocsNavItem[] } => group !== null)
+    .filter((group): group is { prefix: string; order: number; label: string; items: DocsNavItem[] } => group !== null)
+    .sort((a, b) => {
+      if (a.order !== b.order) return a.order - b.order
+      return a.label.localeCompare(b.label)
+    })
 
   const feedbackItems = sortPrefixedGroup(
     allItems.filter((item) => slugFromUrl(item.href).startsWith("feedback-")),
@@ -214,7 +231,6 @@ export default async function DocsRouteLayout({ children }: DocsRouteLayoutProps
     ...playbookItems,
   ]
 
-  const hrefSet = new Set(orderedItems.map((item) => item.href))
   const hrefForSlug = (target: string) => orderedItems.find((item) => slugFromUrl(item.href) === target)?.href
   const apiReferenceHref =
     hrefForSlug("api-reference") ??
@@ -222,38 +238,43 @@ export default async function DocsRouteLayout({ children }: DocsRouteLayoutProps
     hrefForSlug("codebase-api-reference") ??
     hrefForSlug("vision-api-reference")
 
-  const navGroups = [
-    {
+  const coreGroups = {
+    Overview: {
       label: localizeDocsLabel("Overview", language),
       items: overviewItems,
       defaultOpen: true,
     },
-    {
+    Workspace: {
       label: localizeDocsLabel("Workspace", language),
       items: workspaceItems,
       defaultOpen: true,
     },
+    "Feedback and Community": {
+      label: localizeDocsLabel("Feedback and Community", language),
+      items: feedbackItems,
+      defaultOpen: true,
+    },
+    "System Architecture": {
+      label: localizeDocsLabel("System Architecture", language),
+      items: architectureItems,
+      defaultOpen: true,
+    },
+    "Use-Case Playbooks": {
+      label: localizeDocsLabel("Use-Case Playbooks", language),
+      items: playbookItems,
+      defaultOpen: true,
+    },
+  }
+
+  const navGroups = [
+    ...CORE_GROUP_ORDER.slice(0, 2).map((name) => coreGroups[name]),
     ...sisterGroups.map((group) => ({
       label: group.label,
       items: group.items,
       defaultOpen: true,
     })),
-    {
-      label: localizeDocsLabel("Feedback and Community", language),
-      items: feedbackItems,
-      defaultOpen: true,
-    },
-    {
-      label: localizeDocsLabel("System Architecture", language),
-      items: architectureItems,
-      defaultOpen: true,
-    },
-    {
-      label: localizeDocsLabel("Use-Case Playbooks", language),
-      items: playbookItems,
-      defaultOpen: true,
-    },
-  ].filter((group) => group.items.length > 0)
+    ...CORE_GROUP_ORDER.slice(2).map((name) => coreGroups[name]),
+  ].filter((group) => group && group.items.length > 0)
 
   return (
     <div className={`docs-shell docs-variant-aspen ${manrope.variable}`}>

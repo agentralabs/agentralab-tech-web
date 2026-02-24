@@ -15,9 +15,27 @@ const workspaceRoot = path.resolve(
 
 const EN_OUT_DIR = path.join(repoRoot, "docs", "ecosystem", "en")
 const ZH_OUT_DIR = path.join(repoRoot, "docs", "ecosystem", "zh")
+const NAV_CONTRACT_FILE = path.join(repoRoot, "docs", "ecosystem", "navigation-contract.json")
 const ZH_TRANSLATION_CACHE = path.join(repoRoot, "scripts", "data", "zh-translation-cache.json")
 const SISTER_OVERRIDES_FILE = path.join(repoRoot, "docs", "config", "sister-overrides.json")
 const SISTER_MANIFEST_NAME = "sister.manifest.json"
+const CORE_GROUP_ORDER = [
+  "Overview",
+  "Workspace",
+  "Feedback and Community",
+  "System Architecture",
+  "Use-Case Playbooks",
+]
+const REQUIRED_CORE_SLUG_ORDER = [
+  "index",
+  "workspace-how-to",
+  "workspace-new-sister-checklist",
+  "workspace-agentra-runtime-operations-update",
+  "workspace-server-runtime-auth-artifact-sync",
+  "feedback-community",
+  "architecture-system",
+  "playbooks-use-cases",
+]
 
 const CORE_DOC_SPECS = [
   {
@@ -652,6 +670,13 @@ async function discoverSisterSpecs(overrides) {
 
     const resolved = applySisterOverride(baseSpec, override)
     if (resolved.enabled === false) continue
+
+    if (resolved.includeLanding !== true) {
+      const message = `[sync] Sister ${resolved.repoName} is enabled but include_landing is not true; sister landing pages are required for deterministic nav panes`
+      if (strict) throw new Error(message)
+      console.warn(message)
+    }
+
     discovered.push(resolved)
   }
 
@@ -1111,6 +1136,15 @@ async function main() {
     docResults.push({ spec, ...(await buildDocPages(spec, cacheState)) })
   }
 
+  for (const result of docResults) {
+    const { spec, landingSlug } = result
+    if (spec.isSister && spec.enabled !== false && spec.includeLanding !== false && !landingSlug) {
+      const message = `[sync] Sister ${spec.repoName || spec.key} has no landing slug; required for deterministic nav panes`
+      if (strict) throw new Error(message)
+      console.warn(message)
+    }
+  }
+
   const enFiles = new Map()
   const zhFiles = new Map()
 
@@ -1182,6 +1216,25 @@ async function main() {
 
   const uniqueOrderedPages = [...new Set(orderedPages)]
 
+  const sisterContract = docResults
+    .filter((result) => result.spec.isSister)
+    .map((result, index) => ({
+      key: result.spec.key,
+      repo: result.spec.repoName || `agentic-${result.spec.key}`,
+      name: result.spec.name,
+      order: Number.isFinite(result.spec.order) ? result.spec.order : 1000 + index,
+      landingSlug: result.landingSlug || null,
+      includeLanding: result.spec.includeLanding !== false,
+      enabled: result.spec.enabled !== false,
+    }))
+
+  const navContract = {
+    generatedAt: new Date().toISOString(),
+    coreGroupOrder: CORE_GROUP_ORDER,
+    requiredCoreSlugOrder: REQUIRED_CORE_SLUG_ORDER,
+    sisters: sisterContract,
+  }
+
   enFiles.set(
     "meta.json",
     `${JSON.stringify({ title: "Agentra Labs Docs", pages: uniqueOrderedPages }, null, 2)}\n`,
@@ -1190,6 +1243,8 @@ async function main() {
     "meta.json",
     `${JSON.stringify({ title: "Agentra Labs 文档", pages: uniqueOrderedPages }, null, 2)}\n`,
   )
+
+  await writeIfChanged(NAV_CONTRACT_FILE, `${JSON.stringify(navContract, null, 2)}\n`)
 
   for (const [name, content] of enFiles.entries()) {
     assertEnglishOutputHasNoHan(name, content)

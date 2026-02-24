@@ -6,7 +6,9 @@ on:
       - "docs/**"
       - "scripts/sync-ecosystem-docs.mjs"
       - "scripts/check-docs-sync.sh"
+      - "scripts/check-docs-nav-contract.mjs"
       - "scripts/check-public-docs.sh"
+      - "app/docs/layout.tsx"
       - "package.json"
       - ".github/workflows/docs-sync-guardrails.yml"
   pull_request:
@@ -14,7 +16,9 @@ on:
       - "docs/**"
       - "scripts/sync-ecosystem-docs.mjs"
       - "scripts/check-docs-sync.sh"
+      - "scripts/check-docs-nav-contract.mjs"
       - "scripts/check-public-docs.sh"
+      - "app/docs/layout.tsx"
       - "package.json"
       - ".github/workflows/docs-sync-guardrails.yml"
 

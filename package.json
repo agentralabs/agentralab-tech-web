@@ -7,7 +7,7 @@
     "build": "next build",
     "prebuild": "pnpm docs:sync && pnpm docs:gen",
     "docs:sync": "node scripts/sync-ecosystem-docs.mjs",
-    "docs:sync:check": "node scripts/sync-ecosystem-docs.mjs --strict && ./scripts/check-docs-sync.sh",
+    "docs:sync:check": "node scripts/sync-ecosystem-docs.mjs --strict && ./scripts/check-docs-sync.sh && node scripts/check-docs-nav-contract.mjs",
     "docs:gen": "fumadocs-mdx",
     "lablog:generate": "node scripts/generate-lab-log.mjs",
     "lablog:release": "node scripts/create-lab-log-release.mjs",
