@@ -145,7 +145,7 @@ function buildAutoNote(repoName: string, title: string, tagName: string, publish
   const paragraph1 =
     `${repoName} released ${title} (${tagName}) on ${releaseDateLabel(publishedAt)}. ` +
     `This drop focuses on production readiness and smoother adoption across the Agentra ecosystem, with ` +
-    `${prerelease ? "pre-release" : "public"} shipping status for early validation and rollout.`
+    `${prerelease ? "pre-release" : "public"} release status for early validation and rollout.`
 
   const paragraph2 =
     `What is new in this release: ${highlights}. ` +

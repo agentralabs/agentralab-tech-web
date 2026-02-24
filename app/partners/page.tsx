@@ -35,7 +35,7 @@ export default function PartnersPage() {
           <div className="border-2 border-foreground p-6 lg:p-8">
             <h1 className="text-3xl lg:text-5xl font-mono font-bold uppercase tracking-tight">Partnerships and Sponsorships</h1>
             <p className="mt-4 max-w-4xl text-xs lg:text-sm font-mono text-muted-foreground leading-relaxed">
-              We partner with teams shipping real systems. If your work touches persistent memory, web perception,
+              We partner with teams operating real systems. If your work touches persistent memory, web perception,
               semantic code intelligence, or governance infrastructure, we can collaborate.
             </p>
             <div className="mt-5 inline-flex border-2 border-foreground text-foreground text-[10px] font-mono tracking-wider uppercase">
