@@ -20,8 +20,8 @@ const SITE_LINKS = [
 const PROJECT_LINKS = [
   { label: "AgenticMemory", href: "https://github.com/agentralabs/agentic-memory" },
   { label: "AgenticVision", href: "https://github.com/agentralabs/agentic-vision" },
-  { label: "AgenticCodebase", href: "https://github.com/agentralabs/codebase" },
-  { label: "AgentraLabsWeb", href: "https://github.com/agentralabs/agentralab-tech-web" },
+  { label: "AgenticCodebase", href: "https://github.com/agentralabs/agentic-codebase" },
+  { label: "AgentraLabsWeb", href: "https://github.com/agentralabs/agentralabs-tech-web" },
 ]
 
 export function Footer() {

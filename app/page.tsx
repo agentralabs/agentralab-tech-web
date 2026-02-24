@@ -3,6 +3,7 @@ import { Navbar } from "@/components/navbar"
 import { HeroSection } from "@/components/hero-section"
 import { HomeReleaseStrip } from "@/components/home-release-strip"
 import { ValueProofSection } from "@/components/value-proof-section"
+import { CollaborationCtaSection } from "@/components/collaboration-cta-section"
 import { FeatureGrid } from "@/components/feature-grid"
 import { AboutSection } from "@/components/about-section"
 import { PricingSection } from "@/components/pricing-section"
@@ -14,7 +15,7 @@ import { siteConfig } from "@/lib/site"
 export const metadata: Metadata = {
   title: "Home",
   description:
-    "AGENTRA LABS builds open-source agentic infrastructure: AgenticMemory for long-horizon memory retention, AgenticVision for queryable visual operations, and AgenticCodebase for semantic code risk intelligence.",
+    "Reliable infrastructure for long-lived AI agents with persistent state, structured reasoning surfaces, and policy-enforced execution with audit-ready run trails.",
   alternates: {
     canonical: "/",
   },
@@ -37,6 +38,7 @@ export default function Page() {
         <HeroSection />
         <HomeReleaseStrip />
         <ValueProofSection />
+        <CollaborationCtaSection />
         <FeatureGrid />
         <AboutSection />
         <PricingSection />

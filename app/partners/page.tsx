@@ -39,10 +39,11 @@ export default function PartnersPage() {
               semantic code intelligence, or governance infrastructure, we can collaborate.
             </p>
             <div className="mt-5 inline-flex border-2 border-foreground text-foreground text-[10px] font-mono tracking-wider uppercase">
-              <span className="px-4 py-2">Partner Intake Paused</span>
+              <span className="px-4 py-2">Partner Intake By Review</span>
             </div>
             <p className="mt-3 text-xs font-mono text-muted-foreground">
-              Intake is currently inactive. For urgent institutional requests, use{" "}
+              Submit your context and scope by email. We review institutional and sponsor collaboration requests on a
+              rolling basis. For priority requests, use{" "}
               <a href="mailto:contact@agentralabs.tech" className="underline hover:text-foreground">
                 contact@agentralabs.tech
               </a>.

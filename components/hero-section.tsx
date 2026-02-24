@@ -47,37 +47,50 @@ export function HeroSection() {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.45, ease }}
-          className="text-xs lg:text-sm text-muted-foreground max-w-md mb-6 leading-relaxed font-mono"
+          className="text-xs lg:text-sm text-muted-foreground max-w-2xl mb-6 leading-relaxed font-mono"
         >
-          AI can think. AI cannot see. AgenticVision fixes that with Cortex web cartography: map sites into queryable
-          graphs, execute web actions without brittle browser loops, and preserve visual state in portable .avis
-          memory. Combined with AgenticMemory (.amem) and AgenticCodebase (.acb), agents retain continuity across
-          what they know, see, and change.
+          Reliable infrastructure for long-lived AI agents. Agentra delivers persistent state, structured perception
+          and reasoning, and policy-enforced execution with audit-ready run trails across desktop, terminal, and
+          server environments.
         </motion.p>
 
-        {/* CTA Button */}
-        <motion.a
-          href="#quickstart-pane"
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.6, ease }}
-          whileHover={{ scale: 1.03 }}
-          whileTap={{ scale: 0.97 }}
-          className="group flex items-center gap-0 bg-foreground text-background text-sm font-mono tracking-wider uppercase"
-        >
-          <span className="flex items-center justify-center w-10 h-10 bg-[#ea580c]">
-            <motion.span
-              className="inline-flex"
-              whileHover={{ x: 3 }}
-              transition={{ type: "spring", stiffness: 400, damping: 20 }}
-            >
-              <ArrowRight size={16} strokeWidth={2} className="text-background" />
-            </motion.span>
-          </span>
-          <span className="px-5 py-2.5">
-            Run Quickstart
-          </span>
-        </motion.a>
+        <div className="flex flex-col sm:flex-row items-center gap-3">
+          <motion.a
+            href="#quickstart-pane"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.6, ease }}
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
+            className="group flex items-center gap-0 bg-foreground text-background text-sm font-mono tracking-wider uppercase"
+          >
+            <span className="flex items-center justify-center w-10 h-10 bg-[#ea580c]">
+              <motion.span
+                className="inline-flex"
+                whileHover={{ x: 3 }}
+                transition={{ type: "spring", stiffness: 400, damping: 20 }}
+              >
+                <ArrowRight size={16} strokeWidth={2} className="text-background" />
+              </motion.span>
+            </span>
+            <span className="px-5 py-2.5">Run Quickstart</span>
+          </motion.a>
+
+          <motion.a
+            href="/partners"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.68, ease }}
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
+            className="group flex items-center gap-0 border border-foreground bg-background text-foreground text-sm font-mono tracking-wider uppercase"
+          >
+            <span className="flex items-center justify-center w-10 h-10 border-r border-foreground bg-background">
+              <ArrowRight size={16} strokeWidth={2} className="text-foreground" />
+            </span>
+            <span className="px-5 py-2.5">Collaborate</span>
+          </motion.a>
+        </div>
 
         <QuickstartTerminalPane />
       </div>

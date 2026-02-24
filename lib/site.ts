@@ -2,7 +2,7 @@ export const siteConfig = {
   name: "AGENTRA LABS",
   shortName: "AGENTRA",
   description:
-    "Open-source agentic systems lab building AgenticMemory, AgenticVision, and AgenticCodebase for persistent memory, web-scale vision, and semantic code intelligence.",
+    "Open infrastructure for reliable, long-lived AI agents with persistent state, structured reasoning surfaces, and policy-enforced execution.",
   url: "https://www.agentralabs.tech",
   locale: "en_US",
   xHandle: "@agentralab",
