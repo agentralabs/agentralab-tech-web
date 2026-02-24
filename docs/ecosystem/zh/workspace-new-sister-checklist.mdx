@@ -1,0 +1,63 @@
+---
+title: "新 Sister 发布清单"
+description: "当准备发布新的 sister 时使用本页。它遵循现有文档的相同框架与布局，不会新增任何 UI 面板。"
+---
+
+当准备发布新的 sister 时使用本页。它遵循现有文档的相同框架与布局，不会新增任何 UI 面板。
+
+## 1. 定义 sister 契约
+
+1. 用一句话定义 sister 范围：它解决什么问题。
+2. 确认工件格式与命名规范。
+3. 确认 MCP 接口与工具名称。
+4. 确认在缺少其他 sisters 时的独立运行行为。
+
+## 2. 对齐安装器质量（必需）
+
+1. 以 AgenticMemory、AgenticVision、AgenticCodebase 现有安装器为基准。
+2. 保持输出简洁、可复现、用户可读。
+3. 显示一条清晰的进度条，从 `0%` 到 `100%`。
+4. 打印明确的安装后指引：
+   1. 重启 MCP 客户端
+   2. 验证工具发现
+   3. 可选反馈渠道
+
+## 3. 发布 docs/public 页面
+
+1. 在 sister 仓库 `docs/public/` 下创建公开页面。
+2. 添加 `docs/public/sister.manifest.json`。
+3. 仅包含面向公开导航的页面。
+4. 命令只放在命令类页面，避免全站重复。
+
+## 4. 自动接入 web 文档
+
+1. 确保 sister 仓库名遵循 `agentic-*` 模式。
+2. 确保 manifest 包含：
+   1. `key`
+   2. `name`
+   3. `page_ids`
+   4. 可选 `slug_by_id`
+3. 可选的运维覆盖配置位于 `docs/config/sister-overrides.json`。
+4. 不要为新 sister 新增额外标签页或面板。
+
+## 5. 运行时与检测校验
+
+1. 验证 local/desktop/server 安装档位。
+2. 验证客户端重启后 MCP 可被检测。
+3. 验证项目级隔离（图与记忆不串扰）。
+4. 验证仅 server 档位需要鉴权。
+
+## 6. 发布门禁
+
+1. sister 仓库 guardrails 必须全绿。
+2. web 仓库 docs sync guardrails 必须全绿。
+3. 公共文档 lint 与 sync 检查必须全绿。
+4. macOS/Linux/Windows 的安装与运行冒烟测试全部通过。
+
+## 7. 即将推出
+
+以下为规划项，当前非强制：
+
+1. 为新 sister 自动生成起始文档集。
+2. 为发布说明自动生成截图证据包。
+3. 提供一条命令创建已预接 manifest 与 guardrails 的 sister 脚手架。
