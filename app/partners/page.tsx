@@ -38,9 +38,12 @@ export default function PartnersPage() {
               We partner with teams operating real systems. If your work touches persistent memory, web perception,
               semantic code intelligence, or governance infrastructure, we can collaborate.
             </p>
-            <div className="mt-5 inline-flex border-2 border-foreground text-foreground text-[10px] font-mono tracking-wider uppercase">
-              <span className="px-4 py-2">Partner Intake By Review</span>
-            </div>
+            <a
+              href="/partners/intake"
+              className="mt-5 inline-flex border-2 border-foreground px-4 py-2 text-[10px] font-mono tracking-wider uppercase text-foreground hover:bg-foreground hover:text-background transition-colors"
+            >
+              Partner Intake By Review
+            </a>
             <p className="mt-3 text-xs font-mono text-muted-foreground">
               Submit your context and scope by email. We review institutional and sponsor collaboration requests on a
               rolling basis. For priority requests, use{" "}
