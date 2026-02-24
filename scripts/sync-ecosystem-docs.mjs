@@ -1229,7 +1229,6 @@ async function main() {
     }))
 
   const navContract = {
-    generatedAt: new Date().toISOString(),
     coreGroupOrder: CORE_GROUP_ORDER,
     requiredCoreSlugOrder: REQUIRED_CORE_SLUG_ORDER,
     sisters: sisterContract,
