@@ -79,12 +79,9 @@ export default async function ReleasesPage() {
             <p className="text-[10px] font-mono uppercase tracking-[0.16em] text-muted-foreground">Latest Releases</p>
             <div className="mt-4 grid grid-cols-1 gap-3 lg:grid-cols-3">
               {feed.latest.slice(0, 9).map((item) => (
-                <a
+                <article
                   key={item.id}
-                  href={item.url}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="border border-foreground p-3 transition-colors hover:bg-foreground hover:text-background"
+                  className="border border-foreground p-3"
                 >
                   <div className="flex items-center justify-between gap-2">
                     <p className="text-[10px] font-mono uppercase tracking-[0.14em] text-muted-foreground">{item.repoName}</p>
@@ -97,8 +94,26 @@ export default async function ReleasesPage() {
                   </div>
                   <p className="mt-2 text-xs font-mono font-bold uppercase tracking-[0.08em]">{item.tagName}</p>
                   <p className="mt-1 text-xs font-mono leading-relaxed">{item.title}</p>
-                  <p className="mt-3 text-[10px] font-mono uppercase tracking-[0.14em]">{formatDate(item.publishedAt)}</p>
-                </a>
+                  <div className="mt-3 space-y-2">
+                    {item.detailedNotes.slice(0, 3).map((paragraph, index) => (
+                      <p key={`${item.id}-paragraph-${index}`} className="text-[11px] font-mono leading-relaxed text-muted-foreground">
+                        {paragraph}
+                      </p>
+                    ))}
+                  </div>
+                  <div className="mt-3 flex items-center justify-between">
+                    <p className="text-[10px] font-mono uppercase tracking-[0.14em]">{formatDate(item.publishedAt)}</p>
+                    <a
+                      href={item.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-1 text-[10px] font-mono uppercase tracking-[0.14em] hover:text-[#ea580c]"
+                    >
+                      Open Release
+                      <ArrowUpRight size={12} />
+                    </a>
+                  </div>
+                </article>
               ))}
             </div>
           </div>
@@ -140,18 +155,33 @@ export default async function ReleasesPage() {
                 <div className="mt-3 border border-foreground">
                   {repo.releases.length ? (
                     repo.releases.slice(0, 5).map((release) => (
-                      <a
+                      <details
                         key={release.id}
-                        href={release.url}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="block border-b border-border px-3 py-2 text-xs font-mono hover:bg-foreground hover:text-background last:border-b-0"
+                        className="border-b border-border last:border-b-0 group"
                       >
-                        <span className="font-bold">{release.tagName}</span>
-                        {" "}
-                        <span className="text-muted-foreground">{release.title}</span>
-                        <span className="float-right text-[10px] uppercase tracking-[0.12em]">{formatDate(release.publishedAt)}</span>
-                      </a>
+                        <summary className="list-none cursor-pointer px-3 py-2 text-xs font-mono hover:bg-foreground hover:text-background">
+                          <span className="font-bold">{release.tagName}</span>
+                          {" "}
+                          <span className="text-muted-foreground group-hover:text-background">{release.title}</span>
+                          <span className="float-right text-[10px] uppercase tracking-[0.12em]">{formatDate(release.publishedAt)}</span>
+                        </summary>
+                        <div className="px-3 pb-3 space-y-2 border-t border-border">
+                          {release.detailedNotes.slice(0, 3).map((paragraph, index) => (
+                            <p key={`${release.id}-notes-${index}`} className="pt-2 text-[11px] font-mono leading-relaxed text-muted-foreground">
+                              {paragraph}
+                            </p>
+                          ))}
+                          <a
+                            href={release.url}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="inline-flex items-center gap-1 text-[10px] font-mono uppercase tracking-[0.14em] hover:text-[#ea580c]"
+                          >
+                            Open Full Notes
+                            <ArrowUpRight size={12} />
+                          </a>
+                        </div>
+                      </details>
                     ))
                   ) : (
                     <p className="px-3 py-3 text-xs font-mono text-muted-foreground">No public releases found for this repository yet.</p>
