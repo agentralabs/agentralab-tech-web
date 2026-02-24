@@ -1,0 +1,65 @@
+name: Lab Log Autopublish
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 4 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  publish-lab-log:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Generate lab log
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          AGENTRA_GITHUB_TOKEN: ${{ secrets.AGENTRA_GITHUB_TOKEN }}
+          LAB_LOG_INTERVAL_HOURS: "72"
+          LAB_LOG_MIN_EVENTS: "2"
+          LAB_LOG_MAX_SIGNALS: "6"
+        run: pnpm lablog:generate
+
+      - name: Detect generated changes
+        id: detect
+        run: |
+          if git diff --quiet --exit-code -- content/lab-log data/lab-log-index.json data/lab-log-state.json; then
+            echo "No lab log changes to commit."
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Commit and push lab log
+        if: steps.detect.outputs.changed == 'true'
+        run: |
+          git config user.name "agentra-lab-log-bot"
+          git config user.email "noreply@agentralabs.tech"
+          git add content/lab-log data/lab-log-index.json data/lab-log-state.json
+          git commit -m "chore(lab-log): publish automated entry"
+          git push
+
+      - name: Create matching GitHub release note
+        if: steps.detect.outputs.changed == 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          AGENTRA_GITHUB_TOKEN: ${{ secrets.AGENTRA_GITHUB_TOKEN }}
+        run: pnpm lablog:release

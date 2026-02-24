@@ -4,6 +4,7 @@ import { Footer } from "@/components/footer"
 import { SectionRail } from "@/components/section-rail"
 import { CommunityRoutingTable } from "@/components/community-routing-table"
 import { blogEntries } from "@/lib/community"
+import { getLabLogEntries } from "@/lib/lab-log"
 
 export const metadata: Metadata = {
   title: "Blog",
@@ -11,7 +12,9 @@ export const metadata: Metadata = {
   alternates: { canonical: "/blog" },
 }
 
-export default function BlogPage() {
+export default async function BlogPage() {
+  const labLogEntries = await getLabLogEntries(8)
+
   return (
     <div className="min-h-screen dot-grid-bg bg-white">
       <Navbar />
@@ -26,8 +29,50 @@ export default function BlogPage() {
           </div>
         </section>
 
+        {labLogEntries.length ? (
+          <section className="w-full px-6 pb-12 lg:px-12">
+            <SectionRail label="// SECTION: AUTO_LAB_LOG" step="029" />
+            <div className="border-2 border-foreground divide-y divide-border">
+              {labLogEntries.map((entry) => (
+                <article key={entry.slug} className="p-5 lg:p-6">
+                  <div className="flex items-center gap-3 flex-wrap">
+                    <span className="text-[10px] font-mono uppercase tracking-[0.15em] text-muted-foreground">{entry.dateIso}</span>
+                    <span className="h-1 w-1 bg-[#ea580c]" />
+                    <span className="text-[10px] font-mono uppercase tracking-[0.15em] text-[#ea580c]">AUTOMATED LAB LOG</span>
+                  </div>
+                  <h2 className="mt-2 text-base lg:text-lg font-mono font-bold uppercase tracking-tight">{entry.title}</h2>
+                  <p className="mt-3 text-xs font-mono text-muted-foreground leading-relaxed">{entry.summary}</p>
+                  <div className="mt-3 space-y-2">
+                    {entry.notes.slice(0, 3).map((note, index) => (
+                      <p key={`${entry.slug}-note-${index}`} className="text-[11px] font-mono text-muted-foreground leading-relaxed">
+                        {note}
+                      </p>
+                    ))}
+                  </div>
+                  <div className="mt-4 border border-foreground/30 p-3">
+                    <p className="text-[10px] font-mono uppercase tracking-[0.15em] text-muted-foreground">Sources</p>
+                    <div className="mt-2 flex flex-wrap gap-2">
+                      {entry.sources.map((source) => (
+                        <a
+                          key={`${entry.slug}-${source.href}`}
+                          href={source.href}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="inline-block text-[10px] font-mono uppercase tracking-[0.14em] text-muted-foreground hover:text-foreground"
+                        >
+                          {source.label}
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+        ) : null}
+
         <section className="w-full px-6 pb-20 lg:px-12">
-          <SectionRail label="// SECTION: ENTRY_INDEX" step="029" />
+          <SectionRail label="// SECTION: ENTRY_INDEX" step="030" />
           <div className="border-2 border-foreground divide-y divide-border">
             {blogEntries.map((entry) => (
               <article key={entry.slug} className="p-5 lg:p-6">

@@ -9,6 +9,8 @@
     "docs:sync": "node scripts/sync-ecosystem-docs.mjs",
     "docs:sync:check": "node scripts/sync-ecosystem-docs.mjs --strict && ./scripts/check-docs-sync.sh",
     "docs:gen": "fumadocs-mdx",
+    "lablog:generate": "node scripts/generate-lab-log.mjs",
+    "lablog:release": "node scripts/create-lab-log-release.mjs",
     "start": "next start",
     "lint": "tsc --noEmit",
     "pretypecheck": "pnpm docs:sync && pnpm docs:gen && next typegen",
