@@ -42,16 +42,26 @@ export function HeroSection() {
           UNDERSTAND.
         </motion.h1>
 
-        {/* Sub-headline */}
+        {/* Pain-point hook */}
         <motion.p
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.45, ease }}
+          className="text-sm lg:text-base text-foreground max-w-2xl mb-2 leading-relaxed font-mono font-bold"
+        >
+          Your AI forgets everything. Ours doesn&apos;t.
+        </motion.p>
+
+        {/* Sub-headline */}
+        <motion.p
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.52, ease }}
           className="text-xs lg:text-sm text-muted-foreground max-w-2xl mb-6 leading-relaxed font-mono"
         >
-          Your AI agents forget everything between sessions. Agentra fixes that with persistent memory, visual
-          understanding, and code intelligence — open-source tools that plug into any AI workflow via the Model
-          Context Protocol (MCP).
+          Three open-source systems that give AI agents persistent memory,
+          structured perception, and code intelligence — across sessions,
+          tools, and teams.
         </motion.p>
 
         <div className="flex flex-col sm:flex-row items-center gap-3">

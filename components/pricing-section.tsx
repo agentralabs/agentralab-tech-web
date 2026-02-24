@@ -51,25 +51,25 @@ const MODULES: ModuleCard[] = [
     value: "AgenticMemory",
     period: "/ AVAILABLE",
     tag: "READY",
-    description: "Your agents forget everything between sessions. AgenticMemory gives them a persistent brain that remembers, corrects, and reasons across conversations.",
+    description: "Ask any AI \"why did you recommend that?\" and you'll get a made-up answer. Not because it's dishonest — the reasoning evaporated when the context window closed. AgenticMemory stores reasoning chains so \"why?\" has a real answer.",
     summary:
-      "Every fact, decision, and correction is stored as a typed node in a graph — linked by causality and traversable across sessions. Portable .amem files work with any MCP-compatible client.",
+      "Every decision has CAUSED_BY edges connecting it to the facts that led to it. The chain is traversable. Corrections link to what they fixed. Truth evolves across sessions in portable .amem files.",
     deepSummary: [
       {
-        lead: "Cognitive Atom:",
-        body: "The memory unit is the cognitive event, so every session yields typed nodes linked to why they were created and what they changed.",
+        lead: "CAUSED_BY edges:",
+        body: "Walk backwards through reasoning. Every recommendation traces to the facts that drove it.",
       },
       {
-        lead: "Truth Evolution:",
-        body: "Corrections supersede prior beliefs, contradictions remain visible, and causality stays traversable across sessions.",
+        lead: "SUPERSEDES chains:",
+        body: "Corrections link to what they replaced. Old beliefs stay visible. Truth has a history.",
       },
       {
-        lead: "16-Query Brain:",
-        body: "Traversal, temporal diffs, impact analysis, reasoning gaps, and belief revision run on graph structure instead of flat retrieval.",
+        lead: "16 query types:",
+        body: "Traversal, temporal diffs, causal analysis, semantic search, and belief revision on graph structure.",
       },
       {
-        lead: "Asynchronous Formation:",
-        body: "Memory writes happen off the response path, so context quality compounds without increasing interaction latency.",
+        lead: "6 event types:",
+        body: "Facts, decisions, inferences, corrections, skills, and episodes. Each typed, timestamped, and linked.",
       },
     ],
     cta: "VIEW REPO",
@@ -83,25 +83,25 @@ const MODULES: ModuleCard[] = [
     value: "AgenticVision",
     period: "/ AVAILABLE",
     tag: "READY",
-    description: "Your agents can't see across sessions. AgenticVision gives them persistent visual memory — capture, compare, diff, and search screenshots over time.",
+    description: "\"The button broke yesterday.\" Your AI can't see yesterday. It can't see the button. It asks you to describe everything, then guesses. AgenticVision captures visual state as queryable evidence.",
     summary:
-      "Every image is embedded with CLIP, stored in a portable .avis file, and queryable by time, content, or visual similarity. Agents can diff UI states, track regressions, and link visual evidence to memory nodes.",
+      "When the button breaks, the agent diffs Tuesday vs Wednesday, finds the CSS change, traces it to a commit, and links the evidence to memory. Screenshots become queryable in portable .avis files.",
     deepSummary: [
       {
-        lead: "Web Cartography:",
-        body: "Agents map full domains into queryable graphs through HTTP-first extraction rather than page-by-page browser loops.",
+        lead: "vision_capture:",
+        body: "Structured screenshots with CLIP embedding, metadata, quality scoring, and optional OCR extraction.",
       },
       {
-        lead: "Direct Actions:",
-        body: "The runtime discovers and executes underlying action surfaces for search, form, and transactional workflows.",
+        lead: "vision_diff:",
+        body: "Pixel-level comparison between two states. What changed, where, and by how much.",
       },
       {
-        lead: "Three Directions:",
-        body: "Web Compiler, Collective Graph, and Temporal Intelligence compound into a persistent web intelligence layer.",
+        lead: "vision_similar:",
+        body: "Find matching past states by visual similarity. Cosine distance on 512-dim CLIP embeddings.",
       },
       {
-        lead: "Portable Visual Memory:",
-        body: ".avis artifacts remain usable across sessions and MCP clients while preserving timeline continuity.",
+        lead: "Memory bridge:",
+        body: "Link screenshots to cognitive graph nodes. Visual evidence connects to reasoning chains.",
       },
     ],
     cta: "VIEW REPO",
@@ -115,25 +115,25 @@ const MODULES: ModuleCard[] = [
     value: "AgenticCodebase",
     period: "/ AVAILABLE",
     tag: "READY",
-    description: "Your agents grep blindly through files. AgenticCodebase compiles repositories into navigable concept graphs with impact analysis and breakage prediction.",
+    description: "\"Refactor this function.\" Your AI cheerfully edits the code. It has no idea that 47 other functions call this one. It doesn't know the test suite catches 12 failures but misses 35. AgenticCodebase fixes that.",
     summary:
-      "Compile any repo into a portable .acb graph. Query symbols, trace dependencies, detect hidden coupling, and predict which changes will break downstream code — before they ship.",
+      "Before writing one character, the agent walks callers, tests, and hidden couplings. Compile any repo into a portable .acb graph with impact analysis, stability scoring, and breakage prediction.",
     deepSummary: [
       {
-        lead: "Concept Navigation:",
-        body: "Semantic compilation turns repositories into concept graphs so architecture is navigated as intentions, not syntax fragments.",
+        lead: "IMPACT edges:",
+        body: "Trace what depends on what you're changing. Callers, tests, and downstream paths exposed before edits land.",
       },
       {
-        lead: "Impact Awareness:",
-        body: "Before edits land, agents traverse callers, tests, contracts, and downstream paths to expose breakage risk.",
+        lead: "COUPLES_WITH:",
+        body: "Hidden dependencies from git co-change patterns. The connections your linter can't see.",
       },
       {
-        lead: "Collective Intelligence:",
-        body: "Dependencies arrive with pattern knowledge, common failure signatures, and mitigation behavior from ecosystem use.",
+        lead: "PROPHECY:",
+        body: "Predict failures from stability analysis and temporal drift. Stage migrations safely.",
       },
       {
-        lead: "Code Prophecy:",
-        body: "Temporal drift, hidden coupling, and failure trajectories are modeled so migrations can be staged safely.",
+        lead: "14.3 \u00b5s lookup:",
+        body: "Symbol lookup in microseconds, index access in nanoseconds. Structure at the speed of thought.",
       },
     ],
     cta: "VIEW REPO",
@@ -358,11 +358,11 @@ export function PricingSection() {
       >
         <div className="flex flex-col gap-3">
           <h2 className="text-2xl lg:text-3xl font-mono font-bold tracking-tight uppercase text-foreground text-balance">
-            Explore active components
+            Three systems. One cognitive layer.
           </h2>
           <p className="text-xs lg:text-sm font-mono text-muted-foreground leading-relaxed max-w-md">
-            This open-source lab delivers AgenticMemory, AgenticVision, and AgenticCodebase as interoperable runtime
-            components for persistent reasoning, browserless web intelligence, and semantic code navigation via MCP.
+            AgenticMemory — reasoning that persists. AgenticVision — visual state that&apos;s queryable.
+            AgenticCodebase — code understanding with prediction. All open source. All shipped.
           </p>
         </div>
         <StatusLine />
@@ -383,7 +383,7 @@ export function PricingSection() {
       >
         <span className="text-[10px] tracking-[0.2em] uppercase text-muted-foreground font-mono">
           {
-            "* Open-source lab note: AgenticMemory turns memory into graph navigation, AgenticVision turns the web into a queryable memory surface, and AgenticCodebase turns codebases into predictive concept graphs."
+            "* Three independent systems that work well together. Research-backed. MIT licensed. Production ready."
           }
         </span>
         <div className="flex-1 border-t border-border" />

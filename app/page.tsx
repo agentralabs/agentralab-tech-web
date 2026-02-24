@@ -1,6 +1,8 @@
 import type { Metadata } from "next"
 import { Navbar } from "@/components/navbar"
 import { HeroSection } from "@/components/hero-section"
+import { ScenarioCardsSection } from "@/components/scenario-cards-section"
+import { BenchmarksSection } from "@/components/benchmarks-section"
 import { HomeReleaseStrip } from "@/components/home-release-strip"
 import { ValueProofSection } from "@/components/value-proof-section"
 import { CollaborationCtaSection } from "@/components/collaboration-cta-section"
@@ -15,7 +17,7 @@ import { siteConfig } from "@/lib/site"
 export const metadata: Metadata = {
   title: "Home",
   description:
-    "Reliable infrastructure for long-lived AI agents with persistent state, structured reasoning surfaces, and policy-enforced execution with audit-ready run trails.",
+    "Your AI forgets everything. Ours doesn't. Three open-source systems that give AI agents persistent memory, structured perception, and code intelligence.",
   alternates: {
     canonical: "/",
   },
@@ -36,6 +38,8 @@ export default function Page() {
       <Navbar />
       <main>
         <HeroSection />
+        <ScenarioCardsSection />
+        <BenchmarksSection />
         <HomeReleaseStrip />
         <ValueProofSection />
         <CollaborationCtaSection />
