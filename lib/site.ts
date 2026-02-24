@@ -2,7 +2,7 @@ export const siteConfig = {
   name: "AGENTRA LABS",
   shortName: "AGENTRA",
   description:
-    "Open infrastructure for reliable, long-lived AI agents with persistent state, structured reasoning surfaces, and policy-enforced execution.",
+    "Open-source tools that give AI agents persistent memory, visual understanding, and code intelligence. AgenticMemory, AgenticVision, and AgenticCodebase work with any MCP-compatible client.",
   url: "https://www.agentralabs.tech",
   locale: "en_US",
   xHandle: "@agentralab",

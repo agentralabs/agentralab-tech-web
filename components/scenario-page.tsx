@@ -87,7 +87,7 @@ function getConfig(sister: string) {
     case "agentic-vision":
       return { hero: VISION_HERO, groups: VISION_SCENARIOS, repo: "https://github.com/agentralabs/agentic-vision" }
     case "agentic-codebase":
-      return { hero: CODEBASE_HERO, groups: CODEBASE_SCENARIOS, repo: "https://github.com/agentralabs/codebase" }
+      return { hero: CODEBASE_HERO, groups: CODEBASE_SCENARIOS, repo: "https://github.com/agentralabs/agentic-codebase" }
     default:
       return { hero: MEMORY_HERO, groups: MEMORY_SCENARIOS, repo: "https://github.com/agentralabs/agentic-memory" }
   }

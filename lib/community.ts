@@ -144,7 +144,7 @@ export const showcaseEntries: ShowcaseEntry[] = [
     stack: ["AgenticCodebase", "Rust", "MCP"],
     links: [
       { label: "Contact", href: "mailto:contact@agentralabs.tech" },
-      { label: "Project", href: "https://github.com/agentralabs/codebase" },
+      { label: "Project", href: "https://github.com/agentralabs/agentic-codebase" },
     ],
     tags: ["Code Intelligence", "Refactoring", "Governance"],
   },
@@ -167,7 +167,7 @@ export const integrationEntries: IntegrationEntry[] = [
     description: "Local terminal workflow integration for build-time analysis and agentic tooling orchestration.",
     runtime: "CLI",
     project: "AgenticCodebase",
-    link: "https://github.com/agentralabs/codebase",
+    link: "https://github.com/agentralabs/agentic-codebase",
   },
   {
     id: "int-003",

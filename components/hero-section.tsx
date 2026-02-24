@@ -49,9 +49,9 @@ export function HeroSection() {
           transition={{ duration: 0.5, delay: 0.45, ease }}
           className="text-xs lg:text-sm text-muted-foreground max-w-2xl mb-6 leading-relaxed font-mono"
         >
-          Reliable infrastructure for long-lived AI agents. Agentra delivers persistent state, structured perception
-          and reasoning, and policy-enforced execution with audit-ready run trails across desktop, terminal, and
-          server environments.
+          Your AI agents forget everything between sessions. Agentra fixes that with persistent memory, visual
+          understanding, and code intelligence — open-source tools that plug into any AI workflow via the Model
+          Context Protocol (MCP).
         </motion.p>
 
         <div className="flex flex-col sm:flex-row items-center gap-3">

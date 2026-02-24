@@ -106,6 +106,36 @@ export default function RootLayout({
       description: siteConfig.description,
       inLanguage: 'en-US',
     },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'SoftwareApplication',
+      name: 'AgenticMemory',
+      applicationCategory: 'DeveloperApplication',
+      operatingSystem: 'macOS, Linux',
+      description: 'Persistent graph memory for AI agents. Facts, decisions, and corrections stored as traversable cognitive events in portable .amem files.',
+      url: `${siteConfig.url}/projects`,
+      offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'SoftwareApplication',
+      name: 'AgenticVision',
+      applicationCategory: 'DeveloperApplication',
+      operatingSystem: 'macOS, Linux',
+      description: 'Persistent visual memory for AI agents. Capture, compare, diff, and search screenshots across sessions in portable .avis files.',
+      url: `${siteConfig.url}/projects`,
+      offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'SoftwareApplication',
+      name: 'AgenticCodebase',
+      applicationCategory: 'DeveloperApplication',
+      operatingSystem: 'macOS, Linux',
+      description: 'Semantic code intelligence for AI agents. Compile repositories into concept graphs with impact analysis, coupling detection, and breakage prediction.',
+      url: `${siteConfig.url}/projects`,
+      offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    },
   ]
 
   return (

@@ -51,9 +51,9 @@ const MODULES: ModuleCard[] = [
     value: "AgenticMemory",
     period: "/ AVAILABLE",
     tag: "READY",
-    description: "Binary cognitive graph memory where reasoning is traversed, not retrieved from flat text.",
+    description: "Your agents forget everything between sessions. AgenticMemory gives them a persistent brain that remembers, corrects, and reasons across conversations.",
     summary:
-      "AgenticMemory models cognition as events and edges: facts, decisions, inferences, corrections, skills, and episodes linked by causality and supersession in portable .amem files.",
+      "Every fact, decision, and correction is stored as a typed node in a graph — linked by causality and traversable across sessions. Portable .amem files work with any MCP-compatible client.",
     deepSummary: [
       {
         lead: "Cognitive Atom:",
@@ -83,9 +83,9 @@ const MODULES: ModuleCard[] = [
     value: "AgenticVision",
     period: "/ AVAILABLE",
     tag: "READY",
-    description: "Cortex web cartography for browserless mapping, direct web actions, and persistent visual state.",
+    description: "Your agents can't see across sessions. AgenticVision gives them persistent visual memory — capture, compare, diff, and search screenshots over time.",
     summary:
-      "AgenticVision gives agents web-scale sight: map whole domains into binary graphs, execute actions without clicking, compile typed interfaces, and preserve continuity in portable .avis artifacts.",
+      "Every image is embedded with CLIP, stored in a portable .avis file, and queryable by time, content, or visual similarity. Agents can diff UI states, track regressions, and link visual evidence to memory nodes.",
     deepSummary: [
       {
         lead: "Web Cartography:",
@@ -115,9 +115,9 @@ const MODULES: ModuleCard[] = [
     value: "AgenticCodebase",
     period: "/ AVAILABLE",
     tag: "READY",
-    description: "Concept-level code intelligence with impact edges, hidden coupling detection, and code prophecy.",
+    description: "Your agents grep blindly through files. AgenticCodebase compiles repositories into navigable concept graphs with impact analysis and breakage prediction.",
     summary:
-      "AgenticCodebase compiles repositories into semantic .acb graphs so agents navigate concepts not files, trace FFI boundaries, apply collective library patterns, and predict breakage before refactors ship.",
+      "Compile any repo into a portable .acb graph. Query symbols, trace dependencies, detect hidden coupling, and predict which changes will break downstream code — before they ship.",
     deepSummary: [
       {
         lead: "Concept Navigation:",
@@ -137,7 +137,7 @@ const MODULES: ModuleCard[] = [
       },
     ],
     cta: "VIEW REPO",
-    href: "https://github.com/agentralabs/codebase",
+    href: "https://github.com/agentralabs/agentic-codebase",
     scenarioHref: "/projects/scenarios/agentic-codebase",
     highlighted: false,
   },

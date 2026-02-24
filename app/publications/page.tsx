@@ -65,9 +65,9 @@ const PAPERS: Paper[] = [
     project: "AgenticCodebase",
     type: "Paper I",
     summary: "Introduces semantic code compilation for navigable and predictive code intelligence.",
-    pdf: "https://github.com/agentralabs/codebase/blob/main/paper/paper-i-semantic-compiler/agenticcodebase-paper.pdf",
+    pdf: "https://github.com/agentralabs/agentic-codebase/blob/main/paper/paper-i-semantic-compiler/agenticcodebase-paper.pdf",
     source:
-      "https://github.com/agentralabs/codebase/blob/main/paper/paper-i-semantic-compiler/agenticcodebase-paper.tex",
+      "https://github.com/agentralabs/agentic-codebase/blob/main/paper/paper-i-semantic-compiler/agenticcodebase-paper.tex",
   },
 ]
 

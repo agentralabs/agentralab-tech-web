@@ -25,6 +25,7 @@ const CORE_GROUP_ORDER = [
   "Feedback and Community",
   "System Architecture",
   "Use-Case Playbooks",
+  "Glossary",
 ]
 const VALID_DOC_STATUSES = new Set(["internal", "candidate", "stable"])
 const REQUIRED_CORE_SLUG_ORDER = [
@@ -36,6 +37,7 @@ const REQUIRED_CORE_SLUG_ORDER = [
   "feedback-community",
   "architecture-system",
   "playbooks-use-cases",
+  "glossary",
 ]
 
 const CORE_DOC_SPECS = [
@@ -83,6 +85,17 @@ const CORE_DOC_SPECS = [
     enforceWhitelist: false,
     slugById: {
       "use-case-playbooks": "playbooks-use-cases",
+    },
+  },
+  {
+    key: "glossary",
+    name: "Glossary",
+    docsPublicDir: path.join(workspaceRoot, "docs"),
+    includeLanding: false,
+    publishedDocIds: ["glossary"],
+    enforceWhitelist: false,
+    slugById: {
+      "glossary": "glossary",
     },
   },
 ]
@@ -236,6 +249,7 @@ const PAGE_ORDER_SUFFIX = [
   "feedback-and-community",
   "system-architecture",
   "use-case-playbooks",
+  "glossary",
 ]
 
 const ZH_PHRASES = [
@@ -372,6 +386,13 @@ const ZH_PHRASES = [
   ["Settings persist in", "设置会持久化在"],
   ["Expected tool states are `OK`, `DISABLED`, or `MISSING` with hints.", "预期工具状态为 `OK`、`DISABLED` 或 `MISSING`，并附带提示信息。"],
   ["Public source documentation for", "公开来源文档："],
+  ["Glossary", "术语表"],
+  ["Key terms used across Agentra Labs documentation and sister projects.", "Agentra Labs 文档和 sister 项目中使用的关键术语。"],
+  ["Key terms used across Agentra Labs projects.", "Agentra Labs 项目中使用的关键术语。"],
+  ["General", "通用"],
+  ["Works with", "协同使用"],
+  ["Validate capabilities", "验证能力"],
+  ["See also", "另请参阅"],
 ]
 
 const ZH_REPLACEMENTS = [...ZH_PHRASES].sort((a, b) => b[0].length - a[0].length)

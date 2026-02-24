@@ -93,4 +93,4 @@ See:
 
 - AgenticMemory: <https://github.com/agentralabs/agentic-memory>
 - AgenticVision: <https://github.com/agentralabs/agentic-vision>
-- AgenticCodebase: <https://github.com/agentralabs/codebase>
+- AgenticCodebase: <https://github.com/agentralabs/agentic-codebase>

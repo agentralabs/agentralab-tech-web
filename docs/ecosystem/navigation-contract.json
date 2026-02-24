@@ -4,7 +4,8 @@
     "Workspace",
     "Feedback and Community",
     "System Architecture",
-    "Use-Case Playbooks"
+    "Use-Case Playbooks",
+    "Glossary"
   ],
   "requiredCoreSlugOrder": [
     "index",
@@ -14,7 +15,8 @@
     "workspace-server-runtime-auth-artifact-sync",
     "feedback-community",
     "architecture-system",
-    "playbooks-use-cases"
+    "playbooks-use-cases",
+    "glossary"
   ],
   "sisters": [
     {

@@ -15,6 +15,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.7,
     }))
 
+  const scenarioRoutes = [
+    "agentic-memory",
+    "agentic-vision",
+    "agentic-codebase",
+  ].map((sister) => ({
+    url: `${siteConfig.url}/projects/scenarios/${sister}`,
+    lastModified,
+    changeFrequency: "weekly" as const,
+    priority: 0.8,
+  }))
+
   return [
     ...navRoutes.map((route) => ({
       url: `${siteConfig.url}${route.path}`,
@@ -22,6 +33,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: route.changeFrequency,
       priority: route.priority,
     })),
+    ...scenarioRoutes,
     ...docRoutes,
   ]
 }
