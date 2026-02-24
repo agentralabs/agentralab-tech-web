@@ -37,8 +37,8 @@ export default async function ReleasesPage() {
               <div>
                 <h1 className="text-3xl lg:text-5xl font-mono font-bold uppercase tracking-tight">Releases</h1>
                 <p className="mt-3 max-w-4xl text-xs lg:text-sm font-mono text-muted-foreground leading-relaxed">
-                  Live release broadcast for Agentra Labs repositories. This page updates from GitHub releases so users can
-                  see what shipped and when, without reading every repo manually.
+                  Official release index for Agentra Labs repositories. This page is sourced from GitHub releases and is
+                  intended for quick verification and direct access to full release notes.
                 </p>
               </div>
               <a
@@ -94,13 +94,7 @@ export default async function ReleasesPage() {
                   </div>
                   <p className="mt-2 text-xs font-mono font-bold uppercase tracking-[0.08em]">{item.tagName}</p>
                   <p className="mt-1 text-xs font-mono leading-relaxed">{item.title}</p>
-                  <div className="mt-3 space-y-2">
-                    {item.detailedNotes.slice(0, 3).map((paragraph, index) => (
-                      <p key={`${item.id}-paragraph-${index}`} className="text-[11px] font-mono leading-relaxed text-muted-foreground">
-                        {paragraph}
-                      </p>
-                    ))}
-                  </div>
+                  <p className="mt-3 text-[11px] font-mono leading-relaxed text-muted-foreground">{item.summary}</p>
                   <div className="mt-3 flex items-center justify-between">
                     <p className="text-[10px] font-mono uppercase tracking-[0.14em]">{formatDate(item.publishedAt)}</p>
                     <a
@@ -166,11 +160,9 @@ export default async function ReleasesPage() {
                           <span className="float-right text-[10px] uppercase tracking-[0.12em]">{formatDate(release.publishedAt)}</span>
                         </summary>
                         <div className="px-3 pb-3 space-y-2 border-t border-border">
-                          {release.detailedNotes.slice(0, 3).map((paragraph, index) => (
-                            <p key={`${release.id}-notes-${index}`} className="pt-2 text-[11px] font-mono leading-relaxed text-muted-foreground">
-                              {paragraph}
-                            </p>
-                          ))}
+                          <p className="pt-2 text-[11px] font-mono leading-relaxed text-muted-foreground">
+                            {release.summary}
+                          </p>
                           <a
                             href={release.url}
                             target="_blank"

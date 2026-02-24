@@ -5,7 +5,7 @@ const GITHUB_API_URL = "https://api.github.com"
 const DEFAULT_RELEASE_REPOS = [
   "agentralabs/agentic-memory",
   "agentralabs/agentic-vision",
-  "agentralabs/codebase",
+  "agentralabs/agentic-codebase",
   "agentralabs/agentralab-tech-web",
   "agentralabs/agentralabs-tech",
 ]
@@ -106,12 +106,6 @@ function markdownToPlain(value: string): string {
     .trim()
 }
 
-function releaseDateLabel(value: string): string {
-  const date = new Date(value)
-  if (Number.isNaN(date.getTime())) return value
-  return date.toISOString().slice(0, 10)
-}
-
 function extractParagraphsFromBody(body: string): string[] {
   const blocks = body
     .split(/\n{2,}/)
@@ -133,29 +127,13 @@ function extractBullets(body: string): string[] {
     .slice(0, 8)
 }
 
-function buildAutoNote(repoName: string, title: string, tagName: string, publishedAt: string, prerelease: boolean, body: string | null): string[] {
-  const paragraphs = body ? extractParagraphsFromBody(body) : []
-  if (paragraphs.length >= 2) return paragraphs.slice(0, 3)
-
-  const bullets = body ? extractBullets(body) : []
-  const highlights = bullets.length
-    ? bullets.map((item) => item.replace(/[.;:]+$/, "")).join("; ")
-    : "quality improvements, runtime stability hardening, and operational cleanup"
-
-  const paragraph1 =
-    `${repoName} released ${title} (${tagName}) on ${releaseDateLabel(publishedAt)}. ` +
-    `This drop focuses on production readiness and smoother adoption across the Agentra ecosystem, with ` +
-    `${prerelease ? "pre-release" : "public"} release status for early validation and rollout.`
-
-  const paragraph2 =
-    `What is new in this release: ${highlights}. ` +
-    `These changes are structured to improve reliability, reduce setup friction, and make day-to-day operator workflows easier to execute.`
-
-  const paragraph3 =
-    `From an operations perspective, this release is intended to be consumed with release notes and migration checks before broad rollout. ` +
-    `Teams should validate install paths, runtime compatibility, and MCP wiring after update, then promote the version into shared environments.`
-
-  return [paragraph1, paragraph2, paragraph3]
+function releaseDetailNotes(body: string | null): string[] {
+  if (!body) return ["No detailed notes were published in this release body. Open GitHub for full metadata."]
+  const paragraphs = extractParagraphsFromBody(body)
+  if (paragraphs.length) return paragraphs.slice(0, 3)
+  const bullets = extractBullets(body)
+  if (bullets.length) return bullets.slice(0, 3)
+  return ["Release notes are available on GitHub. Open the release page for full details."]
 }
 
 function githubHeaders(): Record<string, string> {
@@ -209,14 +187,7 @@ async function collectRepoSummary(repoPath: string): Promise<RepoReleaseSummary 
   const repoName = repoMeta?.full_name ?? repoPath
   const releases: ReleaseItem[] = repoReleases.map((release) => {
     const publishedAt = release.published_at ?? release.created_at
-    const detailedNotes = buildAutoNote(
-      repoNameFromPath(repoName),
-      release.name?.trim() || release.tag_name,
-      release.tag_name,
-      publishedAt,
-      release.prerelease,
-      release.body,
-    )
+    const detailedNotes = releaseDetailNotes(release.body)
     return {
       id: `${repoPath}-${release.id}`,
       repoPath,
@@ -225,7 +196,7 @@ async function collectRepoSummary(repoPath: string): Promise<RepoReleaseSummary 
       url: release.html_url,
       tagName: release.tag_name,
       title: release.name?.trim() || release.tag_name,
-      summary: releaseSummary(detailedNotes[0] ?? release.body),
+      summary: releaseSummary(release.body),
       detailedNotes,
       publishedAt,
       prerelease: release.prerelease,
