@@ -55,7 +55,7 @@ export function ValueProofSection() {
 
       <div className="border-2 border-foreground p-5 lg:p-6 mb-6 bg-background">
         <h2 className="text-2xl lg:text-3xl font-mono font-bold tracking-tight uppercase text-balance">
-          Why teams switch to the sisters
+          Why teams switch to the Agentra Systems
         </h2>
         <p className="mt-3 text-sm font-mono text-muted-foreground leading-relaxed max-w-4xl">
           These systems are built for one outcome: less repeated work, fewer blind releases, and faster incident
