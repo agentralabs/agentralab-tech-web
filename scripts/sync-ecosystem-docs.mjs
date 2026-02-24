@@ -26,6 +26,7 @@ const CORE_GROUP_ORDER = [
   "System Architecture",
   "Use-Case Playbooks",
 ]
+const VALID_DOC_STATUSES = new Set(["internal", "candidate", "stable"])
 const REQUIRED_CORE_SLUG_ORDER = [
   "index",
   "workspace-how-to",
@@ -1002,6 +1003,23 @@ async function buildDocPages(spec, cacheState) {
   for (const entry of unique) {
     const source = await fs.readFile(entry.file, "utf8")
     const { frontMatter, body } = splitFrontMatter(source)
+    const rawStatus = String(frontMatter.status || "").trim().toLowerCase()
+    if (!rawStatus || !VALID_DOC_STATUSES.has(rawStatus)) {
+      const message = `[sync] Missing or invalid frontmatter status in ${entry.file}. Expected one of: internal, candidate, stable`
+      if (strict) throw new Error(message)
+      console.warn(message)
+      continue
+    }
+
+    if (rawStatus !== "stable") {
+      if (strict && allowedIds.has(entry.id)) {
+        throw new Error(
+          `[sync] Non-stable page cannot be published for ${spec.name}: ${entry.id} has status=${rawStatus}`,
+        )
+      }
+      continue
+    }
+
     const fallbackTitle = titleize(path.basename(entry.id))
     const title = String(frontMatter.title || extractFirstHeading(body) || fallbackTitle)
     const stripped = stripLeadingH1(body)
@@ -1018,6 +1036,10 @@ async function buildDocPages(spec, cacheState) {
   }
 
   const ordered = sortDocEntries(enriched, spec.key)
+
+  if (strict && spec.isSister && spec.includeLanding !== false && ordered.length === 0) {
+    throw new Error(`[sync] Sister ${spec.name} has no stable public pages to publish`)
+  }
 
   const enPages = new Map()
   const zhPages = new Map()

@@ -26,14 +26,8 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Lint
-        run: pnpm lint
-
-      - name: Public docs quality guardrail
-        run: ./scripts/check-public-docs.sh
-
-      - name: Docs navigation contract guardrail
-        run: node scripts/check-docs-nav-contract.mjs
+      - name: Release docs readiness guardrail
+        run: pnpm docs:release:check
 
       - name: Build
         run: pnpm build
