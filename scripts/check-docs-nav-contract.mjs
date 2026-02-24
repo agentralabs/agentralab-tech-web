@@ -10,7 +10,6 @@ const metaZhPath = path.join(root, "docs", "ecosystem", "zh", "meta.json")
 
 const EXPECTED_CORE_GROUP_ORDER = [
   "Overview",
-  "Workspace",
   "Feedback and Community",
   "System Architecture",
   "Use-Case Playbooks",
@@ -19,10 +18,6 @@ const EXPECTED_CORE_GROUP_ORDER = [
 
 const EXPECTED_CORE_SLUG_ORDER = [
   "index",
-  "workspace-how-to",
-  "workspace-new-sister-checklist",
-  "workspace-agentra-runtime-operations-update",
-  "workspace-server-runtime-auth-artifact-sync",
   "feedback-community",
   "architecture-system",
   "playbooks-use-cases",

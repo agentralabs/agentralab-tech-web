@@ -1,7 +1,6 @@
 {
   "coreGroupOrder": [
     "Overview",
-    "Workspace",
     "Feedback and Community",
     "System Architecture",
     "Use-Case Playbooks",
@@ -9,10 +8,6 @@
   ],
   "requiredCoreSlugOrder": [
     "index",
-    "workspace-how-to",
-    "workspace-new-sister-checklist",
-    "workspace-agentra-runtime-operations-update",
-    "workspace-server-runtime-auth-artifact-sync",
     "feedback-community",
     "architecture-system",
     "playbooks-use-cases",
