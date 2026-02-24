@@ -45,6 +45,11 @@ jobs:
             exit 1
           fi
 
+          if ! command -v jq >/dev/null 2>&1; then
+            echo "::error::jq is required for sister auto-discovery"
+            exit 1
+          fi
+
           clone_with_token() {
             local repo="$1"
             local dest="$2"
@@ -54,9 +59,37 @@ jobs:
           }
 
           clone_with_token "agentralabs/agentralabs-tech" "$RUNNER_TEMP/agentra-workspace"
-          clone_with_token "agentralabs/agentic-memory" "$RUNNER_TEMP/agentra-workspace/agentic-memory"
-          clone_with_token "agentralabs/agentic-codebase" "$RUNNER_TEMP/agentra-workspace/agentic-codebase"
-          clone_with_token "agentralabs/agentic-vision" "$RUNNER_TEMP/agentra-workspace/agentic-vision"
+
+          list_agentic_repos() {
+            local page=1
+            while true; do
+              local batch
+              batch="$(curl -fsSL \
+                -H "Authorization: Bearer ${AGENTRALABS_REPO_READ_TOKEN}" \
+                -H "Accept: application/vnd.github+json" \
+                "https://api.github.com/orgs/agentralabs/repos?per_page=100&page=${page}&type=all")"
+
+              echo "${batch}" | jq -r '.[] | select((.archived|not) and (.name|startswith("agentic-"))) | .full_name'
+
+              local count
+              count="$(echo "${batch}" | jq 'length')"
+              if [ "${count}" -lt 100 ]; then
+                break
+              fi
+              page=$((page + 1))
+            done
+          }
+
+          mapfile -t SISTER_REPOS < <(list_agentic_repos | sort -u)
+          if [ "${#SISTER_REPOS[@]}" -eq 0 ]; then
+            echo "::error::No agentic-* sister repos discovered from agentralabs org"
+            exit 1
+          fi
+
+          for repo in "${SISTER_REPOS[@]}"; do
+            repo_name="${repo##*/}"
+            clone_with_token "${repo}" "$RUNNER_TEMP/agentra-workspace/${repo_name}"
+          done
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile

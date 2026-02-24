@@ -1,0 +1,16 @@
+{
+  "sisters": {
+    "memory": {
+      "enabled": true,
+      "order": 10
+    },
+    "vision": {
+      "enabled": true,
+      "order": 20
+    },
+    "codebase": {
+      "enabled": true,
+      "order": 30
+    }
+  }
+}

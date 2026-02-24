@@ -16,37 +16,29 @@ const workspaceRoot = path.resolve(
 const EN_OUT_DIR = path.join(repoRoot, "docs", "ecosystem", "en")
 const ZH_OUT_DIR = path.join(repoRoot, "docs", "ecosystem", "zh")
 const ZH_TRANSLATION_CACHE = path.join(repoRoot, "scripts", "data", "zh-translation-cache.json")
+const SISTER_OVERRIDES_FILE = path.join(repoRoot, "docs", "config", "sister-overrides.json")
+const SISTER_MANIFEST_NAME = "sister.manifest.json"
 
-const DOC_SPECS = [
+const CORE_DOC_SPECS = [
   {
     key: "workspace",
     name: "Workspace",
     docsPublicDir: path.join(workspaceRoot, "docs"),
     includeLanding: false,
-  },
-  {
-    key: "memory",
-    name: "AgenticMemory",
-    docsPublicDir: path.join(workspaceRoot, "agentic-memory", "docs", "public"),
-    includeLanding: true,
-  },
-  {
-    key: "codebase",
-    name: "AgenticCodebase",
-    docsPublicDir: path.join(workspaceRoot, "agentic-codebase", "docs", "public"),
-    includeLanding: true,
-  },
-  {
-    key: "vision",
-    name: "AgenticVision",
-    docsPublicDir: path.join(workspaceRoot, "agentic-vision", "docs", "public"),
-    includeLanding: true,
+    publishedDocIds: [
+      "how-to",
+      "agentra-runtime-operations-update",
+      "server-runtime-auth-artifact-sync",
+    ],
+    enforceWhitelist: false,
   },
   {
     key: "feedback",
     name: "Feedback and Community",
     docsPublicDir: path.join(workspaceRoot, "docs"),
     includeLanding: false,
+    publishedDocIds: ["feedback-and-community"],
+    enforceWhitelist: false,
     slugById: {
       "feedback-and-community": "feedback-community",
     },
@@ -56,6 +48,8 @@ const DOC_SPECS = [
     name: "System Architecture",
     docsPublicDir: path.join(workspaceRoot, "docs"),
     includeLanding: false,
+    publishedDocIds: ["system-architecture"],
+    enforceWhitelist: false,
     slugById: {
       "system-architecture": "architecture-system",
     },
@@ -65,18 +59,94 @@ const DOC_SPECS = [
     name: "Use-Case Playbooks",
     docsPublicDir: path.join(workspaceRoot, "docs"),
     includeLanding: false,
+    publishedDocIds: ["use-case-playbooks"],
+    enforceWhitelist: false,
     slugById: {
       "use-case-playbooks": "playbooks-use-cases",
     },
   },
 ]
 
-const PUBLISHED_DOC_IDS = {
-  workspace: [
-    "how-to",
-    "agentra-runtime-operations-update",
-    "server-runtime-auth-artifact-sync",
-  ],
+const LEGACY_SISTER_SPECS = [
+  {
+    repo: "agentic-codebase",
+    key: "codebase",
+    name: "AgenticCodebase",
+    pageIds: [
+      "overview",
+      "experience-with-vs-without",
+      "quickstart",
+      "installation",
+      "command-surface",
+      "runtime-install-sync",
+      "integration-guide",
+      "concepts",
+      "api-reference",
+      "file-format",
+      "benchmarks",
+      "faq",
+    ],
+  },
+  {
+    repo: "agentic-memory",
+    key: "memory",
+    name: "AgenticMemory",
+    pageIds: [
+      "experience-with-vs-without",
+      "quickstart",
+      "installation",
+      "command-surface",
+      "runtime-install-sync",
+      "integration-guide",
+      "concepts",
+      "api-reference",
+      "file-format",
+      "rust-api",
+      "benchmarks",
+      "faq",
+    ],
+  },
+  {
+    repo: "agentic-vision",
+    key: "vision",
+    name: "AgenticVision",
+    pageIds: [
+      "overview",
+      "experience-with-vs-without",
+      "quickstart",
+      "installation",
+      "command-surface",
+      "runtime-install-sync",
+      "integration-guide",
+      "concepts",
+      "api-reference",
+      "benchmarks",
+      "faq",
+      "limitations",
+    ],
+  },
+]
+
+const SISTER_DEFAULT_PAGE_IDS = [
+  "overview",
+  "experience-with-vs-without",
+  "quickstart",
+  "installation",
+  "command-surface",
+  "runtime-install-sync",
+  "integration-guide",
+  "concepts",
+  "api-reference",
+  "file-format",
+  "rust-api",
+  "benchmarks",
+  "faq",
+  "limitations",
+  "initial-problem-coverage",
+  "primary-problem-coverage",
+]
+
+const LEGACY_PAGE_ID_ALLOWLIST = {
   codebase: [
     "overview",
     "experience-with-vs-without",
@@ -119,9 +189,6 @@ const PUBLISHED_DOC_IDS = {
     "faq",
     "limitations",
   ],
-  feedback: ["feedback-and-community"],
-  architecture: ["system-architecture"],
-  playbooks: ["use-case-playbooks"],
 }
 
 const PAGE_ORDER_SUFFIX = [
@@ -142,6 +209,8 @@ const PAGE_ORDER_SUFFIX = [
   "benchmarks",
   "faq",
   "limitations",
+  "initial-problem-coverage",
+  "primary-problem-coverage",
   "guide",
   "feedback-and-community",
   "system-architecture",
@@ -404,6 +473,160 @@ function slugify(value) {
     .replace(/^-+|-+$/g, "")
 }
 
+function parseSisterKeyFromRepo(repoName) {
+  return slugify(repoName.replace(/^agentic-/, "") || repoName)
+}
+
+function defaultSisterNameFromKey(key) {
+  const body = key
+    .split("-")
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join("")
+  return `Agentic${body}`
+}
+
+function normalizePageIdList(value) {
+  if (!Array.isArray(value)) return []
+  return [...new Set(value.map((item) => String(item).trim().toLowerCase()).filter(Boolean))]
+}
+
+function normalizeSlugMap(value) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return {}
+  const out = {}
+  for (const [key, val] of Object.entries(value)) {
+    if (typeof val !== "string" || !val.trim()) continue
+    out[String(key).trim().toLowerCase()] = val.trim()
+  }
+  return out
+}
+
+async function readJsonIfExists(file) {
+  if (!(await pathExists(file))) return null
+  const raw = await fs.readFile(file, "utf8")
+  return JSON.parse(raw)
+}
+
+async function loadSisterOverrides() {
+  const parsed = await readJsonIfExists(SISTER_OVERRIDES_FILE)
+  if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
+    return { sisters: {} }
+  }
+  const sisters = parsed.sisters && typeof parsed.sisters === "object" && !Array.isArray(parsed.sisters)
+    ? parsed.sisters
+    : {}
+  return { sisters }
+}
+
+function applySisterOverride(spec, override) {
+  const out = { ...spec }
+  if (!override || typeof override !== "object" || Array.isArray(override)) return out
+
+  if (typeof override.enabled === "boolean") out.enabled = override.enabled
+  if (typeof override.name === "string" && override.name.trim()) out.name = override.name.trim()
+  if (typeof override.include_landing === "boolean") out.includeLanding = override.include_landing
+  if (typeof override.enforce_whitelist === "boolean") out.enforceWhitelist = override.enforce_whitelist
+  if (typeof override.order === "number" && Number.isFinite(override.order)) out.order = override.order
+
+  const pageIds = normalizePageIdList(override.page_ids)
+  if (pageIds.length) out.publishedDocIds = pageIds
+
+  const overrideSlugMap = normalizeSlugMap(override.slug_by_id)
+  if (Object.keys(overrideSlugMap).length) {
+    out.slugById = { ...(out.slugById || {}), ...overrideSlugMap }
+  }
+
+  return out
+}
+
+async function discoverSisterSpecs(overrides) {
+  const entries = await fs.readdir(workspaceRoot, { withFileTypes: true })
+  const repoDirs = entries
+    .filter((entry) => entry.isDirectory() && entry.name.startsWith("agentic-"))
+    .map((entry) => entry.name)
+    .sort((a, b) => a.localeCompare(b))
+
+  const discovered = []
+  for (const repoName of repoDirs) {
+    const repoRootDir = path.join(workspaceRoot, repoName)
+    const docsPublicDir = path.join(repoRootDir, "docs", "public")
+    const docsPublicExists = await pathExists(docsPublicDir)
+
+    if (!docsPublicExists) {
+      const message = `[sync] Missing required public docs path for sister ${repoName}: ${docsPublicDir}`
+      if (strict) throw new Error(message)
+      console.warn(message)
+      continue
+    }
+
+    const manifestPath = path.join(docsPublicDir, SISTER_MANIFEST_NAME)
+    const manifest = await readJsonIfExists(manifestPath)
+    const legacy = LEGACY_SISTER_SPECS.find((entry) => entry.repo === repoName) || null
+
+    if (!manifest && !legacy) {
+      const message = `[sync] Missing ${SISTER_MANIFEST_NAME} for sister ${repoName}`
+      if (strict) throw new Error(message)
+      console.warn(message)
+      continue
+    }
+
+    const manifestObj = manifest && typeof manifest === "object" && !Array.isArray(manifest) ? manifest : {}
+    const key = String(manifestObj.key || legacy?.key || parseSisterKeyFromRepo(repoName)).trim().toLowerCase()
+    const name = String(manifestObj.name || legacy?.name || defaultSisterNameFromKey(key)).trim()
+    const includeLanding = manifestObj.include_landing !== false
+    const slugById = normalizeSlugMap(manifestObj.slug_by_id)
+    const manifestPageIds = normalizePageIdList(manifestObj.page_ids)
+    const legacyPageIds = legacy ? normalizePageIdList(legacy.pageIds) : []
+    const publishedDocIds = manifestPageIds.length
+      ? manifestPageIds
+      : legacyPageIds.length
+        ? legacyPageIds
+        : SISTER_DEFAULT_PAGE_IDS
+
+    const baseSpec = {
+      key,
+      repoName,
+      name,
+      docsPublicDir,
+      includeLanding,
+      slugById,
+      publishedDocIds,
+      enforceWhitelist: manifestObj.enforce_whitelist === true,
+      isSister: true,
+      enabled: manifestObj.enabled !== false,
+      order: typeof manifestObj.order === "number" ? manifestObj.order : Number.POSITIVE_INFINITY,
+    }
+
+    const override =
+      overrides.sisters?.[key] ||
+      overrides.sisters?.[repoName] ||
+      null
+
+    const resolved = applySisterOverride(baseSpec, override)
+    if (resolved.enabled === false) continue
+    discovered.push(resolved)
+  }
+
+  const keySet = new Set()
+  const unique = []
+  for (const spec of discovered) {
+    if (keySet.has(spec.key)) {
+      const message = `[sync] duplicate sister key detected: ${spec.key}`
+      if (strict) throw new Error(message)
+      console.warn(message)
+      continue
+    }
+    keySet.add(spec.key)
+    unique.push(spec)
+  }
+
+  return unique.sort((a, b) => {
+    const orderA = Number.isFinite(a.order) ? a.order : Number.POSITIVE_INFINITY
+    const orderB = Number.isFinite(b.order) ? b.order : Number.POSITIVE_INFINITY
+    if (orderA !== orderB) return orderA - orderB
+    return a.name.localeCompare(b.name)
+  })
+}
+
 function splitFrontMatter(markdown) {
   if (!markdown.startsWith("---\n")) {
     return { frontMatter: {}, body: markdown }
@@ -626,7 +849,15 @@ async function buildDocPages(spec, cacheState) {
   }
 
   const files = await walkMarkdownFiles(spec.docsPublicDir)
-  const allowedIds = new Set(PUBLISHED_DOC_IDS[spec.key] || [])
+  const knownAllowlist = spec.publishedDocIds || LEGACY_PAGE_ID_ALLOWLIST[spec.key] || []
+  const allowedIds = new Set(knownAllowlist)
+  const allIds = new Set(
+    files.map((file) =>
+      normalizePath(path.relative(spec.docsPublicDir, file))
+        .replace(/\.(md|mdx)$/i, "")
+        .toLowerCase(),
+    ),
+  )
   const filteredFiles = allowedIds.size
     ? files.filter((file) => {
         const rel = normalizePath(path.relative(spec.docsPublicDir, file))
@@ -640,6 +871,15 @@ async function buildDocPages(spec, cacheState) {
   }
 
   if (allowedIds.size) {
+    if (spec.enforceWhitelist) {
+      const extras = [...allIds].filter((id) => !allowedIds.has(id))
+      if (extras.length) {
+        const message = `[sync] Unapproved public docs for ${spec.name}: ${extras.join(", ")}`
+        if (strict) throw new Error(message)
+        console.warn(message)
+      }
+    }
+
     const presentIds = new Set(
       filteredFiles.map((file) =>
         normalizePath(path.relative(spec.docsPublicDir, file))
@@ -793,8 +1033,12 @@ async function main() {
     translated: 0,
   }
 
+  const sisterOverrides = await loadSisterOverrides()
+  const sisterSpecs = await discoverSisterSpecs(sisterOverrides)
+  const docSpecs = [...CORE_DOC_SPECS, ...sisterSpecs]
+
   const sourceChecks = await Promise.all(
-    DOC_SPECS.map(async (spec) => ({
+    docSpecs.map(async (spec) => ({
       spec,
       exists: await pathExists(spec.docsPublicDir),
     })),
@@ -813,7 +1057,7 @@ async function main() {
   await ensureDir(ZH_OUT_DIR)
 
   const docResults = []
-  for (const spec of DOC_SPECS) {
+  for (const spec of docSpecs) {
     // eslint-disable-next-line no-await-in-loop
     docResults.push({ spec, ...(await buildDocPages(spec, cacheState)) })
   }
