@@ -32,6 +32,7 @@ const manrope = Manrope({
 
 const SUFFIX_ORDER = [
   "how-to",
+  "new-sister-checklist",
   "agentra-runtime-operations-update",
   "server-runtime-auth-artifact-sync",
   "docs",
@@ -74,6 +75,19 @@ function slugFromUrl(url: string) {
 function suffixForPrefix(slug: string, prefix: string) {
   if (!slug.startsWith(prefix)) return ""
   return slug.slice(prefix.length)
+}
+
+function prefixForSlug(slug: string) {
+  const index = slug.indexOf("-")
+  if (index <= 0) return ""
+  return `${slug.slice(0, index)}-`
+}
+
+function toSisterGroupLabel(rawLabel: string, language: "en" | "zh") {
+  if (language === "zh") {
+    return rawLabel.replace(/\s*文档总览$/u, "").trim()
+  }
+  return rawLabel.replace(/\s*Docs$/i, "").trim()
 }
 
 function sortOverviewGroup(items: DocsNavItem[]) {
@@ -120,7 +134,20 @@ export default async function DocsRouteLayout({ children }: DocsRouteLayoutProps
       description: typeof page.data.description === "string" ? page.data.description : undefined,
     }))
 
-  const groupedPrefixes = ["workspace-", "memory-", "codebase-", "vision-", "feedback-", "architecture-", "playbooks-"]
+  const reservedPrefixes = ["workspace-", "feedback-", "architecture-", "playbooks-"]
+  const sisterPrefixOrder: string[] = []
+
+  for (const item of allItems) {
+    const slug = slugFromUrl(item.href)
+    if (!slug.endsWith("-docs")) continue
+    const prefix = slug.slice(0, -"docs".length)
+    if (!prefix || reservedPrefixes.includes(prefix)) continue
+    if (!sisterPrefixOrder.includes(prefix)) {
+      sisterPrefixOrder.push(prefix)
+    }
+  }
+
+  const groupedPrefixes = [...reservedPrefixes, ...sisterPrefixOrder]
 
   const overviewItems = sortOverviewGroup(
     allItems.filter((item) => {
@@ -132,20 +159,36 @@ export default async function DocsRouteLayout({ children }: DocsRouteLayoutProps
   const workspaceItems = sortPrefixedGroup(
     allItems.filter((item) => slugFromUrl(item.href).startsWith("workspace-")),
     "workspace-",
-    ["how-to", "agentra-runtime-operations-update", "server-runtime-auth-artifact-sync"],
+    ["how-to", "new-sister-checklist", "agentra-runtime-operations-update", "server-runtime-auth-artifact-sync"],
   )
-  const memoryItems = sortPrefixedGroup(
-    allItems.filter((item) => slugFromUrl(item.href).startsWith("memory-")),
-    "memory-",
-  )
-  const codebaseItems = sortPrefixedGroup(
-    allItems.filter((item) => slugFromUrl(item.href).startsWith("codebase-")),
-    "codebase-",
-  )
-  const visionItems = sortPrefixedGroup(
-    allItems.filter((item) => slugFromUrl(item.href).startsWith("vision-")),
-    "vision-",
-  )
+  const sisterGroups = sisterPrefixOrder
+    .map((prefix) => {
+      const items = sortPrefixedGroup(
+        allItems.filter((item) => slugFromUrl(item.href).startsWith(prefix)),
+        prefix,
+      )
+      if (items.length === 0) return null
+
+      const landing = items.find((item) => slugFromUrl(item.href) === `${prefix}docs`)
+      const derivedLabel = landing
+        ? toSisterGroupLabel(landing.label, language)
+        : localizeDocsLabel(
+            prefix
+              .replace(/-$/, "")
+              .split("-")
+              .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+              .join(" "),
+            language,
+          )
+
+      return {
+        prefix,
+        label: derivedLabel,
+        items,
+      }
+    })
+    .filter((group): group is { prefix: string; label: string; items: DocsNavItem[] } => group !== null)
+
   const feedbackItems = sortPrefixedGroup(
     allItems.filter((item) => slugFromUrl(item.href).startsWith("feedback-")),
     "feedback-",
@@ -165,9 +208,7 @@ export default async function DocsRouteLayout({ children }: DocsRouteLayoutProps
   const orderedItems = [
     ...overviewItems,
     ...workspaceItems,
-    ...memoryItems,
-    ...codebaseItems,
-    ...visionItems,
+    ...sisterGroups.flatMap((group) => group.items),
     ...feedbackItems,
     ...architectureItems,
     ...playbookItems,
@@ -192,21 +233,11 @@ export default async function DocsRouteLayout({ children }: DocsRouteLayoutProps
       items: workspaceItems,
       defaultOpen: true,
     },
-    {
-      label: localizeDocsLabel("AgenticMemory", language),
-      items: memoryItems,
+    ...sisterGroups.map((group) => ({
+      label: group.label,
+      items: group.items,
       defaultOpen: true,
-    },
-    {
-      label: localizeDocsLabel("AgenticCodebase", language),
-      items: codebaseItems,
-      defaultOpen: true,
-    },
-    {
-      label: localizeDocsLabel("AgenticVision", language),
-      items: visionItems,
-      defaultOpen: true,
-    },
+    })),
     {
       label: localizeDocsLabel("Feedback and Community", language),
       items: feedbackItems,
