@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { Navbar } from "@/components/navbar"
 import { HeroSection } from "@/components/hero-section"
+import { HomeReleaseStrip } from "@/components/home-release-strip"
 import { ValueProofSection } from "@/components/value-proof-section"
 import { FeatureGrid } from "@/components/feature-grid"
 import { AboutSection } from "@/components/about-section"
@@ -34,6 +35,7 @@ export default function Page() {
       <Navbar />
       <main>
         <HeroSection />
+        <HomeReleaseStrip />
         <ValueProofSection />
         <FeatureGrid />
         <AboutSection />

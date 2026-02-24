@@ -8,6 +8,7 @@ const SITE_LINKS = [
   { label: "Home", href: "/" },
   { label: "Projects", href: "/projects" },
   { label: "Publications", href: "/publications" },
+  { label: "Releases", href: "/releases" },
   { label: "Docs", href: "/docs", newTab: true },
   { label: "Feedback", href: "/feedback" },
   { label: "Showcase", href: "/showcase" },
