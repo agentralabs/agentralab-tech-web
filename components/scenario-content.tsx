@@ -1,0 +1,1072 @@
+"use client"
+
+import { type ReactNode } from "react"
+
+/* ────────────────────────────────────────────
+   Reusable prose primitives that match the
+   Agentra design-system (mono, sharp, orange)
+   ──────────────────────────────────────────── */
+
+function P({ children }: { children: ReactNode }) {
+  return <p className="text-xs lg:text-sm font-mono text-muted-foreground leading-relaxed mt-3">{children}</p>
+}
+
+function B({ children }: { children: ReactNode }) {
+  return <strong className="text-foreground">{children}</strong>
+}
+
+function Agent({ children }: { children: ReactNode }) {
+  return (
+    <blockquote className="mt-4 border-l-2 border-[#ea580c] pl-4 py-2 bg-foreground/[0.03]">
+      <p className="text-xs font-mono text-muted-foreground leading-relaxed italic">{children}</p>
+    </blockquote>
+  )
+}
+
+function SectionLabel({ children }: { children: ReactNode }) {
+  return (
+    <p className="text-[10px] tracking-[0.2em] uppercase font-mono text-[#ea580c] mt-5 mb-1">{children}</p>
+  )
+}
+
+/* ─────────────────────────────── MEMORY ── */
+
+export function CausedByContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        You're three sessions deep into a migration from PostgreSQL to CockroachDB. The agent recommended CockroachDB in session one. Now it's session four, and <B>latency numbers are worse than expected</B>. You ask: "Why did you recommend CockroachDB in the first place?"
+      </P>
+      <P>
+        Without CAUSED_BY edges, the agent stares blankly. It doesn't remember session one. It doesn't know what facts led to that decision. It might <B>hallucinate a justification</B>, or worse, confidently restate the recommendation without acknowledging the latency problem. You're left forensically reading chat logs, trying to reconstruct a reasoning chain that no longer exists in any machine-readable form.
+      </P>
+
+      <SectionLabel>With CAUSED_BY edges</SectionLabel>
+      <P>
+        The agent traverses its own reasoning graph backwards. It finds the Decision node <B>"Chose CockroachDB for multi-region deployment"</B> and follows three CAUSED_BY edges to the supporting facts: "Team requires sub-100ms reads across US-East and EU-West," "CockroachDB supports follower reads," and "PostgreSQL Citus extension lacks transparent geo-routing." The traversal takes <B>3.4 milliseconds</B> across 847 nodes.
+      </P>
+      <Agent>
+        I recommended CockroachDB because of three facts I recorded in session 1: your team needed sub-100ms multi-region reads, CockroachDB supports follower reads natively, and Citus lacked transparent geo-routing. Given the latency regression you're seeing, the second fact may need revisiting — follower reads have consistency trade-offs I didn't weight heavily enough.
+      </Agent>
+      <P>
+        The agent doesn't just remember <B>what</B> it decided. It remembers <B>why</B>, and it can critically re-examine the chain when new evidence arrives.
+      </P>
+    </>
+  )
+}
+
+export function SupersedesContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        Your team's primary language was Python when the agent first learned about the project in January. By March, you've migrated critical services to Rust. You never explicitly told the agent to "forget Python" — you just started talking about Rust codebases and cargo build times.
+      </P>
+      <P>
+        Without supersedes chains, the agent holds <B>contradictory beliefs simultaneously</B>. It might suggest a Python testing framework for your Rust service. Every old fact persists with equal authority, and the agent has no mechanism to distinguish "currently true" from "was once true."
+      </P>
+
+      <SectionLabel>With SUPERSEDES + RESOLVE</SectionLabel>
+      <P>
+        When the agent learns "Primary language is now Rust," it creates a Correction node that <B>supersedes</B> the original Fact. The old fact isn't deleted — it's still there, timestamped, auditable. But when any query touches "primary language," the resolve chain follows the supersedes edge in <B>under 1 millisecond</B> and returns the canonical current answer: Rust.
+      </P>
+      <Agent>
+        Your primary language is Rust (corrected in session 15). Previously, I recorded Python as your primary language in session 1. The correction was triggered when you described migrating payment-service and auth-service to Rust.
+      </Agent>
+    </>
+  )
+}
+
+export function CognitiveTypesContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        You ask the agent to analyze a production incident. It reads logs, makes inferences, forms a hypothesis, decides on a remediation plan, and documents a reusable runbook.
+      </P>
+      <P>
+        Without typed events, all of this reasoning gets stored as <B>undifferentiated text blobs</B>. The agent can't distinguish between "something I observed" and "something I concluded" and "something I decided." Facts, guesses, and conclusions blur together.
+      </P>
+
+      <SectionLabel>With six cognitive event types</SectionLabel>
+      <P>
+        Each piece of reasoning gets a type tag at creation: <B>Fact</B>, <B>Decision</B>, <B>Inference</B>, <B>Correction</B>, <B>Skill</B>, <B>Episode</B>. The production incident analysis produces: 3 Facts ("CPU spiked to 94% at 14:32 UTC"), 2 Inferences ("Likely a slow query cascade"), 1 Decision ("Increase connection pool to 400"), and 1 Skill ("When CPU spikes without deployment, check slow query log first").
+      </P>
+      <P>
+        Later, <B>memory_query</B> with <code className="text-[#ea580c]">event_types: ["decision"]</code> instantly returns only the decisions. A pattern query for all Skills gives you a growing library of reusable runbooks.
+      </P>
+      <Agent>
+        Found 1 decision related to the March 12 incident: "Increase connection pool to 400, add 30s query timeout." Supporting inferences: slow query cascade (confidence 0.85). Want me to show the full reasoning chain?
+      </Agent>
+    </>
+  )
+}
+
+export function CrossSessionContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        You're building a complex microservices architecture over six weeks. Each conversation is a new context window. <B>Every Monday morning is Groundhog Day.</B> You re-explain the architecture. You re-state your preferences. By the third week, you've spent more time re-briefing the agent than actually building.
+      </P>
+
+      <SectionLabel>With cross-session persistence</SectionLabel>
+      <P>
+        The agent opens last session's <B>.amem</B> file in 3.7 milliseconds (10,000 nodes) and has instant access to every fact, decision, inference, and correction from all prior sessions. Session 12 knows what session 1 established.
+      </P>
+      <Agent>
+        Resuming from session 11 (last Tuesday). Your architecture has 7 services. We left off designing the notification service. You preferred webhook delivery over polling. The payment-service Stripe integration is still pending the idempotency key refactor we discussed.
+      </Agent>
+      <P>
+        Storage is <B>8 MB per 10,000 nodes</B>. A decade of daily agent use fits in 240 MB. Your agent's lifetime memory costs less than a single high-resolution photo.
+      </P>
+    </>
+  )
+}
+
+export function SemanticSearchContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        You remember discussing a "scaling bottleneck" three weeks ago, but you can't remember the exact words. Was it "scaling bottleneck"? "Performance ceiling"? "Throughput limit"? A text search for "scaling bottleneck" <B>misses the node</B> where you said "the database can't handle more than 10K writes per second."
+      </P>
+
+      <SectionLabel>With semantic search</SectionLabel>
+      <P>
+        The query "database scaling problems" finds all semantically related nodes in <B>9 milliseconds</B> across 100,000 nodes. Cosine similarity doesn't care about word choice — it matches meaning.
+      </P>
+      <Agent>
+        Found 4 memories related to "database scaling problems": a fact about the 10K write/s ceiling (session 3, confidence 0.92), an inference about connection pool saturation (session 5, confidence 0.78), a decision to evaluate CockroachDB (session 7), and a correction noting higher-than-expected latency (session 9).
+      </Agent>
+    </>
+  )
+}
+
+export function HybridSearchContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        You're looking for "the Stripe webhook handler decision." A keyword search for "Stripe" returns <B>47 nodes</B> — every time Stripe was mentioned. A semantic search for "webhook processing decisions" might miss the specific Stripe context. Neither approach alone gives you the needle.
+      </P>
+
+      <SectionLabel>With hybrid search</SectionLabel>
+      <P>
+        Both BM25 text matching and vector similarity run simultaneously and merge via <B>Reciprocal Rank Fusion</B>. The fusion takes 10.83 milliseconds. The exact Decision node was ranked 12th by BM25 alone and 8th by vector alone, but RRF fusion pushed it to <B>rank 1</B>.
+      </P>
+      <Agent>
+        Top result (hybrid score 0.91): Decision from session 8 — "Implement Stripe webhook handler with idempotency keys and 3-retry exponential backoff." BM25 matched on "Stripe," vector matched on "webhook processing decision pattern."
+      </Agent>
+    </>
+  )
+}
+
+export function TemporalQueriesContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        A production incident happened on February 15th. You need to understand what the agent believed <B>at that time</B>, not what it believes now after three corrections. Without temporal queries, the agent can only show the current state. Post-hoc rationalization becomes indistinguishable from pre-incident understanding.
+      </P>
+
+      <SectionLabel>With temporal queries</SectionLabel>
+      <P>
+        <B>memory_temporal</B> comparing February 1-14 against February 15-28 shows: 3 facts added after the incident, 2 corrections applied to pre-incident beliefs, and 1 decision unchanged. The pre-incident state is fully reconstructable.
+      </P>
+      <Agent>
+        At February 15th, your memory contained: 142 nodes across 8 sessions. Key belief: connection pool at 200 was adequate (confidence 0.88). This was corrected on February 20th to "connection pool needs 400 minimum." The correction was CAUSED_BY the incident finding.
+      </Agent>
+    </>
+  )
+}
+
+export function PatternQueriesContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        You're onboarding a new team member and want every architectural decision about authentication over 30 sessions. Without pattern queries, you keyword-search for "auth" and get a mix of facts, inferences, tangential mentions, and actual decisions. <B>20 minutes of manual filtering.</B>
+      </P>
+
+      <SectionLabel>With pattern queries</SectionLabel>
+      <P>
+        <B>memory_query</B> with <code className="text-[#ea580c]">event_types: ["decision"]</code> combined with semantic similarity to "authentication" returns 7 Decision nodes in <B>40 milliseconds</B>, chronologically ordered, each with CAUSED_BY links to supporting facts.
+      </P>
+      <Agent>
+        Found 7 authentication decisions across sessions 3-28. The narrative arc: JWT for internal auth → refresh tokens → OAuth 2.1 for users → rate limiting post-incident. Each decision links to 2-4 supporting facts. Want me to generate a decision log document?
+      </Agent>
+    </>
+  )
+}
+
+export function CausalAnalysisContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        You just discovered that <B>latency benchmark numbers were wrong</B> — the tool had a configuration error inflating measurements by 40%. What decisions were made based on those bad numbers? Without causal analysis, the blast radius of a bad fact is invisible.
+      </P>
+
+      <SectionLabel>With causal analysis</SectionLabel>
+      <P>
+        <B>memory_causal</B> traverses all downstream edges from the bad fact in 30 milliseconds: 2 Inferences using the fact as evidence, 1 Decision that followed, and 3 further nodes depending on that decision. Total blast radius: <B>6 nodes, 2 high-confidence Decisions needing re-evaluation</B>.
+      </P>
+      <Agent>
+        If the latency benchmarks were wrong, 6 downstream memories are affected: 2 inferences (Service X performance assessment), 1 decision (caching layer addition), and 3 dependent design choices. Recommend re-running benchmarks and using memory_correct to update the chain.
+      </Agent>
+    </>
+  )
+}
+
+export function MemoryQualityContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        Your agent has been running for 6 months — 12,000 nodes across 180 sessions. <B>How healthy is its knowledge base?</B> A low-confidence inference from session 2 carries the same weight as a well-established fact from session 150. Knowledge debt accumulates silently.
+      </P>
+
+      <SectionLabel>With memory quality scoring</SectionLabel>
+      <P>
+        <B>memory_quality</B> runs a comprehensive audit: 23 nodes with confidence below 0.45, 7 orphan nodes, 4 decisions without supporting edges, and 31 stale nodes. Health score: <B>0.87 out of 1.0</B>.
+      </P>
+      <Agent>
+        Memory health audit: 12,847 nodes, 31,204 edges. Health score: 0.87. Concerns: 4 decisions lack supporting evidence (highest risk), 23 low-confidence nodes, 31 stale nodes. The unsupported decisions are about caching strategy, retry policy, timeout values, and rate limiting.
+      </Agent>
+    </>
+  )
+}
+
+export function ContradictionContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        Over 50 sessions, different team members gave the agent conflicting information. Alice said the API rate limit is <B>1,000 req/min</B>. Bob said it's <B>500</B>. Both recorded as Facts. The agent might use either depending on which retrieval path activates first.
+      </P>
+
+      <SectionLabel>With contradiction detection</SectionLabel>
+      <P>
+        The consolidation query's <B>LinkContradictions</B> operation identifies 3 contradiction pairs in 25 milliseconds. The rate limit contradiction is flagged with strength <B>0.89</B>.
+      </P>
+      <Agent>
+        Found contradiction: "API rate limit is 1,000 req/min" (session 12, Alice, confidence 0.80) conflicts with "API rate limit is 500 req/min" (session 34, Bob, confidence 0.75). These can't both be true. Should I verify with the API documentation?
+      </Agent>
+    </>
+  )
+}
+
+export function BudgetPolicyContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        Your agent has been running for 2 years. The memory file is approaching <B>150 MB</B>. Every fact, inference, and tangential observation accumulates forever without budget governance. Eventually disk limits or performance degrade.
+      </P>
+
+      <SectionLabel>With storage budget policy</SectionLabel>
+      <P>
+        With <code className="text-[#ea580c]">AMEM_STORAGE_BUDGET_MODE=auto-rollup</code>, when the file reaches 85% of the 2 GB budget, the consolidation engine activates: near-duplicates merge, stale Episodes compress, low-decay orphan nodes are archived. The <B>2 GB budget accommodates roughly 2.5 million nodes</B> — a lifetime of continuous use.
+      </P>
+      <Agent>
+        Storage health: 147 MB / 2 GB (7.3%). Projected 20-year usage: 890 MB. Budget status: healthy. Auto-rollup has compressed 312 low-value episode nodes this quarter. All decisions and corrections preserved.
+      </Agent>
+    </>
+  )
+}
+
+export function PrivacyRedactionContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        The agent captures decisions and facts automatically. But some conversations contain <B>API keys, email addresses, customer names</B>. Without privacy controls, an API key mentioned in passing becomes a permanent fixture of the memory graph.
+      </P>
+
+      <SectionLabel>With AMEM_AUTO_CAPTURE controls</SectionLabel>
+      <P>
+        With <code className="text-[#ea580c]">AMEM_AUTO_CAPTURE_MODE=safe</code> and <code className="text-[#ea580c]">AMEM_AUTO_CAPTURE_REDACT=true</code>, the agent applies regex-based redaction before any content is persisted. Emails become <B>[redacted-email]</B>. API keys become <B>[redacted-secret]</B>. The safe mode only captures structured reasoning and skips raw conversation content.
+      </P>
+      <Agent>
+        Captured 8 nodes this session. Redaction applied: 2 email addresses removed, 1 API key removed. Mode: safe (structured reasoning only). Raw conversation content: not captured.
+      </Agent>
+    </>
+  )
+}
+
+export function RuntimeSyncContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        Three agents work on different parts of the same project. Agent A designed the database schema. Agent B builds the API. <B>Each agent is an island.</B> Context transfer is manual, lossy, and time-consuming. Important decisions fall through the cracks.
+      </P>
+
+      <SectionLabel>With runtime-sync episodes</SectionLabel>
+      <P>
+        <B>amem runtime-sync</B> scans Agent A's memory file and creates a compressed Episode node: 12 Decisions about table design, 3 Corrections, and 5 key Facts about foreign key constraints. This episode becomes a handoff artifact that Agent B can ingest.
+      </P>
+      <Agent>
+        Runtime-sync episode created: "Database Schema Design (sessions 1-15)." Contains 12 decisions, 3 corrections, 5 key facts. Workspace changes detected: 4 new migration files, 2 modified models. Episode ready for cross-agent handoff.
+      </Agent>
+    </>
+  )
+}
+
+/* ─────────────────────────────── VISION ── */
+
+export function AvisFormatContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        You're debugging a CSS layout issue. You reproduce it, describe it to the agent, but the agent <B>doesn't actually see the problem</B>. It has your text description, which omits the subtle 3-pixel overlap. Every visual debugging session starts from scratch.
+      </P>
+
+      <SectionLabel>With the .avis format</SectionLabel>
+      <P>
+        Every captured screenshot becomes a permanent visual observation: a JPEG thumbnail, a <B>512-dimensional CLIP ViT-B/32 embedding</B>, a quality score, metadata labels, and a timestamp — all packed into roughly <B>4.26 KB per capture</B>. A gigabyte holds 250,000 visual observations. The file is portable and opens in under 5 milliseconds.
+      </P>
+      <Agent>
+        Loaded visual memory: 847 observations across 23 sessions. Oldest capture: January 15th (login page redesign). Most recent: today's cart badge regression. Storage: 3.6 MB.
+      </Agent>
+    </>
+  )
+}
+
+export function VisionQueryContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        You're reviewing a design change from two weeks ago. The Git history shows <B>CSS modifications</B>, but you can't visualize the before state from a diff of <code className="text-[#ea580c]">margin-top: 16px</code> to <code className="text-[#ea580c]">margin-top: 24px</code>.
+      </P>
+
+      <SectionLabel>With vision_query</SectionLabel>
+      <P>
+        The agent queries <code className="text-[#ea580c]">after: Feb 1, before: Feb 14, labels: ["dashboard"]</code> and returns 12 captures sorted by recency. The highest-quality capture (score <B>0.82</B>) shows the pre-redesign layout.
+      </P>
+      <Agent>
+        Found 12 dashboard captures from February 1-14. Best quality capture (0.82): session 15, February 8th, labeled "dashboard main view," 1280x720 resolution. Showing the pre-redesign layout with the compact header and 16px card margins.
+      </Agent>
+    </>
+  )
+}
+
+export function VisionCaptureContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        Your agent is monitoring a long-running deployment. You step away for 30 minutes. <B>The deployment log scrolled past critical error messages</B> that appeared for 10 seconds and then were replaced. The visual evidence is gone.
+      </P>
+
+      <SectionLabel>With vision_capture</SectionLabel>
+      <P>
+        The agent processes screenshots through a rigorous pipeline: JPEG thumbnail, <B>CLIP ViT-B/32 embedding in 47ms</B>, quality scoring (resolution 35%, metadata 40%, model confidence 25%), and metadata sanitization — emails, API keys, and filesystem paths are all redacted automatically.
+      </P>
+      <Agent>
+        Captured 4 deployment states while you were away. Key event: health check failure on pod-3 at minute 18 (capture #1247, quality 0.78). System recovered automatically at minute 23. Full visual timeline available.
+      </Agent>
+    </>
+  )
+}
+
+export function UiBlindnessContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        Your checkout page's "Place Order" button has a disabled state that looks <B>almost identical</B> to its enabled state. The model says "I see a blue button" in both cases. The color contrast ratio is only 1.3:1 — well below WCAG guidelines. The accessibility problem is <B>invisible to text-based reasoning</B>.
+      </P>
+
+      <SectionLabel>With vision capture</SectionLabel>
+      <P>
+        The agent takes screenshots of both states. The CLIP embeddings produce <B>0.94 cosine similarity</B> — nearly identical, confirming the problem numerically. The agent can reason about visual evidence even when it can't articulate the exact color difference.
+      </P>
+      <Agent>
+        Captured enabled and disabled button states. Visual similarity: 0.94 — these states are nearly indistinguishable visually. The disabled state lacks sufficient visual contrast. This may be an accessibility issue (color contrast ratio likely below WCAG 2.1 AA threshold of 3:1).
+      </Agent>
+    </>
+  )
+}
+
+export function VisionCompareContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        A CSS refactoring PR says "no visual changes." With <B>47 unique routes</B>, comprehensive visual regression testing by eye is impractical. A subtle 2-pixel navigation bar shift goes unnoticed until a user reports it.
+      </P>
+
+      <SectionLabel>With vision_compare</SectionLabel>
+      <P>
+        The agent compares captures across key pages using <B>512-dimensional CLIP embeddings</B>. Home page: 0.99. Product page: 0.98. Checkout: 0.97. User profile: <B>0.89 — below the 0.95 threshold</B>. Flagged immediately.
+      </P>
+      <Agent>
+        Compared 12 pages pre-merge vs post-merge. 11 pages visually identical (similarity &gt; 0.95). 1 regression detected: user profile page (similarity 0.89). The profile page header has shifted — likely a CSS specificity change affecting .profile-header margins.
+      </Agent>
+    </>
+  )
+}
+
+export function VisionDiffContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        The profile page regression has been flagged. Now you need to know <B>exactly where</B> the change occurred on a complex page with header, avatar, bio, activity feed, and sidebar. You're doing visual spot-the-difference by eye on a 1280x720 page.
+      </P>
+
+      <SectionLabel>With vision_diff</SectionLabel>
+      <P>
+        Per-pixel absolute difference with an 8x8 grid analysis completes in <B>under 1 millisecond</B>. Result: 3.4% of pixels changed, concentrated in 2 regions — the profile header area and the header-bio gap.
+      </P>
+      <Agent>
+        Pixel diff: 3.4% of pixels changed. 2 regions affected: profile header area (120, 24, 340x48) and header-bio gap (120, 80, 340x16). The header appears to have shifted down, increasing the gap above the bio section. Consistent with a margin-top change on .profile-header.
+      </Agent>
+    </>
+  )
+}
+
+export function VisionSimilarContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        Your user reports: "The login page looks weird. It looked like this before." <B>They don't send a screenshot of "before."</B> If the login page changed three months ago and you have 500 captures, this is a needle-in-a-haystack problem.
+      </P>
+
+      <SectionLabel>With vision_similar</SectionLabel>
+      <P>
+        The current page's CLIP embedding is compared against all <B>847 stored observations</B>. Top match (similarity: 0.96) is from February 3rd, before the redesign. The agent now has a precise visual baseline.
+      </P>
+      <Agent>
+        Found 3 similar visual states. Closest match: capture #412 from February 3rd (similarity 0.96, pre-redesign). The current page closely resembles the pre-redesign version. This suggests the recent CSS deployment may have accidentally reverted login page styles.
+      </Agent>
+    </>
+  )
+}
+
+export function QualityScoreContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        Your agent has 200 captures. Some are full-resolution with detailed labels. Others are <B>quick 320x240 crops with no metadata</B>, captured in fallback mode. You're about to make a critical decision based on visual comparisons. Which captures can you trust?
+      </P>
+
+      <SectionLabel>With quality_score</SectionLabel>
+      <P>
+        Every capture receives a composite metric: <B>resolution (35%)</B>, label completeness (20%), description presence (20%), and <B>model confidence (25%)</B>. A full-resolution capture scores 0.85+. A fallback capture scores 0.35. Comparisons are automatically weighted by quality.
+      </P>
+      <Agent>
+        Visual comparison confidence adjusted: baseline capture quality 0.42 (low resolution, no labels, fallback mode). Recommend recapturing at full resolution before making design decisions.
+      </Agent>
+    </>
+  )
+}
+
+export function VisionHealthContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        Visual memory has grown to 500 captures. Without health diagnostics, <B>unlabeled captures become unsearchable</B>, stale captures pollute similarity searches, and captures disconnected from memory nodes represent evidence that's never linked to reasoning.
+      </P>
+
+      <SectionLabel>With vision_health</SectionLabel>
+      <P>
+        Configurable thresholds flag low-quality (&lt;0.45), stale (&gt;7 days), unlabeled, and unlinked captures. Status logic is strict: <B>&gt;50% low-quality or &gt;70% unlinked triggers "fail."</B>
+      </P>
+      <Agent>
+        Vision health: WARN. 500 captures across 14 sessions. 32 low-quality (6.4%), 147 stale (29.4%), 89 unlabeled (17.8%), 312 unlinked (62.4%). Primary concern: 312 captures not linked to memory nodes.
+      </Agent>
+    </>
+  )
+}
+
+export function VisionLinkContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        The agent made a Decision: "The new checkout flow is better." But <B>where's the evidence?</B> The before/after screenshots that motivated the decision are orphaned in visual memory with no traceable connection.
+      </P>
+
+      <SectionLabel>With vision_link</SectionLabel>
+      <P>
+        The agent creates explicit connections with typed relationships: <B>observed_during</B>, <B>evidence_for</B>, <B>screenshot_of</B>. Linked captures are protected from storage budget pruning — evidence that supports decisions is never automatically deleted.
+      </P>
+      <Agent>
+        Linked capture #834 (old checkout, quality 0.87) and #835 (new checkout, quality 0.91) to Decision node "New checkout flow is better." Relationship: evidence_for. These captures are now protected from storage pruning.
+      </Agent>
+    </>
+  )
+}
+
+export function NonTextSignalContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        The DOM says everything is fine. But the visual capture shows a <B>clear overlap between two elements</B> that only manifests at a specific viewport width. The agent signs off on the release. The overlap ships to production.
+      </P>
+
+      <SectionLabel>With visual confidence scoring</SectionLabel>
+      <P>
+        The agent combines capture quality (both above <B>0.80</B>), diff severity (<B>12% change</B> where 0% was expected), and DOM analysis into a confidence-weighted assessment.
+      </P>
+      <Agent>
+        Visual regression severity: HIGH. Pixel diff ratio 12% in the header region at 1366px viewport. Both captures high quality (0.83 and 0.87). DOM inspection shows no structural issues — this is a purely visual regression invisible to text-based analysis. Recommend blocking release.
+      </Agent>
+    </>
+  )
+}
+
+export function ParameterSafetyContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        A poorly formatted API call passes <code className="text-[#ea580c]">min_quality: 1.5</code> to vision_query. Another passes negative coordinates. A third requests vision_similar with <B>both capture_id and embedding set simultaneously</B>. Without validation, these produce undefined behavior.
+      </P>
+
+      <SectionLabel>With strict validation</SectionLabel>
+      <P>
+        Every parameter is checked before execution. <code className="text-[#ea580c]">min_quality</code> must be in [0.0, 1.0]. <code className="text-[#ea580c]">after</code> must be ≤ <code className="text-[#ea580c]">before</code>. vision_similar requires <B>exactly one</B> of capture_id or embedding. Every validation error returns a <B>specific, actionable message</B>. No silent failures.
+      </P>
+      <Agent>
+        Error: vision_query parameter validation failed. min_quality value 1.5 is outside valid range [0.0, 1.0]. Adjust to a value between 0.0 and 1.0 (e.g., 0.80 for high-quality captures only).
+      </Agent>
+    </>
+  )
+}
+
+/* ────────────────────────────── CODEBASE ── */
+
+export function ImpactEdgesContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        You rename <B>calculateTotal</B> in the payment module. Quick text search finds 8 references. But a webhook handler in a completely different service imports it <B>dynamically via a string-based loader</B>. Your rename just broke payment processing for 40,000 users.
+      </P>
+
+      <SectionLabel>With IMPACT edges</SectionLabel>
+      <P>
+        <B>impact_analysis</B> returns the full dependency tree in 1.46 microseconds. Direct dependents: 8 callers. Transitive dependents: <B>23 additional code units across 7 files</B>. Risk summary: 4 high-risk, 8 medium-risk, 19 low-risk.
+      </P>
+      <Agent>
+        Impact analysis for calculateTotal: 31 total dependents across 10 files. 4 high-risk paths: webhook/processor.ts (dynamic import, stability 0.38), reports/monthly.ts (8 callers deep), api/v2/checkout.ts (public endpoint), batch/reconcile.ts (nightly job).
+      </Agent>
+    </>
+  )
+}
+
+export function CalledByContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        You need to understand what <B>process_order</B> does in a 200,000-line legacy codebase. It calls 12 functions, some call 8 more, those call 5 more. The call tree is <B>6 levels deep</B>. Reading linearly would take hours.
+      </P>
+
+      <SectionLabel>With CALLS / CALLED_BY edges</SectionLabel>
+      <P>
+        Bidirectional call graph traversal at <B>1.27 microseconds</B> for depth 3. Forward: 47 functions called directly or transitively. The agent identifies the critical path through the database. Reverse: 3 distinct entry points, each with different error handling requirements.
+      </P>
+      <Agent>
+        Call graph for process_order (depth 3): 47 callees across 6 levels. Critical database path: process_order → validate_inventory → check_warehouse_stock → query_inventory_db. 3 callers: REST handler, batch job, GraphQL resolver. The batch job doesn't implement retry logic.
+      </Agent>
+    </>
+  )
+}
+
+export function TestsEdgesContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        You refactored <B>UserAuthentication</B> to extract a TokenValidator. All 47 tests pass. But <B>43 of those tests exercise parts you didn't touch</B>. Only 4 test the extracted logic, and 2 use mocks that bypass the new validation path.
+      </P>
+
+      <SectionLabel>With TESTS edges</SectionLabel>
+      <P>
+        The agent maps which tests cover which code units and cross-references against the change set. Net real coverage of the refactored code: <B>2 tests</B>. The 2 mocked tests are flagged as false positives.
+      </P>
+      <Agent>
+        Test coverage for TokenValidator: 4 tests reference this code. However, 2 tests use mocked validators that bypass your extracted logic. Real coverage: 2 tests. Recommend adding tests for: invalid signature handling, token rotation, and the new validation error path.
+      </Agent>
+    </>
+  )
+}
+
+export function ContainsEdgesContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        You need to find where user profile logic lives in a monorepo with <B>12 packages, 340 modules, 2,800 symbols</B>. Grep for "profile" returns 287 hits across 43 files — primary implementations mixed with tangential references.
+      </P>
+
+      <SectionLabel>With CONTAINS edges</SectionLabel>
+      <P>
+        The structural hierarchy reveals: <code className="text-[#ea580c]">packages/user/</code> contains 14 modules, <code className="text-[#ea580c]">shared/models/</code> has the core data model, <code className="text-[#ea580c]">api/handlers/</code> has REST endpoints, and <code className="text-[#ea580c]">legacy/compat/</code> has backward-compatibility shims. <B>Full structural picture, not a flat list of text matches.</B>
+      </P>
+      <Agent>
+        User profile logic spans 4 packages: user/ (primary, 14 modules), shared/models/ (data model, 1 class), api/handlers/ (REST endpoints, 3 functions), legacy/compat/ (v1 compatibility, 2 functions).
+      </Agent>
+    </>
+  )
+}
+
+export function CouplesWithContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        There's no explicit dependency between <B>pricing/calculator.py</B> and <B>notifications/email_templates.py</B>. Different packages, no shared imports. But every time someone changes pricing, someone changes templates within 48 hours. <B>This pattern has repeated 7 times.</B>
+      </P>
+
+      <SectionLabel>With COUPLES_WITH edges</SectionLabel>
+      <P>
+        Git history analysis finds these files co-change in <B>89% of commits</B> touching either file. Coupling type: <B>Hidden</B> (no code-level dependency). The agent flags this during impact analysis.
+      </P>
+      <Agent>
+        Hidden coupling detected: pricing/calculator.py and notifications/email_templates.py co-change 89% of the time (12 of 13 commits). No code-level dependency — this is business logic coupling. Recommend extracting shared pricing constants or adding a CI check.
+      </Agent>
+    </>
+  )
+}
+
+export function ProphecyContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        A file has been modified <B>23 times in 30 days</B>. Of those, 9 were bugfixes. Complexity doubled. Three authors. Nobody noticed because each change was small. <B>The trend lines point toward imminent failure.</B>
+      </P>
+
+      <SectionLabel>With PROPHECY</SectionLabel>
+      <P>
+        The agent analyzes temporal patterns weighted by velocity (30%), bugfix trend (30%), complexity growth (15%), and coupling risk (25%). The file scores <B>risk 0.91</B> — one of the highest in the repository.
+      </P>
+      <Agent>
+        PROPHECY alert: services/payment/refund_handler.py — risk score 0.91 (BugRisk). 23 changes in 30 days, 39% bugfix ratio, complexity doubled, 3 authors. Prediction: high probability of production bug within 2 weeks. Recommend: freeze non-essential changes, add integration tests.
+      </Agent>
+    </>
+  )
+}
+
+export function StabilityScoringContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        You're choosing which module to build on. Two candidates: <B>services/auth/</B> (feels stable) and <B>services/payments/</B> (actively evolving). "Stable" and "volatile" are vibes, not measurements.
+      </P>
+
+      <SectionLabel>With stability scoring</SectionLabel>
+      <P>
+        Five weighted factors: change frequency (25%), bugfix ratio (25%), recent activity (20%), author concentration (15%), and code churn (15%). Auth scores <B>0.87</B>. Payments scores <B>0.23</B>. The gap is quantified, not guessed.
+      </P>
+      <Agent>
+        Stability comparison: auth/session_manager.py scores 0.87 (stable). payments/refund_handler.py scores 0.23 (volatile). Building on auth gives you a 3.8x more stable foundation.
+      </Agent>
+    </>
+  )
+}
+
+export function ChangeVelocityContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        Sprint planning is based on ticket descriptions and developer intuition. Nobody mentions that the payment service has been changing <B>4 times per week</B> and is likely to have merge conflicts with 2 other in-flight PRs.
+      </P>
+
+      <SectionLabel>With change velocity</SectionLabel>
+      <P>
+        The agent quantifies acceleration: payments at <B>4.2 changes/week</B> (up 3.8x), notifications decelerating (2.1, down from 3.5), auth stable (0.3/week). These trends inform planning.
+      </P>
+      <Agent>
+        Velocity report: payments/ is accelerating (4.2 changes/week, up 3.8x). notifications/ is decelerating (2.1/week, down from 3.5). auth/ is stable (0.3/week). Recommend serializing payment PRs or designating a single owner for the sprint.
+      </Agent>
+    </>
+  )
+}
+
+export function ConceptEdgesContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        You search for "auth" and get <B>287 results</B>. Some are authentication, some are authorization (different concept), some are test helpers, config files, comments. 30 minutes of manual filtering.
+      </P>
+
+      <SectionLabel>With CONCEPT edges</SectionLabel>
+      <P>
+        The "authentication" concept maps to semantically identified units across packages: <B>AuthMiddleware</B> in api/, <B>TokenValidator</B> in shared/, <B>OAuth2Provider</B> in integrations/, <B>SessionStore</B> in data/. Sub-concepts: token validation (3 units), session management (5 units), OAuth integration (4 units).
+      </P>
+      <Agent>
+        Concept map for "authentication": 19 code units across 5 packages. Sub-concepts: token validation (3 units), session management (5 units), OAuth integration (4 units), permission checking (7 units). Entry point: AuthMiddleware.authenticate().
+      </Agent>
+    </>
+  )
+}
+
+export function SymbolLookupContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        Documentation references <B>PaymentService.processRefund</B>. You need to find it among 2,800 exported symbols across 12 packages. Searching "processRefund" returns 14 matches — you scan them visually to find the definition.
+      </P>
+
+      <SectionLabel>With symbol lookup</SectionLabel>
+      <P>
+        Exact match in <B>14.3 microseconds</B> — O(1) hash-based lookup. Returns the definition with metadata: file path, complexity, stability score, caller count. Prefix, contains, and fuzzy modes handle typos and partial names.
+      </P>
+      <Agent>
+        Symbol: PaymentService.processRefund — packages/payments/src/service.ts:145. Public async function, complexity 12, stability 0.67. 23 direct callers, 3 covering tests.
+      </Agent>
+    </>
+  )
+}
+
+export function TypeHierarchyContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        You're refactoring <B>BaseRepository</B>, extended by 7 subclasses. Grep for "extends BaseRepository" finds 5 — but <B>2 subclasses extend intermediate classes</B> that extend BaseRepository. They don't appear in a direct text search.
+      </P>
+
+      <SectionLabel>With type hierarchy</SectionLabel>
+      <P>
+        INHERITS, IMPLEMENTS, and OVERRIDES edges reveal the full tree: <B>5 direct children, 2 grandchildren</B>. Method overrides mapped: findById overridden 3 times, save overridden 2 times. Trait implementations tracked across the hierarchy.
+      </P>
+      <Agent>
+        Type hierarchy for BaseRepository: 5 direct subclasses, 2 grandchildren via CachedRepository. Method overrides: findById (3), save (2), delete (1). Changing findById signature affects 3 overrides and their 23 combined callers.
+      </Agent>
+    </>
+  )
+}
+
+export function FfiBindsContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        Your Python web server calls a Rust library via PyO3 for text processing. A bug report says <B>normalization is dropping Unicode characters</B>. Python IDE doesn't know about Rust. Rust IDE doesn't know about Python callers.
+      </P>
+
+      <SectionLabel>With FFI_BINDS edges</SectionLabel>
+      <P>
+        The PyO3 binding is detected during compilation. Python call at <code className="text-[#ea580c]">text.py:34</code> connects via FFI_BINDS edge to Rust at <code className="text-[#ea580c]">lib.rs:67</code>. Impact analysis <B>crosses the language boundary</B> — changing the Rust function shows 12 Python callers.
+      </P>
+      <Agent>
+        FFI trace: Python text_processor.normalize() → PyO3 → Rust fn normalize(). The Unicode bug is in the Rust implementation: input.chars().filter() at line 72 filters by ASCII range. 12 Python callers affected.
+      </Agent>
+    </>
+  )
+}
+
+export function MultiLanguageContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        TypeScript frontend, Python API, Rust performance library. Garbled text appears. You debug <B>each layer independently</B> — console.logs, print statements, dbg! macros. If the bug is at a boundary, you might miss it because <B>each layer looks correct in isolation</B>.
+      </P>
+
+      <SectionLabel>With cross-language tracing</SectionLabel>
+      <P>
+        The agent traces the data flow: TypeScript → HTTP → Python → PyO3 → Rust. It identifies that Rust returns UTF-8 <B>Vec&lt;u8&gt;</B>, but Python decodes as ASCII instead of UTF-8. The encoding error is at the Python-Rust boundary.
+      </P>
+      <Agent>
+        Cross-language trace: Frontend fetchText() → API get_text_handler() → Rust process_text(). Bug at Python-Rust boundary: Rust returns UTF-8, Python decodes as ASCII at api/handlers/text.py:45. Fix: change .decode('ascii') to .decode('utf-8').
+      </Agent>
+    </>
+  )
+}
+
+export function PatternSharingContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        You're using <B>sqlx</B> in Rust for the first time. You use <code className="text-[#ea580c]">.unwrap()</code> on the database result. Your codebase doesn't demonstrate the correct error handling pattern, so the agent has no reference for "good."
+      </P>
+
+      <SectionLabel>With pattern sharing</SectionLabel>
+      <P>
+        The collective registry has established patterns from open-source codebases (<B>your private code never leaves your machine</B>). For sqlx: "Always handle sqlx::Error via ? or match — never .unwrap()." Confidence <B>0.94</B>, observed across 12,000+ codebases.
+      </P>
+      <Agent>
+        Common mistake: .unwrap() on sqlx::query() at src/db/users.rs:34. Established pattern (confidence 0.94): propagate with ? or handle with match. Using .unwrap() will panic on any database error.
+      </Agent>
+    </>
+  )
+}
+
+export function CommonMistakeContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        You're writing a Go HTTP handler and <B>forget to call resp.Body.Close()</B>. Tests pass. In production under load, you exhaust file descriptors and the service crashes.
+      </P>
+
+      <SectionLabel>With common mistake detection</SectionLabel>
+      <P>
+        The pattern hash matches a known LibraryMistake for Go's <code className="text-[#ea580c]">net/http</code> with confidence <B>0.91</B>. Flagged immediately, before tests, code review, or deployment.
+      </P>
+      <Agent>
+        Common Go mistake: HTTP response body not closed at handlers/proxy.go:67. Must call defer resp.Body.Close() immediately after error check. Without this, each request leaks a file descriptor. #2 most common net/http mistake (confidence 0.91).
+      </Agent>
+    </>
+  )
+}
+
+export function LibraryGuidanceContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        You create a <code className="text-[#ea580c]">tokio::runtime::Runtime</code> inside an existing async context. This compiles. Tests might pass. But <B>creating a runtime inside a runtime panics in production</B>.
+      </P>
+
+      <SectionLabel>With library-specific guidance</SectionLabel>
+      <P>
+        The collective registry flags: "Never create Runtime::new() inside an existing async context — use <B>tokio::task::spawn_blocking()</B> for synchronous work." Confidence <B>0.93</B>.
+      </P>
+      <Agent>
+        Tokio anti-pattern: Runtime::new() called inside async function at src/services/worker.rs:89. Creating a tokio runtime inside an existing runtime will panic. Use tokio::task::spawn_blocking() instead. Known footgun (confidence 0.93).
+      </Agent>
+    </>
+  )
+}
+
+export function AcbGateContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        Your CI merges PRs that pass tests. But tests don't catch <B>architectural risk</B> — a PR adding a dependency on a module with stability 0.12 and 47 dependents merges just as easily as one modifying a stable utility.
+      </P>
+
+      <SectionLabel>With acb gate</SectionLabel>
+      <P>
+        CI runs <code className="text-[#ea580c]">acb gate --max-risk 0.60 --require-tests</code>. The gate checks stability, dependency count, test coverage, and complexity against thresholds. Non-zero exit code <B>blocks the PR with a specific explanation</B>.
+      </P>
+      <Agent>
+        Gate BLOCKED: PR modifies payment/refund_handler (risk 0.78, threshold 0.60). Reasons: stability 0.23, 31 dependents, 2 covering tests (minimum: 5). To unblock: add 3 tests covering the refund calculation path.
+      </Agent>
+    </>
+  )
+}
+
+export function AcbBudgetContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        After 18 months of compiling code graphs, storage approaches <B>15 GB across 200 files</B>. Nobody knows which graphs are still relevant. Disk usage becomes an infrastructure conversation.
+      </P>
+
+      <SectionLabel>With acb budget</SectionLabel>
+      <P>
+        <code className="text-[#ea580c]">ACB_STORAGE_BUDGET_MODE=auto-rollup</code> with a 2 GB budget per graph. At 85% capacity, the engine compresses merged-branch graphs, archives historical snapshots, and preserves latest graphs for active branches.
+      </P>
+      <Agent>
+        Storage audit: 200 graphs, 14.7 GB total. 142 from merged branches. Auto-rollup would compress to 3.2 GB. Active graphs (58): 4.8 GB, within 20-year budget projections.
+      </Agent>
+    </>
+  )
+}
+
+export function TestGapContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        You shipped a feature. <B>82% line coverage.</B> But the uncovered 18% is concentrated in error handling for your most critical functions — payment retry, database failover, circuit breaker timeout. The aggregate metric <B>hides the actual risk</B>.
+      </P>
+
+      <SectionLabel>With test-gap detection</SectionLabel>
+      <P>
+        The agent cross-references coverage against risk scores. Payment retry: risk <B>0.72, 0 tests</B>. Database failover: risk 0.65, 1 mocked test. Circuit breaker: risk 0.58, 0 tests. These 3 paths account for <B>67% of production incident risk</B>.
+      </P>
+      <Agent>
+        Test gap analysis: 82% coverage overall, but 3 high-risk paths uncovered. Payment retry (risk 0.72, 0 tests), database failover (risk 0.65, 1 mocked), circuit breaker (risk 0.58, 0 tests). These account for 67% of incident risk.
+      </Agent>
+    </>
+  )
+}
+
+export function HealthDiagnosticsContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        Your codebase grew from 50K to 200K lines over 2 years. "Deploys feel slower." "Code review takes longer." These observations are real but <B>not quantified and don't point to specific causes</B>.
+      </P>
+
+      <SectionLabel>With acb health</SectionLabel>
+      <P>
+        Comprehensive report: systemic stability <B>(weighted average across all units)</B>, test coverage ratio, hotspot concentration, coupling density, and prophecy alerts. Not just "unhealthy" — specifically <B>which module and why</B>.
+      </P>
+      <Agent>
+        Codebase health: stability 0.71 (down from 0.78). 3 hotspot files causing 34% of bugfixes. Coupling density up 23% (hidden coupling in payments/ ↔ notifications/). Test coverage in high-velocity modules: 79% (was 85%). 5 files at risk &gt; 0.70.
+      </Agent>
+    </>
+  )
+}
+
+/* ─────────────── ALL TOGETHER NOW ─────── */
+
+export function MemoryAllTogetherContent() {
+  return (
+    <>
+      <P>
+        It's Tuesday. Your production monitoring triggers an alert: the payment service is returning <B>500 errors at a rate of 12%</B> of all requests. You engage the agent.
+      </P>
+
+      <SectionLabel>Session 1: Triage (10:00 AM)</SectionLabel>
+      <P>
+        The agent records initial facts: "Payment service 500 error rate: 12%", "No deployments in the last 24 hours." It creates an <B>Inference</B>: "Likely not a code regression" (confidence 0.72, CAUSED_BY the "no deployments" fact). It finds a <B>Skill</B> node from 3 months ago: "When payment errors spike without deployment, check Stripe API status first." Stripe status: operational. Second Inference: "If not code and not Stripe, likely database or connection issue" (confidence 0.65). <B>Decision</B>: "Investigate database connection pool next."
+      </P>
+
+      <SectionLabel>Session 2: Investigation (11:30 AM)</SectionLabel>
+      <P>
+        Memory loads in <B>3.7 milliseconds</B>. New facts from database metrics: "Connection pool utilization: 198/200 (99%)", "Average query time: 340ms (normal: 45ms)", "3 queries &gt; 5 seconds." New Inference: "Connection pool exhaustion caused by slow queries" (confidence <B>0.88</B>). A <B>Correction</B> supersedes the vaguer inference from session 1. Decision: "Add 30s query timeout, increase pool to 400, identify slow queries."
+      </P>
+
+      <SectionLabel>Session 3: Remediation (2:00 PM)</SectionLabel>
+      <P>
+        Outcome facts: "Pool increased to 400 — error rate dropped to 2%", "3 slow queries identified." The agent finds a <B>semantically similar Skill</B> from 2 months ago via memory_similar (9ms, similarity 0.87): "Aggregation queries on large tables benefit from materialized views." Decision: "Optimize the 3 slow queries."
+      </P>
+
+      <SectionLabel>Session 4: Postmortem (Wednesday)</SectionLabel>
+      <P>
+        The agent loads all sessions. <B>memory_query</B> finds 4 Decisions, 1 Correction, 11 Facts. <B>memory_causal</B> traces the complete dependency tree from the initial alert: 11 facts → 4 inferences → 3 corrections → 4 decisions → 1 skill applied. <B>Belief revision</B> with the hypothetical "slow query monitoring was in place" identifies 2 decisions that would have been unnecessary. The postmortem is recorded as an <B>Episode</B>, with a new Skill: "Add slow query alerting to prevent connection pool cascades."
+      </P>
+
+      <Agent>
+        Postmortem complete. Root cause chain: 3 slow queries → connection pool exhaustion → 12% error rate. Resolution: pool increase (immediate), query timeout (mitigation), query optimization (permanent). New skill recorded: slow query alerting prevents cascade. Belief revision shows this could have been a 30-minute fix with proper monitoring.
+      </Agent>
+
+      <P>
+        Four sessions. Seventeen memory nodes. Twenty-three edges. Every decision traceable to evidence, every correction preserving history, every skill reusable in future incidents. <B>The agent didn't just solve the problem — it built institutional knowledge that makes the next incident faster.</B>
+      </P>
+    </>
+  )
+}
+
+export function VisionAllTogetherContent() {
+  return (
+    <>
+      <P>
+        It's Wednesday morning. A QA engineer reports: "The product detail page looks broken on mobile. <B>The 'Add to Cart' button is hidden behind the image carousel.</B> It was fine last week."
+      </P>
+
+      <SectionLabel>Step 1: Capture the broken state</SectionLabel>
+      <P>
+        <B>vision_capture</B> at mobile viewport (375x812). CLIP embedding computed in 47ms. Quality score: <B>0.84</B>. Labels: "product-detail-mobile-broken." Session token in URL redacted to [redacted-secret]. Capture ID: #1089.
+      </P>
+
+      <SectionLabel>Step 2: Find the last known good state</SectionLabel>
+      <P>
+        <B>vision_similar</B> searches 847 observations in 1.5ms. Top match: capture #1034 (similarity <B>0.88</B>, from last Tuesday). Selected as baseline.
+      </P>
+
+      <SectionLabel>Step 3: Pixel-level diff</SectionLabel>
+      <P>
+        <B>vision_diff</B> in under 1ms. Result: <B>18% of pixels changed</B>. Three regions: carousel area expanded (+120px), Add to Cart button shifted and overlapping, product description pushed down.
+      </P>
+
+      <SectionLabel>Step 4: Compare with baseline</SectionLabel>
+      <P>
+        <B>vision_compare</B>: broken vs good = 0.88 similarity. Good vs two-weeks-ago = <B>0.97</B> — the page was stable before. Regression happened between Tuesday and today.
+      </P>
+
+      <SectionLabel>Step 5: Link to cognitive memory</SectionLabel>
+      <P>
+        Decision node created in cognitive memory. <B>vision_link</B> connects both captures as <code className="text-[#ea580c]">evidence_for</code>. Protected from storage pruning. CAUSED_BY edge to the pixel diff fact.
+      </P>
+
+      <SectionLabel>Step 6: Quality-weighted confidence</SectionLabel>
+      <P>
+        Both captures above <B>0.80 quality</B>. Pixel diff unambiguous. CLIP similarity drop (0.97 → 0.88) confirms genuine regression. Confidence: <B>0.92</B>.
+      </P>
+
+      <Agent>
+        Diagnosis (confidence: 0.92): Mobile product detail page regression. Image carousel height increased ~120px, pushing "Add to Cart" below the fold at 375px. Visual evidence: 18% pixel diff. The page was stable for 2 prior weeks (0.97 similarity). Both evidence captures high quality (0.81 and 0.84). Recommend checking carousel CSS changes — likely a max-height or aspect-ratio change.
+      </Agent>
+
+      <P>
+        Seven steps. Two captures compared. Three regions identified. One diagnosis with <B>0.92 confidence</B>, backed by quality-scored visual evidence linked to cognitive memory. The entire workflow took <B>under 200 milliseconds</B> of computation.
+      </P>
+    </>
+  )
+}
+
+export function CodebaseAllTogetherContent() {
+  return (
+    <>
+      <P>
+        The tech lead says: "Refactor <B>PaymentProcessor.processPayment()</B> — it's a 400-line god method. Break it into smaller functions. Don't break anything."
+      </P>
+
+      <SectionLabel>Symbol lookup + Structural understanding</SectionLabel>
+      <P>
+        Found in <B>14.3μs</B>. Public async, complexity 34, stability <B>0.31</B>. CONTAINS edges show 14 methods in the class, inside the payments package.
+      </P>
+
+      <SectionLabel>Impact analysis</SectionLabel>
+      <P>
+        <B>47 dependents</B> across 12 files. 23 callers. 3 high-risk: webhook handler (stability 0.22, dynamic import), batch reconciler (nightly job), GraphQL resolver (public API). 5 test files cover this method.
+      </P>
+
+      <SectionLabel>Hidden coupling</SectionLabel>
+      <P>
+        COUPLES_WITH: <code className="text-[#ea580c]">processor.ts</code> and <code className="text-[#ea580c]">payment_confirmation.ts</code> co-change <B>82% of the time</B>. No code dependency. Business logic coupling — pricing changes require template updates.
+      </P>
+
+      <SectionLabel>Call graph + Concept mapping</SectionLabel>
+      <P>
+        10 internal calls spanning 5 responsibilities: input validation (2), pricing calculation (2), payment execution (1), post-payment fulfillment (3), observability (2). Each concept suggests a <B>natural extraction boundary</B>.
+      </P>
+
+      <SectionLabel>Prophecy + Stability</SectionLabel>
+      <P>
+        Risk score <B>0.87</B> — 3rd highest. 19 changes in 45 days, 37% bugfix ratio, complexity doubled, 4 authors. Stability <B>0.31</B>. The refactor isn't premature — it's overdue.
+      </P>
+
+      <SectionLabel>Test gaps + FFI + Type hierarchy</SectionLabel>
+      <P>
+        Discount path: <B>0 dedicated tests</B>. Webhook path: 0 tests. FFI_BINDS: <code className="text-[#ea580c]">calculateTotal()</code> calls Rust pricing engine via N-API — must preserve call convention. INHERITS: 2 subclasses (<B>SubscriptionPaymentProcessor</B>, <B>RefundPaymentProcessor</B>) override this method. Interface <B>IPaymentHandler</B> must also update.
+      </P>
+
+      <SectionLabel>The gate + The plan</SectionLabel>
+      <P>
+        <B>acb gate</B>: risk 0.87, above threshold 0.60. But the refactor itself is the fix. The agent synthesizes all 10 analyses:
+      </P>
+      <P>
+        Add 3 tests first. Extract <B>validateAndCalculate()</B>, <B>executePayment()</B>, and <B>fulfillOrder()</B>. Keep processPayment as orchestrator. Update 2 subclass overrides. Update the interface. Verify N-API compatibility. Update the email template (hidden coupling). Run full suite.
+      </P>
+
+      <Agent>
+        Refactoring plan: 400 lines → 4 focused methods. Impact: 47 dependents, 3 high-risk callers, 2 subclass overrides, 1 interface update, 1 FFI boundary, 1 hidden coupling. Test gaps: 3 paths need coverage first. Risk: 0.87 → projected 0.45 after decomposition. No breaking API changes if orchestrator signature preserved.
+      </Agent>
+
+      <P>
+        Eleven analyses. One comprehensive plan. Every dependency mapped. Every risk quantified. Every hidden coupling surfaced. <B>The god method doesn't stand a chance.</B>
+      </P>
+    </>
+  )
+}

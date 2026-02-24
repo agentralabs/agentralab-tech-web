@@ -1,8 +1,9 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { ArrowRight } from "lucide-react"
+import { ArrowRight, Eye } from "lucide-react"
 import { motion } from "framer-motion"
+import Link from "next/link"
 
 const ease = [0.22, 1, 0.36, 1] as const
 
@@ -39,6 +40,7 @@ interface ModuleCard {
   deepSummary: { lead: string; body: string }[]
   cta: string
   href: string
+  scenarioHref: string
   highlighted: boolean
 }
 
@@ -72,6 +74,7 @@ const MODULES: ModuleCard[] = [
     ],
     cta: "VIEW REPO",
     href: "https://github.com/agentralabs/agentic-memory",
+    scenarioHref: "/projects/scenarios/agentic-memory",
     highlighted: false,
   },
   {
@@ -103,6 +106,7 @@ const MODULES: ModuleCard[] = [
     ],
     cta: "VIEW REPO",
     href: "https://github.com/agentralabs/agentic-vision",
+    scenarioHref: "/projects/scenarios/agentic-vision",
     highlighted: true,
   },
   {
@@ -134,6 +138,7 @@ const MODULES: ModuleCard[] = [
     ],
     cta: "VIEW REPO",
     href: "https://github.com/agentralabs/codebase",
+    scenarioHref: "/projects/scenarios/agentic-codebase",
     highlighted: false,
   },
 ]
@@ -288,7 +293,20 @@ function ModuleCardView({ module, index }: { module: ModuleCard; index: number }
         </div>
       </div>
 
-      <div className="px-5 pb-5 pt-3">
+      <div className="px-5 pb-5 pt-3 flex flex-col gap-2">
+        <Link
+          href={module.scenarioHref}
+          className={`group w-full flex items-center justify-center gap-0 text-xs font-mono tracking-wider uppercase transition-colors ${
+            module.highlighted
+              ? "border-2 border-background/30 text-background hover:bg-background/10"
+              : "border-2 border-foreground text-foreground hover:bg-foreground hover:text-background"
+          }`}
+        >
+          <span className="flex items-center justify-center w-9 h-9 bg-[#ea580c]">
+            <Eye size={14} strokeWidth={2} className="text-background" />
+          </span>
+          <span className="flex-1 py-2.5">SEE IN ACTION</span>
+        </Link>
         <motion.a
           href={module.href}
           target="_blank"

@@ -2,7 +2,8 @@
 
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { ArrowRight } from "lucide-react"
+import { ArrowRight, Eye } from "lucide-react"
+import Link from "next/link"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 
@@ -22,6 +23,7 @@ const PROJECTS: {
   artifact: string
   capacity: string
   repo: string
+  scenarioHref: string
   line: string
 }[] = [
   {
@@ -29,6 +31,7 @@ const PROJECTS: {
     artifact: ".amem",
     capacity: "16 query capacities",
     repo: "https://github.com/agentralabs/agentic-memory",
+    scenarioHref: "/projects/scenarios/agentic-memory",
     line: "Persistent cognitive graph memory for cross-session reasoning continuity.",
   },
   {
@@ -36,6 +39,7 @@ const PROJECTS: {
     artifact: ".avis",
     capacity: "cartography + actions + gateway + compiler runtime",
     repo: "https://github.com/agentralabs/agentic-vision",
+    scenarioHref: "/projects/scenarios/agentic-vision",
     line: "Cortex web cartography with browserless mapping, direct actions, and persistent visual memory.",
   },
   {
@@ -43,6 +47,7 @@ const PROJECTS: {
     artifact: ".acb",
     capacity: "semantic compiler + collective + prophecy",
     repo: "https://github.com/agentralabs/codebase",
+    scenarioHref: "/projects/scenarios/agentic-codebase",
     line: "Concept-level code intelligence with impact edges, hidden coupling, and temporal prophecy.",
   },
 ]
@@ -571,6 +576,15 @@ export default function ProjectsPage() {
                   </span>
                   <span className="flex-1 py-2.5 text-center">View Repo</span>
                 </a>
+                <Link
+                  href={activeMeta.scenarioHref}
+                  className="mt-2 group flex items-center gap-0 border-2 border-foreground text-foreground text-xs font-mono tracking-wider uppercase hover:bg-foreground hover:text-background transition-colors"
+                >
+                  <span className="flex items-center justify-center w-9 h-9 bg-[#ea580c]">
+                    <Eye size={14} strokeWidth={2} className="text-background" />
+                  </span>
+                  <span className="flex-1 py-2.5 text-center">See Scenarios</span>
+                </Link>
               </div>
 
               <div className="p-5">
