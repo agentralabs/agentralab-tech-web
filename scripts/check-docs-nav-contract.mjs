@@ -14,6 +14,7 @@ const EXPECTED_CORE_GROUP_ORDER = [
   "Feedback and Community",
   "System Architecture",
   "Use-Case Playbooks",
+  "Glossary",
 ]
 
 const EXPECTED_CORE_SLUG_ORDER = [
@@ -25,6 +26,7 @@ const EXPECTED_CORE_SLUG_ORDER = [
   "feedback-community",
   "architecture-system",
   "playbooks-use-cases",
+  "glossary",
 ]
 
 function fail(message) {
