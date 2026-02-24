@@ -26,9 +26,9 @@ pnpm lint
 pnpm build
 ```
 
-## Automated Lab Log Publishing
+## Automated Blog Publishing
 
-Lab Log entries can be generated from GitHub release/commit signals and published automatically every 72 hours.
+Blog entries can be generated from GitHub release/commit signals and published automatically every 4-5 days.
 
 - Generator script: `scripts/generate-lab-log.mjs`
 - Local run: `pnpm lablog:generate`
@@ -42,7 +42,7 @@ Lab Log entries can be generated from GitHub release/commit signals and publishe
 Workflow:
 
 - `.github/workflows/lab-log-autopublish.yml`
-- Runs daily and publishes whenever the last publish is older than 72 hours.
+- Runs daily and publishes whenever the last publish is older than the configured 4-5 day window.
 - If unseen source events are below threshold, it publishes in carryover heartbeat mode (same cadence, lower-signal summary).
 - Commits only when a new entry is generated.
 - Every generated publish also creates a matching GitHub Release with business-structured notes.
@@ -51,7 +51,7 @@ Workflow:
 Environment knobs:
 
 - `LAB_LOG_REPO_SOURCES` comma-separated `owner/repo` list.
-- `LAB_LOG_INTERVAL_HOURS` default `72`.
+- `LAB_LOG_INTERVAL_HOURS` default `96`.
 - `LAB_LOG_MIN_EVENTS` default `2`.
 - `LAB_LOG_MAX_SIGNALS` default `6`.
 - `LAB_LOG_FORCE=true` to bypass interval guard.

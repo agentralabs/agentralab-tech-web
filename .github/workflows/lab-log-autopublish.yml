@@ -33,7 +33,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           AGENTRA_GITHUB_TOKEN: ${{ secrets.AGENTRA_GITHUB_TOKEN }}
-          LAB_LOG_INTERVAL_HOURS: "72"
+          LAB_LOG_INTERVAL_HOURS: "96"
           LAB_LOG_MIN_EVENTS: "2"
           LAB_LOG_MAX_SIGNALS: "6"
         run: pnpm lablog:generate

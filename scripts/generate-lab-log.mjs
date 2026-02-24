@@ -277,7 +277,7 @@ function buildNarrative(selectedEvents, nowIso) {
   ]
 
   const paragraph1 =
-    `This Lab Log captures the latest 72-hour activity window ending on ${dateIso}. ` +
+    `This blog update captures the latest publishing window ending on ${dateIso}. ` +
     `We recorded ${selectedEvents.length} ${plural("signal", selectedEvents.length)} across ${repoSet.size} ${pluralRepository(repoSet.size)}, ` +
     `including ${releaseCount} ${plural("release", releaseCount)}, ${commitCount} commit ${plural("update", commitCount)}, and ${manualCount} manually curated ${plural("note", manualCount)}. ` +
     `${pick(openingVariants, seed)}`
@@ -298,7 +298,7 @@ function buildNarrative(selectedEvents, nowIso) {
     `For each item, source links are attached below so teams can validate scope, migration impact, and follow-up tasks without context loss before broad release communication.`
 
   const summary =
-    `${selectedEvents.length} fresh ${plural("signal", selectedEvents.length)} across ${repoSet.size} ${plural("repo", repoSet.size)} in the latest 72-hour lab window.`
+    `${selectedEvents.length} fresh ${plural("signal", selectedEvents.length)} across ${repoSet.size} ${plural("repo", repoSet.size)} in the latest 4-5 day publishing window.`
 
   return {
     summary,
@@ -329,7 +329,7 @@ function toMdx(entry) {
 }
 
 async function main() {
-  const intervalHours = envNumber("LAB_LOG_INTERVAL_HOURS", 72)
+  const intervalHours = envNumber("LAB_LOG_INTERVAL_HOURS", 96)
   const minEvents = envNumber("LAB_LOG_MIN_EVENTS", 2)
   const maxSignals = envNumber("LAB_LOG_MAX_SIGNALS", 6)
   const forcePublish = envBool("LAB_LOG_FORCE")
@@ -391,7 +391,7 @@ async function main() {
 
   const entry = {
     slug,
-    title: `Lab Log · ${dateIso}`,
+    title: `Blog Update · ${dateIso}`,
     dateIso,
     publishedAt: nowIso,
     summary: narrative.summary,
