@@ -8,7 +8,7 @@ description: "安装 commands are documented in 安装."
 ## 二进制文件
 
 - `acb`（CLI 编译器和查询引擎）
-- `acb-mcp`（MCP 服务器）
+- `agentic-codebase-mcp` (MCP server)
 
 ## `acb` 顶级
 
@@ -92,10 +92,10 @@ export ACB_STORAGE_BUDGET_HORIZON_YEARS=20
 export ACB_STORAGE_BUDGET_TARGET_FRACTION=0.85
 ```
 
-## `acb-mcp`
+## `agentic-codebase-mcp`
 
 ```bash
-acb-mcp serve
+agentic-codebase-mcp serve
 ```
 
 常用选项：
@@ -110,7 +110,7 @@ acb-mcp serve
 {
   "mcpServers": {
     "agentic-codebase": {
-      "command": "$HOME/.local/bin/acb-mcp",
+      "command": "$HOME/.local/bin/agentic-codebase-mcp",
       "args": []
     }
   }

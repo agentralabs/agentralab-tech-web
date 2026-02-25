@@ -89,7 +89,7 @@ acb query project.acb prophecy -f json     # Machine-readable predictions
 
 ## MCP 服务器如何工作？
 
-`acb-mcp` 二进制文件通过 stdio 实现了模型上下文协议。当与 MCP 兼容的客户端（Claude Desktop、VS Code、Cursor、Windsurf）连接时，它会收到：
+The `agentic-codebase-mcp` binary implements the [模型上下文协议](https://modelcontextprotocol.io/) over stdio. When an MCP-compatible client (Claude Desktop, VS Code, Cursor, Windsurf) connects, it receives:
 
 - **工具**：LLM 可以调用的函数（`acb_compile`、`acb_query`、`acb_info` 等）
 - **资源**：法学硕士可以读取的数据（`acb://graphs/project/units` 等）

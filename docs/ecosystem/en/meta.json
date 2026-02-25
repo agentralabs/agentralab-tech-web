@@ -44,6 +44,18 @@
     "codebase-api-reference",
     "codebase-file-format",
     "codebase-benchmarks",
-    "codebase-faq"
+    "codebase-faq",
+    "identity-docs",
+    "identity-experience-with-vs-without",
+    "identity-quickstart",
+    "identity-installation",
+    "identity-command-surface",
+    "identity-runtime-install-sync",
+    "identity-integration-guide",
+    "identity-concepts",
+    "identity-api-reference",
+    "identity-file-format",
+    "identity-benchmarks",
+    "identity-faq"
   ]
 }

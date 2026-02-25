@@ -638,22 +638,41 @@ export default function ProjectsPage() {
           <SectionRail label="// SECTION: CAPABILITY_SURFACE" step="010" />
           <div className="border-2 border-foreground">
             <div className="px-4 py-3 border-b-2 border-foreground flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-              <div className="flex items-center gap-2 flex-wrap">
-                {PROJECTS.map((project) => (
-                  <button
-                    key={project.key}
-                    type="button"
-                    onClick={() => setActiveProject(project.key)}
-                    className={`px-3 py-2 text-[10px] tracking-[0.15em] uppercase font-mono border ${
-                      activeProject === project.key
-                        ? "bg-foreground text-background border-foreground"
-                        : "bg-background text-muted-foreground border-border hover:border-foreground"
-                    }`}
-                    aria-pressed={activeProject === project.key}
-                  >
-                    {project.key}
-                  </button>
-                ))}
+              <div className="flex flex-col items-start gap-1">
+                <div className="flex items-center gap-2">
+                  {PROJECTS.slice(0, 3).map((project) => (
+                    <button
+                      key={project.key}
+                      type="button"
+                      onClick={() => setActiveProject(project.key)}
+                      className={`px-3 py-2 text-[10px] tracking-[0.15em] uppercase font-mono border ${
+                        activeProject === project.key
+                          ? "bg-foreground text-background border-foreground"
+                          : "bg-background text-muted-foreground border-border hover:border-foreground"
+                      }`}
+                      aria-pressed={activeProject === project.key}
+                    >
+                      {project.key}
+                    </button>
+                  ))}
+                </div>
+                <div className="flex items-center gap-2">
+                  {PROJECTS.slice(3).map((project) => (
+                    <button
+                      key={project.key}
+                      type="button"
+                      onClick={() => setActiveProject(project.key)}
+                      className={`px-3 py-2 text-[10px] tracking-[0.15em] uppercase font-mono border ${
+                        activeProject === project.key
+                          ? "bg-foreground text-background border-foreground"
+                          : "bg-background text-muted-foreground border-border hover:border-foreground"
+                      }`}
+                      aria-pressed={activeProject === project.key}
+                    >
+                      {project.key}
+                    </button>
+                  ))}
+                </div>
               </div>
               <span className="text-[10px] tracking-[0.15em] uppercase font-mono text-muted-foreground">
                 {activeMeta.capacity} | artifact: {activeMeta.artifact}

@@ -9,7 +9,7 @@ const ease = [0.22, 1, 0.36, 1] as const
 
 interface Paper {
   title: string
-  project: "AgenticMemory" | "AgenticVision" | "AgenticCodebase"
+  project: "AgenticMemory" | "AgenticVision" | "AgenticCodebase" | "AgenticIdentity"
   type: string
   summary: string
   pdf: string
@@ -68,6 +68,15 @@ const PAPERS: Paper[] = [
     pdf: "https://github.com/agentralabs/agentic-codebase/blob/main/paper/paper-i-semantic-compiler/agenticcodebase-paper.pdf",
     source:
       "https://github.com/agentralabs/agentic-codebase/blob/main/paper/paper-i-semantic-compiler/agenticcodebase-paper.tex",
+  },
+  {
+    title: "AgenticIdentity: A Cryptographic Trust Anchor for AI Agent Systems",
+    project: "AgenticIdentity",
+    type: "Paper I",
+    summary: "Defines a cryptographic identity framework for AI agents using Ed25519 anchors, signed action receipts, and scoped trust delegation.",
+    pdf: "https://github.com/agentralabs/agentic-identity/blob/main/paper/paper-i-trust-anchor/agenticidentity-paper.pdf",
+    source:
+      "https://github.com/agentralabs/agentic-identity/blob/main/paper/paper-i-trust-anchor/agenticidentity-paper.tex",
   },
 ]
 
@@ -167,17 +176,17 @@ export default function PublicationsPage() {
               Publications and technical papers
             </h1>
             <p className="mt-4 max-w-3xl text-xs lg:text-sm font-mono text-muted-foreground leading-relaxed">
-              Research corpus for AgenticMemory, AgenticVision, and AgenticCodebase. Each paper documents core
+              Research corpus for AgenticMemory, AgenticVision, AgenticCodebase, and AgenticIdentity. Each paper documents core
               architecture decisions, data formats, and MCP integration pathways.
             </p>
             <div className="mt-5 grid grid-cols-1 sm:grid-cols-3 gap-0 border-2 border-foreground">
               <div className="px-4 py-3 border-b-2 sm:border-b-0 sm:border-r-2 border-foreground">
                 <p className="text-[10px] tracking-[0.15em] uppercase font-mono text-muted-foreground">Total Papers</p>
-                <p className="text-2xl font-mono font-bold">6</p>
+                <p className="text-2xl font-mono font-bold">7</p>
               </div>
               <div className="px-4 py-3 border-b-2 sm:border-b-0 sm:border-r-2 border-foreground">
                 <p className="text-[10px] tracking-[0.15em] uppercase font-mono text-muted-foreground">Projects</p>
-                <p className="text-2xl font-mono font-bold">3</p>
+                <p className="text-2xl font-mono font-bold">4</p>
               </div>
               <div className="px-4 py-3">
                 <p className="text-[10px] tracking-[0.15em] uppercase font-mono text-muted-foreground">Open Access</p>
@@ -190,6 +199,7 @@ export default function PublicationsPage() {
         <GroupBlock project="AgenticMemory" step="014" />
         <GroupBlock project="AgenticVision" step="015" />
         <GroupBlock project="AgenticCodebase" step="016" />
+        <GroupBlock project="AgenticIdentity" step="016b" />
 
         <section className="w-full px-6 pb-20 lg:px-12">
           <SectionRail label="// SECTION: RESEARCH_DIRECTION" step="017" />
@@ -199,7 +209,7 @@ export default function PublicationsPage() {
                 ongoing.research
               </span>
             </div>
-            <div className="p-5 grid grid-cols-1 lg:grid-cols-3 gap-4">
+            <div className="p-5 grid grid-cols-1 lg:grid-cols-2 gap-4">
               <div className="border-2 border-foreground p-4">
                 <h3 className="text-sm font-mono font-bold uppercase">Web Compiler</h3>
                 <p className="mt-2 text-xs font-mono text-muted-foreground leading-relaxed">
@@ -219,6 +229,13 @@ export default function PublicationsPage() {
                 <p className="mt-2 text-xs font-mono text-muted-foreground leading-relaxed">
                   Historical delta stacks for pattern detection, trend modeling, predictive alerts, and web-state
                   memory over time.
+                </p>
+              </div>
+              <div className="border-2 border-foreground p-4">
+                <h3 className="text-sm font-mono font-bold uppercase">Multi-Agent Trust</h3>
+                <p className="mt-2 text-xs font-mono text-muted-foreground leading-relaxed">
+                  Delegation chain verification, cross-agent trust revocation, and multi-party receipt attestation
+                  for production agent orchestration.
                 </p>
               </div>
             </div>

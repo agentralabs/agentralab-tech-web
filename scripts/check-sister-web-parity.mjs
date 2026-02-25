@@ -397,6 +397,26 @@ for (const s of sisters) {
   }
 }
 
+// ── Q. publications/page.tsx — all sisters must have papers ──────────────────
+
+console.log("\n── Q. publications/page.tsx ──")
+const pubTsx = readFile("app/publications/page.tsx")
+if (pubTsx) {
+  for (const s of sisters) {
+    assertContains(pubTsx, s.name, "publications/page.tsx", `publications page references ${s.name}`)
+  }
+}
+
+// ── R. value-proof-section.tsx — all sisters must have proof cards ───────────
+
+console.log("\n── R. value-proof-section.tsx ──")
+const vpTsx = readFile("components/value-proof-section.tsx")
+if (vpTsx) {
+  for (const s of sisters) {
+    assertContains(vpTsx, s.name, "value-proof-section.tsx", `value proof references ${s.name}`)
+  }
+}
+
 // ── Summary ─────────────────────────────────────────────────────────────────
 
 console.log("\n══════════════════════════════════════════")

@@ -415,9 +415,14 @@ export function PricingSection() {
         <StatusLine />
       </motion.div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-0">
-        {MODULES.map((module, i) => (
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0">
+        {MODULES.slice(0, 3).map((module, i) => (
           <ModuleCardView key={module.id} module={module} index={i} />
+        ))}
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0 mt-0">
+        {MODULES.slice(3).map((module, i) => (
+          <ModuleCardView key={module.id} module={module} index={i + 3} />
         ))}
       </div>
 

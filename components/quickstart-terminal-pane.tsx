@@ -275,22 +275,41 @@ export function QuickstartTerminalPane() {
         <span className="text-[10px] tracking-[0.2em] uppercase text-muted-foreground font-mono">
           quickstart.terminal
         </span>
-        <div className="flex items-center gap-1">
-          {PROJECTS.map((item, index) => (
-            <button
-              key={item}
-              type="button"
-              onClick={() => setProjectIndex(index)}
-              className={`px-2 py-1 text-[10px] font-mono tracking-[0.15em] uppercase border ${
-                index === projectIndex
-                  ? "bg-foreground text-background border-foreground"
-                  : "bg-background text-muted-foreground border-border hover:border-foreground"
-              }`}
-              aria-pressed={index === projectIndex}
-            >
-              {item}
-            </button>
-          ))}
+        <div className="flex flex-col items-end gap-1">
+          <div className="flex items-center gap-1">
+            {PROJECTS.slice(0, 3).map((item, index) => (
+              <button
+                key={item}
+                type="button"
+                onClick={() => setProjectIndex(index)}
+                className={`px-2 py-1 text-[10px] font-mono tracking-[0.15em] uppercase border ${
+                  index === projectIndex
+                    ? "bg-foreground text-background border-foreground"
+                    : "bg-background text-muted-foreground border-border hover:border-foreground"
+                }`}
+                aria-pressed={index === projectIndex}
+              >
+                {item}
+              </button>
+            ))}
+          </div>
+          <div className="flex items-center gap-1">
+            {PROJECTS.slice(3).map((item, index) => (
+              <button
+                key={item}
+                type="button"
+                onClick={() => setProjectIndex(index + 3)}
+                className={`px-2 py-1 text-[10px] font-mono tracking-[0.15em] uppercase border ${
+                  index + 3 === projectIndex
+                    ? "bg-foreground text-background border-foreground"
+                    : "bg-background text-muted-foreground border-border hover:border-foreground"
+                }`}
+                aria-pressed={index + 3 === projectIndex}
+              >
+                {item}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 

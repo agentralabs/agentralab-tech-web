@@ -17,7 +17,7 @@ import { siteConfig } from "@/lib/site"
 export const metadata: Metadata = {
   title: "Home",
   description:
-    "Your AI forgets everything. Ours doesn't. Three open-source systems that give AI agents persistent memory, structured perception, and code intelligence.",
+    "Your AI forgets everything. Ours doesn't. Four open-source systems that give AI agents persistent memory, structured perception, code intelligence, and cryptographic identity.",
   alternates: {
     canonical: "/",
   },
