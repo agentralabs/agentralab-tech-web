@@ -116,7 +116,12 @@ const COMMANDS: Record<ProjectKey, Record<CommandType, CommandEntry[]>> = {
         note: "Validates integrity of the local visual artifact.",
       },
     ],
-    PYTHON: [],
+    PYTHON: [
+      {
+        command: "pip install agentic-vision",
+        note: "Installs Python bindings for visual memory capture and query workflows.",
+      },
+    ],
     NPM: [
       {
         command: "npm install @agenticamem/vision",
@@ -167,7 +172,12 @@ const COMMANDS: Record<ProjectKey, Record<CommandType, CommandEntry[]>> = {
         note: "Starts MCP stdio transport for code intelligence tools.",
       },
     ],
-    PYTHON: [],
+    PYTHON: [
+      {
+        command: "pip install agentic-codebase",
+        note: "Installs Python bindings for semantic code graph analysis workflows.",
+      },
+    ],
     NPM: [
       {
         command: "npm install @agenticamem/codebase",

@@ -79,19 +79,18 @@ const NPM_PACKAGES = { memory: "@agenticamem/memory", vision: "@agenticamem/visi
 console.log(`Enabled sisters: ${sisterKeys.join(", ")} (${sisters.length} total)\n`)
 
 // ── Cross-validate: sister repos in workspace must have canonical files ──────
-// When running locally in a workspace that contains sister repos, this validates
-// canonical file parity across all sisters. In CI (where only the web repo is
-// checked out), this section is SKIPPED — the per-sister CI guardrails handle it.
+// This is the STRICTEST section. A new sister that is added to navigation-contract.json
+// but does not have ALL canonical files in its repo directory will FAIL the entire guardrail.
+// CI clones all sister repos into the workspace parent so this runs everywhere.
 
 const WORKSPACE = resolve(ROOT, "..")
-const IS_CI = !!process.env.CI
 
 function readAbsFile(absPath) {
   if (!existsSync(absPath)) return null
   return readFileSync(absPath, "utf-8")
 }
 
-console.log("── Cross-validate: sister repo canonical files" + (IS_CI ? " (SKIPPED — CI mode, sister repos not in workspace)" : " (STRICT)") + " ──")
+console.log("── Cross-validate: sister repo canonical files (STRICT) ──")
 
 // Required files every sister MUST have — no exceptions
 const CANONICAL_REQUIRED_FILES = [
@@ -131,11 +130,7 @@ for (const s of sisters) {
   const slug = `agentic-${s.key}`
   const repoDir = resolve(WORKSPACE, slug)
   if (!existsSync(repoDir)) {
-    if (IS_CI) {
-      console.log(`  ⊘ ${slug}/ not in workspace (expected in CI — sister guardrails run in their own repos)`)
-    } else {
-      fail(`Sister repo directory missing: ${slug}/ — new sister must exist in workspace before it can be enabled on the web`)
-    }
+    fail(`Sister repo directory missing: ${slug}/ — new sister must exist in workspace before it can be enabled on the web`)
     continue
   }
   ok(`${slug}/ exists in workspace`)
@@ -420,6 +415,93 @@ const vpTsx = readFile("components/value-proof-section.tsx")
 if (vpTsx) {
   for (const s of sisters) {
     assertContains(vpTsx, s.name, "value-proof-section.tsx", `value proof references ${s.name}`)
+  }
+}
+
+// ── S. glossary.mdx — all sisters must have a section ──────────────────────
+
+console.log("\n── S. glossary.mdx ──")
+const glossaryEn = readFile("docs/ecosystem/en/glossary.mdx")
+if (glossaryEn) {
+  for (const s of sisters) {
+    assertContains(glossaryEn, `## ${s.name}`, "glossary.mdx", `glossary has "## ${s.name}" section`)
+  }
+  assertMatch(glossaryEn, /four/i, "glossary.mdx", `glossary says "four" sisters (not three)`)
+}
+
+// ── T. architecture-system.mdx — all sister runtimes referenced ────────────
+
+console.log("\n── T. architecture-system.mdx ──")
+const archEn = readFile("docs/ecosystem/en/architecture-system.mdx")
+if (archEn) {
+  for (const s of sisters) {
+    const mcp = s.key === "codebase" ? "acb-mcp" : `agentic-${s.key}-mcp`
+    assertContains(archEn, mcp, "architecture-system.mdx", `architecture doc references ${mcp}`)
+  }
+  assertMatch(archEn, /four/i, "architecture-system.mdx", `architecture doc says "four" sisters (not three)`)
+}
+
+// ── U. Meta tags: layout.tsx + head files must reference all sisters ────────
+
+console.log("\n── U. Meta tags ──")
+const layoutTsx = readFile("app/layout.tsx")
+if (layoutTsx) {
+  for (const s of sisters) {
+    assertContains(layoutTsx, s.name, "app/layout.tsx", `layout.tsx meta references ${s.name}`)
+  }
+}
+const ogTsx = readFile("app/opengraph-image.tsx")
+if (ogTsx) {
+  for (const s of sisters) {
+    assertContains(ogTsx, s.name, "app/opengraph-image.tsx", `opengraph-image.tsx references ${s.name}`)
+  }
+}
+const pubHead = readFile("app/publications/head.tsx")
+if (pubHead) {
+  for (const s of sisters) {
+    assertContains(pubHead, s.name, "app/publications/head.tsx", `publications/head.tsx references ${s.name}`)
+  }
+}
+const projHead = readFile("app/projects/head.tsx")
+if (projHead) {
+  for (const s of sisters) {
+    assertContains(projHead, s.name, "app/projects/head.tsx", `projects/head.tsx references ${s.name}`)
+  }
+}
+const showcaseTsx = readFile("app/showcase/page.tsx")
+if (showcaseTsx) {
+  for (const s of sisters) {
+    assertContains(showcaseTsx, s.name, "app/showcase/page.tsx", `showcase/page.tsx references ${s.name}`)
+  }
+}
+
+// ── V. quickstart-terminal-pane: all command types must have entries ─────────
+
+console.log("\n── V. quickstart command completeness ──")
+const REQUIRED_COMMAND_TYPES = ["GLOBAL", "RUST", "MCP", "PYTHON", "NPM"]
+if (qsTsx) {
+  // Extract each sister's COMMANDS block by finding text between sister name entries
+  const sisterNames = sisters.map(s => s.name)
+  for (let i = 0; i < sisters.length; i++) {
+    const name = sisters[i].name
+    const startIdx = qsTsx.indexOf(`${name}: {`, qsTsx.indexOf("COMMANDS"))
+    if (startIdx === -1) continue
+    // Find the end: next sister entry or end of COMMANDS
+    let endIdx = qsTsx.length
+    for (let j = i + 1; j < sisters.length; j++) {
+      const nextIdx = qsTsx.indexOf(`${sisters[j].name}: {`, startIdx + 1)
+      if (nextIdx !== -1 && nextIdx < endIdx) { endIdx = nextIdx; break }
+    }
+    const block = qsTsx.substring(startIdx, endIdx)
+    for (const ct of REQUIRED_COMMAND_TYPES) {
+      // Match: PYTHON: [ { (with whitespace) = non-empty, vs PYTHON: [] = empty
+      const nonEmpty = new RegExp(`${ct}:\\s*\\[\\s*\\{`)
+      if (nonEmpty.test(block)) {
+        ok(`quickstart: ${name} has non-empty ${ct} commands`)
+      } else {
+        fail(`quickstart: ${name} has EMPTY ${ct} commands — every sister must have entries for all command types`)
+      }
+    }
   }
 }
 

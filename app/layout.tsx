@@ -15,7 +15,7 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: 'AGENTRA LABS | AgenticMemory, AgenticVision, AgenticCodebase',
+    default: 'AGENTRA LABS | AgenticMemory, AgenticVision, AgenticCodebase, AgenticIdentity',
     template: '%s | AGENTRA LABS',
   },
   description: siteConfig.description,
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     type: 'website',
     locale: siteConfig.locale,
     url: siteConfig.url,
-    title: 'AGENTRA LABS | Agentic Systems for Memory, Vision, and Code Intelligence',
+    title: 'AGENTRA LABS | Agentic Systems for Memory, Vision, Code Intelligence, and Identity',
     description: siteConfig.description,
     siteName: siteConfig.name,
     images: [
@@ -50,13 +50,13 @@ export const metadata: Metadata = {
         url: '/opengraph-image',
         width: 1200,
         height: 630,
-        alt: 'AGENTRA LABS — AgenticMemory, AgenticVision, AgenticCodebase',
+        alt: 'AGENTRA LABS — AgenticMemory, AgenticVision, AgenticCodebase, AgenticIdentity',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'AGENTRA LABS | Memory, Vision, and Code Intelligence',
+    title: 'AGENTRA LABS | Memory, Vision, Code Intelligence, and Identity',
     description: siteConfig.description,
     creator: siteConfig.xHandle,
     images: ['/twitter-image'],

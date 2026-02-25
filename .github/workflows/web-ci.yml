@@ -12,6 +12,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Checkout sister repos for cross-validation
+        run: |
+          cd ..
+          git clone --depth 1 https://github.com/agentralabs/agentic-memory.git
+          git clone --depth 1 https://github.com/agentralabs/agentic-vision.git
+          git clone --depth 1 https://github.com/agentralabs/agentic-codebase.git
+          git clone --depth 1 https://github.com/agentralabs/agentic-identity.git
+
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
