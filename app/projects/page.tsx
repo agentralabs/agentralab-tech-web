@@ -9,7 +9,7 @@ import { Footer } from "@/components/footer"
 
 const ease = [0.22, 1, 0.36, 1] as const
 
-type ProjectKey = "AgenticMemory" | "AgenticVision" | "AgenticCodebase"
+type ProjectKey = "AgenticMemory" | "AgenticVision" | "AgenticCodebase" | "AgenticIdentity"
 
 interface QueryRow {
   id: number
@@ -49,6 +49,14 @@ const PROJECTS: {
     repo: "https://github.com/agentralabs/agentic-codebase",
     scenarioHref: "/projects/scenarios/agentic-codebase",
     line: "Concept-level code intelligence with impact edges, hidden coupling, and temporal prophecy.",
+  },
+  {
+    key: "AgenticIdentity",
+    artifact: ".aid",
+    capacity: "identity anchors + trust grants + action receipts",
+    repo: "https://github.com/agentralabs/agentic-identity",
+    scenarioHref: "/projects/scenarios/agentic-identity",
+    line: "Cryptographic agent identity with Ed25519 anchors, signed receipts, and scoped trust delegation.",
   },
 ]
 
@@ -493,10 +501,111 @@ function CodebaseCapacity() {
   )
 }
 
+function IdentityCapacity() {
+  return (
+    <div className="flex flex-col gap-4">
+      <div className="border-2 border-foreground p-4">
+        <p className="text-sm font-mono font-bold uppercase tracking-tight">Agents Have No Identity</p>
+        <p className="mt-2 text-xs font-mono text-muted-foreground leading-relaxed">
+          API keys are shared secrets with no audit trail. OAuth tokens expire and carry no action history.
+          Logs can be tampered with and carry no signatures. AgenticIdentity gives every agent a permanent,
+          cryptographic identity rooted in Ed25519 key pairs.
+        </p>
+      </div>
+
+      <div className="border-2 border-foreground p-4">
+        <p className="text-sm font-mono font-bold uppercase tracking-tight">The Atom: Identity Anchor</p>
+        <p className="mt-2 text-xs font-mono text-muted-foreground leading-relaxed">
+          The identity anchor is an Ed25519 key pair that uniquely identifies an agent. The public key is the
+          agent&apos;s verifiable identity. The private key signs every action the agent takes.
+        </p>
+        <div className="mt-3 border border-foreground overflow-hidden">
+          {[
+            "IDENTITY ANCHOR — Ed25519 key pair, deterministic and portable.",
+            "ACTION RECEIPT — Signed record of an operation with timestamp and payload hash.",
+            "RECEIPT CHAIN — Ordered sequence of receipts forming a complete audit trail.",
+            "TRUST GRANT — Scoped, time-limited delegation from one anchor to another.",
+            "KEY DERIVATION — Hierarchical child keys for isolated subsystem identities.",
+          ].map((row) => (
+            <div key={row} className="px-3 py-2 text-xs font-mono text-muted-foreground border-b border-border last:border-b-0">
+              {row}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="border-2 border-foreground p-4">
+        <p className="text-sm font-mono font-bold uppercase tracking-tight">Trust Grants Make It A Web</p>
+        <p className="mt-2 text-xs font-mono text-muted-foreground leading-relaxed">
+          Trust grants are signed delegation tokens from one identity anchor to another. Each grant specifies
+          scope (deploy:staging, read:logs), TTL, and revocation conditions. Delegation chains are fully verifiable.
+        </p>
+      </div>
+
+      <div className="border-2 border-foreground p-4">
+        <p className="text-sm font-mono font-bold uppercase tracking-tight">One File, Portable Identity</p>
+        <p className="mt-2 text-xs font-mono text-muted-foreground leading-relaxed">
+          <code>.aid</code> is a portable identity artifact containing the anchor, trust grants, and receipt history.
+          It travels with the agent across environments. Identity belongs to the agent, not the platform.
+        </p>
+      </div>
+
+      <div className="border-2 border-foreground p-4">
+        <p className="text-sm font-mono font-bold uppercase tracking-tight">Cryptographic Primitives</p>
+        <div className="mt-3 border border-foreground overflow-hidden">
+          <div className="grid grid-cols-[160px_1fr_140px] border-b border-foreground">
+            <span className="px-3 py-2 text-[10px] uppercase tracking-[0.15em] font-mono text-muted-foreground">
+              Operation
+            </span>
+            <span className="px-3 py-2 text-[10px] uppercase tracking-[0.15em] font-mono text-muted-foreground">
+              Detail
+            </span>
+            <span className="px-3 py-2 text-[10px] uppercase tracking-[0.15em] font-mono text-muted-foreground">
+              Status
+            </span>
+          </div>
+          {[
+            { op: "Key Generation", detail: "Ed25519 from CSPRNG or deterministic seed", status: "Operational" },
+            { op: "Action Signing", detail: "Sign payload hash with private key", status: "Operational" },
+            { op: "Receipt Verify", detail: "Verify signature with public key only", status: "Operational" },
+            { op: "Trust Grant", detail: "Scoped delegation with TTL and revocation", status: "Operational" },
+            { op: "Key Derivation", detail: "Hierarchical child keys from master anchor", status: "Operational" },
+            { op: "Receipt Chain", detail: "Ordered, hash-linked audit trail", status: "Operational" },
+            { op: "Encrypted Storage", detail: "AES-256-GCM encrypted .aid at rest", status: "Operational" },
+          ].map((row) => (
+            <div key={row.op} className="grid grid-cols-[160px_1fr_140px] border-b border-border last:border-b-0">
+              <span className="px-3 py-2 text-xs font-mono">{row.op}</span>
+              <span className="px-3 py-2 text-xs font-mono text-muted-foreground">{row.detail}</span>
+              <span className="px-3 py-2 text-xs font-mono text-[#ea580c]">{row.status}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="border-2 border-foreground p-4">
+        <p className="text-sm font-mono font-bold uppercase tracking-tight">Multi-LLM Portability</p>
+        <p className="mt-2 text-xs font-mono text-muted-foreground leading-relaxed">
+          Identity anchors are LLM-agnostic. The same <code>.aid</code> artifact works across Claude, GPT, Gemini,
+          and any MCP-compatible runtime. Agent identity is not locked to a single vendor.
+        </p>
+      </div>
+
+      <div className="border-2 border-foreground p-4">
+        <p className="text-sm font-mono font-bold uppercase tracking-tight">MCP Capability Surface</p>
+        <p className="mt-2 text-xs font-mono text-muted-foreground leading-relaxed">
+          AgenticIdentity exposes MCP tools for identity lifecycle: create_anchor, sign_receipt, verify_receipt,
+          grant_trust, revoke_trust, list_receipts, and action_context. All operations produce portable <code>.aid</code> artifacts.
+        </p>
+      </div>
+    </div>
+  )
+}
+
 function ProjectCapacityView({ project }: { project: ProjectKey }) {
   if (project === "AgenticMemory") return <MemoryCapacity />
   if (project === "AgenticVision") return <VisionCapacity />
-  return <CodebaseCapacity />
+  if (project === "AgenticCodebase") return <CodebaseCapacity />
+  return <IdentityCapacity />
 }
 
 export default function ProjectsPage() {

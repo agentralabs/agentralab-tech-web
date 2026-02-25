@@ -9,6 +9,7 @@ import type { ScenarioGroup } from "@/data/scenarios-memory"
 import { MEMORY_HERO, MEMORY_SCENARIOS } from "@/data/scenarios-memory"
 import { VISION_HERO, VISION_SCENARIOS } from "@/data/scenarios-vision"
 import { CODEBASE_HERO, CODEBASE_SCENARIOS } from "@/data/scenarios-codebase"
+import { IDENTITY_HERO, IDENTITY_SCENARIOS } from "@/data/scenarios-identity"
 import * as SC from "@/components/scenario-content"
 
 const ease = [0.22, 1, 0.36, 1] as const
@@ -65,12 +66,26 @@ const CONTENT_MAP: Record<string, () => React.ReactNode> = {
   "acb-budget": () => <SC.AcbBudgetContent />,
   "test-gap": () => <SC.TestGapContent />,
   "health-diagnostics": () => <SC.HealthDiagnosticsContent />,
+  // Identity
+  "identity-anchors": () => <SC.IdentityAnchorsContent />,
+  "action-receipts": () => <SC.ActionReceiptsContent />,
+  "receipt-chains": () => <SC.ReceiptChainsContent />,
+  "key-derivation": () => <SC.KeyDerivationContent />,
+  "trust-grants": () => <SC.TrustGrantsContent />,
+  "trust-delegation": () => <SC.TrustDelegationContent />,
+  "trust-revocation": () => <SC.TrustRevocationContent />,
+  "receipt-verification": () => <SC.ReceiptVerificationContent />,
+  "multi-llm-portability": () => <SC.MultiLlmPortabilityContent />,
+  "aid-file-format": () => <SC.AidFileFormatContent />,
+  "encrypted-at-rest": () => <SC.EncryptedAtRestContent />,
+  "identity-parameter-safety": () => <SC.IdentityParameterSafetyContent />,
 }
 
 const ALL_TOGETHER_MAP: Record<string, () => React.ReactNode> = {
   "agentic-memory": () => <SC.MemoryAllTogetherContent />,
   "agentic-vision": () => <SC.VisionAllTogetherContent />,
   "agentic-codebase": () => <SC.CodebaseAllTogetherContent />,
+  "agentic-identity": () => <SC.IdentityAllTogetherContent />,
 }
 
 const ALL_TOGETHER_PLAIN: Record<string, string> = {
@@ -80,6 +95,8 @@ const ALL_TOGETHER_PLAIN: Record<string, string> = {
     "This is the difference between a developer who says \"something looks off\" and one who says \"here's the before screenshot, here's the after, here are the three regions that changed, and here's exactly when it broke.\" AgenticVision turns visual debugging from guesswork into forensics.",
   "agentic-codebase":
     "This is the difference between refactoring with a flashlight and refactoring with floodlights. AgenticCodebase doesn't just understand the code you're changing — it understands everything connected to it, everything that changed with it, and everything that might break because of it.",
+  "agentic-identity":
+    "This is the difference between trusting a log entry and holding a signed receipt. AgenticIdentity doesn't just record what happened — it cryptographically proves which agent acted, who authorized it, and that nobody tampered with the record. Every action has a signature. Every delegation has a scope. Every audit trail is tamper-evident.",
 }
 
 function getConfig(sister: string) {
@@ -88,6 +105,8 @@ function getConfig(sister: string) {
       return { hero: VISION_HERO, groups: VISION_SCENARIOS, repo: "https://github.com/agentralabs/agentic-vision" }
     case "agentic-codebase":
       return { hero: CODEBASE_HERO, groups: CODEBASE_SCENARIOS, repo: "https://github.com/agentralabs/agentic-codebase" }
+    case "agentic-identity":
+      return { hero: IDENTITY_HERO, groups: IDENTITY_SCENARIOS, repo: "https://github.com/agentralabs/agentic-identity" }
     default:
       return { hero: MEMORY_HERO, groups: MEMORY_SCENARIOS, repo: "https://github.com/agentralabs/agentic-memory" }
   }

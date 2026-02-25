@@ -59,8 +59,8 @@ export function HeroSection() {
           transition={{ duration: 0.5, delay: 0.52, ease }}
           className="text-xs lg:text-sm text-muted-foreground max-w-2xl mb-6 leading-relaxed font-mono"
         >
-          Three open-source systems that give AI agents persistent memory,
-          structured perception, and code intelligence — across sessions,
+          Four open-source systems that give AI agents persistent memory,
+          structured perception, code intelligence, and cryptographic identity — across sessions,
           tools, and teams.
         </motion.p>
 

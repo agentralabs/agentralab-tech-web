@@ -40,6 +40,15 @@
       "landingSlug": "codebase-docs",
       "includeLanding": true,
       "enabled": true
+    },
+    {
+      "key": "identity",
+      "repo": "agentic-identity",
+      "name": "AgenticIdentity",
+      "order": 1003,
+      "landingSlug": "identity-docs",
+      "includeLanding": true,
+      "enabled": true
     }
   ]
 }

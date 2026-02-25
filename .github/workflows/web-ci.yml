@@ -29,5 +29,8 @@ jobs:
       - name: Release docs readiness guardrail
         run: pnpm docs:release:check
 
+      - name: Sister web parity guardrail
+        run: pnpm parity:check
+
       - name: Build
         run: pnpm build

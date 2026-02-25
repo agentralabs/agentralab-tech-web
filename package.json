@@ -13,6 +13,7 @@
     "lablog:generate": "node scripts/generate-lab-log.mjs",
     "lablog:release": "node scripts/create-lab-log-release.mjs",
     "start": "next start",
+    "parity:check": "node scripts/check-sister-web-parity.mjs",
     "lint": "tsc --noEmit",
     "pretypecheck": "pnpm docs:sync && pnpm docs:gen && next typegen",
     "typecheck": "tsc --noEmit",

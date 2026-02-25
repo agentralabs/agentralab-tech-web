@@ -1070,3 +1070,268 @@ export function CodebaseAllTogetherContent() {
     </>
   )
 }
+
+/* ─────────────────────────────── IDENTITY ── */
+
+export function IdentityAnchorsContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        Your agent deploys code, calls APIs, and approves transactions. But when something goes wrong, there is <B>no cryptographic proof</B> of which agent acted. API keys are shared secrets — they prove a key was used, not who used it. OAuth tokens expire and carry no action history.
+      </P>
+
+      <SectionLabel>With identity anchors</SectionLabel>
+      <P>
+        Each agent gets a unique <B>Ed25519 key pair</B> as its identity anchor. The public key is the agent's verifiable identity — anyone can confirm "this is agent deploy-bot-7." The private key stays with the agent and signs every action it takes. No central authority required.
+      </P>
+      <Agent>
+        My identity anchor is a3f8...c2 (Ed25519). I generated it deterministically from my seed. You can verify any receipt I produce using only my public key — no network call, no server, no trust assumptions.
+      </Agent>
+    </>
+  )
+}
+
+export function ActionReceiptsContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        Agents act constantly — deploying, querying, modifying data — but the record of those actions lives in <B>mutable logs</B> that can be tampered with, truncated, or lost. There is no tamper-evident record of what happened.
+      </P>
+
+      <SectionLabel>With action receipts</SectionLabel>
+      <P>
+        Every operation produces a <B>signed receipt</B>: the action type, payload hash, timestamp, and the agent's Ed25519 signature. The receipt is immutable — if anyone changes a single byte, the signature breaks. Verification requires only the public key.
+      </P>
+      <Agent>
+        Receipt #1847: action=deploy, target=staging-us-east, payload_hash=7a3b...f1, timestamp=2026-02-25T14:32:07Z, signature=valid. Anyone with my public key can verify this receipt independently.
+      </Agent>
+    </>
+  )
+}
+
+export function ReceiptChainsContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        Individual log entries exist in isolation. There is no guarantee of completeness — entries can be deleted from the middle without detection. <B>Audit trails have gaps</B> and no one can prove they don't.
+      </P>
+
+      <SectionLabel>With receipt chains</SectionLabel>
+      <P>
+        Each receipt includes the <B>hash of the previous receipt</B>, forming an ordered chain. If any receipt is removed or modified, every subsequent hash breaks visibly. The chain provides a complete, verifiable, tamper-evident audit trail.
+      </P>
+      <Agent>
+        Receipt chain for deploy-bot-7: 47 receipts, all hashes valid, no gaps. The chain traces from initial anchor creation through today's deployment. Full provenance in one traversal.
+      </Agent>
+    </>
+  )
+}
+
+export function KeyDerivationContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        Complex agents need different identities for different subsystems, but managing multiple independent key pairs creates <B>key sprawl</B> with no clear relationship between identities.
+      </P>
+
+      <SectionLabel>With key derivation</SectionLabel>
+      <P>
+        A master anchor can derive <B>hierarchical child keys</B> for isolated subsystems. The deploy subsystem gets its own key, the monitoring subsystem gets another — but all trace back to the same root identity through deterministic derivation paths.
+      </P>
+      <Agent>
+        Derived key deploy/staging from master anchor a3f8...c2 at path m/0/1. The child key is independently verifiable and can be revoked without affecting the master or sibling keys.
+      </Agent>
+    </>
+  )
+}
+
+export function TrustGrantsContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        Agent-to-agent delegation is ad hoc. One agent gives another an API key or token with <B>no scope limits, no expiry, and no audit trail</B>. If the delegated agent misbehaves, there is no cryptographic record of what was authorized.
+      </P>
+
+      <SectionLabel>With trust grants</SectionLabel>
+      <P>
+        Trust grants are <B>signed delegation tokens</B> from one identity anchor to another. Each grant specifies exact scope (deploy:staging but not deploy:prod), a TTL, and revocation conditions. The grant itself is a signed receipt — fully verifiable.
+      </P>
+      <Agent>
+        Trust grant: ops-lead (91b2...e4) → deploy-bot-7 (a3f8...c2). Scope: deploy:staging, deploy:prod. TTL: 24h. Granted at 2026-02-25T08:00:00Z. Signature: valid.
+      </Agent>
+    </>
+  )
+}
+
+export function TrustDelegationContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        Multi-agent systems need chains of trust — the CTO trusts the ops lead, who trusts the deploy bot. But <B>there is no way to verify the chain</B> without asking each party individually.
+      </P>
+
+      <SectionLabel>With trust delegation</SectionLabel>
+      <P>
+        Delegation chains are sequences of signed trust grants. Each hop is independently verifiable. Anyone can walk the chain from the deploy bot back to the CTO and confirm every grant is <B>valid, in-scope, and unexpired</B> — without contacting any party.
+      </P>
+      <Agent>
+        Delegation chain: CTO → ops-lead → deploy-bot-7. 2 hops. All signatures valid. Scope narrows at each hop: full-admin → deploy:* → deploy:staging,deploy:prod. TTL: 24h at final hop.
+      </Agent>
+    </>
+  )
+}
+
+export function TrustRevocationContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        Revoking an agent's access means rotating shared secrets, updating configurations, and <B>hoping the agent checks back</B> before acting on stale credentials.
+      </P>
+
+      <SectionLabel>With trust revocation</SectionLabel>
+      <P>
+        Revocation is a signed receipt that invalidates a trust grant. The revoked grant <B>stops validating immediately</B> — any receipt signed under that grant after revocation is cryptographically invalid. No waiting for expiry, no configuration changes.
+      </P>
+      <Agent>
+        Revocation receipt issued for grant ops-lead → deploy-bot-7. Any action receipts signed by deploy-bot-7 under this grant after 2026-02-25T16:00:00Z will fail verification.
+      </Agent>
+    </>
+  )
+}
+
+export function ReceiptVerificationContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        Verifying that an agent really performed an action requires <B>trusting the logging infrastructure</B>, the database, and the network between them. Any point in the chain can be compromised.
+      </P>
+
+      <SectionLabel>With receipt verification</SectionLabel>
+      <P>
+        Verification requires <B>only the public key</B>. No network, no server, no central authority. The receipt contains the signature, the payload hash, and the signer's public key reference. Verification is a single Ed25519 check — offline, instant, and trustless.
+      </P>
+      <Agent>
+        Verified receipt #1847: signature matches public key a3f8...c2, payload hash matches content, timestamp within chain sequence. Verification completed offline in 12 microseconds.
+      </Agent>
+    </>
+  )
+}
+
+export function MultiLlmPortabilityContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        Agent identity is <B>locked to the platform</B>. Switch from Claude to GPT and your agent starts from zero — no history, no trust relationships, no audit trail.
+      </P>
+
+      <SectionLabel>With multi-LLM portability</SectionLabel>
+      <P>
+        The <code className="text-[#ea580c]">.aid</code> artifact is LLM-agnostic. The same identity anchor, trust grants, and receipt history work across <B>Claude, GPT, Gemini, and any MCP-compatible runtime</B>. Agent identity belongs to the agent, not the vendor.
+      </P>
+      <Agent>
+        Loading .aid artifact from previous Claude session. Identity anchor a3f8...c2 verified. 47 receipts in chain. 3 active trust grants. Now running on GPT-4 with full identity continuity.
+      </Agent>
+    </>
+  )
+}
+
+export function AidFileFormatContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        Agent credentials are scattered across environment variables, config files, and key stores. There is <B>no single portable artifact</B> that contains an agent's complete identity.
+      </P>
+
+      <SectionLabel>With the .aid file format</SectionLabel>
+      <P>
+        The <code className="text-[#ea580c]">.aid</code> file contains the identity anchor, all trust grants, and the complete receipt history in one <B>portable, encrypted artifact</B>. Copy it to another machine and the agent's full identity travels with it.
+      </P>
+      <Agent>
+        .aid artifact summary: anchor=a3f8...c2, receipts=47, trust_grants=3 (2 active, 1 expired), encrypted=AES-256-GCM, size=12.4KB. Portable to any compatible runtime.
+      </Agent>
+    </>
+  )
+}
+
+export function EncryptedAtRestContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        Private keys stored on disk are <B>one file read away from compromise</B>. Most agent systems store credentials in plaintext environment variables or unencrypted config files.
+      </P>
+
+      <SectionLabel>With encrypted at rest</SectionLabel>
+      <P>
+        The .aid file is encrypted with <B>AES-256-GCM</B> when saved to disk. The private key never exists in plaintext outside of memory. Even if someone copies the file, they cannot extract the key or forge receipts without the encryption passphrase.
+      </P>
+      <Agent>
+        .aid file encrypted at rest with AES-256-GCM. Private key decrypted only in memory during signing operations. File-level integrity verified by GCM authentication tag.
+      </Agent>
+    </>
+  )
+}
+
+export function IdentityParameterSafetyContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        Identity operations deal with multiple key types, IDs, and signatures that <B>look similar as strings</B>. Mixing up a public key with a private key, or an anchor ID with a receipt ID, causes silent failures or security holes.
+      </P>
+
+      <SectionLabel>With parameter safety</SectionLabel>
+      <P>
+        The type system makes it <B>structurally impossible</B> to confuse parameter types. Public keys, private keys, anchor IDs, receipt IDs, and signatures are all distinct types at compile time. Misuse is caught before the code runs.
+      </P>
+      <Agent>
+        Type safety enforced: AnchorId, ReceiptId, PublicKey, PrivateKey, Signature are all distinct newtypes. Attempting to pass a PublicKey where a PrivateKey is expected is a compile error, not a runtime bug.
+      </Agent>
+    </>
+  )
+}
+
+export function IdentityAllTogetherContent() {
+  return (
+    <>
+      <SectionLabel>End-to-end: production deployment audit</SectionLabel>
+      <P>
+        A production deployment fails at 2 AM. The incident team needs to know: which agent deployed, who authorized it, what exactly was deployed, and whether the authorization was valid at deployment time. With AgenticIdentity, every answer is <B>one receipt-chain traversal away</B>.
+      </P>
+
+      <SectionLabel>Identity anchor</SectionLabel>
+      <P>
+        Deploy-bot-7 (anchor <code className="text-[#ea580c]">a3f8...c2</code>) is cryptographically identified. Not "a token was used" — <B>this specific agent acted</B>.
+      </P>
+
+      <SectionLabel>Trust chain</SectionLabel>
+      <P>
+        Delegation: CTO → ops-lead → deploy-bot-7. Scope narrowed at each hop: full-admin → deploy:* → deploy:staging,deploy:prod. <B>All 3 grants valid at deployment time</B>. TTL: 24h, 6h remaining when deploy executed.
+      </P>
+
+      <SectionLabel>Receipt chain</SectionLabel>
+      <P>
+        Receipt #1847: action=deploy, target=prod-us-east, commit=af7c2e3, timestamp=02:14:07Z. Previous receipt: #1846 (staging deploy, same commit, 01:58:22Z). <B>Full chain: 47 receipts, no gaps, all signatures valid</B>.
+      </P>
+
+      <SectionLabel>Verification</SectionLabel>
+      <P>
+        The incident team verifies everything offline with deploy-bot-7's public key. No server needed. No logs to trust. No authority to contact. The <B>cryptographic evidence speaks for itself</B>.
+      </P>
+
+      <Agent>
+        Incident audit complete: deploy-bot-7 deployed commit af7c2e3 to prod-us-east at 02:14:07Z. Authorization chain: CTO → ops-lead → deploy-bot-7, all valid. Receipt chain: 47 entries, zero gaps. Staging deploy preceded production by 16 minutes. All signatures verified offline.
+      </Agent>
+    </>
+  )
+}

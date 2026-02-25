@@ -141,6 +141,38 @@ const MODULES: ModuleCard[] = [
     scenarioHref: "/projects/scenarios/agentic-codebase",
     highlighted: false,
   },
+  {
+    id: "agentic-identity",
+    frame: "PROJECTS",
+    value: "AgenticIdentity",
+    period: "/ AVAILABLE",
+    tag: "READY",
+    description: "\"Who did this?\" Your agent deployed code, called APIs, and approved a transaction. But there is no cryptographic proof. No signed receipt. No scoped trust. AgenticIdentity anchors every agent action to a verifiable identity.",
+    summary:
+      "Every agent gets an Ed25519 key pair as its identity anchor. Every action produces a signed receipt. Trust between agents is granted, scoped, delegated, and revoked through signed trust grants. Everything is portable in .aid files.",
+    deepSummary: [
+      {
+        lead: "Identity anchors:",
+        body: "Ed25519 key pairs that uniquely identify each agent. Deterministic, portable, and verifiable by anyone with the public key.",
+      },
+      {
+        lead: "Action receipts:",
+        body: "Signed records of every operation. Tamper-evident, timestamped, and chainable into complete audit trails.",
+      },
+      {
+        lead: "Trust grants:",
+        body: "Scoped, time-limited delegation tokens. Grant deploy:staging but not deploy:prod. Revoke instantly.",
+      },
+      {
+        lead: "Microsecond signing:",
+        body: "Ed25519 operations complete in microseconds. Zero latency overhead for production agent workflows.",
+      },
+    ],
+    cta: "VIEW REPO",
+    href: "https://github.com/agentralabs/agentic-identity",
+    scenarioHref: "/projects/scenarios/agentic-identity",
+    highlighted: false,
+  },
 ]
 
 function ModuleGlyph({ id, highlighted }: { id: ModuleCard["id"]; highlighted: boolean }) {
@@ -168,6 +200,21 @@ function ModuleGlyph({ id, highlighted }: { id: ModuleCard["id"]; highlighted: b
         <circle cx="60" cy="40" r="12" className={accentClass} stroke="currentColor" strokeWidth="2" />
         <circle cx="60" cy="40" r="4" className={accentClass} fill="currentColor" />
         <path d="M18 40H6M114 40h-12M60 6v12M60 74V62" className={baseClass} stroke="currentColor" strokeWidth="2" />
+      </svg>
+    )
+  }
+
+  if (id === "agentic-identity") {
+    return (
+      <svg viewBox="0 0 120 80" className="w-full h-24" fill="none" aria-label="AgenticIdentity glyph">
+        <rect x="40" y="8" width="40" height="50" rx="4" className={baseClass} stroke="currentColor" strokeWidth="2" />
+        <circle cx="60" cy="28" r="8" className={accentClass} stroke="currentColor" strokeWidth="2" />
+        <path d="M50 42h20M50 48h20" className={accentClass} stroke="currentColor" strokeWidth="2" />
+        <path d="M60 58v14" className={baseClass} stroke="currentColor" strokeWidth="2" />
+        <circle cx="60" cy="72" r="4" className={accentClass} fill="currentColor" />
+        <path d="M20 30l20-10M100 30l-20-10" className={baseClass} stroke="currentColor" strokeWidth="1.5" strokeDasharray="4 3" />
+        <circle cx="16" cy="32" r="4" className={baseClass} fill="currentColor" />
+        <circle cx="104" cy="32" r="4" className={baseClass} fill="currentColor" />
       </svg>
     )
   }
@@ -358,17 +405,17 @@ export function PricingSection() {
       >
         <div className="flex flex-col gap-3">
           <h2 className="text-2xl lg:text-3xl font-mono font-bold tracking-tight uppercase text-foreground text-balance">
-            Three systems. One cognitive layer.
+            Four systems. One cognitive layer.
           </h2>
           <p className="text-xs lg:text-sm font-mono text-muted-foreground leading-relaxed max-w-md">
             AgenticMemory — reasoning that persists. AgenticVision — visual state that&apos;s queryable.
-            AgenticCodebase — code understanding with prediction. All open source. All shipped.
+            AgenticCodebase — code understanding with prediction. AgenticIdentity — cryptographic proof of agent action. All open source. All shipped.
           </p>
         </div>
         <StatusLine />
       </motion.div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-0">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-0">
         {MODULES.map((module, i) => (
           <ModuleCardView key={module.id} module={module} index={i} />
         ))}
@@ -383,7 +430,7 @@ export function PricingSection() {
       >
         <span className="text-[10px] tracking-[0.2em] uppercase text-muted-foreground font-mono">
           {
-            "* Three independent systems that work well together. Research-backed. MIT licensed. Production ready."
+            "* Four independent systems that work well together. Research-backed. MIT licensed. Production ready."
           }
         </span>
         <div className="flex-1 border-t border-border" />

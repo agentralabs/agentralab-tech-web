@@ -4,7 +4,7 @@ import { useMemo, useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { ArrowLeft, ArrowRight, Check, Copy } from "lucide-react"
 
-type ProjectKey = "AgenticMemory" | "AgenticVision" | "AgenticCodebase"
+type ProjectKey = "AgenticMemory" | "AgenticVision" | "AgenticCodebase" | "AgenticIdentity"
 type CommandType = "GLOBAL" | "RUST" | "MCP" | "PYTHON" | "NPM"
 type ModeType = "LOCAL" | "MCP"
 
@@ -13,7 +13,7 @@ interface CommandEntry {
   note: string
 }
 
-const PROJECTS: ProjectKey[] = ["AgenticMemory", "AgenticVision", "AgenticCodebase"]
+const PROJECTS: ProjectKey[] = ["AgenticMemory", "AgenticVision", "AgenticCodebase", "AgenticIdentity"]
 const COMMAND_TYPES: CommandType[] = ["GLOBAL", "RUST", "MCP", "PYTHON", "NPM"]
 
 const COMMANDS: Record<ProjectKey, Record<CommandType, CommandEntry[]>> = {
@@ -66,7 +66,12 @@ const COMMANDS: Record<ProjectKey, Record<CommandType, CommandEntry[]>> = {
         note: "Installs provider integrations for extended memory pipelines.",
       },
     ],
-    NPM: [],
+    NPM: [
+      {
+        command: "npm install @agenticamem/memory",
+        note: "WASM-based memory SDK for Node.js and browser environments.",
+      },
+    ],
   },
   AgenticVision: {
     GLOBAL: [
@@ -112,7 +117,12 @@ const COMMANDS: Record<ProjectKey, Record<CommandType, CommandEntry[]>> = {
       },
     ],
     PYTHON: [],
-    NPM: [],
+    NPM: [
+      {
+        command: "npm install @agenticamem/vision",
+        note: "WASM-based vision SDK for Node.js and browser environments.",
+      },
+    ],
   },
   AgenticCodebase: {
     GLOBAL: [
@@ -158,7 +168,68 @@ const COMMANDS: Record<ProjectKey, Record<CommandType, CommandEntry[]>> = {
       },
     ],
     PYTHON: [],
-    NPM: [],
+    NPM: [
+      {
+        command: "npm install @agenticamem/codebase",
+        note: "WASM-based codebase SDK for Node.js and browser environments.",
+      },
+    ],
+  },
+  AgenticIdentity: {
+    GLOBAL: [
+      {
+        command: "curl -fsSL https://agentralabs.tech/install/identity | bash",
+        note: "Default desktop profile (backward-compatible): installs binaries and auto-merges MCP config for common clients when detected (Claude, Cursor, VS Code, Codex, Windsurf).",
+      },
+      {
+        command: "curl -fsSL https://agentralabs.tech/install/identity/desktop | bash",
+        note: "Explicit desktop profile with MCP auto-merge for common desktop clients.",
+      },
+      {
+        command: "curl -fsSL https://agentralabs.tech/install/identity/terminal | bash",
+        note: "Terminal profile: installs binaries only, no desktop config writes.",
+      },
+      {
+        command: "curl -fsSL https://agentralabs.tech/install/identity/server | bash",
+        note: "Server profile: installs binaries only for remote hosts and service-style environments. Set AGENTIC_TOKEN for auth gate.",
+      },
+      {
+        command: "cargo install agentic-identity-cli agentic-identity-mcp",
+        note: "Installs aid CLI and agentic-identity-mcp from crates.io.",
+      },
+    ],
+    RUST: [
+      {
+        command: "cargo install agentic-identity-cli agentic-identity-mcp",
+        note: "Installs both aid CLI and identity MCP server from crates.io.",
+      },
+      {
+        command: "aid init --name my-agent",
+        note: "Creates a new Ed25519 identity anchor with a portable .aid artifact.",
+      },
+      {
+        command: "aid sign --receipt action.json",
+        note: "Signs an action receipt with the agent's private key.",
+      },
+    ],
+    MCP: [
+      {
+        command: "agentic-identity-mcp serve",
+        note: "Starts MCP stdio transport for identity, trust, and receipt tools.",
+      },
+    ],
+    PYTHON: [
+      {
+        command: "pip install agentic-identity",
+        note: "Installs Python bindings for identity anchor and receipt workflows.",
+      },
+    ],
+    NPM: [
+      {
+        command: "npm install @agenticamem/identity",
+        note: "WASM-based identity SDK for Node.js and browser environments.",
+      },
+    ],
   },
 }
 
@@ -175,9 +246,9 @@ export function QuickstartTerminalPane() {
 
   const modeCopy = useMemo(() => {
     if (mode === "LOCAL") {
-      return "Local mode keeps .amem, .avis, and .acb as portable files under your control. After install, run: agentra status --session and agentra doctor."
+      return "Local mode keeps .amem, .avis, .acb, and .aid as portable files under your control. After install, run: agentra status --session and agentra doctor."
     }
-    return "MCP mode exposes the same .amem, .avis, and .acb artifacts to MCP clients. Restart your MCP host/client after install to reload config."
+    return "MCP mode exposes the same .amem, .avis, .acb, and .aid artifacts to MCP clients. Restart your MCP host/client after install to reload config."
   }, [mode])
 
   const unsupportedNote = `No official ${commandType} commands documented for ${project} yet.`
@@ -340,7 +411,7 @@ export function QuickstartTerminalPane() {
             ))}
           </div>
           <span className="text-[10px] tracking-[0.15em] uppercase text-muted-foreground font-mono">
-            .amem / .avis / .acb
+            .amem / .avis / .acb / .aid
           </span>
         </div>
         <p className="text-xs font-mono text-muted-foreground mt-2">{modeCopy}</p>

@@ -44,6 +44,15 @@ const SCENARIOS: Scenario[] = [
       '"Before I write code: 23 callers need updates. audit_log has 91% co-change coupling with no test coverage. The Stripe wrapper assumes USD at the FFI layer. Stability score: 0.41. Want a migration plan first?"',
     href: "/projects/scenarios/agentic-codebase",
   },
+  {
+    question: '"Which agent authorized that production deployment?"',
+    without:
+      'No agent identity exists. API keys are shared. Logs show a token was used but not which agent acted or why.',
+    withLabel: "WITH AGENTICIDENTITY",
+    withResponse:
+      '"Agent deploy-bot-7 (anchor a3f8...c2) signed receipt #1847 at 14:32:07 UTC. Trust grant from ops-lead (anchor 91b2...e4) scoped to deploy:staging,deploy:prod with 24h TTL. Full receipt chain: 3 hops, all signatures valid."',
+    href: "/projects/scenarios/agentic-identity",
+  },
 ]
 
 function ScenarioCard({ scenario, index }: { scenario: Scenario; index: number }) {
@@ -126,7 +135,7 @@ export function ScenarioCardsSection() {
         </p>
       </motion.div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {SCENARIOS.map((scenario, i) => (
           <ScenarioCard key={scenario.withLabel} scenario={scenario} index={i} />
         ))}

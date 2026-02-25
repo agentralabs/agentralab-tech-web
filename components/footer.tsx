@@ -21,6 +21,7 @@ const PROJECT_LINKS = [
   { label: "AgenticMemory", href: "https://github.com/agentralabs/agentic-memory" },
   { label: "AgenticVision", href: "https://github.com/agentralabs/agentic-vision" },
   { label: "AgenticCodebase", href: "https://github.com/agentralabs/agentic-codebase" },
+  { label: "AgenticIdentity", href: "https://github.com/agentralabs/agentic-identity" },
   { label: "AgentraLabsWeb", href: "https://github.com/agentralabs/agentralabs-tech-web" },
 ]
 
