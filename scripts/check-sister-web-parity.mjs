@@ -79,17 +79,19 @@ const NPM_PACKAGES = { memory: "@agenticamem/memory", vision: "@agenticamem/visi
 console.log(`Enabled sisters: ${sisterKeys.join(", ")} (${sisters.length} total)\n`)
 
 // ── Cross-validate: sister repos in workspace must have canonical files ──────
-// This is the STRICTEST section. A new sister that is added to navigation-contract.json
-// but does not have ALL canonical files in its repo directory will FAIL the entire guardrail.
+// When running locally in a workspace that contains sister repos, this validates
+// canonical file parity across all sisters. In CI (where only the web repo is
+// checked out), this section is SKIPPED — the per-sister CI guardrails handle it.
 
 const WORKSPACE = resolve(ROOT, "..")
+const IS_CI = !!process.env.CI
 
 function readAbsFile(absPath) {
   if (!existsSync(absPath)) return null
   return readFileSync(absPath, "utf-8")
 }
 
-console.log("── Cross-validate: sister repo canonical files (STRICT) ──")
+console.log("── Cross-validate: sister repo canonical files" + (IS_CI ? " (SKIPPED — CI mode, sister repos not in workspace)" : " (STRICT)") + " ──")
 
 // Required files every sister MUST have — no exceptions
 const CANONICAL_REQUIRED_FILES = [
@@ -129,7 +131,11 @@ for (const s of sisters) {
   const slug = `agentic-${s.key}`
   const repoDir = resolve(WORKSPACE, slug)
   if (!existsSync(repoDir)) {
-    fail(`Sister repo directory missing: ${slug}/ — new sister must exist in workspace before it can be enabled on the web`)
+    if (IS_CI) {
+      console.log(`  ⊘ ${slug}/ not in workspace (expected in CI — sister guardrails run in their own repos)`)
+    } else {
+      fail(`Sister repo directory missing: ${slug}/ — new sister must exist in workspace before it can be enabled on the web`)
+    }
     continue
   }
   ok(`${slug}/ exists in workspace`)
