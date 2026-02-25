@@ -104,6 +104,39 @@ Common options:
 - `--graph <file.acb>`
 - `--name <graph-name>`
 
+## Grounding Tools (v0.2)
+
+| Tool | Purpose |
+|------|---------|
+| `codebase_ground` | Verify code claim has graph evidence |
+| `codebase_evidence` | Get evidence for a symbol |
+| `codebase_suggest` | Find similar symbols (typo correction) |
+
+## Workspace Tools (v0.2)
+
+| Tool | Purpose |
+|------|---------|
+| `workspace_create` | Create multi-codebase workspace |
+| `workspace_add` | Add `.acb` graph with role (source/target/reference) |
+| `workspace_list` | List workspace contents |
+| `workspace_query` | Query across all loaded graphs |
+| `workspace_compare` | Compare symbol between contexts |
+| `workspace_xref` | Cross-reference symbol locations |
+
+## Translation Tools (v0.2)
+
+| Tool | Purpose |
+|------|---------|
+| `translation_record` | Record source-to-target symbol mapping |
+| `translation_progress` | Get migration statistics |
+| `translation_remaining` | List symbols not yet ported |
+
+## Context-Capture Tool
+
+| Tool | Purpose |
+|------|---------|
+| `analysis_log` | Record why a code analysis is being performed |
+
 ## Universal MCP entry
 
 ```json

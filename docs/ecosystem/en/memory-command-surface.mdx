@@ -13,7 +13,7 @@ Install commands are documented in [Installation](/docs/en/memory-installation).
 ## `amem` top-level
 
 ```bash
-amem create
+amem init
 amem info
 amem add
 amem link
@@ -89,6 +89,25 @@ export AMEM_AUTO_CAPTURE_MAX_CHARS=2048
   }
 }
 ```
+
+## Grounding Tools (v0.3)
+
+| Tool | Purpose |
+|------|---------|
+| `memory_ground` | Verify claim has memory backing |
+| `memory_evidence` | Get evidence for a query |
+| `memory_suggest` | Find similar memories (typo correction) |
+
+## Workspace Tools (v0.3)
+
+| Tool | Purpose |
+|------|---------|
+| `memory_workspace_create` | Create multi-memory workspace |
+| `memory_workspace_add` | Add `.amem` file to workspace |
+| `memory_workspace_list` | List loaded memory contexts |
+| `memory_workspace_query` | Query across all contexts |
+| `memory_workspace_compare` | Compare item between contexts |
+| `memory_workspace_xref` | Find topic distribution across contexts |
 
 ## Artifact
 

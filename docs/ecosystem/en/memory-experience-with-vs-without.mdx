@@ -54,7 +54,7 @@ You get plain text and keywords, but no typed memory semantics, confidence model
 ### With
 
 ```bash
-amem create /tmp/sister-sim.amem
+amem init /tmp/sister-sim.amem
 amem add /tmp/sister-sim.amem fact "Installer parity must match memory, vision, and codebase baselines." --session 7 --confidence 0.95
 amem add /tmp/sister-sim.amem decision "Use merge-only MCP config updates and require restart guidance." --session 7 --confidence 0.88
 amem add /tmp/sister-sim.amem correction "Runtime hardening guardrail must run in CI." --session 7 --confidence 0.9
@@ -126,7 +126,7 @@ Claude, Gemini, OpenAI/Codex, Cursor, VS Code, and Windsurf workflows can all fe
 ## Start in 5 minutes
 
 ```bash
-amem create team.amem
+amem init team.amem
 amem add team.amem fact "Release policy" --session 1 --confidence 0.9
 amem --format json quality team.amem
 amem --format json budget team.amem --horizon-years 20 --max-bytes 2147483648

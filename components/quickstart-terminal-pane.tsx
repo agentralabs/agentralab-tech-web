@@ -42,11 +42,11 @@ const COMMANDS: Record<ProjectKey, Record<CommandType, CommandEntry[]>> = {
     ],
     RUST: [
       {
-        command: "cargo install agentic-memory agentic-memory-mcp",
-        note: "Installs core graph engine and MCP server binaries.",
+        command: "cargo install agentic-memory-cli agentic-memory-mcp",
+        note: "Installs the amem CLI plus MCP server from crates.io.",
       },
       {
-        command: "amem create ~/.brain.amem",
+        command: "amem init ~/.brain.amem",
         note: "Creates a portable cognitive memory artifact.",
       },
     ],
@@ -92,18 +92,18 @@ const COMMANDS: Record<ProjectKey, Record<CommandType, CommandEntry[]>> = {
         note: "Server profile: installs binaries only for remote hosts and service-style environments. Then run agentra server preflight.",
       },
       {
-        command: "cargo install agentic-vision-mcp",
-        note: "Installs the Vision MCP server binary from crates.io.",
+        command: "cargo install agentic-vision-cli agentic-vision-mcp",
+        note: "Installs avis CLI and the Vision MCP server from crates.io.",
       },
     ],
     RUST: [
       {
-        command: "cargo add agentic-vision",
-        note: "Adds the core vision library crate to your Rust project.",
+        command: "cargo install agentic-vision-cli agentic-vision-mcp",
+        note: "Installs avis CLI plus MCP bridge binaries.",
       },
       {
-        command: "cargo install agentic-vision-mcp",
-        note: "Installs the MCP bridge binary for desktop/client integrations.",
+        command: "cargo add agentic-vision",
+        note: "Adds the core vision library crate to your Rust project.",
       },
     ],
     MCP: [
@@ -148,14 +148,14 @@ const COMMANDS: Record<ProjectKey, Record<CommandType, CommandEntry[]>> = {
         note: "Server profile: installs binaries only for remote hosts and service-style environments. Then run agentra server preflight.",
       },
       {
-        command: "cargo install agentic-codebase",
-        note: "Installs acb and acb-mcp for semantic code workflows.",
+        command: "cargo install agentic-codebase-cli agentic-codebase-mcp",
+        note: "Installs acb CLI plus codebase MCP server binaries.",
       },
     ],
     RUST: [
       {
-        command: "cargo install agentic-codebase",
-        note: "Installs both acb CLI and acb-mcp from crates.io.",
+        command: "cargo install agentic-codebase-cli agentic-codebase-mcp",
+        note: "Installs both acb CLI and codebase MCP server from crates.io.",
       },
       {
         command: "acb compile ./my-project -o project.acb",
@@ -168,7 +168,7 @@ const COMMANDS: Record<ProjectKey, Record<CommandType, CommandEntry[]>> = {
     ],
     MCP: [
       {
-        command: "acb-mcp serve",
+        command: "agentic-codebase-mcp serve",
         note: "Starts MCP stdio transport for code intelligence tools.",
       },
     ],

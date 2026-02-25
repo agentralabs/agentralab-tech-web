@@ -119,7 +119,7 @@ rsync agent.amem user@backup-server:/backups/
 
 **Python SDK：** 通过 `pip install agentic-brain` 可在 Windows 上使用预构建的轮子。不需要 Rust 工具链。
 
-**Rust CLI：** 使用 `cargo install agentic-memory` 或 `cargo build --release` 从源代码构建。所有测试都在 Windows 上通过。内存映射 I/O 在底层使用 `CreateFileMapping`/`MapViewOfFile` 。
+**Rust CLI：** 使用 `cargo install agentic-memory-cli` 或 `cargo build --release` 从源代码构建。所有测试都在 Windows 上通过。内存映射 I/O 在底层使用 `CreateFileMapping`/`MapViewOfFile` 。
 
 **已知差异：**
 - 文件路径使用反斜杠。 SDK 处理路径规范化，但如果将路径传递给 CLI，请使用 Windows 样式路径或正斜杠（两者都可以）。
