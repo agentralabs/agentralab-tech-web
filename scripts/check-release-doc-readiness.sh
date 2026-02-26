@@ -7,7 +7,8 @@ has_canonical_workspace() {
     [ -f "$root/docs/how-to.md" ] &&
     [ -d "$root/agentic-memory/docs/public" ] &&
     [ -d "$root/agentic-codebase/docs/public" ] &&
-    [ -d "$root/agentic-vision/docs/public" ]
+    [ -d "$root/agentic-vision/docs/public" ] &&
+    [ -d "$root/agentic-identity/docs/public" ]
 }
 
 resolve_workspace_root() {
@@ -23,21 +24,17 @@ resolve_workspace_root() {
     return 0
   fi
 
-  printf '%s\n' ""
+  echo "[release-doc-readiness] canonical workspace not found."
+  echo "[release-doc-readiness] Set AGENTRA_WORKSPACE_ROOT to the checked-out agentralabs-tech workspace."
+  exit 1
 }
 
 echo "[release-doc-readiness] lint"
 pnpm lint
 
 workspace_root="$(resolve_workspace_root)"
-if [ -n "$workspace_root" ]; then
-  echo "[release-doc-readiness] docs sync + nav contract (strict)"
-  AGENTRA_WORKSPACE_ROOT="$workspace_root" pnpm docs:sync:check
-else
-  echo "[release-doc-readiness] docs sync + nav contract (fallback)"
-  echo "[release-doc-readiness] canonical workspace not available; strict source sync skipped"
-  node scripts/check-docs-nav-contract.mjs
-fi
+echo "[release-doc-readiness] docs sync + nav contract (strict)"
+AGENTRA_WORKSPACE_ROOT="$workspace_root" pnpm docs:sync:check
 
 echo "[release-doc-readiness] public docs quality"
 ./scripts/check-public-docs.sh

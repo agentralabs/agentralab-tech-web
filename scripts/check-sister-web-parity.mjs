@@ -75,6 +75,8 @@ const sisterNames = sisters.map((s) => s.name)
 const sisterRepos = sisters.map((s) => s.repo)
 const sisterSlugs = sisters.map((s) => `agentic-${s.key}`)
 const NPM_PACKAGES = { memory: "@agenticamem/memory", vision: "@agenticamem/vision", codebase: "@agenticamem/codebase", identity: "@agenticamem/identity" }
+const CLI_PACKAGES = { memory: "agentic-memory-cli", vision: "agentic-vision-cli", codebase: "agentic-codebase-cli", identity: "agentic-identity-cli" }
+const MCP_PACKAGES = { memory: "agentic-memory-mcp", vision: "agentic-vision-mcp", codebase: "agentic-codebase-mcp", identity: "agentic-identity-mcp" }
 
 console.log(`Enabled sisters: ${sisterKeys.join(", ")} (${sisters.length} total)\n`)
 
@@ -172,6 +174,24 @@ for (const s of sisters) {
   // 4. README must have npm install
   const readme = readAbsFile(resolve(repoDir, "README.md"))
   if (readme !== null) {
+    const routeCmd = `curl -fsSL https://agentralabs.tech/install/${s.key} | bash`
+    if (readme.includes(routeCmd)) {
+      ok(`${slug}: README has canonical install route`)
+    } else {
+      fail(`${slug}: README missing canonical install route "${routeCmd}"`)
+    }
+
+    const cliPkg = CLI_PACKAGES[s.key]
+    const mcpPkg = MCP_PACKAGES[s.key]
+    if (cliPkg && mcpPkg) {
+      const cargoPair = `cargo install ${cliPkg} ${mcpPkg}`
+      if (readme.includes(cargoPair)) {
+        ok(`${slug}: README has cargo install pair "${cargoPair}"`)
+      } else {
+        fail(`${slug}: README missing cargo install pair "${cargoPair}"`)
+      }
+    }
+
     const pkg = NPM_PACKAGES[s.key]
     if (pkg && readme.includes(`npm install ${pkg}`)) {
       ok(`${slug}: README has npm install ${pkg}`)
@@ -192,6 +212,23 @@ for (const s of sisters) {
   // 6. installation.md must have npm install
   const installDoc = readAbsFile(resolve(repoDir, "docs/public/installation.md"))
   if (installDoc !== null) {
+    const routeCmd = `curl -fsSL https://agentralabs.tech/install/${s.key} | bash`
+    if (installDoc.includes(routeCmd)) {
+      ok(`${slug}: installation.md has canonical install route`)
+    } else {
+      fail(`${slug}: installation.md missing canonical install route "${routeCmd}"`)
+    }
+
+    const cliPkg = CLI_PACKAGES[s.key]
+    const mcpPkg = MCP_PACKAGES[s.key]
+    if (cliPkg && mcpPkg) {
+      if (installDoc.includes(`cargo install ${cliPkg}`) && installDoc.includes(`cargo install ${mcpPkg}`)) {
+        ok(`${slug}: installation.md has cargo install commands for ${cliPkg} and ${mcpPkg}`)
+      } else {
+        fail(`${slug}: installation.md missing cargo install commands for ${cliPkg} and/or ${mcpPkg}`)
+      }
+    }
+
     const pkg = NPM_PACKAGES[s.key]
     if (pkg && installDoc.includes(`npm install ${pkg}`)) {
       ok(`${slug}: installation.md has npm install ${pkg}`)
@@ -292,6 +329,16 @@ const artifacts = sisterKeys.map((k) => {
 })
 for (const art of artifacts) {
   assertContains(qsTsx, art, "quickstart-terminal-pane.tsx", `artifact label includes ${art}`)
+}
+for (const s of sisters) {
+  const routeCmd = `curl -fsSL https://agentralabs.tech/install/${s.key} | bash`
+  assertContains(qsTsx, routeCmd, "quickstart-terminal-pane.tsx", `GLOBAL commands include canonical install route for ${s.key}`)
+
+  const cliPkg = CLI_PACKAGES[s.key]
+  const mcpPkg = MCP_PACKAGES[s.key]
+  if (cliPkg && mcpPkg) {
+    assertContains(qsTsx, `cargo install ${cliPkg} ${mcpPkg}`, "quickstart-terminal-pane.tsx", `RUST commands include cargo install pair for ${s.key}`)
+  }
 }
 
 // ── G. scenario-cards-section.tsx ───────────────────────────────────────────
@@ -435,8 +482,16 @@ console.log("\n── T. architecture-system.mdx ──")
 const archEn = readFile("docs/ecosystem/en/architecture-system.mdx")
 if (archEn) {
   for (const s of sisters) {
-    const mcp = s.key === "codebase" ? "acb-mcp" : `agentic-${s.key}-mcp`
-    assertContains(archEn, mcp, "architecture-system.mdx", `architecture doc references ${mcp}`)
+    if (s.key === "codebase") {
+      if (archEn.includes("acb-mcp") || archEn.includes("agentic-codebase-mcp")) {
+        ok("architecture-system.mdx: architecture doc references codebase MCP runtime alias")
+      } else {
+        fail('architecture-system.mdx: architecture doc missing codebase MCP runtime alias ("acb-mcp" or "agentic-codebase-mcp")')
+      }
+    } else {
+      const mcp = `agentic-${s.key}-mcp`
+      assertContains(archEn, mcp, "architecture-system.mdx", `architecture doc references ${mcp}`)
+    }
   }
   assertMatch(archEn, /four/i, "architecture-system.mdx", `architecture doc says "four" sisters (not three)`)
 }
