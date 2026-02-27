@@ -74,6 +74,8 @@ The `amem` binary is the core engine. Use it standalone or as the backend for th
 
 ```bash
 cargo install agentic-memory-cli
+cargo install agentic-memory-mcp
+cargo install agentic-memory
 ```
 
 This installs the `amem` command-line tool.
@@ -82,7 +84,7 @@ This installs the `amem` command-line tool.
 
 ```bash
 amem --help
-amem init test.amem
+amem create test.amem
 amem add test.amem fact "Installation successful" --session 1
 amem info test.amem
 ```
@@ -93,7 +95,7 @@ amem info test.amem
 
 | Command | Description |
 |:---|:---|
-| `amem init` | Create a new empty `.amem` file |
+| `amem create` | Create a new empty `.amem` file |
 | `amem add` | Add a cognitive event (fact, decision, inference, correction, skill, episode) |
 | `amem link` | Add an edge between two nodes |
 | `amem info` | Display file information |
@@ -329,7 +331,7 @@ cd ../installer && pytest tests/ -v
 
 | Package | Registry | Install |
 |:---|:---|:---|
-| **agentic-memory-cli** | [crates.io](https://crates.io/crates/agentic-memory-cli) | `cargo install agentic-memory-cli` |
+| **agentic-memory** | [crates.io](https://crates.io/crates/agentic-memory) | `cargo install agentic-memory` |
 | **agentic-memory-mcp** | [crates.io](https://crates.io/crates/agentic-memory-mcp) | `cargo install agentic-memory-mcp` |
 | **agentic-brain** | [PyPI](https://pypi.org/project/agentic-brain/) | `pip install agentic-brain` |
 | **amem-installer** | [PyPI](https://pypi.org/project/amem-installer/) | `pip install amem-installer` |
@@ -386,7 +388,7 @@ python3 -m pip show amem-installer
 Install the Rust core engine first:
 
 ```bash
-cargo install agentic-memory-cli
+cargo install agentic-memory
 ```
 
 Or build from source if you don't have Rust:

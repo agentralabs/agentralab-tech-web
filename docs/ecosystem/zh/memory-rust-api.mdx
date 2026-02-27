@@ -11,7 +11,7 @@ AgenticMemory 是用 Rust 实现的。本文档涵盖核心库 API 和 `amem` CL
 
 ```toml
 [dependencies]
-agentic-memory = "0.3"
+agentic-memory = "0.2"
 ```
 
 ---
@@ -567,12 +567,12 @@ pub fn drift(&self) -> DriftReport;
 
 `amem` 二进制文件提供对所有核心操作的命令行访问。
 
-### amem init
+### amem create
 
 创建一个新的空大脑文件。
 
 ```
-amem init <PATH>
+amem create <PATH>
 ```
 
 |论证|描述 |
@@ -582,7 +582,7 @@ amem init <PATH>
 **例子：**
 
 ```bash
-amem init project.amem
+amem create project.amem
 ```
 
 ---

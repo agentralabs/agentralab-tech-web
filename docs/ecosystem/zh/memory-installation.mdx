@@ -74,6 +74,8 @@ print(brain.facts())
 
 ```bash
 cargo install agentic-memory-cli
+cargo install agentic-memory-mcp
+cargo install agentic-memory
 ```
 
 这将安装 `amem` 命令行工具。
@@ -82,7 +84,7 @@ cargo install agentic-memory-cli
 
 ```bash
 amem --help
-amem init test.amem
+amem create test.amem
 amem add test.amem fact "Installation successful" --session 1
 amem info test.amem
 ```
@@ -93,7 +95,7 @@ amem info test.amem
 
 |命令|描述 |
 |:---|:---|
-| `amem init` |创建一个新的空 `.amem` 文件 |
+| `amem create` |创建一个新的空 `.amem` 文件 |
 | `amem add` |添加认知事件（事实、决定、推理、纠正、技能、情节）|
 | `amem link` |在两个节点之间添加边 |
 | `amem info` |显示文件信息 |
@@ -329,7 +331,7 @@ cd ../installer && pytest tests/ -v
 
 |套餐 |登记处 | 安装 |
 |:---|:---|:---|
-| **agentic-memory-cli** | [crates.io](https://crates.io/crates/agentic-memory-cli) | `cargo install agentic-memory-cli` |
+| **主体记忆** | [crates.io](https://crates.io/crates/agentic-memory) | `cargo install agentic-memory` |
 | **代理内存-mcp** | [crates.io](https://crates.io/crates/agentic-memory-mcp) | `cargo install agentic-memory-mcp` |
 | **代理脑** | [皮伊](https://pypi.org/project/agentic-brain/) | `pip install agentic-brain` |
 | **amem-安装程序** | [皮伊](https://pypi.org/project/amem-installer/) | `pip install amem-installer` |
@@ -386,7 +388,7 @@ python3 -m pip show amem-installer
 首先安装 Rust 核心引擎：
 
 ```bash
-cargo install agentic-memory-cli
+cargo install agentic-memory
 ```
 
 或者如果您没有 Rust，则从源代码构建：
