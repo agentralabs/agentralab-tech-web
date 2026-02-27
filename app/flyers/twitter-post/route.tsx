@@ -156,11 +156,11 @@ export async function GET() {
               color: "#ea580c",
             }}
           >
-            PROVE.
+            PROVE. PLAN.
           </div>
         </div>
 
-        {/* Four sisters row */}
+        {/* Five sisters row */}
         <div
           style={{
             display: "flex",
@@ -336,6 +336,47 @@ export async function GET() {
                 .aid
               </span>
             </div>
+
+            {/* Time */}
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                border: "2px solid #3a3a3a",
+                borderLeft: "none",
+                padding: "14px 20px",
+                flex: 1,
+              }}
+            >
+              <span
+                style={{
+                  fontSize: 11,
+                  letterSpacing: 2,
+                  color: "#ea580c",
+                  marginBottom: 4,
+                }}
+              >
+                05
+              </span>
+              <span
+                style={{
+                  fontSize: 14,
+                  fontWeight: 700,
+                  letterSpacing: 1,
+                }}
+              >
+                TIME
+              </span>
+              <span
+                style={{
+                  fontSize: 11,
+                  color: "#666666",
+                  marginTop: 2,
+                }}
+              >
+                .atime
+              </span>
+            </div>
           </div>
         </div>
 
@@ -358,6 +399,14 @@ export async function GET() {
             </span>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            <div
+              style={{
+                width: 8,
+                height: 8,
+                borderRadius: "9999px",
+                background: "#ea580c",
+              }}
+            />
             <div
               style={{
                 width: 8,

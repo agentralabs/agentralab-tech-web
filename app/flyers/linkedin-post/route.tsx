@@ -167,6 +167,16 @@ export async function GET() {
             >
               CODE INTELLIGENCE.
             </div>
+            <div
+              style={{
+                fontSize: 56,
+                lineHeight: 1.1,
+                letterSpacing: -2,
+                fontWeight: 700,
+              }}
+            >
+              TEMPORAL REASONING.
+            </div>
           </div>
 
           <div
@@ -178,12 +188,12 @@ export async function GET() {
               maxWidth: 900,
             }}
           >
-            Four independent runtime sisters. Portable artifact files you own
+            Five independent runtime sisters. Portable artifact files you own
             forever. MCP-native integration. Built in Rust.
           </div>
         </div>
 
-        {/* Four sisters grid */}
+        {/* Five sisters grid */}
         <div
           style={{
             display: "flex",
@@ -365,6 +375,49 @@ export async function GET() {
                 }}
               >
                 Ed25519 keys in .aid
+              </span>
+            </div>
+
+            {/* Time */}
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                border: "2px solid #0a0a0a",
+                borderLeft: "none",
+                padding: "16px 22px",
+                flex: 1,
+                background: "rgba(242, 241, 234, 0.8)",
+              }}
+            >
+              <span
+                style={{
+                  fontSize: 11,
+                  letterSpacing: 2,
+                  color: "#ea580c",
+                  fontWeight: 700,
+                  marginBottom: 6,
+                }}
+              >
+                05 TEMPORAL
+              </span>
+              <span
+                style={{
+                  fontSize: 16,
+                  fontWeight: 700,
+                  letterSpacing: 1,
+                }}
+              >
+                AgenticTime
+              </span>
+              <span
+                style={{
+                  fontSize: 12,
+                  color: "#666666",
+                  marginTop: 4,
+                }}
+              >
+                Temporal engine in .atime
               </span>
             </div>
           </div>

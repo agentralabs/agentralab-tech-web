@@ -74,9 +74,9 @@ const sisterKeys = sisters.map((s) => s.key)
 const sisterNames = sisters.map((s) => s.name)
 const sisterRepos = sisters.map((s) => s.repo)
 const sisterSlugs = sisters.map((s) => `agentic-${s.key}`)
-const NPM_PACKAGES = { memory: "@agenticamem/memory", vision: "@agenticamem/vision", codebase: "@agenticamem/codebase", identity: "@agenticamem/identity" }
-const CLI_PACKAGES = { memory: "agentic-memory-cli", vision: "agentic-vision-cli", codebase: "agentic-codebase-cli", identity: "agentic-identity-cli" }
-const MCP_PACKAGES = { memory: "agentic-memory-mcp", vision: "agentic-vision-mcp", codebase: "agentic-codebase-mcp", identity: "agentic-identity-mcp" }
+const NPM_PACKAGES = { memory: "@agenticamem/memory", vision: "@agenticamem/vision", codebase: "@agenticamem/codebase", identity: "@agenticamem/identity", time: "@agenticamem/time" }
+const CLI_PACKAGES = { memory: "agentic-memory-cli", vision: "agentic-vision-cli", codebase: "agentic-codebase-cli", identity: "agentic-identity-cli", time: "agentic-time-cli" }
+const MCP_PACKAGES = { memory: "agentic-memory-mcp", vision: "agentic-vision-mcp", codebase: "agentic-codebase-mcp", identity: "agentic-identity-mcp", time: "agentic-time-mcp" }
 
 console.log(`Enabled sisters: ${sisterKeys.join(", ")} (${sisters.length} total)\n`)
 
@@ -324,6 +324,7 @@ const artifacts = sisterKeys.map((k) => {
     case "vision": return ".avis"
     case "codebase": return ".acb"
     case "identity": return ".aid"
+    case "time": return ".atime"
     default: return `.${k}`
   }
 })
@@ -412,6 +413,7 @@ const allTogetherNames = {
   vision: "VisionAllTogetherContent",
   codebase: "CodebaseAllTogetherContent",
   identity: "IdentityAllTogetherContent",
+  time: "TimeAllTogetherContent",
 }
 for (const key of sisterKeys) {
   const fnName = allTogetherNames[key]
@@ -429,11 +431,46 @@ for (const key of sisterKeys) {
   assertContains(installRoute, `"agentic-${key}"`, "install/[target]/route.ts", `INSTALL_TARGETS has "agentic-${key}" key`)
 }
 
-// ── O. hero-section.tsx ─────────────────────────────────────────────────────
+// ── O. hero-section.tsx + home page metadata ────────────────────────────────
 
-console.log("\n── O. hero-section.tsx ──")
+console.log("\n── O. hero-section.tsx + home page metadata ──")
 const heroTsx = readFile("components/hero-section.tsx")
-assertMatch(heroTsx, /four/i, "hero-section.tsx", `hero mentions "four" systems`)
+assertMatch(heroTsx, /five/i, "hero-section.tsx", `hero mentions "five" systems`)
+
+const homePageTsx = readFile("app/page.tsx")
+if (homePageTsx) {
+  // Home page metadata must NOT say "Four" — must be "Five"
+  if (/Four\s+(open-source|file\s+format|independent|sister)/i.test(homePageTsx)) {
+    fail(`app/page.tsx: home page metadata still says "Four" — must be updated to "Five"`)
+  } else {
+    ok(`app/page.tsx: no stale "Four" count`)
+  }
+  // All file formats must be present
+  for (const art of artifacts) {
+    assertContains(homePageTsx, art, "app/page.tsx", `home page metadata mentions ${art} format`)
+  }
+}
+
+// Flyers must mention all sisters (no stale "Four" counts)
+const flyerFiles = ["app/flyers/twitter-post/route.tsx", "app/flyers/linkedin-post/route.tsx", "app/twitter-image.tsx"]
+for (const flyerPath of flyerFiles) {
+  const flyerContent = readFile(flyerPath)
+  if (flyerContent) {
+    if (/Four\s+(open-source|file\s+format|independent|sister)/i.test(flyerContent)) {
+      fail(`${flyerPath}: flyer still says "Four" — must be updated to "Five"`)
+    } else {
+      ok(`${flyerPath}: no stale "Four" count`)
+    }
+  }
+}
+
+// about-section.tsx must mention all sister display names
+const aboutTsx = readFile("components/about-section.tsx")
+if (aboutTsx) {
+  for (const name of sisterNames) {
+    assertContains(aboutTsx, name, "about-section.tsx", `about section references ${name}`)
+  }
+}
 
 // ── P. quickstart-terminal-pane npm commands ────────────────────────────────
 
@@ -473,7 +510,7 @@ if (glossaryEn) {
   for (const s of sisters) {
     assertContains(glossaryEn, `## ${s.name}`, "glossary.mdx", `glossary has "## ${s.name}" section`)
   }
-  assertMatch(glossaryEn, /four/i, "glossary.mdx", `glossary says "four" sisters (not three)`)
+  assertMatch(glossaryEn, /five/i, "glossary.mdx", `glossary says "five" sisters (not four)`)
 }
 
 // ── T. architecture-system.mdx — all sister runtimes referenced ────────────
@@ -493,7 +530,7 @@ if (archEn) {
       assertContains(archEn, mcp, "architecture-system.mdx", `architecture doc references ${mcp}`)
     }
   }
-  assertMatch(archEn, /four/i, "architecture-system.mdx", `architecture doc says "four" sisters (not three)`)
+  assertMatch(archEn, /five/i, "architecture-system.mdx", `architecture doc says "five" sisters (not four)`)
 }
 
 // ── U. Meta tags: layout.tsx + head files must reference all sisters ────────

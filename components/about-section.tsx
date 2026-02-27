@@ -79,7 +79,8 @@ const STATS = [
   { label: "MEMORY_QUERIES", value: "16" },
   { label: "VISION_TOOLS", value: "10" },
   { label: "CODEBASE_QUERIES", value: "24" },
-  { label: "CORE_FORMATS", value: ".amem/.avis/.acb" },
+  { label: "TIME_TOOLS", value: "19" },
+  { label: "CORE_FORMATS", value: ".amem/.avis/.acb/.aid/.atime" },
 ]
 
 function StatBlock({ label, value, index }: { label: string; value: string; index: number }) {
@@ -206,9 +207,11 @@ export function AboutSection() {
                 <p className="text-xs lg:text-sm font-mono text-muted-foreground leading-relaxed">
                   We build the substrate where AI agents stop operating page by
                   page. AgenticVision maps the web into queryable graphs,
-                  AgenticMemory preserves reasoning continuity, and
+                  AgenticMemory preserves reasoning continuity,
                   AgenticCodebase compiles repositories into semantic
-                  intelligence surfaces.
+                  intelligence surfaces, AgenticIdentity provides
+                  cryptographic trust, and AgenticTime adds temporal
+                  reasoning with deadlines, schedules, and decay models.
                 </p>
                 <p className="text-xs lg:text-sm font-mono text-muted-foreground leading-relaxed">
                   The stack is MCP-native, artifact-portable, and designed for

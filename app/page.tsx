@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { Navbar } from "@/components/navbar"
 import { HeroSection } from "@/components/hero-section"
+import { AStarFilesSection } from "@/components/astar-files-section"
 import { ScenarioCardsSection } from "@/components/scenario-cards-section"
 import { BenchmarksSection } from "@/components/benchmarks-section"
 import { HomeReleaseStrip } from "@/components/home-release-strip"
@@ -17,7 +18,7 @@ import { siteConfig } from "@/lib/site"
 export const metadata: Metadata = {
   title: "Home",
   description:
-    "Your AI forgets everything. Ours doesn't. Four open-source systems that give AI agents persistent memory, structured perception, code intelligence, and cryptographic identity.",
+    "Your AI forgets you exist. Ours remembers for 20 years. Five open-source systems — AgenticMemory, AgenticVision, AgenticCodebase, AgenticIdentity, and AgenticTime. Five file formats. Forever yours. .amem .avis .acb .aid .atime",
   alternates: {
     canonical: "/",
   },
@@ -38,6 +39,7 @@ export default function Page() {
       <Navbar />
       <main>
         <HeroSection />
+        <AStarFilesSection />
         <ScenarioCardsSection />
         <BenchmarksSection />
         <HomeReleaseStrip />
