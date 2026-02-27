@@ -50,8 +50,8 @@ jobs:
           # Clone monorepo (public) — contains workspace-level docs
           git clone --depth 1 https://github.com/agentralabs/agentralabs-tech.git "$WORKSPACE"
 
-          # Clone all sister repos (public) into workspace
-          for repo in agentic-memory agentic-vision agentic-codebase agentic-identity agentic-time; do
+          # Clone all sister repos (public) into workspace — read from registry
+          for repo in $(jq -r '.sisters[].repo' "$WORKSPACE/docs/sisters-registry.json"); do
             git clone --depth 1 "https://github.com/agentralabs/${repo}.git" "$WORKSPACE/${repo}"
           done
 

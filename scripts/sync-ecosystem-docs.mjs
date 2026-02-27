@@ -1185,6 +1185,17 @@ async function main() {
 
   await writeIfChanged(NAV_CONTRACT_FILE, `${JSON.stringify(navContract, null, 2)}\n`)
 
+  // Copy sisters-registry.json from monorepo into web repo (single-source sync)
+  const registrySource = path.join(workspaceRoot, "docs", "sisters-registry.json")
+  const registryDest = path.join(repoRoot, "docs", "ecosystem", "sisters-registry.json")
+  try {
+    const registryContent = await fs.readFile(registrySource, "utf8")
+    await writeIfChanged(registryDest, registryContent)
+  } catch {
+    if (strict) throw new Error(`[sync] sisters-registry.json not found at ${registrySource}`)
+    console.warn(`[sync] skipped sisters-registry.json copy (source not found)`)
+  }
+
   for (const [name, content] of enFiles.entries()) {
     assertEnglishOutputHasNoHan(name, content)
     // eslint-disable-next-line no-await-in-loop

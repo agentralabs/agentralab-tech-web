@@ -20,7 +20,9 @@ const DEFAULT_REPOS = [
   "agentralabs/agentralab-tech-web",
   "agentralabs/agentic-memory",
   "agentralabs/agentic-vision",
-  "agentralabs/codebase",
+  "agentralabs/agentic-codebase",
+  "agentralabs/agentic-identity",
+  "agentralabs/agentic-time",
 ]
 
 const API_BASE = "https://api.github.com"
