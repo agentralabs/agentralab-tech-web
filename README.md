@@ -1,96 +1,106 @@
-# Agentra Labs Web
+<p align="center">
+  <img src="assets/github-hero-pane.svg" alt="Agentra Labs Web hero pane" width="980">
+</p>
 
-Official website for Agentra Labs (`agentralabs.tech`) built with Next.js and the internal Agentra design system.
+<p align="center">
+  <a href="https://agentralab-tech-web.vercel.app"><img src="https://img.shields.io/badge/Live-agentralabs.tech-ea580c?style=for-the-badge" alt="Live Site"></a>
+  <a href="#stack"><img src="https://img.shields.io/badge/Next.js-15-111111?style=for-the-badge&logo=nextdotjs&logoColor=white" alt="Next.js"></a>
+  <a href="#stack"><img src="https://img.shields.io/badge/TypeScript-5-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-22C55E?style=for-the-badge" alt="MIT License"></a>
+</p>
+
+<p align="center">
+  <strong>Documentation site and developer portal for the Agentra ecosystem.</strong>
+</p>
+
+<p align="center">
+  <a href="#local-development">Dev</a> · <a href="#docs-sync">Docs Sync</a> · <a href="#pages">Pages</a> · <a href="#linked-repositories">Repos</a>
+</p>
+
+---
+
+<a name="stack"></a>
 
 ## Stack
 
-- Next.js App Router
-- TypeScript
-- Tailwind CSS
-- Framer Motion
+- **Next.js** App Router + TypeScript
+- **Tailwind CSS** + Framer Motion
+- **Fumadocs** MDX documentation engine
+- **Vercel** deployment
+
+<a name="local-development"></a>
 
 ## Local Development
 
 ```bash
 pnpm install
-pnpm dev
+pnpm dev             # http://localhost:3000
 ```
 
-Open `http://localhost:3000`.
-
-## Build and Verify
+Build and verify:
 
 ```bash
-pnpm docs:sync
-pnpm lint
-pnpm build
+pnpm docs:sync       # sync ecosystem docs from canonical sources
+pnpm lint            # tsc --noEmit
+pnpm build           # production build
 ```
+
+<a name="docs-sync"></a>
+
+## Docs Sync
+
+Ecosystem documentation is generated from canonical sources in the sister repos and the monorepo. The sync pipeline ensures the web site always matches the source of truth.
+
+```bash
+pnpm docs:sync          # regenerate docs from canonical sources
+pnpm docs:sync:check    # strict mode — fails if docs are out of sync
+```
+
+Canonical sources: sister `docs/public/` directories + monorepo `docs/`.
 
 ## Automated Blog Publishing
 
-Blog entries can be generated from GitHub release/commit signals and published automatically every 4-5 days.
+Blog entries are generated from GitHub release/commit signals and published automatically every 4-5 days.
 
-- Generator script: `scripts/generate-lab-log.mjs`
-- Local run: `pnpm lablog:generate`
-- GitHub release sync: `pnpm lablog:release`
-- Output:
-  - `content/lab-log/*.mdx`
-  - `data/lab-log-index.json`
-  - `data/lab-log-state.json`
-- Optional manual signals file: `data/lab-log-manual.json`
+```bash
+pnpm lablog:generate     # generate from signals
+pnpm lablog:release      # sync from GitHub releases
+```
 
-Workflow:
+Workflow: `.github/workflows/lab-log-autopublish.yml`
 
-- `.github/workflows/lab-log-autopublish.yml`
-- Runs daily and publishes whenever the last publish is older than the configured 4-5 day window.
-- If unseen source events are below threshold, it publishes in carryover heartbeat mode (same cadence, lower-signal summary).
-- Commits only when a new entry is generated.
-- Every generated publish also creates a matching GitHub Release with business-structured notes.
-- Quality gate is mandatory: 3 long-form paragraphs, highlight bullets, and source links are required.
-
-Environment knobs:
-
-- `LAB_LOG_REPO_SOURCES` comma-separated `owner/repo` list.
-- `LAB_LOG_INTERVAL_HOURS` default `96`.
-- `LAB_LOG_MIN_EVENTS` default `2`.
-- `LAB_LOG_MAX_SIGNALS` default `6`.
-- `LAB_LOG_FORCE=true` to bypass interval guard.
-- `LAB_LOG_RELEASE_DRY_RUN=1` to print release body without creating a GitHub release.
-
-## Deployment (Vercel)
-
-This repo is prepared for Vercel deployment.
-
-- `vercel.json` contains production routing headers
-- metadata, sitemap, robots, and social cards are configured in `app/`
-
-See:
-
-- `docs/ecosystem/en/installation.mdx`
-- `docs/ecosystem/en/integrations.mdx`
-- `docs/ecosystem/en/server-runtime-auth-and-artifact-sync.mdx`
-
-## Docs Sync Model
-
-- Single source for web docs: `docs/ecosystem/*`
-- Canonical ecosystem docs are synced in via `pnpm docs:sync`
-- Drift check: `pnpm docs:sync:check`
+<a name="pages"></a>
 
 ## Pages
 
-- `/` Home
-- `/projects` Projects
-- `/publications` Publications
-- `/docs` Documentation Hub
-- `/feedback` Feedback
-- `/showcase` Showcase
-- `/integrations` Integrations
-- `/channels` Channels
-- `/blog` Blog
-- `/partners` Partners
+| Route | Content |
+|-------|---------|
+| `/` | Home |
+| `/projects` | Projects overview |
+| `/publications` | Research papers |
+| `/docs` | Documentation hub (all five sisters) |
+| `/integrations` | MCP client integration guides |
+| `/showcase` | Community showcase |
+| `/blog` | Lab log / blog |
+| `/feedback` | Feedback |
+| `/channels` | Community channels |
+| `/partners` | Partners |
+| `/install/[target]/[profile]` | Install route (desktop/terminal/server) |
+
+<a name="linked-repositories"></a>
 
 ## Linked Repositories
 
-- AgenticMemory: <https://github.com/agentralabs/agentic-memory>
-- AgenticVision: <https://github.com/agentralabs/agentic-vision>
-- AgenticCodebase: <https://github.com/agentralabs/agentic-codebase>
+| Sister | Repository | Artifact |
+|--------|-----------|----------|
+| AgenticMemory | [agentralabs/agentic-memory](https://github.com/agentralabs/agentic-memory) | `.amem` |
+| AgenticVision | [agentralabs/agentic-vision](https://github.com/agentralabs/agentic-vision) | `.avis` |
+| AgenticCodebase | [agentralabs/agentic-codebase](https://github.com/agentralabs/agentic-codebase) | `.acb` |
+| AgenticIdentity | [agentralabs/agentic-identity](https://github.com/agentralabs/agentic-identity) | `.aid` |
+| AgenticTime | [agentralabs/agentic-time](https://github.com/agentralabs/agentic-time) | `.atime` |
+
+---
+
+<p align="center">
+  Built by <a href="https://agentralab-tech-web.vercel.app">Agentra Labs</a>
+</p>
