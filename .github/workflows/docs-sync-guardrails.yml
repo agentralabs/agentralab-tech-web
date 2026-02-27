@@ -43,59 +43,19 @@ jobs:
           cache: "pnpm"
 
       - name: Clone canonical ecosystem workspace
-        env:
-          AGENTRALABS_REPO_READ_TOKEN: ${{ secrets.AGENTRALABS_REPO_READ_TOKEN }}
         run: |
-          if [ -z "${AGENTRALABS_REPO_READ_TOKEN}" ]; then
-            echo "::error::Missing secret AGENTRALABS_REPO_READ_TOKEN. Add a read-only PAT with access to agentralabs-tech and sister repos."
-            exit 1
-          fi
+          WORKSPACE="$RUNNER_TEMP/agentra-workspace"
 
-          if ! command -v jq >/dev/null 2>&1; then
-            echo "::error::jq is required for sister auto-discovery"
-            exit 1
-          fi
+          # Clone monorepo (public) — contains workspace-level docs
+          git clone --depth 1 https://github.com/agentralabs/agentralabs-tech.git "$WORKSPACE"
 
-          clone_with_token() {
-            local repo="$1"
-            local dest="$2"
-            git clone --depth 1 \
-              "https://x-access-token:${AGENTRALABS_REPO_READ_TOKEN}@github.com/${repo}.git" \
-              "${dest}"
-          }
-
-          clone_with_token "agentralabs/agentralabs-tech" "$RUNNER_TEMP/agentra-workspace"
-
-          list_agentic_repos() {
-            local page=1
-            while true; do
-              local batch
-              batch="$(curl -fsSL \
-                -H "Authorization: Bearer ${AGENTRALABS_REPO_READ_TOKEN}" \
-                -H "Accept: application/vnd.github+json" \
-                "https://api.github.com/orgs/agentralabs/repos?per_page=100&page=${page}&type=all")"
-
-              echo "${batch}" | jq -r '.[] | select((.archived|not) and (.name|startswith("agentic-"))) | .full_name'
-
-              local count
-              count="$(echo "${batch}" | jq 'length')"
-              if [ "${count}" -lt 100 ]; then
-                break
-              fi
-              page=$((page + 1))
-            done
-          }
-
-          mapfile -t SISTER_REPOS < <(list_agentic_repos | sort -u)
-          if [ "${#SISTER_REPOS[@]}" -eq 0 ]; then
-            echo "::error::No agentic-* sister repos discovered from agentralabs org"
-            exit 1
-          fi
-
-          for repo in "${SISTER_REPOS[@]}"; do
-            repo_name="${repo##*/}"
-            clone_with_token "${repo}" "$RUNNER_TEMP/agentra-workspace/${repo_name}"
+          # Clone all sister repos (public) into workspace
+          for repo in agentic-memory agentic-vision agentic-codebase agentic-identity agentic-time; do
+            git clone --depth 1 "https://github.com/agentralabs/${repo}.git" "$WORKSPACE/${repo}"
           done
+
+          echo "Workspace contents:"
+          ls "$WORKSPACE"/
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
