@@ -9,7 +9,7 @@ import { Footer } from "@/components/footer"
 
 const ease = [0.22, 1, 0.36, 1] as const
 
-type ProjectKey = "AgenticMemory" | "AgenticVision" | "AgenticCodebase" | "AgenticIdentity"
+type ProjectKey = "AgenticMemory" | "AgenticVision" | "AgenticCodebase" | "AgenticIdentity" | "AgenticTime"
 
 interface QueryRow {
   id: number
@@ -57,6 +57,14 @@ const PROJECTS: {
     repo: "https://github.com/agentralabs/agentic-identity",
     scenarioHref: "/projects/scenarios/agentic-identity",
     line: "Cryptographic agent identity with Ed25519 anchors, signed receipts, and scoped trust delegation.",
+  },
+  {
+    key: "AgenticTime",
+    artifact: ".atime",
+    capacity: "deadlines + schedules + sequences + decay + PERT",
+    repo: "https://github.com/agentralabs/agentic-time",
+    scenarioHref: "/projects/scenarios/agentic-time",
+    line: "Temporal reasoning with deadline tracking, recurring schedules, step sequences, and temporal decay models.",
   },
 ]
 
@@ -601,11 +609,116 @@ function IdentityCapacity() {
   )
 }
 
+function TimeCapacity() {
+  return (
+    <div className="flex flex-col gap-4">
+      <div className="border-2 border-foreground p-4">
+        <p className="text-sm font-mono font-bold uppercase tracking-tight">Agents Have No Clock</p>
+        <p className="mt-2 text-xs font-mono text-muted-foreground leading-relaxed">
+          LLMs have no sense of time. They cannot track deadlines, model recurring schedules, estimate
+          durations, or understand temporal decay. Every conversation exists in an eternal present.
+          AgenticTime gives agents a temporal reasoning engine rooted in deadlines, schedules, sequences,
+          and decay models.
+        </p>
+      </div>
+
+      <div className="border-2 border-foreground p-4">
+        <p className="text-sm font-mono font-bold uppercase tracking-tight">The Atom: Temporal Entity</p>
+        <p className="mt-2 text-xs font-mono text-muted-foreground leading-relaxed">
+          The smallest temporal unit is a typed entity: Duration, Deadline, Schedule, Sequence, or Decay.
+          Each carries metadata, status transitions, and relationships to other temporal entities.
+        </p>
+        <div className="mt-3 border border-foreground overflow-hidden">
+          {[
+            "DURATION — PERT three-point estimate (optimistic, expected, pessimistic).",
+            "DEADLINE — Hard or soft with consequences and automatic status transitions.",
+            "SCHEDULE — Daily, weekly, or cron-style recurrence with conflict detection.",
+            "SEQUENCE — Ordered multi-step workflow with automatic advancement.",
+            "DECAY — Exponential, linear, or step-function relevance decay over time.",
+          ].map((row) => (
+            <div key={row} className="px-3 py-2 text-xs font-mono text-muted-foreground border-b border-border last:border-b-0">
+              {row}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="border-2 border-foreground p-4">
+        <p className="text-sm font-mono font-bold uppercase tracking-tight">Temporal Intelligence</p>
+        <p className="mt-2 text-xs font-mono text-muted-foreground leading-relaxed">
+          Beyond tracking, AgenticTime reasons about time: finding available slots across overlapping
+          schedules, detecting conflicts before they happen, computing temporal debt from deferred work,
+          and modeling chrono-gravity where approaching deadlines warp priority landscapes.
+        </p>
+      </div>
+
+      <div className="border-2 border-foreground p-4">
+        <p className="text-sm font-mono font-bold uppercase tracking-tight">Temporal Inventions</p>
+        <div className="mt-3 border border-foreground overflow-hidden">
+          <div className="grid grid-cols-[160px_1fr_140px] border-b border-foreground">
+            <span className="px-3 py-2 text-[10px] uppercase tracking-[0.15em] font-mono text-muted-foreground">
+              Invention
+            </span>
+            <span className="px-3 py-2 text-[10px] uppercase tracking-[0.15em] font-mono text-muted-foreground">
+              Detail
+            </span>
+            <span className="px-3 py-2 text-[10px] uppercase tracking-[0.15em] font-mono text-muted-foreground">
+              Status
+            </span>
+          </div>
+          {[
+            { op: "Timeline Forks", detail: "Branch-and-explore what-if temporal reasoning", status: "Operational" },
+            { op: "Temporal Debt", detail: "Compound interest on deferred work", status: "Operational" },
+            { op: "Chrono-Gravity", detail: "Urgent deadlines warp nearby task priorities", status: "Operational" },
+            { op: "Anomaly Detection", detail: "Catch impossible timelines and temporal paradoxes", status: "Operational" },
+            { op: "PERT Estimation", detail: "Three-point duration estimates with weighted averages", status: "Operational" },
+            { op: "Decay Models", detail: "Exponential, linear, and step-function relevance decay", status: "Operational" },
+            { op: "Slot Queries", detail: "Find free windows across overlapping constraints", status: "Operational" },
+          ].map((row) => (
+            <div key={row.op} className="grid grid-cols-[160px_1fr_140px] border-b border-border last:border-b-0">
+              <span className="px-3 py-2 text-xs font-mono">{row.op}</span>
+              <span className="px-3 py-2 text-xs font-mono text-muted-foreground">{row.detail}</span>
+              <span className="px-3 py-2 text-xs font-mono text-[#ea580c]">{row.status}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="border-2 border-foreground p-4">
+        <p className="text-sm font-mono font-bold uppercase tracking-tight">One File, Portable Temporal Brain</p>
+        <p className="mt-2 text-xs font-mono text-muted-foreground leading-relaxed">
+          <code>.atime</code> is a portable temporal artifact containing all deadlines, schedules, sequences,
+          duration estimates, and decay models in a single binary file with BLAKE3 checksums. Copy it to
+          another machine, and the agent&apos;s entire temporal context comes with it.
+        </p>
+      </div>
+
+      <div className="border-2 border-foreground p-4">
+        <p className="text-sm font-mono font-bold uppercase tracking-tight">Multi-LLM Portability</p>
+        <p className="mt-2 text-xs font-mono text-muted-foreground leading-relaxed">
+          The same <code>.atime</code> artifact works across Claude, GPT, Gemini, and any MCP-compatible
+          runtime. Temporal reasoning is not locked to a single vendor.
+        </p>
+      </div>
+
+      <div className="border-2 border-foreground p-4">
+        <p className="text-sm font-mono font-bold uppercase tracking-tight">MCP Capability Surface</p>
+        <p className="mt-2 text-xs font-mono text-muted-foreground leading-relaxed">
+          AgenticTime exposes 19 MCP tools for temporal lifecycle: deadline management, schedule creation,
+          sequence advancement, decay evaluation, slot queries, conflict detection, and timeline forking.
+          All operations persist in portable <code>.atime</code> artifacts.
+        </p>
+      </div>
+    </div>
+  )
+}
+
 function ProjectCapacityView({ project }: { project: ProjectKey }) {
   if (project === "AgenticMemory") return <MemoryCapacity />
   if (project === "AgenticVision") return <VisionCapacity />
   if (project === "AgenticCodebase") return <CodebaseCapacity />
-  return <IdentityCapacity />
+  if (project === "AgenticIdentity") return <IdentityCapacity />
+  return <TimeCapacity />
 }
 
 export default function ProjectsPage() {

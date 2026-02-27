@@ -49,6 +49,15 @@
       "landingSlug": "identity-docs",
       "includeLanding": true,
       "enabled": true
+    },
+    {
+      "key": "time",
+      "repo": "agentic-time",
+      "name": "AgenticTime",
+      "order": 1004,
+      "landingSlug": "time-docs",
+      "includeLanding": true,
+      "enabled": true
     }
   ]
 }

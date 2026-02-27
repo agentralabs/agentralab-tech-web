@@ -9,9 +9,9 @@ Key terms used across Agentra Labs projects.
 
 **MCP (Model Context Protocol)** — An open standard that lets AI applications discover and call tools exposed by external servers. All Agentra sisters expose their capabilities as MCP tools.
 
-**Sister** — One of the four Agentra runtime components: AgenticMemory, AgenticVision, AgenticCodebase, and AgenticIdentity. Each sister runs as an independent MCP server and produces its own artifact.
+**Sister** — One of the five Agentra runtime components: AgenticMemory, AgenticVision, AgenticCodebase, AgenticIdentity, and AgenticTime. Each sister runs as an independent MCP server and produces its own artifact.
 
-**Artifact** — A portable binary file produced by a sister. Artifacts store all state and can be moved between machines. Formats: `.amem` (memory), `.avis` (vision), `.acb` (codebase), `.aid` (identity).
+**Artifact** — A portable binary file produced by a sister. Artifacts store all state and can be moved between machines. Formats: `.amem` (memory), `.avis` (vision), `.acb` (codebase), `.aid` (identity), `.atime` (time).
 
 **Workspace** — The parent directory containing the web repo and all sister repos. The docs sync script reads from this workspace to build the documentation site.
 
@@ -88,3 +88,19 @@ Key terms used across Agentra Labs projects.
 **Derived key** — A child signing key generated from the root key using HKDF-SHA256 with a context-specific path. Types: session keys, capability keys, device keys. Compromising a derived key does not expose the root key.
 
 **.aid** — The AgenticIdentity artifact file. A JSON document containing encrypted private key material (ChaCha20-Poly1305) and plaintext public identity metadata. The public document can be read without the passphrase.
+
+## AgenticTime
+
+**Temporal entity** — The atomic unit of temporal reasoning. Five types: `Duration` (time spans with PERT estimation), `Deadline` (hard or soft due dates with consequences), `Schedule` (recurring events with cron-style patterns), `Sequence` (ordered multi-step workflows), and `Decay` (values that fade over time).
+
+**PERT estimation** — Program Evaluation and Review Technique for three-point duration estimates. Takes optimistic, expected, and pessimistic values to compute a weighted average: (O + 4M + P) / 6.
+
+**Temporal debt** — The compounding cost of deferred work. Like financial debt that accrues interest, deferred tasks grow more expensive over time. Tracks principal, rate, and accumulated penalty.
+
+**Chrono-gravity** — A priority warping model where approaching deadlines pull nearby tasks into their orbit, automatically escalating urgency based on proximity and consequence severity.
+
+**Timeline fork** — A branch-and-explore mechanism for temporal reasoning. Clones the current temporal state so the agent can simulate different scheduling decisions and compare outcomes before committing.
+
+**Temporal anomaly** — An impossible or contradictory temporal state: deadlines before their start dates, infinite sequence loops, or schedules that conflict with their own recurrence patterns.
+
+**.atime** — The AgenticTime artifact file. A portable binary file containing all temporal entities (deadlines, schedules, sequences, durations, decay models) with BLAKE3 checksums for integrity verification.

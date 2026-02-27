@@ -24,6 +24,8 @@ const BENCHMARKS: BenchmarkRow[] = [
   { operation: "Codebase: Symbol lookup", latency: "14.3 \u00b5s", sister: "codebase" },
   { operation: "Codebase: Impact analysis", latency: "1.46 \u00b5s", sister: "codebase" },
   { operation: "Codebase: Index access", latency: "9.7 ns", sister: "codebase" },
+  { operation: "Grounding: Verify claim", latency: "< 10 ms", sister: "codebase" },
+  { operation: "Workspace: Cross-context query", latency: "< 50 ms", sister: "memory" },
 ]
 
 const SCALE_ROWS = [

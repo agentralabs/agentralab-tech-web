@@ -56,6 +56,20 @@ const identityCard = {
   href: "/docs/en/identity-experience-with-vs-without",
 } as const
 
+const timeCard = {
+  id: "time",
+  title: "AgenticTime",
+  kicker: "Deadlines and schedules become queryable state",
+  claim:
+    "Agents have no clock. They suggest \"this weekend\" without checking calendars, conflicts, or compounding debt. AgenticTime gives every agent temporal reasoning so scheduling decisions are grounded in real constraints.",
+  proof: [
+    "5 entity types: Duration, Deadline, Schedule, Sequence, Decay",
+    "PERT estimation with optimistic/expected/pessimistic bounds",
+    "temporal debt models track compounding cost of deferred work",
+  ],
+  href: "/docs/en/time-experience-with-vs-without",
+} as const
+
 export function ValueProofSection() {
   return (
     <section className="w-full px-6 py-16 lg:px-12" aria-label="Proof of value">
@@ -110,7 +124,7 @@ export function ValueProofSection() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-0 border-2 border-t-0 border-foreground">
-        <article className="p-5 lg:p-6 border-foreground bg-background">
+        <article className="p-5 lg:p-6 border-foreground bg-background border-b-2 lg:border-b-0 lg:border-r-2">
           <p className="text-[10px] tracking-[0.2em] uppercase text-muted-foreground font-mono">{identityCard.kicker}</p>
           <h3 className="mt-2 text-xl font-mono font-bold tracking-tight">{identityCard.title}</h3>
           <p className="mt-3 text-sm font-mono text-muted-foreground leading-relaxed">{identityCard.claim}</p>
@@ -125,6 +139,26 @@ export function ValueProofSection() {
 
           <Link
             href={identityCard.href}
+            className="mt-5 inline-flex items-center gap-2 border border-foreground px-3 py-2 text-[11px] font-mono uppercase tracking-[0.14em] hover:bg-foreground hover:text-background transition-colors"
+          >
+            Read full proof
+          </Link>
+        </article>
+        <article className="p-5 lg:p-6 border-foreground bg-background">
+          <p className="text-[10px] tracking-[0.2em] uppercase text-muted-foreground font-mono">{timeCard.kicker}</p>
+          <h3 className="mt-2 text-xl font-mono font-bold tracking-tight">{timeCard.title}</h3>
+          <p className="mt-3 text-sm font-mono text-muted-foreground leading-relaxed">{timeCard.claim}</p>
+
+          <ul className="mt-4 space-y-2">
+            {timeCard.proof.map((item) => (
+              <li key={item} className="text-xs font-mono text-muted-foreground leading-relaxed">
+                <span className="text-[#ea580c]">■</span> {item}
+              </li>
+            ))}
+          </ul>
+
+          <Link
+            href={timeCard.href}
             className="mt-5 inline-flex items-center gap-2 border border-foreground px-3 py-2 text-[11px] font-mono uppercase tracking-[0.14em] hover:bg-foreground hover:text-background transition-colors"
           >
             Read full proof

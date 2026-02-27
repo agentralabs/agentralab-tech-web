@@ -53,6 +53,15 @@ const SCENARIOS: Scenario[] = [
       '"Agent deploy-bot-7 (anchor a3f8...c2) signed receipt #1847 at 14:32:07 UTC. Trust grant from ops-lead (anchor 91b2...e4) scoped to deploy:staging,deploy:prod with 24h TTL. Full receipt chain: 3 hops, all signatures valid."',
     href: "/projects/scenarios/agentic-identity",
   },
+  {
+    question: '"When can we schedule the database migration without conflicts?"',
+    without:
+      'Agent has no concept of time. It suggests "this weekend" without checking existing schedules, deadlines, or team availability.',
+    withLabel: "WITH AGENTICTIME",
+    withResponse:
+      '"Analyzing temporal state: 3 hard deadlines within 7 days, 2 recurring schedules overlap Saturday. Available 4-hour window: Sunday 02:00-06:00 UTC. PERT estimate for migration: optimistic 2h, expected 3.5h, pessimistic 6h. Temporal debt on deferred schema changes: 1.4x compounding. Recommend the Sunday window with rollback sequence pre-staged."',
+    href: "/projects/scenarios/agentic-time",
+  },
 ]
 
 function ScenarioCard({ scenario, index }: { scenario: Scenario; index: number }) {

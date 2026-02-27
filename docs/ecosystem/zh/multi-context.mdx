@@ -1,0 +1,79 @@
+---
+title: "Multi-Context Workspaces"
+description: "Load and query multiple data sources simultaneously."
+---
+
+# Multi-Context Workspaces
+
+Load and query multiple data sources simultaneously.
+
+## Use Cases
+
+| System | Multi-Context Example |
+|--------|----------------------|
+| Memory | Query across multiple projects |
+| Vision | Compare competitor sites |
+| Codebase | Load source + target for migration |
+| Identity | Compare agent permissions |
+
+## MCP Tools
+
+Each system provides six workspace tools:
+
+| Tool | Purpose |
+|------|---------|
+| `{system}_workspace_create` | Create multi-source workspace |
+| `{system}_workspace_add` | Add source with role |
+| `{system}_workspace_list` | List loaded sources |
+| `{system}_workspace_query` | Query across all sources |
+| `{system}_workspace_compare` | Compare item between sources |
+| `{system}_workspace_xref` | Find where item exists/doesn't |
+
+## Codebase Example: Migration
+
+```bash
+# Create workspace
+acb workspace create cpp-to-rust
+
+# Add source and target
+acb workspace add cpp-to-rust ./legacy-cpp --role source
+acb workspace add cpp-to-rust ./new-rust --role target
+
+# Query across both
+acb workspace query cpp-to-rust "AuthManager"
+
+# Track progress
+acb translation progress cpp-to-rust
+# Output: 15/23 modules ported (65%)
+
+# What's left?
+acb translation remaining cpp-to-rust
+```
+
+## Codebase Translation Tools
+
+AgenticCodebase provides three additional tools for migration tracking:
+
+| Tool | Purpose |
+|------|---------|
+| `translation_record` | Record source-to-target symbol mapping |
+| `translation_progress` | Get migration statistics |
+| `translation_remaining` | List symbols not yet ported |
+
+## Memory Example: Cross-Project
+
+```
+memory_workspace_create { "name": "all-projects" }
+memory_workspace_add { "workspace": "all-projects", "path": "project-a.amem" }
+memory_workspace_add { "workspace": "all-projects", "path": "project-b.amem" }
+memory_workspace_query { "workspace": "all-projects", "query": "async runtime" }
+```
+
+## Identity Example: Fleet Comparison
+
+```
+identity_workspace_create { "name": "fleet-audit" }
+identity_workspace_add { "workspace_id": "...", "path": "/agents/agent-a/.aid" }
+identity_workspace_add { "workspace_id": "...", "path": "/agents/agent-b/.aid" }
+identity_workspace_compare { "workspace_id": "...", "item": "deploy" }
+```

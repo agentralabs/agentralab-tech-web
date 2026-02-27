@@ -8,7 +8,7 @@ import { getCommunityFeed } from "@/lib/community-feed"
 
 export const metadata: Metadata = {
   title: "Showcase",
-  description: "Public showcase of what teams are building with AgenticMemory, AgenticVision, AgenticCodebase, and AgenticIdentity.",
+  description: "Public showcase of what teams are building with AgenticMemory, AgenticVision, AgenticCodebase, AgenticIdentity, and AgenticTime.",
   alternates: { canonical: "/showcase" },
 }
 

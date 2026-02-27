@@ -4,7 +4,7 @@ import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { ScenarioPageView } from "@/components/scenario-page"
 
-const VALID_SISTERS = ["agentic-memory", "agentic-vision", "agentic-codebase", "agentic-identity"] as const
+const VALID_SISTERS = ["agentic-memory", "agentic-vision", "agentic-codebase", "agentic-identity", "agentic-time"] as const
 
 const META: Record<string, { title: string; description: string }> = {
   "agentic-memory": {
@@ -26,6 +26,11 @@ const META: Record<string, { title: string; description: string }> = {
     title: "AgenticIdentity Scenarios — Agentra Labs",
     description:
       "See AgenticIdentity capabilities in action: Ed25519 identity anchors, signed action receipts, scoped trust grants, and cryptographic audit trails.",
+  },
+  "agentic-time": {
+    title: "AgenticTime Scenarios — Agentra Labs",
+    description:
+      "See AgenticTime capabilities in action: deadline tracking, recurring schedules, PERT estimation, temporal decay models, and timeline fork analysis.",
   },
 }
 

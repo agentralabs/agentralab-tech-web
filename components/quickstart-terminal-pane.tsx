@@ -4,7 +4,7 @@ import { useMemo, useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { ArrowLeft, ArrowRight, Check, Copy } from "lucide-react"
 
-type ProjectKey = "AgenticMemory" | "AgenticVision" | "AgenticCodebase" | "AgenticIdentity"
+type ProjectKey = "AgenticMemory" | "AgenticVision" | "AgenticCodebase" | "AgenticIdentity" | "AgenticTime"
 type CommandType = "GLOBAL" | "RUST" | "MCP" | "PYTHON" | "NPM"
 type ModeType = "LOCAL" | "MCP"
 
@@ -13,7 +13,7 @@ interface CommandEntry {
   note: string
 }
 
-const PROJECTS: ProjectKey[] = ["AgenticMemory", "AgenticVision", "AgenticCodebase", "AgenticIdentity"]
+const PROJECTS: ProjectKey[] = ["AgenticMemory", "AgenticVision", "AgenticCodebase", "AgenticIdentity", "AgenticTime"]
 const COMMAND_TYPES: CommandType[] = ["GLOBAL", "RUST", "MCP", "PYTHON", "NPM"]
 
 const COMMANDS: Record<ProjectKey, Record<CommandType, CommandEntry[]>> = {
@@ -241,6 +241,62 @@ const COMMANDS: Record<ProjectKey, Record<CommandType, CommandEntry[]>> = {
       },
     ],
   },
+  AgenticTime: {
+    GLOBAL: [
+      {
+        command: "curl -fsSL https://agentralabs.tech/install/time | bash",
+        note: "Default desktop profile (backward-compatible): installs binaries and auto-merges MCP config for common clients when detected (Claude, Cursor, VS Code, Codex, Windsurf).",
+      },
+      {
+        command: "curl -fsSL https://agentralabs.tech/install/time/desktop | bash",
+        note: "Explicit desktop profile with MCP auto-merge for common desktop clients.",
+      },
+      {
+        command: "curl -fsSL https://agentralabs.tech/install/time/terminal | bash",
+        note: "Terminal profile: installs binaries only, no desktop config writes.",
+      },
+      {
+        command: "curl -fsSL https://agentralabs.tech/install/time/server | bash",
+        note: "Server profile: installs binaries only for remote hosts and service-style environments.",
+      },
+      {
+        command: "cargo install agentic-time-cli agentic-time-mcp",
+        note: "Installs atime CLI and agentic-time-mcp from crates.io.",
+      },
+    ],
+    RUST: [
+      {
+        command: "cargo install agentic-time-cli agentic-time-mcp",
+        note: "Installs both atime CLI and time MCP server from crates.io.",
+      },
+      {
+        command: "atime init ~/.schedule.atime",
+        note: "Creates a portable temporal reasoning artifact.",
+      },
+      {
+        command: "atime add deadline --label 'DB migration' --due 2026-03-15T06:00:00Z",
+        note: "Adds a deadline entity to the temporal store.",
+      },
+    ],
+    MCP: [
+      {
+        command: "agentic-time-mcp --time ~/.schedule.atime serve",
+        note: "Starts MCP stdio transport for temporal reasoning tools.",
+      },
+    ],
+    PYTHON: [
+      {
+        command: "pip install agentic-time",
+        note: "Installs Python bindings for temporal reasoning and scheduling workflows.",
+      },
+    ],
+    NPM: [
+      {
+        command: "npm install @agenticamem/time",
+        note: "WASM-based time SDK for Node.js and browser environments.",
+      },
+    ],
+  },
 }
 
 const ease = [0.22, 1, 0.36, 1] as const
@@ -256,9 +312,9 @@ export function QuickstartTerminalPane() {
 
   const modeCopy = useMemo(() => {
     if (mode === "LOCAL") {
-      return "Local mode keeps .amem, .avis, .acb, and .aid as portable files under your control. After install, run: agentra status --session and agentra doctor."
+      return "Local mode keeps .amem, .avis, .acb, .aid, and .atime as portable files under your control. After install, run: agentra status --session and agentra doctor."
     }
-    return "MCP mode exposes the same .amem, .avis, .acb, and .aid artifacts to MCP clients. Restart your MCP host/client after install to reload config."
+    return "MCP mode exposes the same .amem, .avis, .acb, .aid, and .atime artifacts to MCP clients. Restart your MCP host/client after install to reload config."
   }, [mode])
 
   const unsupportedNote = `No official ${commandType} commands documented for ${project} yet.`
@@ -440,7 +496,7 @@ export function QuickstartTerminalPane() {
             ))}
           </div>
           <span className="text-[10px] tracking-[0.15em] uppercase text-muted-foreground font-mono">
-            .amem / .avis / .acb / .aid
+            .amem / .avis / .acb / .aid / .atime
           </span>
         </div>
         <p className="text-xs font-mono text-muted-foreground mt-2">{modeCopy}</p>

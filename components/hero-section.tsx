@@ -18,7 +18,7 @@ export function HeroSection() {
           transition={{ duration: 0.7, ease }}
           className="font-pixel text-4xl sm:text-6xl lg:text-7xl xl:text-8xl tracking-tight text-foreground mb-2 select-none"
         >
-          REMEMBER. SEE.
+          REMEMBER. SEE. PROVE.
         </motion.h1>
 
         {/* Central Workflow Diagram */}
@@ -31,7 +31,7 @@ export function HeroSection() {
           <WorkflowDiagram />
         </motion.div>
 
-        {/* Bottom headline: ROUTE. -- Geist Pixel Grid */}
+        {/* Bottom headline */}
         <motion.h1
           initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
@@ -49,7 +49,7 @@ export function HeroSection() {
           transition={{ duration: 0.5, delay: 0.45, ease }}
           className="text-sm lg:text-base text-foreground max-w-2xl mb-2 leading-relaxed font-mono font-bold"
         >
-          Your AI forgets everything. Ours doesn&apos;t.
+          Your AI forgets you exist. Ours remembers for 20 years.
         </motion.p>
 
         {/* Sub-headline */}
@@ -57,11 +57,19 @@ export function HeroSection() {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.52, ease }}
-          className="text-xs lg:text-sm text-muted-foreground max-w-2xl mb-6 leading-relaxed font-mono"
+          className="text-xs lg:text-sm text-muted-foreground max-w-2xl mb-2 leading-relaxed font-mono"
         >
-          Four open-source systems that give AI agents persistent memory,
-          structured perception, code intelligence, and cryptographic identity — across sessions,
-          tools, and teams.
+          Five open-source systems. Five file formats. Forever yours.
+        </motion.p>
+
+        {/* File format strip */}
+        <motion.p
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.56, ease }}
+          className="text-xs text-[#ea580c] font-mono tracking-[0.3em] mb-6"
+        >
+          .amem &middot; .avis &middot; .acb &middot; .aid &middot; .atime
         </motion.p>
 
         <div className="flex flex-col sm:flex-row items-center gap-3">

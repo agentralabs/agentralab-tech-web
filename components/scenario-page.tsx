@@ -10,6 +10,7 @@ import { MEMORY_HERO, MEMORY_SCENARIOS } from "@/data/scenarios-memory"
 import { VISION_HERO, VISION_SCENARIOS } from "@/data/scenarios-vision"
 import { CODEBASE_HERO, CODEBASE_SCENARIOS } from "@/data/scenarios-codebase"
 import { IDENTITY_HERO, IDENTITY_SCENARIOS } from "@/data/scenarios-identity"
+import { TIME_HERO, TIME_SCENARIOS } from "@/data/scenarios-time"
 import * as SC from "@/components/scenario-content"
 
 const ease = [0.22, 1, 0.36, 1] as const
@@ -79,6 +80,21 @@ const CONTENT_MAP: Record<string, () => React.ReactNode> = {
   "aid-file-format": () => <SC.AidFileFormatContent />,
   "encrypted-at-rest": () => <SC.EncryptedAtRestContent />,
   "identity-parameter-safety": () => <SC.IdentityParameterSafetyContent />,
+  // Time
+  "deadlines": () => <SC.DeadlinesContent />,
+  "schedules": () => <SC.SchedulesContent />,
+  "sequences": () => <SC.SequencesContent />,
+  "duration-estimates": () => <SC.DurationEstimatesContent />,
+  "decay-models": () => <SC.DecayModelsContent />,
+  "time-slots": () => <SC.TimeSlotsContent />,
+  "conflict-detection": () => <SC.ConflictDetectionContent />,
+  "timeline-forks": () => <SC.TimelineForksContent />,
+  "temporal-debt": () => <SC.TemporalDebtContent />,
+  "chrono-gravity": () => <SC.ChronoGravityContent />,
+  "temporal-anomalies": () => <SC.TemporalAnomaliesContent />,
+  "atime-format": () => <SC.AtimeFormatContent />,
+  "ghost-writer": () => <SC.GhostWriterContent />,
+  "multi-llm": () => <SC.MultiLlmContent />,
 }
 
 const ALL_TOGETHER_MAP: Record<string, () => React.ReactNode> = {
@@ -86,6 +102,7 @@ const ALL_TOGETHER_MAP: Record<string, () => React.ReactNode> = {
   "agentic-vision": () => <SC.VisionAllTogetherContent />,
   "agentic-codebase": () => <SC.CodebaseAllTogetherContent />,
   "agentic-identity": () => <SC.IdentityAllTogetherContent />,
+  "agentic-time": () => <SC.TimeAllTogetherContent />,
 }
 
 const ALL_TOGETHER_PLAIN: Record<string, string> = {
@@ -97,6 +114,8 @@ const ALL_TOGETHER_PLAIN: Record<string, string> = {
     "This is the difference between refactoring with a flashlight and refactoring with floodlights. AgenticCodebase doesn't just understand the code you're changing — it understands everything connected to it, everything that changed with it, and everything that might break because of it.",
   "agentic-identity":
     "This is the difference between trusting a log entry and holding a signed receipt. AgenticIdentity doesn't just record what happened — it cryptographically proves which agent acted, who authorized it, and that nobody tampered with the record. Every action has a signature. Every delegation has a scope. Every audit trail is tamper-evident.",
+  "agentic-time":
+    "This is the difference between an agent that says \"this weekend\" and one that says \"Sunday 02:00-06:00 UTC is your only 4-hour window, the PERT estimate is 3.5h, and every day of delay adds 1.4x compounding cost.\" AgenticTime turns vague temporal reasoning into precise scheduling with deadlines, decay models, and timeline fork analysis.",
 }
 
 function getConfig(sister: string) {
@@ -107,6 +126,8 @@ function getConfig(sister: string) {
       return { hero: CODEBASE_HERO, groups: CODEBASE_SCENARIOS, repo: "https://github.com/agentralabs/agentic-codebase" }
     case "agentic-identity":
       return { hero: IDENTITY_HERO, groups: IDENTITY_SCENARIOS, repo: "https://github.com/agentralabs/agentic-identity" }
+    case "agentic-time":
+      return { hero: TIME_HERO, groups: TIME_SCENARIOS, repo: "https://github.com/agentralabs/agentic-time" }
     default:
       return { hero: MEMORY_HERO, groups: MEMORY_SCENARIOS, repo: "https://github.com/agentralabs/agentic-memory" }
   }

@@ -1335,3 +1335,312 @@ export function IdentityAllTogetherContent() {
     </>
   )
 }
+
+/* ─────────────────────────────── TIME ── */
+
+export function DeadlinesContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        Your agent is managing a sprint. Three features are due Friday, a compliance report is due Thursday, and a database migration has a hard cutoff at midnight Saturday. You ask: "What's at risk this week?"
+      </P>
+      <P>
+        Without deadline tracking, the agent treats all tasks equally. It has no concept of <B>hard vs soft deadlines</B>, no awareness of consequences for missing them, and no automatic status transitions. It might cheerfully suggest starting the migration on Friday afternoon.
+      </P>
+
+      <SectionLabel>With deadline tracking</SectionLabel>
+      <P>
+        Each deadline is stored as a typed entity: <B>hard</B> (compliance report — regulatory penalty), <B>soft</B> (feature delivery — stakeholder disappointment), or <B>hard</B> (migration cutoff — data loss window). The agent queries all deadlines within 7 days, sorts by consequence severity, and flags the compliance report as highest priority.
+      </P>
+      <Agent>
+        Risk assessment: 3 deadlines within 7 days. CRITICAL: compliance report due Thursday (hard, regulatory penalty). HIGH: DB migration cutoff Saturday 00:00 UTC (hard, data loss window). MEDIUM: 3 feature deliveries due Friday (soft, stakeholder impact). Recommend prioritizing compliance report immediately.
+      </Agent>
+    </>
+  )
+}
+
+export function SchedulesContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        Your team has daily standups at 9 AM, weekly retros on Friday at 3 PM, and bi-weekly deploys on Tuesdays. You ask the agent to schedule a 2-hour planning session this week.
+      </P>
+      <P>
+        Without recurring schedule awareness, the agent suggests Tuesday at 2 PM — <B>right when the deploy window opens</B>. It doesn't know about the retro, the standup, or any recurring commitment.
+      </P>
+
+      <SectionLabel>With recurring schedules</SectionLabel>
+      <P>
+        All recurring events are modeled with cron-style recurrence patterns, priority levels, and conflict detection. The agent evaluates all active schedules before suggesting a time slot. It finds that <B>Wednesday 10 AM - 12 PM</B> is the only clean 2-hour window.
+      </P>
+      <Agent>
+        Schedule analysis: Tuesday blocked by bi-weekly deploy (14:00-18:00). Wednesday 10:00-12:00 is clear — no standups overlap, no deploy window, no retro. Thursday after standup also works but leaves less buffer before Friday compliance deadline.
+      </Agent>
+    </>
+  )
+}
+
+export function SequencesContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        A database migration requires 6 ordered steps: backup, schema change, data migration, validation, index rebuild, and cutover. The agent starts helping on step 3 but has <B>no memory of which steps are complete</B>.
+      </P>
+
+      <SectionLabel>With step sequences</SectionLabel>
+      <P>
+        Each step is tracked as a sequence entity with status: <B>completed</B>, <B>active</B>, <B>pending</B>, or <B>skipped</B>. The agent knows step 1 (backup) and step 2 (schema change) are complete, step 3 (data migration) is active, and steps 4-6 are pending. It resumes exactly where you left off.
+      </P>
+      <Agent>
+        Migration progress: steps 1-2 complete (backup: 14:02 UTC, schema: 14:18 UTC). Step 3 (data migration) in progress — 67% complete. Steps 4-6 pending. Estimated completion for remaining steps: 2.5 hours (PERT). Recommend proceeding with step 3 completion before validation.
+      </Agent>
+    </>
+  )
+}
+
+export function DurationEstimatesContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        You ask: "How long will the migration take?" The agent guesses "about 3 hours" based on nothing. If it goes 6 hours, everyone is surprised. If it takes 1 hour, you over-allocated resources.
+      </P>
+
+      <SectionLabel>With PERT estimation</SectionLabel>
+      <P>
+        The agent uses three-point estimation: <B>optimistic</B> (best case), <B>expected</B> (most likely), and <B>pessimistic</B> (worst case). The PERT formula weighs the expected value 4x: (O + 4M + P) / 6. For a migration with O=1h, M=3h, P=8h, the PERT estimate is <B>3.5 hours</B> with a standard deviation of 1.17h.
+      </P>
+      <Agent>
+        PERT estimate for DB migration: optimistic 1.0h, expected 3.0h, pessimistic 8.0h. Weighted estimate: 3.5h. Standard deviation: 1.17h. 95% confidence interval: 1.2h - 5.8h. Recommend scheduling a 6-hour window to cover the 95th percentile.
+      </Agent>
+    </>
+  )
+}
+
+export function DecayModelsContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        Your agent recommends a library version that was current 6 months ago. It has no concept that <B>information relevance degrades over time</B>. A breaking news alert from January is treated identically to one from today.
+      </P>
+
+      <SectionLabel>With temporal decay</SectionLabel>
+      <P>
+        Three decay functions model how information loses relevance: <B>exponential</B> (news, alerts — fast fade), <B>linear</B> (project priorities — steady decline), and <B>step</B> (quarterly reports — sudden drops at boundaries). The agent scores each fact by its current relevance before using it in reasoning.
+      </P>
+      <Agent>
+        Relevance check: library recommendation from session 12 (6 months ago) has decayed to 0.23 relevance (exponential decay, half-life 60 days). Recommend refreshing this recommendation before proceeding. Current stable version has shifted from 3.2 to 4.1.
+      </Agent>
+    </>
+  )
+}
+
+export function TimeSlotsContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        You need a 4-hour maintenance window this week. The agent says "how about Saturday?" without checking your 3 recurring schedules, 5 deadlines, and 2 in-progress sequences.
+      </P>
+
+      <SectionLabel>With time slot queries</SectionLabel>
+      <P>
+        The agent queries all active temporal entities and finds available gaps. It considers schedule conflicts, deadline proximity, sequence dependencies, and even temporal debt on deferred items. The result: <B>one clean 4-hour window</B>.
+      </P>
+      <Agent>
+        Available 4-hour windows this week: Sunday 02:00-06:00 UTC (cleanest — no schedules, 48h buffer to Monday deadlines). Saturday 22:00-02:00 spans midnight — acceptable but overlaps with weekly backup at 23:00. No other windows available without moving existing commitments.
+      </Agent>
+    </>
+  )
+}
+
+export function ConflictDetectionContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        Two teams independently schedule deployments for the same maintenance window. A deadline falls during a blocked period. Nobody notices until the conflict causes a production incident.
+      </P>
+
+      <SectionLabel>With conflict detection</SectionLabel>
+      <P>
+        The agent automatically detects overlapping schedules and deadline collisions <B>at creation time</B>. When you add a new deadline or schedule, it checks against all existing temporal entities and raises conflicts immediately.
+      </P>
+      <Agent>
+        CONFLICT DETECTED: New deployment window (Tuesday 14:00-18:00) overlaps with existing bi-weekly deploy schedule. Also: compliance deadline (Thursday 17:00) falls within a 2-hour buffer zone of the retro (Friday 15:00). Recommend resolving both conflicts before proceeding.
+      </Agent>
+    </>
+  )
+}
+
+export function TimelineForksContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        You need to decide: migrate the database this weekend, or wait two weeks for a longer maintenance window. The agent can't compare outcomes because it has <B>no way to simulate alternate futures</B>.
+      </P>
+
+      <SectionLabel>With timeline forks</SectionLabel>
+      <P>
+        The agent creates two branches of the current temporal state. In Branch A, the migration happens this weekend (tight 4-hour window, PERT 3.5h). In Branch B, it waits two weeks (8-hour window, but temporal debt compounds at 1.4x). The agent compares outcomes across branches.
+      </P>
+      <Agent>
+        Timeline fork analysis: Branch A (this weekend): 78% confidence of completion within window, 1.2h buffer. Risk: rollback needed if pessimistic scenario. Branch B (2 weeks): 95% confidence, 4.5h buffer. Cost: temporal debt compounds from 1.0x to 2.7x on deferred schema changes. Recommend Branch A with rollback sequence pre-staged.
+      </Agent>
+    </>
+  )
+}
+
+export function TemporalDebtContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        You defer a schema migration for the third time. Each deferral seems harmless. But the agent doesn't know that the migration now blocks 4 other features, the test environment has drifted further, and the estimated effort has doubled.
+      </P>
+
+      <SectionLabel>With temporal debt</SectionLabel>
+      <P>
+        The agent tracks <B>principal</B> (original effort), <B>interest rate</B> (compounding factor per period), and <B>accumulated debt</B>. After three deferrals at 1.4x compounding, the original 3-hour task now carries <B>8.2 hours of effective cost</B>.
+      </P>
+      <Agent>
+        Temporal debt report: Schema migration (originally 3h) deferred 3 times. Compound rate: 1.4x/deferral. Current effective cost: 8.2h. Blocking 4 downstream features. Accumulated interest: 5.2h of additional work. Recommend immediate payoff — every additional week adds 1.4x to current debt.
+      </Agent>
+    </>
+  )
+}
+
+export function ChronoGravityContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        A critical deadline is 48 hours away. The agent continues working on a low-priority task because it has no model for how <B>urgency warps priority</B> as deadlines approach.
+      </P>
+
+      <SectionLabel>With chrono-gravity</SectionLabel>
+      <P>
+        As a deadline approaches, its "gravitational pull" increases, automatically escalating the priority of related tasks. The compliance deadline at T-48h pulls the data validation task (a dependency) from priority 3 to <B>priority 1</B>. The agent reprioritizes without being asked.
+      </P>
+      <Agent>
+        Priority warp detected: compliance deadline at T-48h has pulled 3 related tasks into its gravity well. Data validation: priority 3 → 1 (direct dependency). Report formatting: priority 5 → 2 (required for submission). Stakeholder review: priority 4 → 2 (approval gate). Recommend switching from current low-priority task immediately.
+      </Agent>
+    </>
+  )
+}
+
+export function TemporalAnomaliesContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        Someone creates a deadline before its start date. A sequence has a circular dependency. A schedule conflicts with its own recurrence pattern. Without anomaly detection, these <B>temporal paradoxes</B> silently corrupt all downstream reasoning.
+      </P>
+
+      <SectionLabel>With anomaly detection</SectionLabel>
+      <P>
+        The agent validates all temporal entities at creation and periodically during reasoning. It catches: deadlines with due dates before start dates, sequences that loop infinitely, schedules that cannot satisfy their own recurrence constraints, and decay models with invalid parameters.
+      </P>
+      <Agent>
+        ANOMALY DETECTED: 2 temporal paradoxes found. (1) Deadline "Q1 report" has due_at=2026-02-15 but created_at=2026-03-01 — deadline is in the past relative to creation. (2) Sequence "deploy-pipeline" has step 4 depending on step 6 — circular dependency creates infinite loop. Both must be resolved before temporal reasoning can proceed.
+      </Agent>
+    </>
+  )
+}
+
+export function AtimeFormatContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        Temporal state is scattered across calendar APIs, project management tools, and chat messages. When you switch AI providers, all scheduling context is lost. There is no <B>portable temporal format</B>.
+      </P>
+
+      <SectionLabel>With .atime format</SectionLabel>
+      <P>
+        All temporal entities — deadlines, schedules, sequences, durations, and decay models — are stored in a single binary file with <B>BLAKE3 checksums</B> for integrity verification. Copy the file to another machine, and the agent's entire temporal brain transfers instantly.
+      </P>
+      <Agent>
+        Temporal artifact status: ~/.schedule.atime contains 47 deadlines, 12 recurring schedules, 8 sequences, 23 duration estimates, and 5 decay models. File size: 2.3 MB. BLAKE3 checksum verified. Last modified: 14:32 UTC. Portable to any MCP-compatible runtime.
+      </Agent>
+    </>
+  )
+}
+
+export function GhostWriterContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        Your temporal context exists only inside one MCP server. When you switch from Claude to Cursor mid-session, the deadlines and schedules don't follow.
+      </P>
+
+      <SectionLabel>With Ghost Writer</SectionLabel>
+      <P>
+        The Ghost Writer runs in the background, syncing temporal state to IDE memory directories every <B>5 seconds</B>. Deadlines, schedules, and active sequences are always available to whichever AI assistant you're currently using.
+      </P>
+      <Agent>
+        Ghost Writer active: syncing to 4 client directories (Claude Desktop, Cursor, Windsurf, Cody). Last sync: 3 seconds ago. Temporal entities synced: 47 deadlines, 12 schedules, 8 sequences. All clients have current temporal context.
+      </Agent>
+    </>
+  )
+}
+
+export function MultiLlmContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        You've built scheduling workflows with GPT. Now you want to try Claude. Your entire temporal context — deadlines, schedules, decay models — is locked inside GPT's memory.
+      </P>
+
+      <SectionLabel>With multi-LLM portability</SectionLabel>
+      <P>
+        The .atime file is <B>model-agnostic</B>. Load it into any MCP-compatible runtime: Claude today, GPT tomorrow, a local Llama model next week. Your deadlines, schedules, and temporal models belong to your workflow, not your AI vendor.
+      </P>
+      <Agent>
+        Portability check: .atime artifact is compatible with all MCP runtimes. Current session on Claude. Previous sessions: 3 on GPT-4, 2 on local Llama. All temporal entities preserved across provider switches. Zero data loss on migration.
+      </Agent>
+    </>
+  )
+}
+
+export function TimeAllTogetherContent() {
+  return (
+    <>
+      <SectionLabel>End-to-end: production migration scheduling</SectionLabel>
+      <P>
+        A database migration needs scheduling. The team has 3 hard deadlines this week, 2 recurring deploy windows, a compliance report due Thursday, and the migration itself has been deferred twice. Without AgenticTime, the agent guesses "this weekend." With it, every temporal dimension is <B>precisely modeled</B>.
+      </P>
+
+      <SectionLabel>Deadline analysis</SectionLabel>
+      <P>
+        3 deadlines within 7 days: compliance report (Thursday, hard, regulatory), feature release (Friday, soft, stakeholder), migration cutoff (Saturday midnight, hard, data integrity). The compliance report has <B>chrono-gravity pulling</B> two dependent tasks to priority 1.
+      </P>
+
+      <SectionLabel>Schedule conflicts</SectionLabel>
+      <P>
+        Tuesday deploy window overlaps with the proposed migration. Saturday backup at 23:00 conflicts with a midnight migration start. Only clean window: <B>Sunday 02:00-06:00 UTC</B>.
+      </P>
+
+      <SectionLabel>PERT + temporal debt</SectionLabel>
+      <P>
+        Migration PERT estimate: optimistic 2h, expected 3.5h, pessimistic 6h. Weighted: 3.7h. This migration has been deferred twice at 1.4x compounding — original 3h effort now carries <B>5.9h of effective cost</B>. Further deferral would push it to 8.3h.
+      </P>
+
+      <SectionLabel>Timeline fork decision</SectionLabel>
+      <P>
+        Fork A (Sunday window): 89% confidence of completion, 0.3h buffer. Fork B (defer to next week): 96% confidence in larger window, but temporal debt compounds to 8.3h. The agent recommends Fork A with <B>rollback sequence pre-staged</B>.
+      </P>
+
+      <Agent>
+        Migration plan: Sunday 02:00-06:00 UTC. PERT estimate 3.7h within 4h window (89% confidence). Rollback pre-staged at 05:30 checkpoint. Temporal debt payoff: 5.9h → 0h. Compliance report not impacted (due Thursday, 72h buffer). All 3 recurring schedules clear. Zero conflicts detected.
+      </Agent>
+    </>
+  )
+}

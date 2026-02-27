@@ -7,6 +7,7 @@ const DEFAULT_RELEASE_REPOS = [
   "agentralabs/agentic-vision",
   "agentralabs/agentic-codebase",
   "agentralabs/agentic-identity",
+  "agentralabs/agentic-time",
   "agentralabs/agentralab-tech-web",
   "agentralabs/agentralabs-tech",
 ]

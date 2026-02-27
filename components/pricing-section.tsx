@@ -173,6 +173,38 @@ const MODULES: ModuleCard[] = [
     scenarioHref: "/projects/scenarios/agentic-identity",
     highlighted: false,
   },
+  {
+    id: "agentic-time",
+    frame: "PROJECTS",
+    value: "AgenticTime",
+    period: "/ AVAILABLE",
+    tag: "READY",
+    description: "\"When should we migrate?\" Your agent has no clock, no calendar, no sense of deadlines or decay. It suggests \"this weekend\" without checking schedules, conflicts, or compounding debt. AgenticTime gives agents temporal reasoning.",
+    summary:
+      "Every temporal entity — deadlines, schedules, sequences, durations, decay models — is stored, queried, and reasoned over. PERT estimation, conflict detection, and timeline fork analysis in portable .atime files.",
+    deepSummary: [
+      {
+        lead: "5 entity types:",
+        body: "Duration, Deadline, Schedule, Sequence, and Decay. Each typed, timestamped, and linked to temporal chains.",
+      },
+      {
+        lead: "PERT estimation:",
+        body: "Three-point estimates (optimistic, expected, pessimistic) for realistic scheduling under uncertainty.",
+      },
+      {
+        lead: "Temporal debt:",
+        body: "Compounding cost models for deferred work. See how delay cascades before it compounds.",
+      },
+      {
+        lead: "Timeline forks:",
+        body: "Branch temporal state to compare outcomes before committing. What-if analysis for scheduling.",
+      },
+    ],
+    cta: "VIEW REPO",
+    href: "https://github.com/agentralabs/agentic-time",
+    scenarioHref: "/projects/scenarios/agentic-time",
+    highlighted: false,
+  },
 ]
 
 function ModuleGlyph({ id, highlighted }: { id: ModuleCard["id"]; highlighted: boolean }) {
@@ -215,6 +247,19 @@ function ModuleGlyph({ id, highlighted }: { id: ModuleCard["id"]; highlighted: b
         <path d="M20 30l20-10M100 30l-20-10" className={baseClass} stroke="currentColor" strokeWidth="1.5" strokeDasharray="4 3" />
         <circle cx="16" cy="32" r="4" className={baseClass} fill="currentColor" />
         <circle cx="104" cy="32" r="4" className={baseClass} fill="currentColor" />
+      </svg>
+    )
+  }
+
+  if (id === "agentic-time") {
+    return (
+      <svg viewBox="0 0 120 80" className="w-full h-24" fill="none" aria-label="AgenticTime glyph">
+        <circle cx="60" cy="40" r="28" className={baseClass} stroke="currentColor" strokeWidth="2" />
+        <circle cx="60" cy="40" r="3" className={accentClass} fill="currentColor" />
+        <path d="M60 40V20" className={accentClass} stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+        <path d="M60 40L78 48" className={baseClass} stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+        <path d="M60 14v4M60 62v4M88 40h4M28 40h4" className={baseClass} stroke="currentColor" strokeWidth="1.5" />
+        <path d="M96 16l-6 6M30 64l-6 6" className={accentClass} stroke="currentColor" strokeWidth="1.5" strokeDasharray="3 2" />
       </svg>
     )
   }
@@ -405,11 +450,11 @@ export function PricingSection() {
       >
         <div className="flex flex-col gap-3">
           <h2 className="text-2xl lg:text-3xl font-mono font-bold tracking-tight uppercase text-foreground text-balance">
-            Four systems. One cognitive layer.
+            Five systems. One cognitive layer.
           </h2>
           <p className="text-xs lg:text-sm font-mono text-muted-foreground leading-relaxed max-w-md">
             AgenticMemory — reasoning that persists. AgenticVision — visual state that&apos;s queryable.
-            AgenticCodebase — code understanding with prediction. AgenticIdentity — cryptographic proof of agent action. All open source. All shipped.
+            AgenticCodebase — code understanding with prediction. AgenticIdentity — cryptographic proof of agent action. AgenticTime — temporal reasoning with deadlines. All open source. All shipped.
           </p>
         </div>
         <StatusLine />
@@ -435,7 +480,7 @@ export function PricingSection() {
       >
         <span className="text-[10px] tracking-[0.2em] uppercase text-muted-foreground font-mono">
           {
-            "* Four independent systems that work well together. Research-backed. MIT licensed. Production ready."
+            "* Five independent systems that work well together. Research-backed. MIT licensed. Production ready."
           }
         </span>
         <div className="flex-1 border-t border-border" />

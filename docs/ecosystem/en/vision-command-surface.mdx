@@ -47,6 +47,31 @@ export CORTEX_STORAGE_BUDGET_TARGET_FRACTION=0.85
 - `session_start`
 - `session_end`
 
+## Grounding Tools (v0.2)
+
+| Tool | Purpose |
+|------|---------|
+| `vision_ground` | Verify claim has visual evidence |
+| `vision_evidence` | Get evidence for a query |
+| `vision_suggest` | Find similar captures (typo correction) |
+
+## Workspace Tools (v0.2)
+
+| Tool | Purpose |
+|------|---------|
+| `vision_workspace_create` | Create multi-vision workspace |
+| `vision_workspace_add` | Add `.avis` file to workspace |
+| `vision_workspace_list` | List loaded vision contexts |
+| `vision_workspace_query` | Query across all contexts |
+| `vision_workspace_compare` | Compare item between contexts |
+| `vision_workspace_xref` | Find capture distribution across contexts |
+
+## Context-Capture Tool
+
+| Tool | Purpose |
+|------|---------|
+| `observation_log` | Record why a visual analysis is being performed |
+
 ## Universal MCP entry
 
 ```json

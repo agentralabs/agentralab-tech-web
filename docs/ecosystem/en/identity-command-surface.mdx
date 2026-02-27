@@ -35,6 +35,31 @@ description: "| Command | Description |"
 | `spawn_identity` | Spawn a child identity |
 | `action_context` | Record why an identity action is being performed |
 
+## Grounding Tools (v0.2)
+
+| Tool | Purpose |
+|------|---------|
+| `identity_ground` | Verify authority/action claim has backing |
+| `identity_evidence` | Get evidence for a claim from grants/receipts |
+| `identity_suggest` | Find similar grants/receipts (typo correction) |
+
+## Workspace Tools (v0.2)
+
+| Tool | Purpose |
+|------|---------|
+| `identity_workspace_create` | Create multi-identity workspace |
+| `identity_workspace_add` | Add identity directory to workspace |
+| `identity_workspace_list` | List loaded identity contexts |
+| `identity_workspace_query` | Query across all contexts |
+| `identity_workspace_compare` | Compare permissions between contexts |
+| `identity_workspace_xref` | Cross-reference permission across contexts |
+
+## Context-Capture Tool
+
+| Tool | Purpose |
+|------|---------|
+| `action_context` | Record why an identity action is being performed |
+
 ## Environment Variables
 
 | Variable | Default | Description |

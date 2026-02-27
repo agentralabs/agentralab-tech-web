@@ -9,7 +9,7 @@ const ease = [0.22, 1, 0.36, 1] as const
 
 interface Paper {
   title: string
-  project: "AgenticMemory" | "AgenticVision" | "AgenticCodebase" | "AgenticIdentity"
+  project: "AgenticMemory" | "AgenticVision" | "AgenticCodebase" | "AgenticIdentity" | "AgenticTime"
   type: string
   summary: string
   pdf: string
@@ -77,6 +77,15 @@ const PAPERS: Paper[] = [
     pdf: "https://github.com/agentralabs/agentic-identity/blob/main/paper/paper-i-trust-anchor/agenticidentity-paper.pdf",
     source:
       "https://github.com/agentralabs/agentic-identity/blob/main/paper/paper-i-trust-anchor/agenticidentity-paper.tex",
+  },
+  {
+    title: "AgenticTime: A Binary Temporal Format for Persistent, Portable, and Navigable AI Agent Scheduling",
+    project: "AgenticTime",
+    type: "Paper I",
+    summary: "Defines a portable binary temporal format for persistent AI-agent scheduling, deadline tracking, PERT estimation, decay models, and timeline fork analysis.",
+    pdf: "https://github.com/agentralabs/agentic-time/blob/main/paper/paper-i-temporal-format/agentictime-paper.pdf",
+    source:
+      "https://github.com/agentralabs/agentic-time/blob/main/paper/paper-i-temporal-format/agentictime-paper.tex",
   },
 ]
 
@@ -176,17 +185,17 @@ export default function PublicationsPage() {
               Publications and technical papers
             </h1>
             <p className="mt-4 max-w-3xl text-xs lg:text-sm font-mono text-muted-foreground leading-relaxed">
-              Research corpus for AgenticMemory, AgenticVision, AgenticCodebase, and AgenticIdentity. Each paper documents core
+              Research corpus for AgenticMemory, AgenticVision, AgenticCodebase, AgenticIdentity, and AgenticTime. Each paper documents core
               architecture decisions, data formats, and MCP integration pathways.
             </p>
             <div className="mt-5 grid grid-cols-1 sm:grid-cols-3 gap-0 border-2 border-foreground">
               <div className="px-4 py-3 border-b-2 sm:border-b-0 sm:border-r-2 border-foreground">
                 <p className="text-[10px] tracking-[0.15em] uppercase font-mono text-muted-foreground">Total Papers</p>
-                <p className="text-2xl font-mono font-bold">7</p>
+                <p className="text-2xl font-mono font-bold">8</p>
               </div>
               <div className="px-4 py-3 border-b-2 sm:border-b-0 sm:border-r-2 border-foreground">
                 <p className="text-[10px] tracking-[0.15em] uppercase font-mono text-muted-foreground">Projects</p>
-                <p className="text-2xl font-mono font-bold">4</p>
+                <p className="text-2xl font-mono font-bold">5</p>
               </div>
               <div className="px-4 py-3">
                 <p className="text-[10px] tracking-[0.15em] uppercase font-mono text-muted-foreground">Open Access</p>
@@ -200,6 +209,7 @@ export default function PublicationsPage() {
         <GroupBlock project="AgenticVision" step="015" />
         <GroupBlock project="AgenticCodebase" step="016" />
         <GroupBlock project="AgenticIdentity" step="016b" />
+        <GroupBlock project="AgenticTime" step="016c" />
 
         <section className="w-full px-6 pb-20 lg:px-12">
           <SectionRail label="// SECTION: RESEARCH_DIRECTION" step="017" />
