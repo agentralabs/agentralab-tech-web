@@ -1045,6 +1045,74 @@ for (const s of sisters) {
   }
 }
 
+// ── Y. Code Depth Guardrail — MCP crate Rust line counts ────────────────────
+// Counts .rs lines in each sister's MCP crate src/ directory (recursively).
+// If any sister's MCP code depth falls significantly below the median,
+// it gets flagged as shallow. This prevents new sisters from shipping with
+// stub implementations while older sisters have deep algorithmic code.
+//
+// The threshold is intentionally strict: every sister must have at least 60%
+// of the median MCP crate line count.
+
+console.log("\n── Y. Code depth guardrail (MCP crate .rs lines) ──")
+
+function countRustLines(dir) {
+  if (!existsSync(dir)) return 0
+  let total = 0
+  for (const entry of readdirSync(dir, { withFileTypes: true })) {
+    const full = resolve(dir, entry.name)
+    if (entry.isDirectory()) {
+      total += countRustLines(full)
+    } else if (entry.name.endsWith(".rs")) {
+      const content = readFileSync(full, "utf-8")
+      total += content.split("\n").length
+    }
+  }
+  return total
+}
+
+const codeDepthMetrics = {}
+for (const s of sisters) {
+  const slug = `agentic-${s.key}`
+  const repoDir = resolve(WORKSPACE, slug)
+
+  // Use mcp.cratePath from registry if available, otherwise guess
+  const mcpCratePath = s.mcp?.cratePath || `crates/${slug}-mcp`
+  const mcpSrcDir = resolve(repoDir, mcpCratePath, "src")
+
+  if (existsSync(mcpSrcDir)) {
+    codeDepthMetrics[s.key] = countRustLines(mcpSrcDir)
+  } else {
+    codeDepthMetrics[s.key] = 0
+  }
+}
+
+const depthValues = Object.values(codeDepthMetrics).filter(v => v > 0).sort((a, b) => a - b)
+const medianCodeDepth = depthValues.length > 0 ? depthValues[Math.floor(depthValues.length / 2)] : 0
+const MIN_CODE_DEPTH_RATIO = 0.6  // Must have at least 60% of median code depth
+const MIN_ABSOLUTE_LINES = 2000   // Absolute floor: every sister needs at least 2000 .rs lines
+
+console.log(`  Code depth metrics (median MCP crate: ${medianCodeDepth} lines):`)
+for (const s of sisters) {
+  const lines = codeDepthMetrics[s.key] || 0
+  console.log(`    ${s.key}: ${lines.toLocaleString()} .rs lines in MCP crate src/`)
+
+  // Absolute minimum
+  if (lines < MIN_ABSOLUTE_LINES) {
+    fail(`CODE-DEPTH: ${s.key} has ${lines} .rs lines — below absolute minimum of ${MIN_ABSOLUTE_LINES}`)
+  } else {
+    ok(`CODE-DEPTH: ${s.key} meets absolute minimum (${lines} >= ${MIN_ABSOLUTE_LINES} lines)`)
+  }
+
+  // Relative to median
+  if (medianCodeDepth > 0 && lines < medianCodeDepth * MIN_CODE_DEPTH_RATIO) {
+    fail(`CODE-DEPTH: ${s.key} has ${lines} .rs lines vs median ${medianCodeDepth} — significantly below sister average (min ${Math.ceil(medianCodeDepth * MIN_CODE_DEPTH_RATIO)} required)`)
+  } else if (medianCodeDepth > 0) {
+    const pct = Math.round((lines / medianCodeDepth) * 100)
+    ok(`CODE-DEPTH: ${s.key} MCP code depth (${lines} lines, ${pct}% of median) within acceptable range`)
+  }
+}
+
 // ── Summary ─────────────────────────────────────────────────────────────────
 
 console.log("\n══════════════════════════════════════════")
