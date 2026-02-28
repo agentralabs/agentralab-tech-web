@@ -9,9 +9,9 @@ Key terms used across Agentra Labs projects.
 
 **MCP (Model Context Protocol)** — An open standard that lets AI applications discover and call tools exposed by external servers. All Agentra sisters expose their capabilities as MCP tools.
 
-**Sister** — One of the six Agentra runtime components: AgenticMemory, AgenticVision, AgenticCodebase, AgenticIdentity, AgenticTime, and AgenticContract. Each sister runs as an independent MCP server and produces its own artifact.
+**Sister** — One of the five Agentra runtime components: AgenticMemory, AgenticVision, AgenticCodebase, AgenticIdentity, and AgenticTime. Each sister runs as an independent MCP server and produces its own artifact.
 
-**Artifact** — A portable binary file produced by a sister. Artifacts store all state and can be moved between machines. Formats: `.amem` (memory), `.avis` (vision), `.acb` (codebase), `.aid` (identity), `.atime` (time), `.acon` (contract).
+**Artifact** — A portable binary file produced by a sister. Artifacts store all state and can be moved between machines. Formats: `.amem` (memory), `.avis` (vision), `.acb` (codebase), `.aid` (identity), `.atime` (time).
 
 **Workspace** — The parent directory containing the web repo and all sister repos. The docs sync script reads from this workspace to build the documentation site.
 
@@ -104,19 +104,3 @@ Key terms used across Agentra Labs projects.
 **Temporal reasoning** — The ability to evaluate deadlines, detect scheduling conflicts, compute time-to-expiry, and prioritize actions based on temporal urgency.
 
 **.atime** — The AgenticTime artifact file. Stores temporal events, schedules, decay models, and constraint graphs in a structured binary format.
-
-## AgenticContract
-
-**Policy** — A governance rule that allows, denies, or requires approval for an agent action. Policies are scoped to global, session, or individual agents with tag-based matching.
-
-**Risk limit** — A quantitative boundary on agent behavior: rate limits, threshold limits, budget limits, or count limits. The agent checks limits before acting.
-
-**Approval workflow** — A multi-party process where controlled actions require explicit approval from designated approvers before execution.
-
-**Obligation** — A task an agent must fulfill within a deadline. Obligations track status transitions from pending to fulfilled or overdue.
-
-**Violation** — A recorded instance of an agent breaking a policy or exceeding a risk limit. Violations have severity levels: info, warning, critical, fatal.
-
-**Self-healing contract** — A contract that automatically adapts its policies when violations are detected, tightening rules or adding monitoring without manual review.
-
-**.acon** — The AgenticContract artifact file. Stores policies, risk limits, approval workflows, obligations, conditions, and violation history in a portable binary format with BLAKE3 checksums.
