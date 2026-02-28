@@ -87,6 +87,15 @@ const PAPERS: Paper[] = [
     source:
       "https://github.com/agentralabs/agentic-time/blob/main/paper/paper-i-temporal-format/agentictime-paper.tex",
   },
+  {
+    title: "AgenticContract: A Runtime Policy Engine for Governed AI Agent Systems",
+    project: "AgenticContract",
+    type: "Paper I",
+    summary: "Presents a self-contained policy engine modeling six governance primitives — policies, risk limits, approvals, conditions, obligations, and violations — in a single binary .acon file with nanosecond-scale evaluation.",
+    pdf: "https://github.com/agentralabs/agentic-contract/blob/main/paper/paper-i-policy-engine/agenticcontract-paper.pdf",
+    source:
+      "https://github.com/agentralabs/agentic-contract/blob/main/paper/paper-i-policy-engine/agenticcontract-paper.tex",
+  },
 ]
 
 function SectionRail({ label, step }: { label: string; step: string }) {
@@ -191,7 +200,7 @@ export default function PublicationsPage() {
             <div className="mt-5 grid grid-cols-1 sm:grid-cols-3 gap-0 border-2 border-foreground">
               <div className="px-4 py-3 border-b-2 sm:border-b-0 sm:border-r-2 border-foreground">
                 <p className="text-[10px] tracking-[0.15em] uppercase font-mono text-muted-foreground">Total Papers</p>
-                <p className="text-2xl font-mono font-bold">8</p>
+                <p className="text-2xl font-mono font-bold">9</p>
               </div>
               <div className="px-4 py-3 border-b-2 sm:border-b-0 sm:border-r-2 border-foreground">
                 <p className="text-[10px] tracking-[0.15em] uppercase font-mono text-muted-foreground">Projects</p>
