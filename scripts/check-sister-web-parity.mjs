@@ -325,6 +325,7 @@ const artifacts = sisterKeys.map((k) => {
     case "codebase": return ".acb"
     case "identity": return ".aid"
     case "time": return ".atime"
+    case "contract": return ".acon"
     default: return `.${k}`
   }
 })
