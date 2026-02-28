@@ -1644,3 +1644,222 @@ export function TimeAllTogetherContent() {
     </>
   )
 }
+
+/* ── Contract ── */
+
+export function PolicyEngineContent() {
+  return (
+    <>
+      <SectionLabel>How policy enforcement works</SectionLabel>
+      <P>
+        Each policy has a scope (global, session, or agent), an action (allow, deny, or require approval), and optional conditions and tags. When an agent attempts an action, the engine checks all matching policies and returns the most restrictive applicable result.
+      </P>
+      <Agent>
+        policy_check action=&quot;deploy:production&quot; → RequireApproval (policy #7: &quot;production deploys need ops-lead approval&quot;, scope: global, tags: [deploy, production])
+      </Agent>
+    </>
+  )
+}
+
+export function RiskLimitsContent() {
+  return (
+    <>
+      <SectionLabel>How risk limits work</SectionLabel>
+      <P>
+        Risk limits define boundaries agents cannot exceed. Each limit has a type (rate, threshold, budget, count), a current value, and a maximum. The engine tracks usage over configurable time windows and rejects actions that would breach limits.
+      </P>
+      <Agent>
+        risk_limit_check label=&quot;daily-deployments&quot; proposed_usage=1 → Allowed (3/5 used, 2 remaining in 24h window). risk_limit_check label=&quot;api-spend&quot; proposed_usage=150 → Denied (budget: $450/$500, proposed would exceed by $100).
+      </Agent>
+    </>
+  )
+}
+
+export function ApprovalWorkflowsContent() {
+  return (
+    <>
+      <SectionLabel>How approval workflows operate</SectionLabel>
+      <P>
+        Approval rules define which actions need sign-off and from whom. When triggered, the engine creates a request that blocks the action until an authorized party decides. Every approval and denial is recorded with reasons for full audit trails.
+      </P>
+      <Agent>
+        approval_request rule_id=&quot;prod-deploy&quot; action=&quot;deploy v2.3.1 to production&quot; requestor=&quot;deploy-bot-7&quot; → Request #47 created, pending ops-lead decision. approval_decide request_id=#47 approved=true reason=&quot;reviewed changelog, no breaking changes&quot; → Approved.
+      </Agent>
+    </>
+  )
+}
+
+export function ObligationTrackingContent() {
+  return (
+    <>
+      <SectionLabel>How obligation tracking works</SectionLabel>
+      <P>
+        Obligations represent tasks agents must fulfill within deadlines. The engine tracks status transitions (pending → fulfilled / overdue / waived) and surfaces unfulfilled obligations before agents take on new work.
+      </P>
+      <Agent>
+        obligation_check → 2 pending: &quot;post-deploy monitoring&quot; (due in 28 min, assignee: deploy-bot-7), &quot;weekly compliance report&quot; (due Thursday, assignee: audit-agent). 0 overdue.
+      </Agent>
+    </>
+  )
+}
+
+export function ViolationDetectionContent() {
+  return (
+    <>
+      <SectionLabel>How violation detection works</SectionLabel>
+      <P>
+        When an agent breaks a policy or exceeds a risk limit, the violation is recorded with severity (info, warning, critical, fatal), a description, and the triggering policy. Violation lists are queryable by severity, time range, and agent.
+      </P>
+      <Agent>
+        violation_report description=&quot;Agent exceeded daily API budget by $47&quot; severity=&quot;warning&quot; → Violation #12 recorded. violation_list severity=&quot;critical&quot; → 0 critical violations in last 30 days.
+      </Agent>
+    </>
+  )
+}
+
+export function ConditionalExecutionContent() {
+  return (
+    <>
+      <SectionLabel>How conditional execution works</SectionLabel>
+      <P>
+        Conditions gate actions on dynamic state: time windows, metric thresholds, dependency completion, or custom expressions. The engine evaluates conditions in real time, allowing or blocking actions based on current context.
+      </P>
+      <Agent>
+        condition_evaluate condition_id=&quot;business-hours-only&quot; → Met (current time 14:32 UTC, window 09:00-18:00 UTC). condition_evaluate condition_id=&quot;staging-passed&quot; → Not met (staging deploy still pending).
+      </Agent>
+    </>
+  )
+}
+
+export function ContractSigningContent() {
+  return (
+    <>
+      <SectionLabel>How contract signing works</SectionLabel>
+      <P>
+        Contracts formalize agreements between agents. Each party signs the contract to indicate acceptance. The signature chain is verifiable, and contracts can be checked for validity, expiration, and completeness.
+      </P>
+      <Agent>
+        contract_create title=&quot;Deploy Collaboration Agreement&quot; parties=[&quot;deploy-bot-7&quot;, &quot;monitor-agent-3&quot;] → Contract #8 created. contract_sign contract_id=#8 → Signed by deploy-bot-7. contract_verify contract_id=#8 → Valid, 1/2 signatures collected.
+      </Agent>
+    </>
+  )
+}
+
+export function SelfHealingContractsContent() {
+  return (
+    <>
+      <SectionLabel>How self-healing contracts work</SectionLabel>
+      <P>
+        When a violation is detected, the self-healing engine analyzes the pattern and automatically adjusts governance: tightening policies, lowering risk limits, or adding monitoring conditions. Governance evolves from incidents without manual intervention.
+      </P>
+      <Agent>
+        Violation #12 triggered self-healing: daily API budget limit reduced from $500 to $400 (20% safety margin). New condition added: &quot;api-spend-alert&quot; triggers at 80% budget utilization. Policy updated: &quot;high-cost API calls require approval above $50&quot;.
+      </Agent>
+    </>
+  )
+}
+
+export function SmartEscalationContent() {
+  return (
+    <>
+      <SectionLabel>How smart escalation works</SectionLabel>
+      <P>
+        When an approval request is created, the escalation engine analyzes historical patterns: who approved similar requests, response times, current availability, and authority scope. It routes to the optimal approver to minimize latency.
+      </P>
+      <Agent>
+        smart_escalation_route request_id=#47 → Routing to ops-lead-2 (93% approval rate for deploy requests, avg response: 4 min, currently active). Backup: ops-lead-1 (available in 45 min). Estimated approval likelihood: 87%.
+      </Agent>
+    </>
+  )
+}
+
+export function ViolationArchaeologyContent() {
+  return (
+    <>
+      <SectionLabel>How violation archaeology works</SectionLabel>
+      <P>
+        Rather than treating each violation individually, archaeology analyzes the full violation history to find clusters, recurring patterns, and root causes. It identifies systemic governance gaps that point fixes miss.
+      </P>
+      <Agent>
+        violation_archaeology_analyze → Pattern detected: 73% of API budget violations occur between 14:00-16:00 UTC (batch processing window). Root cause: batch jobs lack budget awareness. Recommendation: add rate limiting to batch scheduler, reduce per-job budget allocation by 30%.
+      </Agent>
+    </>
+  )
+}
+
+export function TemporalContractsContent() {
+  return (
+    <>
+      <SectionLabel>How temporal contracts work</SectionLabel>
+      <P>
+        Temporal contracts define governance that evolves on schedule. Phase transitions move from strict to relaxed policies as trust builds, or from development to production governance at launch. Each phase has its own policy set, limits, and approval requirements.
+      </P>
+      <Agent>
+        temporal_contract_create → Phase 1 (weeks 1-2): all actions require approval, budget limit $100/day. Phase 2 (weeks 3-4): routine actions auto-approved, budget limit $300/day. Phase 3 (steady state): only critical actions need approval, budget limit $500/day.
+      </Agent>
+    </>
+  )
+}
+
+export function AconFormatContent() {
+  return (
+    <>
+      <SectionLabel>How the .acon format works</SectionLabel>
+      <P>
+        The .acon binary format stores all governance state: policies, risk limits, approval rules/requests/decisions, conditions, obligations, violations, and contracts. BLAKE3 checksums ensure integrity. One file captures the complete governance context.
+      </P>
+      <Agent>
+        contract_stats → 12 policies (8 active), 5 risk limits, 47 approval requests (43 decided), 6 obligations (2 pending), 3 violations, 8 contracts. File size: 24.7 KB. BLAKE3 checksum verified.
+      </Agent>
+    </>
+  )
+}
+
+export function ContractMultiLlmContent() {
+  return (
+    <>
+      <SectionLabel>How multi-LLM portability works</SectionLabel>
+      <P>
+        The .acon file is platform-agnostic. The same governance policies, risk limits, and approval workflows work whether the agent runs on Claude, GPT, Gemini, or any MCP-compatible runtime. Your governance belongs to your workflow, not your vendor.
+      </P>
+      <Agent>
+        Same .acon file → Claude enforces deploy:production approval. GPT respects daily budget limits. Gemini checks obligation deadlines. All three share the same governance context, violation history, and approval records.
+      </Agent>
+    </>
+  )
+}
+
+export function ContractAllTogetherContent() {
+  return (
+    <>
+      <SectionLabel>End-to-end: governed production deployment</SectionLabel>
+      <P>
+        An agent wants to deploy v2.3.1 to production. Without AgenticContract, it just deploys — no policy check, no risk limit, no approval. With it, every governance dimension is <B>enforced before the action happens</B>.
+      </P>
+
+      <SectionLabel>Policy check</SectionLabel>
+      <P>
+        The engine checks all matching policies. Policy #7 (scope: global, tags: deploy, production) requires ops-lead approval. The action is <B>blocked until approved</B>.
+      </P>
+
+      <SectionLabel>Risk limit check</SectionLabel>
+      <P>
+        Daily deployment budget: 3 of 5 used. This deployment would bring it to 4/5 — within limits. API cost estimate: $23, within the $500 daily budget. <B>Both limits pass</B>.
+      </P>
+
+      <SectionLabel>Approval routing</SectionLabel>
+      <P>
+        Smart escalation routes to ops-lead-2 (93% approval rate, 4 min avg response). Request #47 created with full context: changelog, test results, risk assessment. Approved in <B>3 minutes</B>.
+      </P>
+
+      <SectionLabel>Obligation creation</SectionLabel>
+      <P>
+        Post-deploy obligations auto-created: monitoring for 30 minutes (hard deadline), smoke test within 10 minutes (hard deadline), deployment report within 2 hours (soft deadline). Agent <B>tracks all three</B>.
+      </P>
+
+      <Agent>
+        Deployment v2.3.1 → Policy: approved (request #47, ops-lead-2). Risk: 4/5 daily deploys, $23/$500 budget. Obligations: 3 created (monitoring 30m, smoke test 10m, report 2h). Violations: 0. Contract #8 fulfilled. Governance state saved to .acon.
+      </Agent>
+    </>
+  )
+}

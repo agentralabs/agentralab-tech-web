@@ -70,6 +70,20 @@ const timeCard = {
   href: "/docs/en/time-experience-with-vs-without",
 } as const
 
+const contractCard = {
+  id: "contract",
+  title: "AgenticContract",
+  kicker: "Policy enforcement becomes machine-readable",
+  claim:
+    "Agents act without guardrails. They approve actions no human reviewed, exceed budgets no one set, and skip steps no policy enforced. AgenticContract gives every agent governance so decisions are bounded, auditable, and self-healing.",
+  proof: [
+    "policies, risk limits, and approval workflows in one .acon file",
+    "obligation tracking with deadline enforcement and violation alerts",
+    "self-healing contracts auto-correct when conditions change",
+  ],
+  href: "/docs/en/contract-experience-with-vs-without",
+} as const
+
 export function ValueProofSection() {
   return (
     <section className="w-full px-6 py-16 lg:px-12" aria-label="Proof of value">
@@ -144,7 +158,7 @@ export function ValueProofSection() {
             Read full proof
           </Link>
         </article>
-        <article className="p-5 lg:p-6 border-foreground bg-background">
+        <article className="p-5 lg:p-6 border-foreground bg-background border-b-2 lg:border-b-0 lg:border-r-2">
           <p className="text-[10px] tracking-[0.2em] uppercase text-muted-foreground font-mono">{timeCard.kicker}</p>
           <h3 className="mt-2 text-xl font-mono font-bold tracking-tight">{timeCard.title}</h3>
           <p className="mt-3 text-sm font-mono text-muted-foreground leading-relaxed">{timeCard.claim}</p>
@@ -159,6 +173,26 @@ export function ValueProofSection() {
 
           <Link
             href={timeCard.href}
+            className="mt-5 inline-flex items-center gap-2 border border-foreground px-3 py-2 text-[11px] font-mono uppercase tracking-[0.14em] hover:bg-foreground hover:text-background transition-colors"
+          >
+            Read full proof
+          </Link>
+        </article>
+        <article className="p-5 lg:p-6 border-foreground bg-background">
+          <p className="text-[10px] tracking-[0.2em] uppercase text-muted-foreground font-mono">{contractCard.kicker}</p>
+          <h3 className="mt-2 text-xl font-mono font-bold tracking-tight">{contractCard.title}</h3>
+          <p className="mt-3 text-sm font-mono text-muted-foreground leading-relaxed">{contractCard.claim}</p>
+
+          <ul className="mt-4 space-y-2">
+            {contractCard.proof.map((item) => (
+              <li key={item} className="text-xs font-mono text-muted-foreground leading-relaxed">
+                <span className="text-[#ea580c]">■</span> {item}
+              </li>
+            ))}
+          </ul>
+
+          <Link
+            href={contractCard.href}
             className="mt-5 inline-flex items-center gap-2 border border-foreground px-3 py-2 text-[11px] font-mono uppercase tracking-[0.14em] hover:bg-foreground hover:text-background transition-colors"
           >
             Read full proof

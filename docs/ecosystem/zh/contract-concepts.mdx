@@ -1,0 +1,36 @@
+---
+title: "概念"
+description: "A policy is a named rule governing agent behavior. Each policy has a scope (global, session, or agent) and an action (allow, deny, require_approval, or audit_only). Policies are..."
+---
+
+## Policy
+
+A policy is a named rule governing agent behavior. Each policy has a scope (global, session, or agent) and an action (allow, deny, require_approval, or audit_only). Policies are evaluated against action descriptions using text matching.
+
+## Risk Limit
+
+A risk limit sets quantitative boundaries on agent operations. Limit types include rate limits, thresholds, budgets, and counts. Each limit tracks current usage against a maximum value and can optionally enforce time windows.
+
+## Approval
+
+The approval system gates high-stakes actions behind human or automated review. Approval rules define patterns that trigger approval requirements. Requests are submitted, then approved or denied with justification.
+
+## Condition
+
+A condition is a prerequisite that must be satisfied before an action can proceed. Conditions can be threshold-based, time-based, dependency-based, or custom expressions evaluated at runtime.
+
+## Obligation
+
+An obligation represents a commitment that an agent must fulfill, optionally with a deadline. Obligations track their status through pending, fulfilled, overdue, and waived states.
+
+## Violation
+
+A violation records a breach of a policy or contract term. Violations are classified by severity: info, warning, critical, or fatal. The violation log provides an audit trail of all detected breaches.
+
+## Contract Engine
+
+The contract engine is the central runtime that manages all governance entities. It wraps the binary `.acon` file format and provides CRUD operations for policies, risk limits, approvals, conditions, obligations, and violations.
+
+## .acon File Format
+
+The `.acon` binary format stores all contract data in a single portable file. It uses the `ACON` magic bytes, includes a BLAKE3 checksum for integrity verification, and supports versioned headers for forward compatibility.

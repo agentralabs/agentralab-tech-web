@@ -1,0 +1,28 @@
+---
+title: "File Format"
+description: "The .acon binary file format specification"
+---
+
+AgenticContract stores all contract data in a single `.acon` binary file.
+
+## Magic Bytes
+
+Files begin with `ACON` (0x41434F4E).
+
+## Structure
+
+| Section | Description |
+|---------|-------------|
+| Header | Magic + version + flags + entity counts + BLAKE3 checksum |
+| Policies | Policy rules governing agent behavior |
+| Risk Limits | Threshold guardrails for resources and actions |
+| Approval Rules | Rules defining when approval is required |
+| Approval Requests | Pending and resolved approval requests |
+| Approval Decisions | Records of approval outcomes |
+| Conditions | Conditional execution rules |
+| Obligations | Mandatory actions with deadlines |
+| Violations | Records of policy breaches |
+
+## Version
+
+Current format version: 1

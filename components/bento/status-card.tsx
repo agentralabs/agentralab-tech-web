@@ -6,6 +6,9 @@ const REGIONS = [
   { name: "AgenticMemory", status: "ONLINE", latency: ".amem" },
   { name: "AgenticVision", status: "ONLINE", latency: ".avis" },
   { name: "AgenticCodebase", status: "ONLINE", latency: ".acb" },
+  { name: "AgenticIdentity", status: "ONLINE", latency: ".aid" },
+  { name: "AgenticTime", status: "ONLINE", latency: ".atime" },
+  { name: "AgenticContract", status: "ONLINE", latency: ".acon" },
   { name: "MCP-BRIDGE", status: "ONLINE", latency: "STDIO" },
 ]
 

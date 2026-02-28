@@ -74,9 +74,9 @@ const sisterKeys = sisters.map((s) => s.key)
 const sisterNames = sisters.map((s) => s.name)
 const sisterRepos = sisters.map((s) => s.repo)
 const sisterSlugs = sisters.map((s) => `agentic-${s.key}`)
-const NPM_PACKAGES = { memory: "@agenticamem/memory", vision: "@agenticamem/vision", codebase: "@agenticamem/codebase", identity: "@agenticamem/identity", time: "@agenticamem/time" }
-const CLI_PACKAGES = { memory: "agentic-memory-cli", vision: "agentic-vision-cli", codebase: "agentic-codebase-cli", identity: "agentic-identity-cli", time: "agentic-time-cli" }
-const MCP_PACKAGES = { memory: "agentic-memory-mcp", vision: "agentic-vision-mcp", codebase: "agentic-codebase-mcp", identity: "agentic-identity-mcp", time: "agentic-time-mcp" }
+const NPM_PACKAGES = { memory: "@agenticamem/memory", vision: "@agenticamem/vision", codebase: "@agenticamem/codebase", identity: "@agenticamem/identity", time: "@agenticamem/time", contract: "@agenticamem/contract" }
+const CLI_PACKAGES = { memory: "agentic-memory-cli", vision: "agentic-vision-cli", codebase: "agentic-codebase-cli", identity: "agentic-identity-cli", time: "agentic-time-cli", contract: "agentic-contract-cli" }
+const MCP_PACKAGES = { memory: "agentic-memory-mcp", vision: "agentic-vision-mcp", codebase: "agentic-codebase-mcp", identity: "agentic-identity-mcp", time: "agentic-time-mcp", contract: "agentic-contract-mcp" }
 
 console.log(`Enabled sisters: ${sisterKeys.join(", ")} (${sisters.length} total)\n`)
 
@@ -435,15 +435,15 @@ for (const key of sisterKeys) {
 
 console.log("\n── O. hero-section.tsx + home page metadata ──")
 const heroTsx = readFile("components/hero-section.tsx")
-assertMatch(heroTsx, /five/i, "hero-section.tsx", `hero mentions "five" systems`)
+assertMatch(heroTsx, /six/i, "hero-section.tsx", `hero mentions "six" systems`)
 
 const homePageTsx = readFile("app/page.tsx")
 if (homePageTsx) {
-  // Home page metadata must NOT say "Four" — must be "Five"
-  if (/Four\s+(open-source|file\s+format|independent|sister)/i.test(homePageTsx)) {
-    fail(`app/page.tsx: home page metadata still says "Four" — must be updated to "Five"`)
+  // Home page metadata must NOT say "Five" — must be "Six"
+  if (/Five\s+(open-source|file\s+format|independent|sister)/i.test(homePageTsx)) {
+    fail(`app/page.tsx: home page metadata still says "Five" — must be updated to "Six"`)
   } else {
-    ok(`app/page.tsx: no stale "Four" count`)
+    ok(`app/page.tsx: no stale "Five" count`)
   }
   // All file formats must be present
   for (const art of artifacts) {
@@ -510,7 +510,7 @@ if (glossaryEn) {
   for (const s of sisters) {
     assertContains(glossaryEn, `## ${s.name}`, "glossary.mdx", `glossary has "## ${s.name}" section`)
   }
-  assertMatch(glossaryEn, /five/i, "glossary.mdx", `glossary says "five" sisters (not four)`)
+  assertMatch(glossaryEn, /six/i, "glossary.mdx", `glossary says "six" sisters (not five)`)
 }
 
 // ── T. architecture-system.mdx — all sister runtimes referenced ────────────
@@ -530,7 +530,7 @@ if (archEn) {
       assertContains(archEn, mcp, "architecture-system.mdx", `architecture doc references ${mcp}`)
     }
   }
-  assertMatch(archEn, /five/i, "architecture-system.mdx", `architecture doc says "five" sisters (not four)`)
+  assertMatch(archEn, /six/i, "architecture-system.mdx", `architecture doc says "six" sisters (not five)`)
 }
 
 // ── U. Meta tags: layout.tsx + head files must reference all sisters ────────

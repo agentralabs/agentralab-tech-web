@@ -1,0 +1,59 @@
+---
+title: "常见问题"
+description: "What is AgenticContract?"
+---
+
+## 通用
+
+**What is AgenticContract?**
+
+AgenticContract is a policy engine for AI agents. It provides governance primitives — policies, risk limits, approvals, conditions, obligations, and violations — in a single `.acon` binary file.
+
+**Do I need the other Agentra sisters to use AgenticContract?**
+
+No. AgenticContract is fully standalone. It works independently via MCP, CLI, FFI, or the Python SDK. Integration with other sisters is optional.
+
+**What file format does AgenticContract use?**
+
+The `.acon` binary format with BLAKE3 checksums for integrity. See the file format documentation for details.
+
+## 安装
+
+**What are the system requirements?**
+
+- macOS (x86_64, aarch64) or Linux (x86_64, aarch64)
+- No runtime dependencies for the binary
+- Python 3.8+ for the Python SDK
+- Rust 1.75+ for building from source
+
+**How do I install AgenticContract?**
+
+```bash
+curl -fsSL https://agentralabs.tech/install/contract | bash
+```
+
+Or via package managers: `pip install agentic-contract`, `cargo install agentic-contract-cli`.
+
+## Usage
+
+**How are policies evaluated?**
+
+Policies are matched against action descriptions using text-based matching. The most restrictive matching policy takes precedence: deny > require_approval > audit_only > allow.
+
+**Can I have multiple contract files?**
+
+Yes. Use the `--path` flag or `ACON_PATH` environment variable to specify which contract file to use.
+
+**How do risk limits work?**
+
+Risk limits track a current value against a maximum. When a check would exceed the limit, the action is blocked. Limits can be rate-based, threshold-based, budget-based, or count-based.
+
+## MCP
+
+**What MCP protocol version is supported?**
+
+Protocol version `2024-11-05`.
+
+**How many MCP tools are available?**
+
+21 tools covering policies, risk limits, approvals, conditions, obligations, violations, and context logging.

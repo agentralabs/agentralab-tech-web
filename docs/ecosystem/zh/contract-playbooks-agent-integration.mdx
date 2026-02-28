@@ -1,0 +1,63 @@
+---
+title: "Playbooks: Agent Integration"
+description: "Set up a policy that prevents agents from performing dangerous actions."
+---
+
+## Playbook 1: Basic Policy Enforcement
+
+Set up a policy that prevents agents from performing dangerous actions.
+
+```
+1. policy_add("No production deploys without approval", scope="global", action="require_approval")
+2. Before any deploy action: policy_check("deploy to production")
+3. If require_approval: approval_request(rule_id, "deploy to production", "agent-1")
+4. Wait for approval_decide from human operator
+5. On approval: proceed with deploy
+6. On deny: log violation and stop
+```
+
+## Playbook 2: Budget-Controlled Agent
+
+Enforce spending limits on an agent that makes API calls.
+
+```
+1. risk_limit_set("API spend", max=100.0, type="budget")
+2. Before each API call: risk_limit_check("API spend", proposed=0.05)
+3. If within limit: proceed
+4. If exceeded: violation_report("Budget exceeded", severity="critical")
+```
+
+## Playbook 3: Compliance Obligations
+
+Track mandatory reporting obligations with deadlines.
+
+```
+1. obligation_add("Submit weekly report", deadline="2026-03-07T17:00:00Z", assignee="agent-1")
+2. Periodically: obligation_check() to identify overdue items
+3. On completion: mark obligation fulfilled
+4. On overdue: violation_report("Missed weekly report deadline", severity="warning")
+```
+
+## Playbook 4: Multi-Agent Governance
+
+Set up governance for multiple agents working together.
+
+```
+1. Create agent-scoped policies for each agent
+2. Set global risk limits shared across all agents
+3. Use approval workflows for cross-agent actions
+4. Monitor violations across all scopes
+5. Run contract_audit periodically for compliance review
+```
+
+## Playbook 5: Agentra Ecosystem Integration
+
+Combine AgenticContract with other Agentra sisters.
+
+```
+1. AgenticIdentity: Link approval decisions to identity trust grants
+2. AgenticMemory: Store contract decisions as memory nodes
+3. AgenticTime: Use temporal analysis on policy evaluation patterns
+4. AgenticCodebase: Feed code analysis into condition evaluations
+5. AgenticVision: Trigger policy checks based on visual observations
+```

@@ -188,12 +188,12 @@ export async function GET() {
               maxWidth: 900,
             }}
           >
-            Five independent runtime sisters. Portable artifact files you own
+            Six independent runtime sisters. Portable artifact files you own
             forever. MCP-native integration. Built in Rust.
           </div>
         </div>
 
-        {/* Five sisters grid */}
+        {/* Six sisters grid */}
         <div
           style={{
             display: "flex",
@@ -418,6 +418,49 @@ export async function GET() {
                 }}
               >
                 Temporal engine in .atime
+              </span>
+            </div>
+
+            {/* Contract */}
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                border: "2px solid #0a0a0a",
+                borderLeft: "none",
+                padding: "16px 22px",
+                flex: 1,
+                background: "rgba(242, 241, 234, 0.8)",
+              }}
+            >
+              <span
+                style={{
+                  fontSize: 11,
+                  letterSpacing: 2,
+                  color: "#ea580c",
+                  fontWeight: 700,
+                  marginBottom: 6,
+                }}
+              >
+                06 GOVERNANCE
+              </span>
+              <span
+                style={{
+                  fontSize: 16,
+                  fontWeight: 700,
+                  letterSpacing: 1,
+                }}
+              >
+                AgenticContract
+              </span>
+              <span
+                style={{
+                  fontSize: 12,
+                  color: "#666666",
+                  marginTop: 4,
+                }}
+              >
+                Policy engine in .acon
               </span>
             </div>
           </div>

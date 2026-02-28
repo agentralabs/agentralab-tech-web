@@ -85,7 +85,7 @@ export const TIME_SCENARIOS: ScenarioGroup[] = [
     ],
   },
   {
-    label: "Temporal Inventions",
+    label: "Temporal Advanced Tools",
     items: [
       {
         id: "timeline-forks",

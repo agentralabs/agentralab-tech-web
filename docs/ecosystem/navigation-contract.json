@@ -42,10 +42,19 @@
       "enabled": true
     },
     {
+      "key": "contract",
+      "repo": "agentic-contract",
+      "name": "AgenticContract",
+      "order": 1003,
+      "landingSlug": "contract-docs",
+      "includeLanding": true,
+      "enabled": true
+    },
+    {
       "key": "identity",
       "repo": "agentic-identity",
       "name": "AgenticIdentity",
-      "order": 1003,
+      "order": 1004,
       "landingSlug": "identity-docs",
       "includeLanding": true,
       "enabled": true
@@ -54,7 +63,7 @@
       "key": "time",
       "repo": "agentic-time",
       "name": "AgenticTime",
-      "order": 1004,
+      "order": 1005,
       "landingSlug": "time-docs",
       "includeLanding": true,
       "enabled": true

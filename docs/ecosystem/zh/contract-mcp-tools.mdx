@@ -1,0 +1,67 @@
+---
+title: "MCP Tools"
+description: "Complete reference for AgenticContract MCP tools"
+---
+
+AgenticContract exposes 22 tools via the Model Context Protocol.
+
+## Contract Tools
+
+|工具|描述 |
+|------|-------------|
+| `contract_create` | Create a new contract between agents or agent and user |
+| `contract_sign` | Sign a contract to indicate acceptance |
+| `contract_verify` | Verify a contract's validity and signature chain |
+| `contract_list` | List contracts with optional status filter |
+| `contract_get` | Get a specific contract by ID |
+
+## Policy Tools
+
+|工具|描述 |
+|------|-------------|
+| `policy_add` | Add a policy rule governing agent behavior |
+| `policy_check` | Check if an action is allowed under current policies |
+| `policy_list` | List active policies with optional scope filter |
+
+## Risk Limit Tools
+
+|工具|描述 |
+|------|-------------|
+| `risk_limit_set` | Set a risk limit threshold for a resource or action |
+| `risk_limit_check` | Check if an action would exceed risk limits |
+| `risk_limit_list` | List all risk limits with current values |
+
+## Approval Tools
+
+|工具|描述 |
+|------|-------------|
+| `approval_request` | Request approval for a controlled action |
+| `approval_decide` | Approve or deny a pending approval request |
+| `approval_list` | List approval requests with optional status filter |
+
+## Condition Tools
+
+|工具|描述 |
+|------|-------------|
+| `condition_add` | Add a conditional execution rule |
+| `condition_evaluate` | Evaluate whether conditions are met for an action |
+
+## Obligation Tools
+
+|工具|描述 |
+|------|-------------|
+| `obligation_add` | Add an obligation that an agent must fulfill |
+| `obligation_check` | Check the status of obligations |
+
+## Violation Tools
+
+|工具|描述 |
+|------|-------------|
+| `violation_list` | List recorded violations with optional severity filter |
+| `violation_report` | Report a contract or policy violation |
+
+## Context Tool
+
+|工具|描述 |
+|------|-------------|
+| `contract_context_log` | Log the intent and context behind a contract action |

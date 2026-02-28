@@ -17,6 +17,7 @@ const FILES: FileCard[] = [
   { ext: ".acb", name: "AgenticCodebase", desc: "Every project. Semantic graphs. Zero hallucination.", size: "~2-3 GB / 20 yr" },
   { ext: ".aid", name: "AgenticIdentity", desc: "Signed receipts. Earned trust. Unbroken continuity.", size: "~0.5-1 GB / 20 yr" },
   { ext: ".atime", name: "AgenticTime", desc: "Deadlines. Schedules. Decay models. Temporal reasoning.", size: "~0.5-1 GB / 20 yr" },
+  { ext: ".acon", name: "AgenticContract", desc: "Policies. Risk limits. Approvals. Self-healing governance.", size: "~0.5-1 GB / 20 yr" },
 ]
 
 function BlinkDot() {
@@ -62,7 +63,7 @@ export function AStarFilesSection() {
       </motion.div>
 
       {/* File cards grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 border-2 border-foreground">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 border-2 border-foreground">
         {FILES.map((file, i) => (
           <motion.div
             key={file.ext}
@@ -105,7 +106,7 @@ export function AStarFilesSection() {
         <div className="border border-border p-5">
           <h4 className="text-[10px] font-mono uppercase tracking-[0.2em] text-foreground mb-2">~10-15 GB</h4>
           <p className="text-xs font-mono text-muted-foreground leading-relaxed">
-            20 years of memory, vision, code, and identity. Fits on your phone. Backs up like photos.
+            20 years of memory, vision, code, identity, time, and governance. Fits on your phone. Backs up like photos.
           </p>
         </div>
       </motion.div>

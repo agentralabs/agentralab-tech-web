@@ -62,6 +62,15 @@ const SCENARIOS: Scenario[] = [
       '"Analyzing temporal state: 3 hard deadlines within 7 days, 2 recurring schedules overlap Saturday. Available 4-hour window: Sunday 02:00-06:00 UTC. PERT estimate for migration: optimistic 2h, expected 3.5h, pessimistic 6h. Temporal debt on deferred schema changes: 1.4x compounding. Recommend the Sunday window with rollback sequence pre-staged."',
     href: "/projects/scenarios/agentic-time",
   },
+  {
+    question: '"Can this agent deploy to production without approval?"',
+    without:
+      'No governance layer exists. The agent has the API key, so it deploys. No policy check, no risk limit, no approval workflow. Hope nothing breaks.',
+    withLabel: "WITH AGENTICCONTRACT",
+    withResponse:
+      '"Policy check: deploy:production requires approval from ops-lead. Risk limit: 3/5 daily deployments used (budget limit). Obligation: post-deploy monitoring required within 30 minutes. Auto-creating approval request #47 with smart escalation to on-call approver. Estimated approval likelihood: 87% based on prior patterns."',
+    href: "/projects/scenarios/agentic-contract",
+  },
 ]
 
 function ScenarioCard({ scenario, index }: { scenario: Scenario; index: number }) {

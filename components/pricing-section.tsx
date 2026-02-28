@@ -205,6 +205,38 @@ const MODULES: ModuleCard[] = [
     scenarioHref: "/projects/scenarios/agentic-time",
     highlighted: false,
   },
+  {
+    id: "agentic-contract",
+    frame: "PROJECTS",
+    value: "AgenticContract",
+    period: "/ AVAILABLE",
+    tag: "READY",
+    description: "\"Is this agent allowed to do that?\" Your agent deploys code, approves requests, and allocates resources — with no policies, no risk limits, and no approval workflows. AgenticContract gives agents governance.",
+    summary:
+      "Every agent action is checked against policies, risk limits, and approval workflows. Obligations track what must be done. Violations are detected before they compound. All governance state lives in portable .acon files.",
+    deepSummary: [
+      {
+        lead: "Policy engine:",
+        body: "Allow, deny, or require approval for any action. Scoped to global, session, or individual agents with tag-based matching.",
+      },
+      {
+        lead: "Risk limits:",
+        body: "Rate, threshold, budget, and count limits that prevent agents from exceeding safe boundaries.",
+      },
+      {
+        lead: "Approval workflows:",
+        body: "Multi-party approval chains with smart escalation routing. Request, decide, and audit every controlled action.",
+      },
+      {
+        lead: "Self-healing contracts:",
+        body: "Contracts that automatically adapt policies when violations are detected. Governance that learns from incidents.",
+      },
+    ],
+    cta: "VIEW REPO",
+    href: "https://github.com/agentralabs/agentic-contract",
+    scenarioHref: "/projects/scenarios/agentic-contract",
+    highlighted: false,
+  },
 ]
 
 function ModuleGlyph({ id, highlighted }: { id: ModuleCard["id"]; highlighted: boolean }) {
@@ -260,6 +292,19 @@ function ModuleGlyph({ id, highlighted }: { id: ModuleCard["id"]; highlighted: b
         <path d="M60 40L78 48" className={baseClass} stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
         <path d="M60 14v4M60 62v4M88 40h4M28 40h4" className={baseClass} stroke="currentColor" strokeWidth="1.5" />
         <path d="M96 16l-6 6M30 64l-6 6" className={accentClass} stroke="currentColor" strokeWidth="1.5" strokeDasharray="3 2" />
+      </svg>
+    )
+  }
+
+  if (id === "agentic-contract") {
+    return (
+      <svg viewBox="0 0 120 80" className="w-full h-24" fill="none" aria-label="AgenticContract glyph">
+        <rect x="30" y="8" width="60" height="64" rx="2" className={baseClass} stroke="currentColor" strokeWidth="2" />
+        <path d="M42 24h36M42 34h36M42 44h24" className={baseClass} stroke="currentColor" strokeWidth="1.5" />
+        <path d="M42 54h12" className={accentClass} stroke="currentColor" strokeWidth="2" />
+        <circle cx="82" cy="54" r="6" className={accentClass} stroke="currentColor" strokeWidth="2" />
+        <path d="M79 54l2 2 4-4" className={accentClass} stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M20 20l10-4M100 20l-10-4" className={baseClass} stroke="currentColor" strokeWidth="1.5" strokeDasharray="4 3" />
       </svg>
     )
   }
@@ -450,11 +495,11 @@ export function PricingSection() {
       >
         <div className="flex flex-col gap-3">
           <h2 className="text-2xl lg:text-3xl font-mono font-bold tracking-tight uppercase text-foreground text-balance">
-            Five systems. One cognitive layer.
+            Six systems. One cognitive layer.
           </h2>
           <p className="text-xs lg:text-sm font-mono text-muted-foreground leading-relaxed max-w-md">
             AgenticMemory — reasoning that persists. AgenticVision — visual state that&apos;s queryable.
-            AgenticCodebase — code understanding with prediction. AgenticIdentity — cryptographic proof of agent action. AgenticTime — temporal reasoning with deadlines. All open source. All shipped.
+            AgenticCodebase — code understanding with prediction. AgenticIdentity — cryptographic proof of agent action. AgenticTime — temporal reasoning with deadlines. AgenticContract — policy governance for agents. All open source. All shipped.
           </p>
         </div>
         <StatusLine />
@@ -480,7 +525,7 @@ export function PricingSection() {
       >
         <span className="text-[10px] tracking-[0.2em] uppercase text-muted-foreground font-mono">
           {
-            "* Five independent systems that work well together. Research-backed. MIT licensed. Production ready."
+            "* Six independent systems that work well together. Research-backed. MIT licensed. Production ready."
           }
         </span>
         <div className="flex-1 border-t border-border" />

@@ -89,8 +89,11 @@ function matchesAnyCategory(node: GitHubDiscussionNode, allowedSlugs: string[]):
   return !!slug && allowedSlugs.includes(slug)
 }
 
-function detectProject(text: string): "AgenticMemory" | "AgenticVision" | "AgenticCodebase" {
+function detectProject(text: string): "AgenticMemory" | "AgenticVision" | "AgenticCodebase" | "AgenticIdentity" | "AgenticTime" | "AgenticContract" {
   const lower = text.toLowerCase()
+  if (lower.includes("contract") || lower.includes("governance") || lower.includes(".acon") || lower.includes("policy engine")) return "AgenticContract"
+  if (lower.includes("time") || lower.includes("temporal") || lower.includes(".atime") || lower.includes("schedule")) return "AgenticTime"
+  if (lower.includes("identity") || lower.includes("trust") || lower.includes(".aid") || lower.includes("receipt")) return "AgenticIdentity"
   if (lower.includes("vision") || lower.includes("cortex") || lower.includes(".avis")) return "AgenticVision"
   if (lower.includes("codebase") || lower.includes("acb") || lower.includes("semantic code")) return "AgenticCodebase"
   return "AgenticMemory"

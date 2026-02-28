@@ -78,7 +78,7 @@ Workflow: `.github/workflows/lab-log-autopublish.yml`
 | `/` | Home |
 | `/projects` | Projects overview |
 | `/publications` | Research papers |
-| `/docs` | Documentation hub (all five sisters) |
+| `/docs` | Documentation hub (all six sisters) |
 | `/integrations` | MCP client integration guides |
 | `/showcase` | Community showcase |
 | `/blog` | Lab log / blog |

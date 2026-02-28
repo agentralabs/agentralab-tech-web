@@ -1,0 +1,109 @@
+---
+title: "API Reference"
+description: "The main entry point for the policy engine."
+---
+
+## Core Types
+
+### `ContractEngine`
+
+The main entry point for the policy engine.
+
+```rust
+pub struct ContractEngine { /* ... */ }
+```
+
+**Methods:**
+
+| Method | Description |
+|--------|-------------|
+| `new()` | Create a new empty engine |
+| `open(path)` | Open an existing `.acon` file |
+| `save(path)` | Save to a `.acon` file |
+| `add_policy(label, scope, action)` | Add a policy |
+| `check_policy(action)` | Check an action against policies |
+| `list_policies()` | List all policies |
+| `add_risk_limit(label, type, max)` | Add a risk limit |
+| `check_risk_limit(label, usage)` | Check risk limit |
+| `list_risk_limits()` | List all risk limits |
+| `request_approval(rule_id, desc, requestor)` | Request approval |
+| `decide_approval(request_id, decision)` | Decide on approval |
+| `list_approvals()` | List approval requests |
+| `add_condition(label, type, expr)` | Add a condition |
+| `evaluate_condition(id)` | Evaluate a condition |
+| `add_obligation(label, desc, assignee)` | Add an obligation |
+| `check_obligations()` | Check all obligations |
+| `report_violation(desc, severity, actor)` | Report a violation |
+| `list_violations()` | List all violations |
+| `stats()` | Get summary statistics |
+
+### `Policy`
+
+```rust
+pub struct Policy {
+    pub id: ContractId,
+    pub label: String,
+    pub scope: PolicyScope,
+    pub action: PolicyAction,
+    pub conditions: Vec<String>,
+    pub tags: Vec<String>,
+    pub active: bool,
+    pub created_at: DateTime<Utc>,
+}
+```
+
+### `PolicyScope`
+
+```rust
+pub enum PolicyScope { Global, Session, Agent }
+```
+
+### `PolicyAction`
+
+```rust
+pub enum PolicyAction { Allow, Deny, RequireApproval, AuditOnly }
+```
+
+### `RiskLimit`
+
+```rust
+pub struct RiskLimit {
+    pub id: ContractId,
+    pub label: String,
+    pub limit_type: LimitType,
+    pub current_value: f64,
+    pub max_value: f64,
+    pub window_secs: Option<u64>,
+}
+```
+
+### `LimitType`
+
+```rust
+pub enum LimitType { Rate, Threshold, Budget, Count }
+```
+
+### `ViolationSeverity`
+
+```rust
+pub enum ViolationSeverity { Info, Warning, Critical, Fatal }
+```
+
+## Error Types
+
+```rust
+pub enum ContractError {
+    NotFound(String),
+    PolicyViolation(String),
+    RiskLimitExceeded(String),
+    ApprovalRequired(String),
+    ApprovalDenied(String),
+    ConditionNotMet(String),
+    ObligationUnfulfilled(String),
+    ContractExpired(String),
+    InvalidContract(String),
+    FileFormat(String),
+    Io(std::io::Error),
+    Serialization(String),
+}
+```

@@ -18,7 +18,7 @@ import { siteConfig } from "@/lib/site"
 export const metadata: Metadata = {
   title: "Home",
   description:
-    "Your AI forgets you exist. Ours remembers for 20 years. Five open-source systems — AgenticMemory, AgenticVision, AgenticCodebase, AgenticIdentity, and AgenticTime. Five file formats. Forever yours. .amem .avis .acb .aid .atime",
+    "Your AI forgets you exist. Ours remembers for 20 years. Six open-source systems — AgenticMemory, AgenticVision, AgenticCodebase, AgenticIdentity, AgenticTime, and AgenticContract. Six file formats. Forever yours. .amem .avis .acb .aid .atime .acon",
   alternates: {
     canonical: "/",
   },

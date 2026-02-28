@@ -1,0 +1,44 @@
+---
+title: "Benchmarks"
+description: "All benchmarks measured with Criterion on Apple M-series hardware. Results represent median values from 100+ iterations."
+---
+
+All benchmarks measured with Criterion on Apple M-series hardware. Results represent median values from 100+ iterations.
+
+## Core Operations
+
+| Operation | Median | Notes |
+|-----------|--------|-------|
+| Policy evaluate | 0.03 ms | Single policy check |
+| Risk limit check | 0.04 ms | Against one limit |
+| Approval request | 0.05 ms | Create pending request |
+| Condition evaluate | 0.04 ms | Single condition |
+| Obligation check | 0.03 ms | Status lookup |
+| Violation report | 0.06 ms | With severity classification |
+
+## Scale Operations
+
+| Operation | Median | Notes |
+|-----------|--------|-------|
+| Evaluate across 1K policies | 0.3 ms | Full scan |
+| Evaluate across 10K policies | 2.9 ms | Full scan |
+| List 1K obligations | 0.6 ms | With status filter |
+| Full audit 10K entries | 5.8 ms | All entity types |
+
+## File I/O
+
+| Operation | Median | Notes |
+|-----------|--------|-------|
+| Save 1K entities | 2.1 ms | Binary write |
+| Save 10K entities | 24 ms | Binary write |
+| Load 1K entities | 1.8 ms | Binary read + verify |
+| Load 10K entities | 18 ms | Binary read + verify |
+
+## Reproduction
+
+```bash
+cd crates/agentic-contract
+cargo bench
+```
+
+Benchmarks use the Criterion framework and produce HTML reports in `target/criterion/`.

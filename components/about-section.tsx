@@ -80,7 +80,8 @@ const STATS = [
   { label: "VISION_TOOLS", value: "10" },
   { label: "CODEBASE_QUERIES", value: "24" },
   { label: "TIME_TOOLS", value: "19" },
-  { label: "CORE_FORMATS", value: ".amem/.avis/.acb/.aid/.atime" },
+  { label: "CONTRACT_TOOLS", value: "38" },
+  { label: "CORE_FORMATS", value: ".amem/.avis/.acb/.aid/.atime/.acon" },
 ]
 
 function StatBlock({ label, value, index }: { label: string; value: string; index: number }) {
@@ -210,8 +211,10 @@ export function AboutSection() {
                   AgenticMemory preserves reasoning continuity,
                   AgenticCodebase compiles repositories into semantic
                   intelligence surfaces, AgenticIdentity provides
-                  cryptographic trust, and AgenticTime adds temporal
-                  reasoning with deadlines, schedules, and decay models.
+                  cryptographic trust, AgenticTime adds temporal
+                  reasoning with deadlines, schedules, and decay models,
+                  and AgenticContract enforces policy governance with
+                  risk limits, approval workflows, and self-healing contracts.
                 </p>
                 <p className="text-xs lg:text-sm font-mono text-muted-foreground leading-relaxed">
                   The stack is MCP-native, artifact-portable, and designed for

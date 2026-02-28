@@ -1,0 +1,35 @@
+---
+title: "MCP Resources"
+description: "AgenticContract exposes 12 resources via the MCP protocol using the acon:// URI scheme."
+---
+
+AgenticContract exposes 12 resources via the MCP protocol using the `acon://` URI scheme.
+
+## Resource List
+
+| URI | Name | Description |
+|-----|------|-------------|
+| `acon://policies` | All policies | Complete list of active policies |
+| `acon://policies/global` | Global policies | Policies with global scope |
+| `acon://policies/session` | Session policies | Policies scoped to current session |
+| `acon://risk-limits` | Risk limits | All risk limit definitions and current values |
+| `acon://risk-limits/exceeded` | Exceeded limits | Risk limits currently over threshold |
+| `acon://approvals` | Approval requests | All approval requests |
+| `acon://approvals/pending` | Pending approvals | Approval requests awaiting decision |
+| `acon://obligations` | Obligations | All tracked obligations |
+| `acon://obligations/overdue` | Overdue obligations | Obligations past their deadline |
+| `acon://violations` | Violations | All recorded violations |
+| `acon://violations/critical` | Critical violations | Violations with critical or fatal severity |
+| `acon://stats` | Contract statistics | Summary statistics for the contract |
+
+## URI Scheme
+
+All resources use the `acon://` prefix. Resources return JSON-formatted data.
+
+## Cross-Sister References
+
+AgenticContract resources can be referenced by other Agentra sisters:
+
+- **AgenticIdentity**: Links approvals to identity trust grants
+- **AgenticMemory**: Stores contract decisions as memory nodes
+- **AgenticTime**: Timestamps for policy evaluations and violations

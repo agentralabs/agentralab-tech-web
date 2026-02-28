@@ -1,0 +1,73 @@
+---
+title: "集成指南"
+description: "AgenticContract exposes 21 tools, 12 resources, and 4 prompts through the Model Context Protocol. Any MCP-compatible client can use the contract engine."
+---
+
+## MCP Integration
+
+AgenticContract exposes 21 tools, 12 resources, and 4 prompts through the Model Context Protocol. Any MCP-compatible client can use the contract engine.
+
+＃＃＃ 设置
+
+```json
+{
+  "mcpServers": {
+    "agentic-contract": {
+      "command": "agentic-contract-mcp",
+      "args": ["serve"]
+    }
+  }
+}
+```
+
+### Common Workflows
+
+**Pre-action policy check:**
+1. Call `policy_check` with the intended action description
+2. If denied, stop and report the violation
+3. If require_approval, call `approval_request`
+4. If allowed, proceed with the action
+
+**Risk-aware operations:**
+1. Call `risk_limit_check` before the action
+2. If the limit would be exceeded, stop or request escalation
+3. After the action, update the risk limit usage
+
+## Rust API
+
+Add `agentic-contract` to your `Cargo.toml`:
+
+```toml
+[dependencies]
+agentic-contract = "0.1"
+```
+
+```rust
+use agentic_contract::{ContractEngine, PolicyScope, PolicyAction};
+
+let mut engine = ContractEngine::new();
+engine.add_policy("spending-cap", PolicyScope::Global, PolicyAction::Deny);
+```
+
+## Python SDK
+
+```bash
+pip install agentic-contract
+```
+
+```python
+from agentic_contract import ContractEngine
+
+engine = ContractEngine()
+engine.add_policy("No deploys on Friday", scope="global", action="deny")
+```
+
+## Cross-Sister Integration
+
+AgenticContract integrates with the Agentra ecosystem:
+
+- **AgenticIdentity**: Approval decisions link to identity trust grants via receipts
+- **AgenticMemory**: Contract decisions are stored as memory nodes for long-term recall
+- **AgenticTime**: All contract events are timestamped for temporal analysis
+- **AgenticVision**: Visual observations can trigger policy evaluations
+- **AgenticCodebase**: Code analysis results can feed into condition evaluations

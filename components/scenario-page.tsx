@@ -11,6 +11,7 @@ import { VISION_HERO, VISION_SCENARIOS } from "@/data/scenarios-vision"
 import { CODEBASE_HERO, CODEBASE_SCENARIOS } from "@/data/scenarios-codebase"
 import { IDENTITY_HERO, IDENTITY_SCENARIOS } from "@/data/scenarios-identity"
 import { TIME_HERO, TIME_SCENARIOS } from "@/data/scenarios-time"
+import { CONTRACT_HERO, CONTRACT_SCENARIOS } from "@/data/scenarios-contract"
 import * as SC from "@/components/scenario-content"
 
 const ease = [0.22, 1, 0.36, 1] as const
@@ -95,6 +96,20 @@ const CONTENT_MAP: Record<string, () => React.ReactNode> = {
   "atime-format": () => <SC.AtimeFormatContent />,
   "ghost-writer": () => <SC.GhostWriterContent />,
   "multi-llm": () => <SC.MultiLlmContent />,
+  // Contract
+  "policy-engine": () => <SC.PolicyEngineContent />,
+  "risk-limits": () => <SC.RiskLimitsContent />,
+  "approval-workflows": () => <SC.ApprovalWorkflowsContent />,
+  "obligation-tracking": () => <SC.ObligationTrackingContent />,
+  "violation-detection": () => <SC.ViolationDetectionContent />,
+  "conditional-execution": () => <SC.ConditionalExecutionContent />,
+  "contract-signing": () => <SC.ContractSigningContent />,
+  "self-healing-contracts": () => <SC.SelfHealingContractsContent />,
+  "smart-escalation": () => <SC.SmartEscalationContent />,
+  "violation-archaeology": () => <SC.ViolationArchaeologyContent />,
+  "temporal-contracts": () => <SC.TemporalContractsContent />,
+  "acon-format": () => <SC.AconFormatContent />,
+  "contract-multi-llm": () => <SC.ContractMultiLlmContent />,
 }
 
 const ALL_TOGETHER_MAP: Record<string, () => React.ReactNode> = {
@@ -103,6 +118,7 @@ const ALL_TOGETHER_MAP: Record<string, () => React.ReactNode> = {
   "agentic-codebase": () => <SC.CodebaseAllTogetherContent />,
   "agentic-identity": () => <SC.IdentityAllTogetherContent />,
   "agentic-time": () => <SC.TimeAllTogetherContent />,
+  "agentic-contract": () => <SC.ContractAllTogetherContent />,
 }
 
 const ALL_TOGETHER_PLAIN: Record<string, string> = {
@@ -116,6 +132,8 @@ const ALL_TOGETHER_PLAIN: Record<string, string> = {
     "This is the difference between trusting a log entry and holding a signed receipt. AgenticIdentity doesn't just record what happened — it cryptographically proves which agent acted, who authorized it, and that nobody tampered with the record. Every action has a signature. Every delegation has a scope. Every audit trail is tamper-evident.",
   "agentic-time":
     "This is the difference between an agent that says \"this weekend\" and one that says \"Sunday 02:00-06:00 UTC is your only 4-hour window, the PERT estimate is 3.5h, and every day of delay adds 1.4x compounding cost.\" AgenticTime turns vague temporal reasoning into precise scheduling with deadlines, decay models, and timeline fork analysis.",
+  "agentic-contract":
+    "This is the difference between an agent that acts first and asks forgiveness later, and one that checks policies, respects risk limits, routes approvals, and tracks obligations before taking action. AgenticContract turns ungoverned agent behavior into auditable, policy-compliant operations with self-healing governance that learns from every violation.",
 }
 
 function getConfig(sister: string) {
@@ -128,6 +146,8 @@ function getConfig(sister: string) {
       return { hero: IDENTITY_HERO, groups: IDENTITY_SCENARIOS, repo: "https://github.com/agentralabs/agentic-identity" }
     case "agentic-time":
       return { hero: TIME_HERO, groups: TIME_SCENARIOS, repo: "https://github.com/agentralabs/agentic-time" }
+    case "agentic-contract":
+      return { hero: CONTRACT_HERO, groups: CONTRACT_SCENARIOS, repo: "https://github.com/agentralabs/agentic-contract" }
     default:
       return { hero: MEMORY_HERO, groups: MEMORY_SCENARIOS, repo: "https://github.com/agentralabs/agentic-memory" }
   }
