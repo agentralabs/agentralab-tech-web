@@ -21,6 +21,7 @@ jobs:
           git clone --depth 1 https://github.com/agentralabs/agentic-identity.git
           git clone --depth 1 https://github.com/agentralabs/agentic-time.git
           git clone --depth 1 https://github.com/agentralabs/agentic-contract.git
+          git clone --depth 1 https://github.com/agentralabs/agentic-comm.git
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4

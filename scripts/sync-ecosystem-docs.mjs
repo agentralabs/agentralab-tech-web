@@ -534,6 +534,17 @@ async function discoverSisterSpecs(overrides) {
   const discovered = []
   for (const repoName of repoDirs) {
     const repoRootDir = path.join(workspaceRoot, repoName)
+    const legacy = LEGACY_SISTER_SPECS.find((entry) => entry.repo === repoName) || null
+    const manifestPath = path.join(repoRootDir, "docs", "public", SISTER_MANIFEST_NAME)
+    const hasManifest = await pathExists(manifestPath)
+    const isKnownSister = Boolean(legacy || hasManifest)
+
+    // Skip non-sister agentic-* repos (for example agentic-sdk) so strict sync
+    // only validates canonical sister repositories.
+    if (!isKnownSister) {
+      continue
+    }
+
     const docsPublicDir = path.join(repoRootDir, "docs", "public")
     const docsPublicExists = await pathExists(docsPublicDir)
 
@@ -544,9 +555,7 @@ async function discoverSisterSpecs(overrides) {
       continue
     }
 
-    const manifestPath = path.join(docsPublicDir, SISTER_MANIFEST_NAME)
     const manifest = await readJsonIfExists(manifestPath)
-    const legacy = LEGACY_SISTER_SPECS.find((entry) => entry.repo === repoName) || null
 
     if (!manifest && !legacy) {
       const message = `[sync] Missing ${SISTER_MANIFEST_NAME} for sister ${repoName}`
@@ -712,6 +721,32 @@ function escapeUnsafeAngles(markdown) {
         .replace(/(?<!\\)<(?=\s*\d)/g, "\\<")
         .replace(/(?<!\\)<([A-Za-z0-9_.-]+)>/g, (_, token) => `&lt;${token}&gt;`)
       return restoreInlineCode(escaped, placeholders)
+    })
+    .join("\n")
+}
+
+function escapeMdxExpressionHeadings(markdown) {
+  const lines = markdown.split("\n")
+  let inFence = false
+
+  return lines
+    .map((line) => {
+      const trimmed = line.trimStart()
+      if (trimmed.startsWith("```")) {
+        inFence = !inFence
+        return line
+      }
+      if (inFence) return line
+
+      const heading = line.match(/^(\s*#{1,6}\s+)(.+)$/)
+      if (!heading) return line
+
+      const [, prefix, text] = heading
+      if (text.includes("`")) return line
+      if (/\{[A-Za-z_][A-Za-z0-9_-]*\}/.test(text)) {
+        return `${prefix}\`${text.trim()}\``
+      }
+      return line
     })
     .join("\n")
 }
@@ -942,7 +977,7 @@ async function buildDocPages(spec, cacheState) {
     const title = String(frontMatter.title || extractFirstHeading(body) || fallbackTitle)
     const stripped = stripLeadingH1(body)
     const rewritten = rewriteLocalLinks(stripped, entry.id, idToSlug)
-    const cleaned = escapeUnsafeAngles(sanitizeForPublic(rewritten))
+    const cleaned = escapeMdxExpressionHeadings(escapeUnsafeAngles(sanitizeForPublic(rewritten)))
     const description = String(frontMatter.description || extractDescription(cleaned) || `${spec.name} documentation page.`)
 
     enriched.push({
@@ -984,7 +1019,7 @@ async function buildDocPages(spec, cacheState) {
       mdxPage({
         title: zhTitle,
         description: zhDescription,
-        body: escapeUnsafeAngles(localizeMarkdownDocsLinks(zhBody, "zh")),
+        body: escapeMdxExpressionHeadings(escapeUnsafeAngles(localizeMarkdownDocsLinks(zhBody, "zh"))),
       }),
     )
   }
