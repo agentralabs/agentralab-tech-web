@@ -1,0 +1,66 @@
+---
+title: AgenticComm Concepts
+description: Core concepts behind AgenticComm's communication architecture
+---
+
+# Concepts
+
+## Channels
+
+Channels are named message streams with independent subscriber lists. Each channel has:
+
+- A unique name within the store
+- An ordered sequence of messages
+- A list of subscribed agents
+- Metadata (description, creation time)
+
+Channels provide isolation — messages in one channel do not affect others.
+
+## Messages
+
+Messages are the fundamental unit of communication. Each message has:
+
+- **ID**: Monotonically increasing within the channel
+- **Channel**: Which channel this message belongs to
+- **Content**: The message payload (text)
+- **Sender**: Identity of the sending agent
+- **Timestamp**: When the message was sent
+
+Messages are append-only — once sent, they cannot be modified or deleted.
+
+## Subscriptions
+
+Subscriptions link agents to channels. A subscribed agent can:
+
+- **Poll** for new messages across all subscribed channels
+- **Receive** messages from specific channels
+- **Peek** at messages without consuming them
+
+Subscriptions persist across sessions in the `.acomm` file.
+
+## Store
+
+The store is the top-level container — a single `.acomm` file that holds all channels, messages, and subscriptions. Key properties:
+
+- **Portable**: Copy the file to move the entire communication state
+- **Crash-safe**: Append-only writes with integrity checks
+- **Compressed**: LZ4 compression for message content
+- **Self-contained**: Zero external dependencies
+
+## Message patterns
+
+### Point-to-point
+One agent sends to a channel, one agent receives.
+
+### Broadcast
+One agent sends to all channels simultaneously via `comm_broadcast`.
+
+### Pub/Sub
+Multiple agents subscribe to a channel and poll for updates.
+
+### Task queue
+Producer agents send tasks, consumer agents receive and process them.
+
+## Session coordination
+
+Communication actions are linked to session lifecycle through `conversation_log`. This allows operators to audit what happened during each session and reconstruct the communication flow.

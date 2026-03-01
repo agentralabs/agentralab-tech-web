@@ -1,0 +1,76 @@
+---
+title: AgenticComm FAQ
+description: Frequently asked questions about AgenticComm
+---
+
+# FAQ
+
+## General
+
+### What is AgenticComm?
+
+AgenticComm is a portable binary communication system for AI agents. It provides structured channels, typed messages, and subscription management in a single `.acomm` file with zero infrastructure dependencies.
+
+### How is it different from shared files or databases?
+
+Shared files have no structure, ordering guarantees, or search. Databases require infrastructure. AgenticComm provides structured channels with message ordering, subscriptions, full-text search, and broadcast — all in one portable file.
+
+### Does it require a network connection?
+
+No. AgenticComm operates entirely on local files. No servers, databases, or network connections needed.
+
+### Which LLM clients are supported?
+
+Any MCP-compatible client: Claude Desktop, Claude Code, Cursor, Windsurf, VS Code (with MCP extension), and any custom client implementing the MCP protocol.
+
+## Channels
+
+### How many channels can a store have?
+
+No hard limit. The binary format supports up to 2^32 channels per store.
+
+### Can I have channels with the same name?
+
+No. Channel names are unique within a store. Attempting to create a duplicate returns an error.
+
+### What happens when I delete a channel?
+
+The channel and all its messages are marked for deletion. Disk space is reclaimed on the next compaction.
+
+## Messages
+
+### Are messages ordered?
+
+Yes. Messages within a channel have monotonically increasing IDs. Cross-channel ordering uses timestamps.
+
+### Can I modify a sent message?
+
+No. Messages are append-only. Once sent, they cannot be modified or deleted. This provides a reliable audit trail.
+
+### What's the maximum message size?
+
+Content is LZ4-compressed. Practical limit depends on available disk space. Messages up to 1 MB are well-supported.
+
+## Performance
+
+### How fast is send/receive?
+
+Sub-millisecond. Send and receive operations complete in approximately 0.01 ms.
+
+### How does search scale?
+
+Search scales linearly with message count. 1K messages: 0.3 ms. 10K messages: 2.1 ms.
+
+## Storage
+
+### Where is my data stored?
+
+Default location is `~/.comms.acomm`. Override with `ACOMM_FILE` environment variable or `--store` CLI flag.
+
+### How big do `.acomm` files get?
+
+With LZ4 compression, typical agent communication produces 1-10 KB per 100 messages. A year of active multi-agent coordination typically stays under 100 MB.
+
+### Can multiple agents access the same store?
+
+Yes. The store uses file locking for concurrent access. Multiple MCP clients can share the same `.acomm` file.

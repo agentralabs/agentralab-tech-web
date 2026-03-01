@@ -1,0 +1,114 @@
+---
+title: "Architecture"
+description: "AgenticComm is a 4-crate Rust workspace with additional language bindings."
+---
+
+AgenticComm is a 4-crate Rust workspace with additional language bindings.
+
+## Workspace Structure
+
+```
+agentic-comm/
+  Cargo.toml                    (workspace root)
+  crates/
+    agentic-comm/               (core library)
+    agentic-comm-mcp/           (MCP server)
+    agentic-comm-cli/           (CLI binary: acomm)
+    agentic-comm-ffi/           (C FFI shared library)
+  python/                       (Python SDK via PyO3)
+  npm/wasm/                     (npm WASM package)
+```
+
+## Crate Responsibilities
+
+### agentic-comm
+
+The core library. All communication logic lives here.
+
+- Store management: create, open, save, validate, compact
+- Channel operations: create, delete, list, subscribe, unsubscribe
+- Message operations: send, receive, peek, search, broadcast
+- Binary format: `.acomm` file format (magic `ACOM`, version 1)
+- LZ4 compression for message content
+- Full-text search across messages
+- No I/O dependencies beyond file system access
+- No MCP, CLI, or FFI concerns
+
+### agentic-comm-mcp
+
+The MCP server binary (`agentic-comm-mcp`).
+
+- JSON-RPC 2.0 over stdio
+- 17 MCP tools (channels, messaging, subscriptions, search, administration)
+- MCP resources via `acomm://` URI scheme
+- 3 MCP prompts (comm_coordinate, comm_review, comm_broadcast_status)
+- Auto-session lifecycle management
+- Content-Length framing with 8 MiB frame limit
+- Input validation: no silent fallback for invalid parameters
+
+### agentic-comm-cli
+
+The command-line interface binary (`acomm`).
+
+- Human-friendly terminal output
+- All core operations exposed as subcommands
+- Table, JSON, and text output formats
+- File validation and info commands
+- Import/export workflows
+
+### agentic-comm-ffi
+
+C-compatible shared library for cross-language integration.
+
+- Opaque handle pattern for store instances
+- JSON-based data exchange for complex types
+- Thread-safe per-handle access
+- Error propagation via return codes and `acomm_last_error()`
+
+## Data Flow
+
+```
+Agent (Claude/GPT/etc.)
+  |
+  | MCP protocol (JSON-RPC 2.0 over stdio)
+  v
+agentic-comm-mcp
+  |
+  | Rust function calls
+  v
+agentic-comm (core)
+  |
+  | Binary I/O
+  v
+agents.acomm (file)
+```
+
+## File Format
+
+The `.acomm` binary format:
+
+| Offset | Size | Field |
+|--------|------|-------|
+| 0 | 4 | Magic bytes: `ACOM` |
+| 4 | 2 | Version: `0x0001` |
+| 6 | 2 | Flags (reserved) |
+| 8 | 8 | Channel count |
+| 16 | 8 | Message count |
+| 24 | 8 | Index offset |
+| 32 | 32 | Header checksum |
+| 64 | ... | Channel records (128B each) |
+| ... | ... | Message index entries (64B each) |
+| ... | ... | Content blocks (LZ4 compressed) |
+
+## Cross-Sister Integration
+
+AgenticComm integrates with other Agentra sisters:
+
+- **AgenticIdentity**: Signed messages with sender verification via identity receipts
+- **AgenticMemory**: Store communication context in long-term memory graphs
+- **AgenticTime**: Deadline-aware message scheduling and time-boxed channels
+- **AgenticContract**: Policy-governed communication channels with approval workflows
+
+## Runtime Isolation
+
+Each project gets its own `.acomm` file. Default location is `~/.comms.acomm`, overridable with the `ACOMM_FILE` environment variable. File-level locking ensures safe concurrent access from multiple MCP clients.

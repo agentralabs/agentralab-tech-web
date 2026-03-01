@@ -126,7 +126,7 @@ export async function GET() {
               marginBottom: 4,
             }}
           >
-            PORTABLE AGENT INFRASTRUCTURE
+            PORTABLE AGENT INFRASTRUCTURE + COMM
           </div>
 
           <div
@@ -188,8 +188,9 @@ export async function GET() {
               maxWidth: 900,
             }}
           >
-            Six independent runtime sisters. Portable artifact files you own
-            forever. MCP-native integration. Built in Rust.
+            Seven independent runtime sisters. Portable artifact files you own
+            forever, including AgenticComm (.acomm). MCP-native integration.
+            Built in Rust.
           </div>
         </div>
 

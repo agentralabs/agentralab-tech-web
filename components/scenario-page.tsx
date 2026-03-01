@@ -12,6 +12,7 @@ import { CODEBASE_HERO, CODEBASE_SCENARIOS } from "@/data/scenarios-codebase"
 import { IDENTITY_HERO, IDENTITY_SCENARIOS } from "@/data/scenarios-identity"
 import { TIME_HERO, TIME_SCENARIOS } from "@/data/scenarios-time"
 import { CONTRACT_HERO, CONTRACT_SCENARIOS } from "@/data/scenarios-contract"
+import { COMM_HERO, COMM_SCENARIOS } from "@/data/scenarios-comm"
 import * as SC from "@/components/scenario-content"
 
 const ease = [0.22, 1, 0.36, 1] as const
@@ -119,6 +120,7 @@ const ALL_TOGETHER_MAP: Record<string, () => React.ReactNode> = {
   "agentic-identity": () => <SC.IdentityAllTogetherContent />,
   "agentic-time": () => <SC.TimeAllTogetherContent />,
   "agentic-contract": () => <SC.ContractAllTogetherContent />,
+  "agentic-comm": () => <SC.CommAllTogetherContent />,
 }
 
 const ALL_TOGETHER_PLAIN: Record<string, string> = {
@@ -134,6 +136,8 @@ const ALL_TOGETHER_PLAIN: Record<string, string> = {
     "This is the difference between an agent that says \"this weekend\" and one that says \"Sunday 02:00-06:00 UTC is your only 4-hour window, the PERT estimate is 3.5h, and every day of delay adds 1.4x compounding cost.\" AgenticTime turns vague temporal reasoning into precise scheduling with deadlines, decay models, and timeline fork analysis.",
   "agentic-contract":
     "This is the difference between an agent that acts first and asks forgiveness later, and one that checks policies, respects risk limits, routes approvals, and tracks obligations before taking action. AgenticContract turns ungoverned agent behavior into auditable, policy-compliant operations with self-healing governance that learns from every violation.",
+  "agentic-comm":
+    "This is the difference between agents that pass unstructured text files around hoping the other agent reads them, and agents that communicate through named channels with ordered messages, subscriptions, search, and broadcast — all in one portable file. AgenticComm turns ad-hoc agent coordination into structured, searchable, replayable communication.",
 }
 
 function getConfig(sister: string) {
@@ -148,6 +152,8 @@ function getConfig(sister: string) {
       return { hero: TIME_HERO, groups: TIME_SCENARIOS, repo: "https://github.com/agentralabs/agentic-time" }
     case "agentic-contract":
       return { hero: CONTRACT_HERO, groups: CONTRACT_SCENARIOS, repo: "https://github.com/agentralabs/agentic-contract" }
+    case "agentic-comm":
+      return { hero: COMM_HERO, groups: COMM_SCENARIOS, repo: "https://github.com/agentralabs/agentic-comm" }
     default:
       return { hero: MEMORY_HERO, groups: MEMORY_SCENARIOS, repo: "https://github.com/agentralabs/agentic-memory" }
   }

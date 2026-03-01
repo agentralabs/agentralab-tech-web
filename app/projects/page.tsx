@@ -74,6 +74,14 @@ const PROJECTS: {
     scenarioHref: "/projects/scenarios/agentic-contract",
     line: "Policy governance for AI agents with risk limits, approval workflows, obligation tracking, and self-healing contracts.",
   },
+  {
+    key: "AgenticComm",
+    artifact: ".acomm",
+    capacity: "channels + messages + subscriptions + search + broadcast",
+    repo: "https://github.com/agentralabs/agentic-comm",
+    scenarioHref: "/projects/scenarios/agentic-comm",
+    line: "Structured inter-agent communication with named channels, typed messages, subscriptions, and full-text search.",
+  },
 ]
 
 const MEMORY_ENGINE: QueryRow[] = [
@@ -750,7 +758,8 @@ export default function ProjectsPage() {
             </h1>
             <p className="mt-4 max-w-3xl text-xs lg:text-sm font-mono text-muted-foreground leading-relaxed">
               Click each project to inspect its real capacity surface. This page is intentionally capability-first:
-              what the engine can do, how it behaves, and how it maps to practical agent outcomes.
+              what the engine can do, how it behaves, and how it maps to practical agent outcomes. AgenticComm
+              (.acomm) serves as the structured communication substrate across these runtime sisters.
             </p>
           </motion.div>
         </section>

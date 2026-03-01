@@ -125,7 +125,7 @@ export async function GET() {
               marginBottom: 8,
             }}
           >
-            AGENTIC INFRASTRUCTURE FOR AI SYSTEMS
+            AGENTIC INFRASTRUCTURE FOR AI SYSTEMS + COMM
           </div>
           <div
             style={{
@@ -156,7 +156,7 @@ export async function GET() {
               color: "#ea580c",
             }}
           >
-            PROVE. PLAN. GOVERN.
+            PROVE. PLAN. GOVERN. COMMUNICATE.
           </div>
         </div>
 

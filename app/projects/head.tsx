@@ -4,19 +4,19 @@ export default function Head() {
       <title>Projects | AGENTRA LABS</title>
       <meta
         name="description"
-        content="Explore AGENTRA LABS projects: AgenticMemory (.amem), AgenticVision (.avis), AgenticCodebase (.acb), AgenticIdentity (.aid), AgenticTime (.atime), and AgenticContract (.acon), including architecture capability surfaces and repository links."
+        content="Explore AGENTRA LABS projects: AgenticMemory (.amem), AgenticVision (.avis), AgenticCodebase (.acb), AgenticIdentity (.aid), AgenticTime (.atime), AgenticContract (.acon), and AgenticComm (.acomm), including architecture capability surfaces and repository links."
       />
       <link rel="canonical" href="https://www.agentralabs.tech/projects" />
       <meta property="og:title" content="Projects | AGENTRA LABS" />
       <meta
         property="og:description"
-        content="Capability surfaces, technical architecture, and GitHub repositories for AgenticMemory, AgenticVision, AgenticCodebase, AgenticIdentity, AgenticTime, and AgenticContract."
+        content="Capability surfaces, technical architecture, and GitHub repositories for AgenticMemory, AgenticVision, AgenticCodebase, AgenticIdentity, AgenticTime, AgenticContract, and AgenticComm."
       />
       <meta property="og:url" content="https://www.agentralabs.tech/projects" />
       <meta name="twitter:title" content="Projects | AGENTRA LABS" />
       <meta
         name="twitter:description"
-        content="AgenticMemory, AgenticVision, AgenticCodebase, AgenticIdentity, AgenticTime, and AgenticContract with detailed capacity frames and ecosystem links."
+        content="AgenticMemory, AgenticVision, AgenticCodebase, AgenticIdentity, AgenticTime, AgenticContract, and AgenticComm with detailed capacity frames and ecosystem links."
       />
     </>
   )

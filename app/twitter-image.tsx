@@ -32,7 +32,7 @@ export default function TwitterImage() {
             FOR TRUSTED SYSTEMS
           </div>
           <div style={{ fontSize: 30, lineHeight: 1.25, color: "#b8b8b8", marginTop: 12 }}>
-            AgenticMemory · AgenticVision · AgenticCodebase · AgenticIdentity · AgenticTime · AgenticContract
+            AgenticMemory · AgenticVision · AgenticCodebase · AgenticIdentity · AgenticTime · AgenticContract · AgenticComm
           </div>
         </div>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>

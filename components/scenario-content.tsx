@@ -1863,3 +1863,40 @@ export function ContractAllTogetherContent() {
     </>
   )
 }
+
+/* ─────────────────────────────── COMM ── */
+
+export function CommAllTogetherContent() {
+  return (
+    <>
+      <SectionLabel>End-to-end: multi-agent feature pipeline</SectionLabel>
+      <P>
+        A team of three agents needs to coordinate building a feature: a planner breaks down work, a developer implements, and a reviewer validates. Without AgenticComm, they pass files around with no structure. With it, every handoff flows through <B>named channels with typed messages</B>.
+      </P>
+
+      <SectionLabel>Channel setup</SectionLabel>
+      <P>
+        The planner creates three channels: &quot;task-queue&quot; for work items, &quot;review-queue&quot; for completed work, and &quot;status&quot; for broadcasts. Each agent subscribes to its input channel. Setup takes <B>0.08 ms total</B>.
+      </P>
+
+      <SectionLabel>Task delegation</SectionLabel>
+      <P>
+        The planner sends three task messages to &quot;task-queue&quot;: build the login form, add validation, write tests. Each message includes context, acceptance criteria, and priority. The developer receives all three in <B>0.01 ms</B>.
+      </P>
+
+      <SectionLabel>Work handoff</SectionLabel>
+      <P>
+        As the developer completes each task, it sends a completion message to &quot;review-queue&quot; with the implementation summary. The reviewer picks up each item, validates, and sends feedback. All handoffs are <B>ordered and searchable</B>.
+      </P>
+
+      <SectionLabel>Status broadcasting</SectionLabel>
+      <P>
+        On completion, the reviewer broadcasts &quot;Feature complete: all 3 tasks implemented and approved&quot; to all channels. Every agent sees the final status. The entire communication history is <B>preserved in a single .acomm file</B>.
+      </P>
+
+      <Agent>
+        Pipeline complete → Channels: 3 (task-queue, review-queue, status). Messages: 12 total. Subscriptions: 3. Total coordination time: 0.15 ms. Full history searchable. Artifact: agents.acomm (4.2 KB).
+      </Agent>
+    </>
+  )
+}

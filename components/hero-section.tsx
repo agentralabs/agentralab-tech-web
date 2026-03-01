@@ -59,7 +59,7 @@ export function HeroSection() {
           transition={{ duration: 0.5, delay: 0.52, ease }}
           className="text-xs lg:text-sm text-muted-foreground max-w-2xl mb-2 leading-relaxed font-mono"
         >
-          Six open-source systems. Six file formats. Forever yours.
+          Seven open-source systems. Seven file formats. Forever yours.
         </motion.p>
 
         {/* File format strip */}
@@ -69,7 +69,7 @@ export function HeroSection() {
           transition={{ duration: 0.5, delay: 0.56, ease }}
           className="text-xs text-[#ea580c] font-mono tracking-[0.3em] mb-6"
         >
-          .amem &middot; .avis &middot; .acb &middot; .aid &middot; .atime &middot; .acon
+          .amem &middot; .avis &middot; .acb &middot; .aid &middot; .atime &middot; .acon &middot; .acomm
         </motion.p>
 
         <div className="flex flex-col sm:flex-row items-center gap-3">

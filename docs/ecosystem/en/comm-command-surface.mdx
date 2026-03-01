@@ -1,0 +1,80 @@
+---
+title: AgenticComm Command Surface
+description: Complete CLI commands and MCP tools reference for AgenticComm
+---
+
+# Command Surface
+
+## CLI commands (acomm)
+
+| Command | Description |
+|---------|-------------|
+| `acomm create <file>` | Create a new empty `.acomm` store |
+| `acomm channel <file> <name>` | Create a communication channel |
+| `acomm send <file> <channel> <content>` | Send a message to a channel |
+| `acomm receive <file> <channel>` | Receive messages from a channel |
+| `acomm peek <file> <channel>` | Preview messages without consuming |
+| `acomm subscribe <file> <channel> <agent>` | Subscribe an agent to a channel |
+| `acomm unsubscribe <file> <channel> <agent>` | Remove a subscription |
+| `acomm search <file> <query>` | Search messages by content |
+| `acomm history <file> <channel>` | View channel message history |
+| `acomm broadcast <file> <content>` | Send to all channels |
+| `acomm poll <file> <agent>` | Check all subscribed channels |
+| `acomm info <file>` | Display store information |
+| `acomm health <file>` | Check store health status |
+| `acomm export <file>` | Export store as JSON |
+| `acomm import <file> <json>` | Import from JSON |
+
+All commands support `--json` for programmatic output.
+
+## MCP tools (agentic-comm-mcp)
+
+### Channel management
+
+| Tool | Parameters | Description |
+|------|-----------|-------------|
+| `comm_channel_create` | `name`, `description` | Create a new channel |
+| `comm_channel_list` | | List all channels |
+| `comm_channel_delete` | `name` | Delete a channel |
+
+### Messaging
+
+| Tool | Parameters | Description |
+|------|-----------|-------------|
+| `comm_send` | `channel`, `content`, `sender` | Send a message |
+| `comm_receive` | `channel`, `limit` | Receive messages |
+| `comm_peek` | `channel`, `limit` | Preview without consuming |
+
+### Pub/Sub
+
+| Tool | Parameters | Description |
+|------|-----------|-------------|
+| `comm_subscribe` | `channel`, `agent_id` | Subscribe to channel |
+| `comm_unsubscribe` | `channel`, `agent_id` | Unsubscribe |
+| `comm_subscriptions` | `channel` | List subscriptions |
+
+### Query
+
+| Tool | Parameters | Description |
+|------|-----------|-------------|
+| `comm_search` | `query`, `limit`, `channel` | Search messages |
+| `comm_history` | `channel`, `limit`, `since` | Channel history |
+
+### Context
+
+| Tool | Parameters | Description |
+|------|-----------|-------------|
+| `comm_broadcast` | `content`, `sender` | Send to all channels |
+| `comm_poll` | `agent_id` | Check subscribed channels |
+| `comm_store_info` | | Store statistics |
+| `comm_store_create` | `path` | Create new store |
+| `comm_health` | | Health check |
+| `conversation_log` | `user_message`, `agent_response`, `topic` | Log conversation context |
+
+## Environment variables
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `ACOMM_FILE` | `~/.comms.acomm` | Default store path |
+| `ACOMM_LOG_LEVEL` | `info` | Log verbosity |
+| `AGENTIC_TOKEN` | | Auth token for server mode |

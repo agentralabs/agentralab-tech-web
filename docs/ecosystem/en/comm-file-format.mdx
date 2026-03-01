@@ -1,0 +1,87 @@
+---
+title: AgenticComm File Format
+description: Binary specification for the .acomm communication store format
+---
+
+# .acomm File Format
+
+## Overview
+
+The `.acomm` format is a binary file storing channels, messages, subscriptions, and indexes in a single portable artifact.
+
+## Structure
+
+```
+┌──────────────────┐
+│   Header (64B)   │  Magic bytes, version, table offsets
+├──────────────────┤
+│  Channel Table   │  Fixed-size channel records
+├──────────────────┤
+│  Message Table   │  Fixed-size message index records
+├──────────────────┤
+│ Subscription Tbl │  Agent-to-channel bindings
+├──────────────────┤
+│  Content Block   │  LZ4-compressed message payloads
+├──────────────────┤
+│   Index Block    │  Search indexes
+└──────────────────┘
+```
+
+## Header
+
+| Offset | Size | Field | Value |
+|--------|------|-------|-------|
+| 0 | 4 | Magic | `ACOM` (0x41434F4D) |
+| 4 | 2 | Version | 1 |
+| 6 | 2 | Flags | Reserved |
+| 8 | 8 | Channel table offset | u64 |
+| 16 | 8 | Message table offset | u64 |
+| 24 | 8 | Subscription table offset | u64 |
+| 32 | 8 | Content block offset | u64 |
+| 40 | 8 | Index block offset | u64 |
+| 48 | 4 | Channel count | u32 |
+| 52 | 4 | Message count | u32 |
+| 56 | 4 | Subscription count | u32 |
+| 60 | 4 | Checksum | CRC32 |
+
+## Channel record (128 bytes)
+
+| Field | Size | Type |
+|-------|------|------|
+| Name | 64 | UTF-8 padded |
+| Description offset | 8 | u64 |
+| Message count | 8 | u64 |
+| Subscriber count | 4 | u32 |
+| Created at | 8 | u64 (epoch ms) |
+| Flags | 4 | u32 |
+| Reserved | 32 | padding |
+
+## Message index record (64 bytes)
+
+| Field | Size | Type |
+|-------|------|------|
+| Message ID | 8 | u64 |
+| Channel index | 4 | u32 |
+| Content offset | 8 | u64 |
+| Content length | 4 | u32 |
+| Sender hash | 8 | u64 |
+| Timestamp | 8 | u64 (epoch ms) |
+| Flags | 4 | u32 |
+| Reserved | 20 | padding |
+
+## Content block
+
+Message content is stored with LZ4 compression. Each entry:
+
+| Field | Size | Description |
+|-------|------|-------------|
+| Compressed length | 4 | u32 |
+| Uncompressed length | 4 | u32 |
+| Data | variable | LZ4 compressed UTF-8 |
+
+## Properties
+
+- **Append-only**: Messages are never modified after write
+- **Crash-safe**: Header checksum validates integrity
+- **Portable**: Single file contains all state
+- **Compressed**: LZ4 for content, fixed-size records for indexes

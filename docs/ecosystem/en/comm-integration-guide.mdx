@@ -1,0 +1,108 @@
+---
+title: AgenticComm Integration Guide
+description: Integrate AgenticComm with frameworks, languages, and AI tools
+---
+
+# Integration Guide
+
+## Integration levels
+
+1. **MCP Server** (zero-code) — Configure your LLM client and start communicating
+2. **Rust Library** — Native integration via the `agentic-comm` crate
+3. **C FFI** — C-compatible API for any language with C bindings
+4. **Python Package** — Pythonic wrapper for the communication store
+
+## MCP configuration
+
+### Claude Desktop
+
+Add to `~/Library/Application Support/Claude/claude_desktop_config.json`:
+
+```json
+{
+  "mcpServers": {
+    "agentic-comm": {
+      "command": "agentic-comm-mcp",
+      "args": ["serve"]
+    }
+  }
+}
+```
+
+### Cursor / Windsurf
+
+Add to `.cursor/mcp.json` or equivalent:
+
+```json
+{
+  "mcpServers": {
+    "agentic-comm": {
+      "command": "agentic-comm-mcp",
+      "args": ["serve"]
+    }
+  }
+}
+```
+
+## Rust integration
+
+```rust
+use agentic_comm::CommStore;
+
+// Create and use a store
+let mut store = CommStore::create("agents.acomm")?;
+store.create_channel("tasks", Some("Work items"))?;
+store.send("tasks", "Build the frontend", "planner-agent")?;
+
+let messages = store.receive("tasks", 10)?;
+for msg in &messages {
+    println!("[{}] {}: {}", msg.timestamp, msg.sender, msg.content);
+}
+
+store.save()?;
+```
+
+## Python integration
+
+```python
+from agentic_comm import CommStore
+
+store = CommStore("agents.acomm")
+print(store.info())
+```
+
+## C FFI
+
+```c
+#include "agentic_comm_ffi.h"
+
+AcommStore* store = acomm_store_create("agents.acomm");
+acomm_channel_create(store, "tasks");
+acomm_send(store, "tasks", "Build the frontend", "planner");
+
+char* messages = acomm_receive(store, "tasks", 10);
+printf("%s\n", messages);
+acomm_free_string(messages);
+acomm_store_free(store);
+```
+
+## Integration patterns
+
+### Multi-agent coordination
+
+Create dedicated channels per workflow stage:
+
+```
+planning → development → review → deployment
+```
+
+Each agent subscribes to its input channel and sends results to the next.
+
+### Sister integration
+
+AgenticComm integrates with other Agentra sisters:
+
+- **AgenticIdentity**: Signed messages with sender verification
+- **AgenticMemory**: Store communication context in long-term memory
+- **AgenticTime**: Deadline-aware message scheduling
+- **AgenticContract**: Policy-governed communication channels

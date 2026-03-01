@@ -42,6 +42,15 @@
       "enabled": true
     },
     {
+      "key": "comm",
+      "repo": "agentic-comm",
+      "name": "AgenticComm",
+      "order": 40,
+      "landingSlug": "comm-docs",
+      "includeLanding": true,
+      "enabled": true
+    },
+    {
       "key": "contract",
       "repo": "agentic-contract",
       "name": "AgenticContract",

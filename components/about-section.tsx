@@ -81,7 +81,7 @@ const STATS = [
   { label: "CODEBASE_QUERIES", value: "24" },
   { label: "TIME_TOOLS", value: "19" },
   { label: "CONTRACT_TOOLS", value: "38" },
-  { label: "CORE_FORMATS", value: ".amem/.avis/.acb/.aid/.atime/.acon" },
+  { label: "CORE_FORMATS", value: ".amem/.avis/.acb/.aid/.atime/.acon/.acomm" },
 ]
 
 function StatBlock({ label, value, index }: { label: string; value: string; index: number }) {
@@ -215,6 +215,8 @@ export function AboutSection() {
                   reasoning with deadlines, schedules, and decay models,
                   and AgenticContract enforces policy governance with
                   risk limits, approval workflows, and self-healing contracts.
+                  AgenticComm provides channels, pub/sub, and message
+                  coordination across long-running agent sessions.
                 </p>
                 <p className="text-xs lg:text-sm font-mono text-muted-foreground leading-relaxed">
                   The stack is MCP-native, artifact-portable, and designed for

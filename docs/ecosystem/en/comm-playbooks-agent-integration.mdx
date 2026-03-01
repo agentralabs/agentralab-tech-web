@@ -1,0 +1,93 @@
+---
+title: AgenticComm Playbooks
+description: Agent integration playbooks for AgenticComm
+---
+
+# Agent Integration Playbooks
+
+## 30-second start
+
+**MCP:**
+
+```bash
+curl -fsSL https://agentralabs.tech/install/comm | bash
+```
+
+Restart your client. Your agent now has inter-agent communication.
+
+**Python:**
+
+```bash
+pip install agentic-comm
+```
+
+## System prompt templates
+
+### Minimal
+
+```
+You have inter-agent communication via AgenticComm.
+- Use comm_send to send messages to channels
+- Use comm_receive to check for incoming messages
+```
+
+### Standard (recommended)
+
+```
+You have inter-agent communication via AgenticComm MCP server.
+
+SENDING: comm_send channel="..." content="..."
+RECEIVING: comm_receive channel="..."
+CHANNELS: comm_channel_create, comm_channel_list
+SUBSCRIBE: comm_subscribe channel="..." agent="..."
+SEARCH: comm_search query="..."
+BROADCAST: comm_broadcast content="..."
+
+Check channels at conversation start. Send status updates on task completion.
+```
+
+## Common patterns
+
+### Task delegation
+
+```python
+# Planner agent
+store.send("task-queue", "Build the login page with React")
+
+# Worker agent
+tasks = store.receive("task-queue")
+# ... process task ...
+store.send("status", "Login page complete")
+```
+
+### Code review handoff
+
+```python
+# Developer
+store.send("review", "PR #42 ready: auth refactor")
+
+# Reviewer
+reviews = store.receive("review")
+store.send("feedback", "Approved with minor comments")
+```
+
+### Status broadcasting
+
+```python
+store.broadcast("Deployment v1.2.0 complete on staging")
+```
+
+### Multi-agent pipeline
+
+```python
+# Stage 1: Planning
+store.send("dev-tasks", plan_output)
+
+# Stage 2: Development
+tasks = store.receive("dev-tasks")
+store.send("review-queue", implementation)
+
+# Stage 3: Review
+code = store.receive("review-queue")
+store.send("deploy-queue", approved_code)
+```

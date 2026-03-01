@@ -1,0 +1,71 @@
+---
+title: AgenticComm Runtime Install Sync
+description: Install profiles, runtime modes, and sync behavior for AgenticComm
+---
+
+# Runtime Install Sync
+
+## Install profiles
+
+| Profile | CLI | MCP Server | Claude Desktop | Claude Code | Token Auth |
+|---------|-----|------------|----------------|-------------|------------|
+| **desktop** | Yes | Yes | Configured | Configured | No |
+| **terminal** | Yes | Yes | No | Configured | No |
+| **server** | Yes | Yes | No | No | Required |
+
+## MCP configuration
+
+Config updates are merge-only — existing entries are never overwritten.
+
+### Claude Desktop
+
+```
+~/Library/Application Support/Claude/claude_desktop_config.json
+```
+
+### Claude Code
+
+```
+~/.claude.json
+```
+
+## Post-install verification
+
+```bash
+acomm --version
+agentic-comm-mcp --help
+```
+
+## Server mode
+
+Requires `AGENTIC_TOKEN` environment variable:
+
+```bash
+export AGENTIC_TOKEN="$(openssl rand -hex 32)"
+```
+
+## Data directory
+
+```
+~/.comms.acomm          # Default store location
+```
+
+Override with `ACOMM_FILE` environment variable.
+
+## Sync behavior
+
+- No in-memory cache; reads/writes to disk on every operation
+- Multiple MCP clients see consistent state via file locking
+- Crash recovery automatic via header checksum validation
+
+## Multi-device operation
+
+Copy the `.acomm` file to each device. File locking ensures safe concurrent access on shared filesystems.
+
+## Environment variables
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `ACOMM_FILE` | `~/.comms.acomm` | Default store path |
+| `AGENTIC_TOKEN` | | Auth token for server mode |
+| `RUST_LOG` | `info` | Log verbosity |
