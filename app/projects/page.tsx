@@ -9,7 +9,7 @@ import { Footer } from "@/components/footer"
 
 const ease = [0.22, 1, 0.36, 1] as const
 
-type ProjectKey = "AgenticMemory" | "AgenticVision" | "AgenticCodebase" | "AgenticIdentity" | "AgenticTime" | "AgenticContract"
+type ProjectKey = "AgenticMemory" | "AgenticVision" | "AgenticCodebase" | "AgenticIdentity" | "AgenticTime" | "AgenticContract" | "AgenticComm"
 
 interface QueryRow {
   id: number
@@ -787,7 +787,24 @@ export default function ProjectsPage() {
                   ))}
                 </div>
                 <div className="flex items-center gap-2">
-                  {PROJECTS.slice(3).map((project) => (
+                  {PROJECTS.slice(3, 6).map((project) => (
+                    <button
+                      key={project.key}
+                      type="button"
+                      onClick={() => setActiveProject(project.key)}
+                      className={`px-3 py-2 text-[10px] tracking-[0.15em] uppercase font-mono border ${
+                        activeProject === project.key
+                          ? "bg-foreground text-background border-foreground"
+                          : "bg-background text-muted-foreground border-border hover:border-foreground"
+                      }`}
+                      aria-pressed={activeProject === project.key}
+                    >
+                      {project.key}
+                    </button>
+                  ))}
+                </div>
+                <div className="flex items-center gap-2">
+                  {PROJECTS.slice(6).map((project) => (
                     <button
                       key={project.key}
                       type="button"

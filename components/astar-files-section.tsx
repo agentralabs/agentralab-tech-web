@@ -20,6 +20,10 @@ const FILES: FileCard[] = [
   { ext: ".acon", name: "AgenticContract", desc: "Policies. Risk limits. Approvals. Self-healing governance.", size: "~0.5-1 GB / 20 yr" },
 ]
 
+const COMM_FILE: FileCard = {
+  ext: ".acomm", name: "AgenticComm", desc: "Channels. Messages. Subscriptions. Structured coordination.", size: "~0.5-1 GB / 20 yr",
+}
+
 function BlinkDot() {
   return <span className="inline-block h-2 w-2 bg-[#ea580c] animate-blink" />
 }
@@ -82,6 +86,18 @@ export function AStarFilesSection() {
           </motion.div>
         ))}
       </div>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ delay: 0.5, duration: 0.5, ease }}
+        className="border-2 border-t-0 border-foreground p-5 flex flex-col gap-3"
+      >
+        <span className="text-2xl font-mono font-bold text-[#ea580c]">{COMM_FILE.ext}</span>
+        <span className="text-xs font-mono font-bold text-foreground uppercase tracking-wider">{COMM_FILE.name}</span>
+        <span className="text-xs font-mono text-muted-foreground leading-relaxed">{COMM_FILE.desc}</span>
+        <span className="text-[10px] font-mono text-muted-foreground mt-auto">{COMM_FILE.size}</span>
+      </motion.div>
 
       {/* Value proposition */}
       <motion.div
@@ -106,7 +122,7 @@ export function AStarFilesSection() {
         <div className="border border-border p-5">
           <h4 className="text-[10px] font-mono uppercase tracking-[0.2em] text-foreground mb-2">~10-15 GB</h4>
           <p className="text-xs font-mono text-muted-foreground leading-relaxed">
-            20 years of memory, vision, code, identity, time, and governance. Fits on your phone. Backs up like photos.
+            20 years of memory, vision, code, identity, time, governance, and communication. Fits on your phone. Backs up like photos.
           </p>
         </div>
       </motion.div>

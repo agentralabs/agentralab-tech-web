@@ -467,6 +467,63 @@ export async function GET() {
           </div>
         </div>
 
+        {/* Seventh sister row */}
+        <div
+          style={{
+            display: "flex",
+            position: "relative",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              gap: 0,
+              flex: 1,
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                border: "2px solid #0a0a0a",
+                padding: "16px 22px",
+                flex: 1,
+                background: "rgba(242, 241, 234, 0.8)",
+              }}
+            >
+              <span
+                style={{
+                  fontSize: 11,
+                  letterSpacing: 2,
+                  color: "#ea580c",
+                  fontWeight: 700,
+                  marginBottom: 6,
+                }}
+              >
+                07 COORDINATION
+              </span>
+              <span
+                style={{
+                  fontSize: 16,
+                  fontWeight: 700,
+                  letterSpacing: 1,
+                }}
+              >
+                AgenticComm
+              </span>
+              <span
+                style={{
+                  fontSize: 12,
+                  color: "#666666",
+                  marginTop: 4,
+                }}
+              >
+                Channels + messages in .acomm
+              </span>
+            </div>
+          </div>
+        </div>
+
         {/* Bottom bar */}
         <div
           style={{

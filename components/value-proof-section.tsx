@@ -84,6 +84,20 @@ const contractCard = {
   href: "/docs/en/contract-experience-with-vs-without",
 } as const
 
+const commCard = {
+  id: "comm",
+  title: "AgenticComm",
+  kicker: "Agent coordination becomes structured communication",
+  claim:
+    "Agents pass unstructured text hoping the other reads it. No channels, no ordering, no subscriptions. AgenticComm gives agents structured communication with named channels, typed messages, pub/sub, and full-text search.",
+  proof: [
+    "named channels with direct, group, broadcast, and pub/sub topologies",
+    "typed messages with ordering, acknowledgments, and searchable history",
+    "portable .acomm artifacts with LZ4 compression and concurrent access",
+  ],
+  href: "/docs/en/comm-experience-with-vs-without",
+} as const
+
 export function ValueProofSection() {
   return (
     <section className="w-full px-6 py-16 lg:px-12" aria-label="Proof of value">
@@ -193,6 +207,29 @@ export function ValueProofSection() {
 
           <Link
             href={contractCard.href}
+            className="mt-5 inline-flex items-center gap-2 border border-foreground px-3 py-2 text-[11px] font-mono uppercase tracking-[0.14em] hover:bg-foreground hover:text-background transition-colors"
+          >
+            Read full proof
+          </Link>
+        </article>
+      </div>
+
+      <div className="border-2 border-t-0 border-foreground">
+        <article className="p-5 lg:p-6 border-foreground bg-background">
+          <p className="text-[10px] tracking-[0.2em] uppercase text-muted-foreground font-mono">{commCard.kicker}</p>
+          <h3 className="mt-2 text-xl font-mono font-bold tracking-tight">{commCard.title}</h3>
+          <p className="mt-3 text-sm font-mono text-muted-foreground leading-relaxed">{commCard.claim}</p>
+
+          <ul className="mt-4 space-y-2">
+            {commCard.proof.map((item) => (
+              <li key={item} className="text-xs font-mono text-muted-foreground leading-relaxed">
+                <span className="text-[#ea580c]">■</span> {item}
+              </li>
+            ))}
+          </ul>
+
+          <Link
+            href={commCard.href}
             className="mt-5 inline-flex items-center gap-2 border border-foreground px-3 py-2 text-[11px] font-mono uppercase tracking-[0.14em] hover:bg-foreground hover:text-background transition-colors"
           >
             Read full proof

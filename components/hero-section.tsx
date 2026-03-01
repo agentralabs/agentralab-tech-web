@@ -69,7 +69,9 @@ export function HeroSection() {
           transition={{ duration: 0.5, delay: 0.56, ease }}
           className="text-xs text-[#ea580c] font-mono tracking-[0.3em] mb-6"
         >
-          .amem &middot; .avis &middot; .acb &middot; .aid &middot; .atime &middot; .acon &middot; .acomm
+          .amem &middot; .avis &middot; .acb &middot; .aid &middot; .atime &middot; .acon
+          <br />
+          .acomm
         </motion.p>
 
         <div className="flex flex-col sm:flex-row items-center gap-3">

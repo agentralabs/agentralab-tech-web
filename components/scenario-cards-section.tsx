@@ -71,6 +71,15 @@ const SCENARIOS: Scenario[] = [
       '"Policy check: deploy:production requires approval from ops-lead. Risk limit: 3/5 daily deployments used (budget limit). Obligation: post-deploy monitoring required within 30 minutes. Auto-creating approval request #47 with smart escalation to on-call approver. Estimated approval likelihood: 87% based on prior patterns."',
     href: "/projects/scenarios/agentic-contract",
   },
+  {
+    question: '"How do I coordinate three agents working on the same feature?"',
+    without:
+      'Agents write to shared text files. Messages are unstructured. No ordering guarantee. No subscriptions. One agent overwrites another\'s output.',
+    withLabel: "WITH AGENTICCOMM",
+    withResponse:
+      '"Created channel #feature-auth with 3 subscribers. Task message sent to planner agent, acknowledged in 40ms. Worker agent subscribed to task channel, received assignment with typed payload. Status broadcast sent to all: 2/3 subtasks complete. Full message history searchable in .acomm artifact."',
+    href: "/projects/scenarios/agentic-comm",
+  },
 ]
 
 function ScenarioCard({ scenario, index }: { scenario: Scenario; index: number }) {

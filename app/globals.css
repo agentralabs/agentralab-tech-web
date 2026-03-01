@@ -112,6 +112,10 @@
   animation: marquee 30s linear infinite;
 }
 
+.animate-marquee-reverse {
+  animation: marquee 25s linear infinite reverse;
+}
+
 .animate-blink {
   animation: blink 1s step-end infinite;
 }

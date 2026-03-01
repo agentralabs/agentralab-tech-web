@@ -111,6 +111,13 @@ const CONTENT_MAP: Record<string, () => React.ReactNode> = {
   "temporal-contracts": () => <SC.TemporalContractsContent />,
   "acon-format": () => <SC.AconFormatContent />,
   "contract-multi-llm": () => <SC.ContractMultiLlmContent />,
+  // Comm
+  "channel-topology": () => <SC.ChannelTopologyContent />,
+  "typed-messages": () => <SC.TypedMessagesContent />,
+  "delivery-semantics": () => <SC.DeliverySemanticsContent />,
+  "session-coordination": () => <SC.SessionCoordinationContent />,
+  "search-and-history": () => <SC.SearchAndHistoryContent />,
+  "portable-artifact": () => <SC.PortableArtifactContent />,
 }
 
 const ALL_TOGETHER_MAP: Record<string, () => React.ReactNode> = {

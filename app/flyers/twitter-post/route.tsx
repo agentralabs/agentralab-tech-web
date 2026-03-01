@@ -421,6 +421,61 @@ export async function GET() {
           </div>
         </div>
 
+        {/* Seventh sister row */}
+        <div
+          style={{
+            display: "flex",
+            position: "relative",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              gap: 0,
+              flex: 1,
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                border: "2px solid #3a3a3a",
+                padding: "14px 20px",
+                flex: 1,
+              }}
+            >
+              <span
+                style={{
+                  fontSize: 11,
+                  letterSpacing: 2,
+                  color: "#ea580c",
+                  marginBottom: 4,
+                }}
+              >
+                07
+              </span>
+              <span
+                style={{
+                  fontSize: 14,
+                  fontWeight: 700,
+                  letterSpacing: 1,
+                }}
+              >
+                COMM
+              </span>
+              <span
+                style={{
+                  fontSize: 11,
+                  color: "#666666",
+                  marginTop: 2,
+                }}
+              >
+                .acomm
+              </span>
+            </div>
+          </div>
+        </div>
+
         {/* Bottom bar */}
         <div
           style={{
@@ -440,6 +495,14 @@ export async function GET() {
             </span>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            <div
+              style={{
+                width: 8,
+                height: 8,
+                borderRadius: "9999px",
+                background: "#ea580c",
+              }}
+            />
             <div
               style={{
                 width: 8,

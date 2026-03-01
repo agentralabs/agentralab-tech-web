@@ -50,6 +50,8 @@
     "codebase-benchmarks",
     "codebase-faq",
     "codebase-playbooks-agent-integration",
+    "comm-docs",
+    "comm-runtime-install-sync",
     "contract-docs",
     "contract-overview",
     "contract-experience-with-vs-without",

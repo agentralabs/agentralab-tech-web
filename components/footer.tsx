@@ -66,7 +66,7 @@ export function Footer() {
               ))}
             </div>
             <div className="w-full border-t border-border pt-3 flex items-center gap-5 flex-wrap">
-              {PROJECT_LINKS.map((link, i) => (
+              {PROJECT_LINKS.slice(0, 6).map((link, i) => (
                 <motion.a
                   key={link.label}
                   href={link.href}
@@ -76,6 +76,23 @@ export function Footer() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.2 + i * 0.04, duration: 0.35, ease }}
+                  className="text-[10px] font-mono tracking-widest uppercase text-muted-foreground hover:text-foreground transition-colors duration-200"
+                >
+                  {link.label}
+                </motion.a>
+              ))}
+            </div>
+            <div className="w-full flex items-center gap-5 flex-wrap">
+              {PROJECT_LINKS.slice(6).map((link, i) => (
+                <motion.a
+                  key={link.label}
+                  href={link.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  initial={{ opacity: 0, y: 6 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.3 + i * 0.04, duration: 0.35, ease }}
                   className="text-[10px] font-mono tracking-widest uppercase text-muted-foreground hover:text-foreground transition-colors duration-200"
                 >
                   {link.label}

@@ -237,6 +237,38 @@ const MODULES: ModuleCard[] = [
     scenarioHref: "/projects/scenarios/agentic-contract",
     highlighted: false,
   },
+  {
+    id: "agentic-comm",
+    frame: "PROJECTS",
+    value: "AgenticComm",
+    period: "/ AVAILABLE",
+    tag: "READY",
+    description: "\"How do agents coordinate?\" They pass text files around hoping the other reads them. No channels, no ordering, no subscriptions. AgenticComm gives agents structured communication with named channels, typed messages, and searchable history.",
+    summary:
+      "Every message flows through named channels with typed payloads, ordering guarantees, and acknowledgments. Agents subscribe to topics, broadcast status, and search history. All coordination lives in portable .acomm files.",
+    deepSummary: [
+      {
+        lead: "Channel topology:",
+        body: "Direct, group, broadcast, and pub/sub channels in one runtime. Each channel is named, typed, and searchable.",
+      },
+      {
+        lead: "Typed messages:",
+        body: "Commands, queries, responses, notifications, and acknowledgments. Every message has a type, sender, timestamp, and payload.",
+      },
+      {
+        lead: "Subscriptions:",
+        body: "Pattern-based subscriptions with delivery guarantees. Subscribe to channels, topics, or message types.",
+      },
+      {
+        lead: "Full-text search:",
+        body: "Search across all channels and messages. Filter by sender, type, channel, or content. Results ranked by relevance.",
+      },
+    ],
+    cta: "VIEW REPO",
+    href: "https://github.com/agentralabs/agentic-comm",
+    scenarioHref: "/projects/scenarios/agentic-comm",
+    highlighted: false,
+  },
 ]
 
 function ModuleGlyph({ id, highlighted }: { id: ModuleCard["id"]; highlighted: boolean }) {
@@ -292,6 +324,20 @@ function ModuleGlyph({ id, highlighted }: { id: ModuleCard["id"]; highlighted: b
         <path d="M60 40L78 48" className={baseClass} stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
         <path d="M60 14v4M60 62v4M88 40h4M28 40h4" className={baseClass} stroke="currentColor" strokeWidth="1.5" />
         <path d="M96 16l-6 6M30 64l-6 6" className={accentClass} stroke="currentColor" strokeWidth="1.5" strokeDasharray="3 2" />
+      </svg>
+    )
+  }
+
+  if (id === "agentic-comm") {
+    return (
+      <svg viewBox="0 0 120 80" className="w-full h-24" fill="none" aria-label="AgenticComm glyph">
+        <rect x="10" y="20" width="30" height="20" rx="3" className={baseClass} stroke="currentColor" strokeWidth="2" />
+        <rect x="80" y="20" width="30" height="20" rx="3" className={baseClass} stroke="currentColor" strokeWidth="2" />
+        <rect x="45" y="45" width="30" height="20" rx="3" className={accentClass} stroke="currentColor" strokeWidth="2" />
+        <path d="M40 30h40" className={accentClass} stroke="currentColor" strokeWidth="2" />
+        <path d="M25 40v15l20 0" className={baseClass} stroke="currentColor" strokeWidth="1.5" strokeDasharray="4 3" />
+        <path d="M95 40v15l-20 0" className={baseClass} stroke="currentColor" strokeWidth="1.5" strokeDasharray="4 3" />
+        <circle cx="60" cy="30" r="3" className={accentClass} fill="currentColor" />
       </svg>
     )
   }
@@ -512,8 +558,13 @@ export function PricingSection() {
         ))}
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0 mt-0">
-        {MODULES.slice(3).map((module, i) => (
+        {MODULES.slice(3, 6).map((module, i) => (
           <ModuleCardView key={module.id} module={module} index={i + 3} />
+        ))}
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0 mt-0">
+        {MODULES.slice(6).map((module, i) => (
+          <ModuleCardView key={module.id} module={module} index={i + 6} />
         ))}
       </div>
 

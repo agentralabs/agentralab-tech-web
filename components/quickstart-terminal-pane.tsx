@@ -4,7 +4,7 @@ import { useMemo, useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { ArrowLeft, ArrowRight, Check, Copy } from "lucide-react"
 
-type ProjectKey = "AgenticMemory" | "AgenticVision" | "AgenticCodebase" | "AgenticIdentity" | "AgenticTime" | "AgenticContract"
+type ProjectKey = "AgenticMemory" | "AgenticVision" | "AgenticCodebase" | "AgenticIdentity" | "AgenticTime" | "AgenticContract" | "AgenticComm"
 type CommandType = "GLOBAL" | "RUST" | "MCP" | "PYTHON" | "NPM"
 type ModeType = "LOCAL" | "MCP"
 
@@ -13,7 +13,7 @@ interface CommandEntry {
   note: string
 }
 
-const PROJECTS: ProjectKey[] = ["AgenticMemory", "AgenticVision", "AgenticCodebase", "AgenticIdentity", "AgenticTime", "AgenticContract"]
+const PROJECTS: ProjectKey[] = ["AgenticMemory", "AgenticVision", "AgenticCodebase", "AgenticIdentity", "AgenticTime", "AgenticContract", "AgenticComm"]
 const COMMAND_TYPES: CommandType[] = ["GLOBAL", "RUST", "MCP", "PYTHON", "NPM"]
 
 const COMMANDS: Record<ProjectKey, Record<CommandType, CommandEntry[]>> = {
@@ -353,6 +353,62 @@ const COMMANDS: Record<ProjectKey, Record<CommandType, CommandEntry[]>> = {
       },
     ],
   },
+  AgenticComm: {
+    GLOBAL: [
+      {
+        command: "curl -fsSL https://agentralabs.tech/install/comm | bash",
+        note: "Default desktop profile (backward-compatible): installs binaries and auto-merges MCP config for common clients when detected (Claude, Cursor, VS Code, Codex, Windsurf).",
+      },
+      {
+        command: "curl -fsSL https://agentralabs.tech/install/comm/desktop | bash",
+        note: "Explicit desktop profile with MCP auto-merge for common desktop clients.",
+      },
+      {
+        command: "curl -fsSL https://agentralabs.tech/install/comm/terminal | bash",
+        note: "Terminal profile: installs binaries only, no desktop config writes.",
+      },
+      {
+        command: "curl -fsSL https://agentralabs.tech/install/comm/server | bash",
+        note: "Server profile: installs binaries only for remote hosts and service-style environments.",
+      },
+      {
+        command: "cargo install agentic-comm-cli agentic-comm-mcp",
+        note: "Installs acomm CLI and agentic-comm-mcp from crates.io.",
+      },
+    ],
+    RUST: [
+      {
+        command: "cargo install agentic-comm-cli agentic-comm-mcp",
+        note: "Installs both acomm CLI and comm MCP server from crates.io.",
+      },
+      {
+        command: "acomm init ~/.channels.acomm",
+        note: "Creates a portable communication artifact with default channels.",
+      },
+      {
+        command: "acomm channel create --name general --type group",
+        note: "Creates a named group channel for multi-agent coordination.",
+      },
+    ],
+    MCP: [
+      {
+        command: "agentic-comm-mcp --comm ~/.channels.acomm serve",
+        note: "Starts MCP stdio transport for communication and channel tools.",
+      },
+    ],
+    PYTHON: [
+      {
+        command: "pip install agentic-comm",
+        note: "Installs Python bindings for structured agent communication workflows.",
+      },
+    ],
+    NPM: [
+      {
+        command: "npm install @agenticamem/comm",
+        note: "WASM-based comm SDK for Node.js and browser environments.",
+      },
+    ],
+  },
 }
 
 const ease = [0.22, 1, 0.36, 1] as const
@@ -368,9 +424,9 @@ export function QuickstartTerminalPane() {
 
   const modeCopy = useMemo(() => {
     if (mode === "LOCAL") {
-      return "Local mode keeps .amem, .avis, .acb, .aid, .atime, and .acon as portable files under your control. After install, run: agentra status --session and agentra doctor."
+      return "Local mode keeps .amem, .avis, .acb, .aid, .atime, .acon, and .acomm as portable files under your control. After install, run: agentra status --session and agentra doctor."
     }
-    return "MCP mode exposes the same .amem, .avis, .acb, .aid, .atime, and .acon artifacts to MCP clients. Restart your MCP host/client after install to reload config."
+    return "MCP mode exposes the same .amem, .avis, .acb, .aid, .atime, .acon, and .acomm artifacts to MCP clients. Restart your MCP host/client after install to reload config."
   }, [mode])
 
   const unsupportedNote = `No official ${commandType} commands documented for ${project} yet.`
@@ -416,7 +472,7 @@ export function QuickstartTerminalPane() {
             ))}
           </div>
           <div className="flex items-center gap-1">
-            {PROJECTS.slice(3).map((item, index) => (
+            {PROJECTS.slice(3, 6).map((item, index) => (
               <button
                 key={item}
                 type="button"
@@ -427,6 +483,23 @@ export function QuickstartTerminalPane() {
                     : "bg-background text-muted-foreground border-border hover:border-foreground"
                 }`}
                 aria-pressed={index + 3 === projectIndex}
+              >
+                {item}
+              </button>
+            ))}
+          </div>
+          <div className="flex items-center gap-1">
+            {PROJECTS.slice(6).map((item, index) => (
+              <button
+                key={item}
+                type="button"
+                onClick={() => setProjectIndex(index + 6)}
+                className={`px-2 py-1 text-[10px] font-mono tracking-[0.15em] uppercase border ${
+                  index + 6 === projectIndex
+                    ? "bg-foreground text-background border-foreground"
+                    : "bg-background text-muted-foreground border-border hover:border-foreground"
+                }`}
+                aria-pressed={index + 6 === projectIndex}
               >
                 {item}
               </button>
@@ -552,7 +625,7 @@ export function QuickstartTerminalPane() {
             ))}
           </div>
           <span className="text-[10px] tracking-[0.15em] uppercase text-muted-foreground font-mono">
-            .amem / .avis / .acb / .aid / .atime / .acon
+            .amem / .avis / .acb / .aid / .atime / .acon / .acomm
           </span>
         </div>
         <p className="text-xs font-mono text-muted-foreground mt-2">{modeCopy}</p>

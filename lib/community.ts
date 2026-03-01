@@ -2,7 +2,7 @@ export type FeedbackType = "Bug Report" | "Feature Request" | "Integration Win" 
 
 export interface FeedbackEntry {
   id: string
-  project: "AgenticMemory" | "AgenticVision" | "AgenticCodebase" | "AgenticIdentity" | "AgenticTime" | "AgenticContract"
+  project: "AgenticMemory" | "AgenticVision" | "AgenticCodebase" | "AgenticIdentity" | "AgenticTime" | "AgenticContract" | "AgenticComm"
   type: FeedbackType
   quote: string
   author: string
@@ -28,7 +28,7 @@ export interface IntegrationEntry {
   status: "Production" | "Pilot" | "Community"
   description: string
   runtime: "MCP" | "CLI" | "Python" | "Rust" | "REST"
-  project: "AgenticMemory" | "AgenticVision" | "AgenticCodebase" | "AgenticIdentity" | "AgenticTime" | "AgenticContract"
+  project: "AgenticMemory" | "AgenticVision" | "AgenticCodebase" | "AgenticIdentity" | "AgenticTime" | "AgenticContract" | "AgenticComm"
   link: string
 }
 
@@ -210,7 +210,7 @@ export const blogEntries: BlogEntry[] = [
     slug: "showcase-roundup",
     title: "What Teams Are Building with Agentra",
     dateIso: "2026-02-20",
-    summary: "A running roundup of deployments using the six Agentra sisters.",
+    summary: "A running roundup of deployments using the seven Agentra sisters.",
     category: "Showcase",
     cta: { label: "View showcase", href: "/showcase" },
   },

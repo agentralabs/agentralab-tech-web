@@ -81,10 +81,12 @@ const STATS = [
   { label: "CODEBASE_QUERIES", value: "24" },
   { label: "TIME_TOOLS", value: "19" },
   { label: "CONTRACT_TOOLS", value: "38" },
+  { label: "COMM_TOOLS", value: "17" },
   { label: "CORE_FORMATS", value: ".amem/.avis/.acb/.aid/.atime/.acon/.acomm" },
 ]
 
 function StatBlock({ label, value, index }: { label: string; value: string; index: number }) {
+  const isLong = value.length > 20
   return (
     <motion.div
       initial={{ opacity: 0, y: 16, filter: "blur(4px)" }}
@@ -96,7 +98,7 @@ function StatBlock({ label, value, index }: { label: string; value: string; inde
       <span className="text-[10px] tracking-[0.2em] uppercase text-muted-foreground font-mono">
         {label}
       </span>
-      <span className="text-xl lg:text-2xl font-mono font-bold tracking-tight">
+      <span className={`${isLong ? "text-xs lg:text-sm" : "text-xl lg:text-2xl"} font-mono font-bold tracking-tight`}>
         <ScrambleText text={value} />
       </span>
     </motion.div>

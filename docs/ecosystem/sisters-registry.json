@@ -185,6 +185,37 @@
         "landingSlug": "contract-docs",
         "includeLanding": true
       }
+    },
+    {
+      "key": "comm",
+      "name": "AgenticComm",
+      "repo": "agentic-comm",
+      "shortName": "COMM",
+      "enabled": true,
+      "order": 70,
+      "fileExtension": ".acomm",
+      "cliBinary": "acomm",
+      "packages": {
+        "npm": "@agenticamem/comm",
+        "pypi": "agentic-comm",
+        "coreCrate": "agentic-comm",
+        "ffiCrate": "agentic-comm-ffi",
+        "mcpCrate": "agentic-comm-mcp",
+        "cliCrate": "agentic-comm-cli"
+      },
+      "paths": {
+        "mcpToolSource": "crates/agentic-comm-mcp/src/tools/registry.rs",
+        "edgeCaseInventionsTest": "crates/agentic-comm-mcp/tests/edge_cases_inventions.rs"
+      },
+      "mcp": {
+        "binary": "agentic-comm-mcp",
+        "args": [],
+        "cratePath": "crates/agentic-comm-mcp"
+      },
+      "docs": {
+        "landingSlug": "comm-docs",
+        "includeLanding": true
+      }
     }
   ]
 }

@@ -9,7 +9,7 @@ const ease = [0.22, 1, 0.36, 1] as const
 
 interface Paper {
   title: string
-  project: "AgenticMemory" | "AgenticVision" | "AgenticCodebase" | "AgenticIdentity" | "AgenticTime" | "AgenticContract"
+  project: "AgenticMemory" | "AgenticVision" | "AgenticCodebase" | "AgenticIdentity" | "AgenticTime" | "AgenticContract" | "AgenticComm"
   type: string
   summary: string
   pdf: string
@@ -95,6 +95,15 @@ const PAPERS: Paper[] = [
     pdf: "https://github.com/agentralabs/agentic-contract/blob/main/paper/paper-i-policy-engine/agenticcontract-paper.pdf",
     source:
       "https://github.com/agentralabs/agentic-contract/blob/main/paper/paper-i-policy-engine/agenticcontract-paper.tex",
+  },
+  {
+    title: "AgenticComm: A Structured Communication Protocol for Multi-Agent Coordination via the Model Context Protocol",
+    project: "AgenticComm",
+    type: "Paper I",
+    summary: "Defines a portable binary communication format for structured multi-agent messaging, channel management, presence tracking, and protocol-native coordination delivered through MCP.",
+    pdf: "https://github.com/agentralabs/agentic-comm/blob/main/paper/paper-i-comm-protocol/agenticcomm-paper.pdf",
+    source:
+      "https://github.com/agentralabs/agentic-comm/blob/main/paper/paper-i-comm-protocol/agenticcomm-paper.tex",
   },
 ]
 
@@ -194,17 +203,17 @@ export default function PublicationsPage() {
               Publications and technical papers
             </h1>
             <p className="mt-4 max-w-3xl text-xs lg:text-sm font-mono text-muted-foreground leading-relaxed">
-              Research corpus for AgenticMemory, AgenticVision, AgenticCodebase, AgenticIdentity, AgenticTime, and AgenticContract. Each paper documents core
+              Research corpus for AgenticMemory, AgenticVision, AgenticCodebase, AgenticIdentity, AgenticTime, AgenticContract, and AgenticComm. Each paper documents core
               architecture decisions, data formats, and MCP integration pathways.
             </p>
             <div className="mt-5 grid grid-cols-1 sm:grid-cols-3 gap-0 border-2 border-foreground">
               <div className="px-4 py-3 border-b-2 sm:border-b-0 sm:border-r-2 border-foreground">
                 <p className="text-[10px] tracking-[0.15em] uppercase font-mono text-muted-foreground">Total Papers</p>
-                <p className="text-2xl font-mono font-bold">9</p>
+                <p className="text-2xl font-mono font-bold">10</p>
               </div>
               <div className="px-4 py-3 border-b-2 sm:border-b-0 sm:border-r-2 border-foreground">
                 <p className="text-[10px] tracking-[0.15em] uppercase font-mono text-muted-foreground">Projects</p>
-                <p className="text-2xl font-mono font-bold">6</p>
+                <p className="text-2xl font-mono font-bold">7</p>
               </div>
               <div className="px-4 py-3">
                 <p className="text-[10px] tracking-[0.15em] uppercase font-mono text-muted-foreground">Open Access</p>
@@ -220,6 +229,7 @@ export default function PublicationsPage() {
         <GroupBlock project="AgenticIdentity" step="016b" />
         <GroupBlock project="AgenticTime" step="016c" />
         <GroupBlock project="AgenticContract" step="016d" />
+        <GroupBlock project="AgenticComm" step="016e" />
 
         <section className="w-full px-6 pb-20 lg:px-12">
           <SectionRail label="// SECTION: RESEARCH_DIRECTION" step="017" />

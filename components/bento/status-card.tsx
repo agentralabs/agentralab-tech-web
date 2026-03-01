@@ -9,6 +9,7 @@ const REGIONS = [
   { name: "AgenticIdentity", status: "ONLINE", latency: ".aid" },
   { name: "AgenticTime", status: "ONLINE", latency: ".atime" },
   { name: "AgenticContract", status: "ONLINE", latency: ".acon" },
+  { name: "AgenticComm", status: "ONLINE", latency: ".acomm" },
   { name: "MCP-BRIDGE", status: "ONLINE", latency: "STDIO" },
 ]
 
@@ -63,10 +64,10 @@ export function StatusCard() {
             <span className="text-[9px] tracking-[0.15em] uppercase text-muted-foreground">
               Stack Readiness
             </span>
-            <span className="text-[9px] font-mono text-foreground">94%</span>
+            <span className="text-[9px] font-mono text-foreground">100%</span>
           </div>
           <div className="h-2 w-full border border-foreground">
-            <div className="h-full bg-foreground" style={{ width: "94%" }} />
+            <div className="h-full bg-foreground" style={{ width: "100%" }} />
           </div>
         </div>
       </div>

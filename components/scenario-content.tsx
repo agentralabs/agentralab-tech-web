@@ -1866,6 +1866,126 @@ export function ContractAllTogetherContent() {
 
 /* ─────────────────────────────── COMM ── */
 
+export function ChannelTopologyContent() {
+  return (
+    <>
+      <SectionLabel>Channel types</SectionLabel>
+      <P>
+        AgenticComm supports four channel topologies out of the box: <B>direct</B> (1:1 between two agents), <B>group</B> (named multi-party), <B>broadcast</B> (one-to-all with no reply), and <B>pub/sub</B> (topic-based subscription). Each channel is a first-class object with an ID, participant list, and creation timestamp.
+      </P>
+
+      <SectionLabel>Participant boundaries</SectionLabel>
+      <P>
+        Every channel enforces explicit membership. An agent cannot read messages from a channel it has not joined. Join/leave events are recorded in the channel history, making <B>participant state auditable at any point in time</B>.
+      </P>
+
+      <Agent>
+        Channel created → id: ch-feature-auth, type: group, participants: [planner, developer, reviewer]. Topology: group. Join events: 3 recorded. Channel state saved to .acomm artifact.
+      </Agent>
+    </>
+  )
+}
+
+export function TypedMessagesContent() {
+  return (
+    <>
+      <SectionLabel>Message types</SectionLabel>
+      <P>
+        Every message carries a <B>type field</B> that declares operational intent: <B>command</B> (do this), <B>query</B> (answer this), <B>response</B> (here is the answer), <B>notification</B> (FYI), and <B>acknowledgment</B> (received). Agents can pattern-match on type to decide how to handle each message without parsing content.
+      </P>
+
+      <SectionLabel>Payload structure</SectionLabel>
+      <P>
+        Message payloads are structured data, not raw strings. Each message includes sender, timestamp, channel, type, and a typed payload field. This means agents can <B>deserialize and validate messages at the protocol level</B> rather than guessing at format.
+      </P>
+
+      <Agent>
+        Message sent → channel: task-queue, type: command, sender: planner, payload: &#123;task: &quot;build login form&quot;, priority: 1, criteria: [&quot;OAuth support&quot;, &quot;session management&quot;]&#125;. Acknowledged by developer in 0.02 ms.
+      </Agent>
+    </>
+  )
+}
+
+export function DeliverySemanticsContent() {
+  return (
+    <>
+      <SectionLabel>Ordering guarantees</SectionLabel>
+      <P>
+        Messages within a channel are <B>strictly ordered by sequence number</B>. An agent reading from a channel always sees messages in the order they were sent. Cross-channel ordering uses timestamps for correlation when needed.
+      </P>
+
+      <SectionLabel>Acknowledgment and retry</SectionLabel>
+      <P>
+        Commands and queries can require acknowledgment. If no ack arrives within a configurable timeout, the sender can retry or escalate. <B>Dead-letter handling</B> captures undeliverable messages so no communication is silently lost.
+      </P>
+
+      <Agent>
+        Delivery report → channel: task-queue, messages: 3, all acknowledged. Sequence: [1, 2, 3] contiguous. Retries: 0. Dead letters: 0. Delivery latency p99: 0.04 ms.
+      </Agent>
+    </>
+  )
+}
+
+export function SessionCoordinationContent() {
+  return (
+    <>
+      <SectionLabel>Session-linked communication</SectionLabel>
+      <P>
+        Communication actions are automatically linked to the active session. When a session starts, a <B>session context marker</B> is inserted into each active channel. When the session ends, all messages sent during that session can be queried as a unit.
+      </P>
+
+      <SectionLabel>Audit trail</SectionLabel>
+      <P>
+        Operators can reconstruct exactly what happened in a session: which channels were active, who sent what, and how the conversation flowed. This is <B>built into the protocol</B>, not bolted on after the fact.
+      </P>
+
+      <Agent>
+        Session #42 summary → Duration: 14.2s. Channels active: 3. Messages sent: 8. Messages received: 12. Acknowledgments: 8/8 (100%). Session context preserved in .acomm artifact.
+      </Agent>
+    </>
+  )
+}
+
+export function SearchAndHistoryContent() {
+  return (
+    <>
+      <SectionLabel>Full-text search</SectionLabel>
+      <P>
+        Every message in the .acomm artifact is indexed for <B>full-text search</B>. Agents can search by channel, sender, time range, message type, or content pattern. Results return in sub-millisecond time even across thousands of messages.
+      </P>
+
+      <SectionLabel>History reconstruction</SectionLabel>
+      <P>
+        The full communication history is preserved in sequence order. An operator can <B>replay the exact conversation flow</B> that led to any production decision, without relying on transient chat logs or cloud services.
+      </P>
+
+      <Agent>
+        Search results → query: &quot;login form&quot;, matches: 4 messages across 2 channels. Oldest: 2.3s ago (planner → task-queue). Most recent: 0.8s ago (developer → review-queue). All results include full context chain.
+      </Agent>
+    </>
+  )
+}
+
+export function PortableArtifactContent() {
+  return (
+    <>
+      <SectionLabel>Single-file portability</SectionLabel>
+      <P>
+        The entire communication state — channels, messages, indexes, participant lists, and integrity checksums — lives in <B>one .acomm file</B>. Copy the file to a new environment and the coordination context moves with it. No database, no cloud service, no external dependencies.
+      </P>
+
+      <SectionLabel>Integrity verification</SectionLabel>
+      <P>
+        The .acomm format includes checksums for structural integrity. On load, the runtime verifies that <B>no messages have been tampered with or lost</B>. Corruption is detected before any agent reads stale or incomplete state.
+      </P>
+
+      <Agent>
+        Artifact stats → file: agents.acomm, size: 4.2 KB. Channels: 3. Messages: 12. Indexes: 3 (by-channel, by-sender, by-time). Integrity: verified, 0 errors. Portable: yes, zero external dependencies.
+      </Agent>
+    </>
+  )
+}
+
 export function CommAllTogetherContent() {
   return (
     <>
