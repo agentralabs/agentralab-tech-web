@@ -13,6 +13,7 @@ import { IDENTITY_HERO, IDENTITY_SCENARIOS } from "@/data/scenarios-identity"
 import { TIME_HERO, TIME_SCENARIOS } from "@/data/scenarios-time"
 import { CONTRACT_HERO, CONTRACT_SCENARIOS } from "@/data/scenarios-contract"
 import { COMM_HERO, COMM_SCENARIOS } from "@/data/scenarios-comm"
+import { PLANNING_HERO, PLANNING_SCENARIOS } from "@/data/scenarios-planning"
 import * as SC from "@/components/scenario-content"
 
 const ease = [0.22, 1, 0.36, 1] as const
@@ -118,6 +119,13 @@ const CONTENT_MAP: Record<string, () => React.ReactNode> = {
   "session-coordination": () => <SC.SessionCoordinationContent />,
   "search-and-history": () => <SC.SearchAndHistoryContent />,
   "portable-artifact": () => <SC.PortableArtifactContent />,
+  // Planning
+  "goal-graph": () => <SC.GoalGraphContent />,
+  "decision-records": () => <SC.DecisionRecordsContent />,
+  "commitment-tracking": () => <SC.CommitmentTrackingContent />,
+  "progress-signals": () => <SC.ProgressSignalsContent />,
+  "planning-sessions": () => <SC.PlanningSessionsContent />,
+  "aplan-artifact": () => <SC.AplanArtifactContent />,
 }
 
 const ALL_TOGETHER_MAP: Record<string, () => React.ReactNode> = {
@@ -128,6 +136,7 @@ const ALL_TOGETHER_MAP: Record<string, () => React.ReactNode> = {
   "agentic-time": () => <SC.TimeAllTogetherContent />,
   "agentic-contract": () => <SC.ContractAllTogetherContent />,
   "agentic-comm": () => <SC.CommAllTogetherContent />,
+  "agentic-planning": () => <SC.PlanningAllTogetherContent />,
 }
 
 const ALL_TOGETHER_PLAIN: Record<string, string> = {
@@ -145,6 +154,8 @@ const ALL_TOGETHER_PLAIN: Record<string, string> = {
     "This is the difference between an agent that acts first and asks forgiveness later, and one that checks policies, respects risk limits, routes approvals, and tracks obligations before taking action. AgenticContract turns ungoverned agent behavior into auditable, policy-compliant operations with self-healing governance that learns from every violation.",
   "agentic-comm":
     "This is the difference between agents that pass unstructured text files around hoping the other agent reads them, and agents that communicate through named channels with ordered messages, subscriptions, search, and broadcast — all in one portable file. AgenticComm turns ad-hoc agent coordination into structured, searchable, replayable communication.",
+  "agentic-planning":
+    "This is the difference between an agent that picks the next task off a list and one that maintains a living goal graph with priorities, trade-offs, and recorded decisions. AgenticPlanning turns reactive task execution into strategic reasoning where every commitment is tracked, every decision has a rationale, and every goal conflict is resolved with an auditable chain.",
 }
 
 function getConfig(sister: string) {
@@ -161,6 +172,8 @@ function getConfig(sister: string) {
       return { hero: CONTRACT_HERO, groups: CONTRACT_SCENARIOS, repo: "https://github.com/agentralabs/agentic-contract" }
     case "agentic-comm":
       return { hero: COMM_HERO, groups: COMM_SCENARIOS, repo: "https://github.com/agentralabs/agentic-comm" }
+    case "agentic-planning":
+      return { hero: PLANNING_HERO, groups: PLANNING_SCENARIOS, repo: "https://github.com/agentralabs/agentic-planning" }
     default:
       return { hero: MEMORY_HERO, groups: MEMORY_SCENARIOS, repo: "https://github.com/agentralabs/agentic-memory" }
   }

@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og"
 
 export const runtime = "edge"
-export const alt = "AGENTRA LABS — AgenticMemory, AgenticVision, AgenticCodebase, AgenticIdentity, AgenticTime, AgenticContract, AgenticComm"
+export const alt = "AGENTRA LABS — AgenticMemory, AgenticVision, AgenticCodebase, AgenticIdentity, AgenticTime, AgenticContract, AgenticComm, AgenticPlanning"
 export const size = {
   width: 1200,
   height: 630,
@@ -36,12 +36,13 @@ export default function OpenGraphImage() {
             UNDERSTAND. PROVE. SCHEDULE. GOVERN. COMMUNICATE.
           </div>
           <div style={{ fontSize: 24, lineHeight: 1.3, color: "#b8b8b8", marginTop: 8 }}>
-            AgenticMemory (.amem) + AgenticVision (.avis) + AgenticCodebase (.acb) + AgenticIdentity (.aid) + AgenticTime (.atime) + AgenticContract (.acon) + AgenticComm (.acomm)
+            AgenticMemory (.amem) + AgenticVision (.avis) + AgenticCodebase (.acb) + AgenticIdentity (.aid) + AgenticTime (.atime) + AgenticContract (.acon) + AgenticComm (.acomm) + AgenticPlanning (.aplan)
           </div>
         </div>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
           <div style={{ fontSize: 20, color: "#a3a3a3", letterSpacing: 2 }}>agentralabs.tech</div>
           <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
+            <span style={{ width: 10, height: 10, borderRadius: "9999px", background: "#ea580c" }} />
             <span style={{ width: 10, height: 10, borderRadius: "9999px", background: "#ea580c" }} />
             <span style={{ width: 10, height: 10, borderRadius: "9999px", background: "#ea580c" }} />
             <span style={{ width: 10, height: 10, borderRadius: "9999px", background: "#ea580c" }} />

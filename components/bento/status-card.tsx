@@ -10,6 +10,7 @@ const REGIONS = [
   { name: "AgenticTime", status: "ONLINE", latency: ".atime" },
   { name: "AgenticContract", status: "ONLINE", latency: ".acon" },
   { name: "AgenticComm", status: "ONLINE", latency: ".acomm" },
+  { name: "AgenticPlanning", status: "ONLINE", latency: ".aplan" },
   { name: "MCP-BRIDGE", status: "ONLINE", latency: "STDIO" },
 ]
 

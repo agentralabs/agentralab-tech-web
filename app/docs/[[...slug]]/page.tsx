@@ -136,6 +136,8 @@ export default async function Page({ params }: DocsPageProps) {
     pageSlug.startsWith("identity-") ? "AgenticIdentity" :
     pageSlug.startsWith("time-") ? "AgenticTime" :
     pageSlug.startsWith("contract-") ? "AgenticContract" :
+    pageSlug.startsWith("comm-") ? "AgenticComm" :
+    pageSlug.startsWith("planning-") ? "AgenticPlanning" :
     pageSlug.startsWith("feedback-") ? "Feedback and Community" :
     pageSlug.startsWith("architecture-") ? "System Architecture" :
     pageSlug.startsWith("playbooks-") ? "Use-Case Playbooks" :

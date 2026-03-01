@@ -126,7 +126,7 @@ export async function GET() {
               marginBottom: 4,
             }}
           >
-            PORTABLE AGENT INFRASTRUCTURE + COMM
+            PORTABLE AGENT INFRASTRUCTURE + PLANNING
           </div>
 
           <div
@@ -188,8 +188,8 @@ export async function GET() {
               maxWidth: 900,
             }}
           >
-            Seven independent runtime sisters. Portable artifact files you own
-            forever, including AgenticComm (.acomm). MCP-native integration.
+            Eight independent runtime sisters. Portable artifact files you own
+            forever, including AgenticPlanning (.aplan). MCP-native integration.
             Built in Rust.
           </div>
         </div>
@@ -467,7 +467,7 @@ export async function GET() {
           </div>
         </div>
 
-        {/* Seventh sister row */}
+        {/* Seventh + Eighth sister row */}
         <div
           style={{
             display: "flex",
@@ -519,6 +519,48 @@ export async function GET() {
                 }}
               >
                 Channels + messages in .acomm
+              </span>
+            </div>
+
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                border: "2px solid #0a0a0a",
+                borderLeft: "none",
+                padding: "16px 22px",
+                flex: 1,
+                background: "rgba(242, 241, 234, 0.8)",
+              }}
+            >
+              <span
+                style={{
+                  fontSize: 11,
+                  letterSpacing: 2,
+                  color: "#ea580c",
+                  fontWeight: 700,
+                  marginBottom: 6,
+                }}
+              >
+                08 STRATEGY
+              </span>
+              <span
+                style={{
+                  fontSize: 16,
+                  fontWeight: 700,
+                  letterSpacing: 1,
+                }}
+              >
+                AgenticPlanning
+              </span>
+              <span
+                style={{
+                  fontSize: 12,
+                  color: "#666666",
+                  marginTop: 4,
+                }}
+              >
+                Goals + decisions in .aplan
               </span>
             </div>
           </div>

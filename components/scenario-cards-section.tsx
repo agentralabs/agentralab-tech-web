@@ -80,6 +80,15 @@ const SCENARIOS: Scenario[] = [
       '"Created channel #feature-auth with 3 subscribers. Task message sent to planner agent, acknowledged in 40ms. Worker agent subscribed to task channel, received assignment with typed payload. Status broadcast sent to all: 2/3 subtasks complete. Full message history searchable in .acomm artifact."',
     href: "/projects/scenarios/agentic-comm",
   },
+  {
+    question: '"What should the agent prioritize when three goals conflict?"',
+    without:
+      'Agent has no goal structure. It picks the first task it sees, ignores trade-offs, and hopes the user corrects it later. No commitments tracked, no decisions recorded.',
+    withLabel: "WITH AGENTICPLANNING",
+    withResponse:
+      '"Analyzing goal graph: 3 active goals, 2 share a dependency. Goal #1 (ship auth) has hard deadline in 48h, priority 0.95. Goal #2 (refactor DB) blocks Goal #3 (add caching). Decision recorded: defer Goal #3, commit to Goal #1 with 2-day sprint, revisit Goal #2 after deadline. Full decision chain preserved in .aplan artifact."',
+    href: "/projects/scenarios/agentic-planning",
+  },
 ]
 
 function ScenarioCard({ scenario, index }: { scenario: Scenario; index: number }) {

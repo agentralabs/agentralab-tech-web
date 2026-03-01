@@ -9,7 +9,7 @@ import { Footer } from "@/components/footer"
 
 const ease = [0.22, 1, 0.36, 1] as const
 
-type ProjectKey = "AgenticMemory" | "AgenticVision" | "AgenticCodebase" | "AgenticIdentity" | "AgenticTime" | "AgenticContract" | "AgenticComm"
+type ProjectKey = "AgenticMemory" | "AgenticVision" | "AgenticCodebase" | "AgenticIdentity" | "AgenticTime" | "AgenticContract" | "AgenticComm" | "AgenticPlanning"
 
 interface QueryRow {
   id: number
@@ -81,6 +81,14 @@ const PROJECTS: {
     repo: "https://github.com/agentralabs/agentic-comm",
     scenarioHref: "/projects/scenarios/agentic-comm",
     line: "Structured inter-agent communication with named channels, typed messages, subscriptions, and full-text search.",
+  },
+  {
+    key: "AgenticPlanning",
+    artifact: ".aplan",
+    capacity: "goals + decisions + commitments + progress + federation",
+    repo: "https://github.com/agentralabs/agentic-planning",
+    scenarioHref: "/projects/scenarios/agentic-planning",
+    line: "Persistent goals, strategic decisions, commitments, and progress tracking for AI agent reasoning.",
   },
 ]
 

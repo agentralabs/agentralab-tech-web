@@ -82,7 +82,8 @@ const STATS = [
   { label: "TIME_TOOLS", value: "19" },
   { label: "CONTRACT_TOOLS", value: "38" },
   { label: "COMM_TOOLS", value: "17" },
-  { label: "CORE_FORMATS", value: ".amem/.avis/.acb/.aid/.atime/.acon/.acomm" },
+  { label: "PLANNING_TOOLS", value: "13" },
+  { label: "CORE_FORMATS", value: ".amem/.avis/.acb/.aid/.atime/.acon/.acomm/.aplan" },
 ]
 
 function StatBlock({ label, value, index }: { label: string; value: string; index: number }) {
@@ -215,10 +216,13 @@ export function AboutSection() {
                   intelligence surfaces, AgenticIdentity provides
                   cryptographic trust, AgenticTime adds temporal
                   reasoning with deadlines, schedules, and decay models,
-                  and AgenticContract enforces policy governance with
-                  risk limits, approval workflows, and self-healing contracts.
+                  AgenticContract enforces policy governance with
+                  risk limits, approval workflows, and self-healing contracts,
                   AgenticComm provides channels, pub/sub, and message
-                  coordination across long-running agent sessions.
+                  coordination across long-running agent sessions, and
+                  AgenticPlanning manages persistent goals, decisions,
+                  commitments, and strategic reasoning with dream simulations
+                  and multi-agent federation.
                 </p>
                 <p className="text-xs lg:text-sm font-mono text-muted-foreground leading-relaxed">
                   The stack is MCP-native, artifact-portable, and designed for

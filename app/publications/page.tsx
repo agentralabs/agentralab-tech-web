@@ -9,7 +9,7 @@ const ease = [0.22, 1, 0.36, 1] as const
 
 interface Paper {
   title: string
-  project: "AgenticMemory" | "AgenticVision" | "AgenticCodebase" | "AgenticIdentity" | "AgenticTime" | "AgenticContract" | "AgenticComm"
+  project: "AgenticMemory" | "AgenticVision" | "AgenticCodebase" | "AgenticIdentity" | "AgenticTime" | "AgenticContract" | "AgenticComm" | "AgenticPlanning"
   type: string
   summary: string
   pdf: string
@@ -104,6 +104,15 @@ const PAPERS: Paper[] = [
     pdf: "https://github.com/agentralabs/agentic-comm/blob/main/paper/paper-i-comm-protocol/agenticcomm-paper.pdf",
     source:
       "https://github.com/agentralabs/agentic-comm/blob/main/paper/paper-i-comm-protocol/agenticcomm-paper.tex",
+  },
+  {
+    title: "AgenticPlanning: A Binary Intention Format for Persistent, Portable, and Navigable AI Agent Strategic Reasoning",
+    project: "AgenticPlanning",
+    type: "Paper I",
+    summary: "Defines a portable binary intention format for persistent AI-agent strategic planning, goal tracking, decision recording, commitment management, and dream simulation with multi-agent federation in .aplan files.",
+    pdf: "https://github.com/agentralabs/agentic-planning/blob/main/paper/paper-i-intention-format/agenticplanning-paper.pdf",
+    source:
+      "https://github.com/agentralabs/agentic-planning/blob/main/paper/paper-i-intention-format/agenticplanning-paper.tex",
   },
 ]
 
@@ -203,17 +212,17 @@ export default function PublicationsPage() {
               Publications and technical papers
             </h1>
             <p className="mt-4 max-w-3xl text-xs lg:text-sm font-mono text-muted-foreground leading-relaxed">
-              Research corpus for AgenticMemory, AgenticVision, AgenticCodebase, AgenticIdentity, AgenticTime, AgenticContract, and AgenticComm. Each paper documents core
+              Research corpus for AgenticMemory, AgenticVision, AgenticCodebase, AgenticIdentity, AgenticTime, AgenticContract, AgenticComm, and AgenticPlanning. Each paper documents core
               architecture decisions, data formats, and MCP integration pathways.
             </p>
             <div className="mt-5 grid grid-cols-1 sm:grid-cols-3 gap-0 border-2 border-foreground">
               <div className="px-4 py-3 border-b-2 sm:border-b-0 sm:border-r-2 border-foreground">
                 <p className="text-[10px] tracking-[0.15em] uppercase font-mono text-muted-foreground">Total Papers</p>
-                <p className="text-2xl font-mono font-bold">10</p>
+                <p className="text-2xl font-mono font-bold">11</p>
               </div>
               <div className="px-4 py-3 border-b-2 sm:border-b-0 sm:border-r-2 border-foreground">
                 <p className="text-[10px] tracking-[0.15em] uppercase font-mono text-muted-foreground">Projects</p>
-                <p className="text-2xl font-mono font-bold">7</p>
+                <p className="text-2xl font-mono font-bold">8</p>
               </div>
               <div className="px-4 py-3">
                 <p className="text-[10px] tracking-[0.15em] uppercase font-mono text-muted-foreground">Open Access</p>
@@ -230,6 +239,7 @@ export default function PublicationsPage() {
         <GroupBlock project="AgenticTime" step="016c" />
         <GroupBlock project="AgenticContract" step="016d" />
         <GroupBlock project="AgenticComm" step="016e" />
+        <GroupBlock project="AgenticPlanning" step="016f" />
 
         <section className="w-full px-6 pb-20 lg:px-12">
           <SectionRail label="// SECTION: RESEARCH_DIRECTION" step="017" />

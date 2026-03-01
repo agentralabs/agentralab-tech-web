@@ -25,6 +25,7 @@ const PROJECT_LINKS = [
   { label: "AgenticTime", href: "https://github.com/agentralabs/agentic-time" },
   { label: "AgenticContract", href: "https://github.com/agentralabs/agentic-contract" },
   { label: "AgenticComm", href: "https://github.com/agentralabs/agentic-comm" },
+  { label: "AgenticPlanning", href: "https://github.com/agentralabs/agentic-planning" },
   { label: "AgentraLabsWeb", href: "https://github.com/agentralabs/agentralabs-tech-web" },
 ]
 

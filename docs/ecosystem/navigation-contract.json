@@ -69,10 +69,19 @@
       "enabled": true
     },
     {
+      "key": "planning",
+      "repo": "agentic-planning",
+      "name": "AgenticPlanning",
+      "order": 1006,
+      "landingSlug": "planning-docs",
+      "includeLanding": true,
+      "enabled": true
+    },
+    {
       "key": "time",
       "repo": "agentic-time",
       "name": "AgenticTime",
-      "order": 1006,
+      "order": 1007,
       "landingSlug": "time-docs",
       "includeLanding": true,
       "enabled": true

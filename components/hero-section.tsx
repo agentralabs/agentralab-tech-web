@@ -59,7 +59,7 @@ export function HeroSection() {
           transition={{ duration: 0.5, delay: 0.52, ease }}
           className="text-xs lg:text-sm text-muted-foreground max-w-2xl mb-2 leading-relaxed font-mono"
         >
-          Seven open-source systems. Seven file formats. Forever yours.
+          Eight open-source systems. Eight file formats. Forever yours.
         </motion.p>
 
         {/* File format strip */}
@@ -71,7 +71,7 @@ export function HeroSection() {
         >
           .amem &middot; .avis &middot; .acb &middot; .aid &middot; .atime &middot; .acon
           <br />
-          .acomm
+          .acomm &middot; .aplan
         </motion.p>
 
         <div className="flex flex-col sm:flex-row items-center gap-3">

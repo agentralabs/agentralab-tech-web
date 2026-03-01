@@ -98,6 +98,20 @@ const commCard = {
   href: "/docs/en/comm-experience-with-vs-without",
 } as const
 
+const planningCard = {
+  id: "planning",
+  title: "AgenticPlanning",
+  kicker: "Strategic reasoning becomes persistent state",
+  claim:
+    "Agents have no memory of their goals. They restart every session without knowing what they committed to, what decisions they made, or what strategy they chose. AgenticPlanning gives agents persistent goals, decisions, commitments, and strategic reasoning with dream simulations.",
+  proof: [
+    "goals, decisions, and commitments persist across sessions in .aplan files",
+    "dream simulations explore counterfactual strategies before committing",
+    "multi-agent federation enables distributed planning with consensus",
+  ],
+  href: "/docs/en/planning-experience-with-vs-without",
+} as const
+
 export function ValueProofSection() {
   return (
     <section className="w-full px-6 py-16 lg:px-12" aria-label="Proof of value">
@@ -214,8 +228,8 @@ export function ValueProofSection() {
         </article>
       </div>
 
-      <div className="border-2 border-t-0 border-foreground">
-        <article className="p-5 lg:p-6 border-foreground bg-background">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-0 border-2 border-t-0 border-foreground">
+        <article className="p-5 lg:p-6 border-foreground bg-background border-b-2 lg:border-b-0 lg:border-r-2">
           <p className="text-[10px] tracking-[0.2em] uppercase text-muted-foreground font-mono">{commCard.kicker}</p>
           <h3 className="mt-2 text-xl font-mono font-bold tracking-tight">{commCard.title}</h3>
           <p className="mt-3 text-sm font-mono text-muted-foreground leading-relaxed">{commCard.claim}</p>
@@ -235,6 +249,27 @@ export function ValueProofSection() {
             Read full proof
           </Link>
         </article>
+        <article className="p-5 lg:p-6 border-foreground bg-background border-b-2 lg:border-b-0 lg:border-r-2">
+          <p className="text-[10px] tracking-[0.2em] uppercase text-muted-foreground font-mono">{planningCard.kicker}</p>
+          <h3 className="mt-2 text-xl font-mono font-bold tracking-tight">{planningCard.title}</h3>
+          <p className="mt-3 text-sm font-mono text-muted-foreground leading-relaxed">{planningCard.claim}</p>
+
+          <ul className="mt-4 space-y-2">
+            {planningCard.proof.map((item) => (
+              <li key={item} className="text-xs font-mono text-muted-foreground leading-relaxed">
+                <span className="text-[#ea580c]">■</span> {item}
+              </li>
+            ))}
+          </ul>
+
+          <Link
+            href={planningCard.href}
+            className="mt-5 inline-flex items-center gap-2 border border-foreground px-3 py-2 text-[11px] font-mono uppercase tracking-[0.14em] hover:bg-foreground hover:text-background transition-colors"
+          >
+            Read full proof
+          </Link>
+        </article>
+        <div className="hidden lg:block bg-background" aria-hidden="true" />
       </div>
     </section>
   )

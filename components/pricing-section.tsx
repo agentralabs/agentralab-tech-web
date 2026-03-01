@@ -269,6 +269,38 @@ const MODULES: ModuleCard[] = [
     scenarioHref: "/projects/scenarios/agentic-comm",
     highlighted: false,
   },
+  {
+    id: "agentic-planning",
+    frame: "PROJECTS",
+    value: "AgenticPlanning",
+    period: "/ AVAILABLE",
+    tag: "READY",
+    description: "\"What should we do next?\" Your agent picks the most obvious task. It has no goal graph, no decision history, no commitment tracking. It can't tell you why it chose this path or what it traded off. AgenticPlanning gives agents strategic reasoning.",
+    summary:
+      "Every goal lives in a hierarchical graph with priorities, dependencies, and conflict resolution. Decisions record rationale, alternatives, and outcomes. Commitments track deadlines and stakeholders. All strategy lives in portable .aplan files.",
+    deepSummary: [
+      {
+        lead: "Goal graph:",
+        body: "Hierarchical goals with priorities, dependencies, blockers, and lifecycle states. The agent always knows what matters most.",
+      },
+      {
+        lead: "Decision records:",
+        body: "Every strategic choice captured with rationale, alternatives considered, and outcome. Trace why any path was chosen.",
+      },
+      {
+        lead: "Commitment tracking:",
+        body: "Promises with owners, deadlines, deliverables, and stakeholders. Progress measured against explicit criteria.",
+      },
+      {
+        lead: "Federation:",
+        body: "Multi-agent coordination with shared goals, sync state, and consensus. Teams of agents plan together.",
+      },
+    ],
+    cta: "VIEW REPO",
+    href: "https://github.com/agentralabs/agentic-planning",
+    scenarioHref: "/projects/scenarios/agentic-planning",
+    highlighted: false,
+  },
 ]
 
 function ModuleGlyph({ id, highlighted }: { id: ModuleCard["id"]; highlighted: boolean }) {
@@ -338,6 +370,22 @@ function ModuleGlyph({ id, highlighted }: { id: ModuleCard["id"]; highlighted: b
         <path d="M25 40v15l20 0" className={baseClass} stroke="currentColor" strokeWidth="1.5" strokeDasharray="4 3" />
         <path d="M95 40v15l-20 0" className={baseClass} stroke="currentColor" strokeWidth="1.5" strokeDasharray="4 3" />
         <circle cx="60" cy="30" r="3" className={accentClass} fill="currentColor" />
+      </svg>
+    )
+  }
+
+  if (id === "agentic-planning") {
+    return (
+      <svg viewBox="0 0 120 80" className="w-full h-24" fill="none" aria-label="AgenticPlanning glyph">
+        <rect x="20" y="10" width="80" height="60" rx="2" className={baseClass} stroke="currentColor" strokeWidth="2" />
+        <circle cx="40" cy="28" r="5" className={accentClass} fill="currentColor" />
+        <circle cx="60" cy="28" r="5" className={baseClass} fill="currentColor" />
+        <circle cx="80" cy="28" r="5" className={baseClass} fill="currentColor" />
+        <path d="M40 28L60 28L80 28" className={baseClass} stroke="currentColor" strokeWidth="2" />
+        <path d="M60 28V48" className={accentClass} stroke="currentColor" strokeWidth="2" />
+        <circle cx="60" cy="52" r="5" className={accentClass} stroke="currentColor" strokeWidth="2" />
+        <path d="M40 28V44L60 52" className={baseClass} stroke="currentColor" strokeWidth="1.5" strokeDasharray="4 3" />
+        <path d="M80 28V44L60 52" className={baseClass} stroke="currentColor" strokeWidth="1.5" strokeDasharray="4 3" />
       </svg>
     )
   }
@@ -541,12 +589,12 @@ export function PricingSection() {
       >
         <div className="flex flex-col gap-3">
           <h2 className="text-2xl lg:text-3xl font-mono font-bold tracking-tight uppercase text-foreground text-balance">
-            Seven systems. One cognitive layer.
+            Eight systems. One cognitive layer.
           </h2>
           <p className="text-xs lg:text-sm font-mono text-muted-foreground leading-relaxed max-w-md">
             AgenticMemory — reasoning that persists. AgenticVision — visual state that&apos;s queryable.
-            AgenticCodebase — code understanding with prediction. AgenticIdentity — cryptographic proof of agent action. AgenticTime — temporal reasoning with deadlines. AgenticContract — policy governance for agents. All open source. All shipped.
-            AgenticComm — structured channels and message routing for cross-agent coordination.
+            AgenticCodebase — code understanding with prediction. AgenticIdentity — cryptographic proof of agent action. AgenticTime — temporal reasoning with deadlines. AgenticContract — policy governance for agents.
+            AgenticComm — structured channels and message routing for cross-agent coordination. AgenticPlanning — persistent goals, decisions, and commitments. All open source. All shipped.
           </p>
         </div>
         <StatusLine />
@@ -577,7 +625,7 @@ export function PricingSection() {
       >
         <span className="text-[10px] tracking-[0.2em] uppercase text-muted-foreground font-mono">
           {
-            "* Seven independent systems that work well together. Research-backed. MIT licensed. Production ready."
+            "* Eight independent systems that work well together. Research-backed. MIT licensed. Production ready."
           }
         </span>
         <div className="flex-1 border-t border-border" />

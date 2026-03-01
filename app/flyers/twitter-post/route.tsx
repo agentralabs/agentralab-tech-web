@@ -125,7 +125,7 @@ export async function GET() {
               marginBottom: 8,
             }}
           >
-            AGENTIC INFRASTRUCTURE FOR AI SYSTEMS + COMM
+            AGENTIC INFRASTRUCTURE FOR AI SYSTEMS + PLANNING
           </div>
           <div
             style={{
@@ -421,7 +421,7 @@ export async function GET() {
           </div>
         </div>
 
-        {/* Seventh sister row */}
+        {/* Seventh + Eighth sister row */}
         <div
           style={{
             display: "flex",
@@ -473,6 +473,46 @@ export async function GET() {
                 .acomm
               </span>
             </div>
+
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                border: "2px solid #3a3a3a",
+                borderLeft: "none",
+                padding: "14px 20px",
+                flex: 1,
+              }}
+            >
+              <span
+                style={{
+                  fontSize: 11,
+                  letterSpacing: 2,
+                  color: "#ea580c",
+                  marginBottom: 4,
+                }}
+              >
+                08
+              </span>
+              <span
+                style={{
+                  fontSize: 14,
+                  fontWeight: 700,
+                  letterSpacing: 1,
+                }}
+              >
+                PLANNING
+              </span>
+              <span
+                style={{
+                  fontSize: 11,
+                  color: "#666666",
+                  marginTop: 2,
+                }}
+              >
+                .aplan
+              </span>
+            </div>
           </div>
         </div>
 
@@ -495,6 +535,14 @@ export async function GET() {
             </span>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            <div
+              style={{
+                width: 8,
+                height: 8,
+                borderRadius: "9999px",
+                background: "#ea580c",
+              }}
+            />
             <div
               style={{
                 width: 8,

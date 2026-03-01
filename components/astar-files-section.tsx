@@ -18,11 +18,21 @@ const FILES: FileCard[] = [
   { ext: ".aid", name: "AgenticIdentity", desc: "Signed receipts. Earned trust. Unbroken continuity.", size: "~0.5-1 GB / 20 yr" },
   { ext: ".atime", name: "AgenticTime", desc: "Deadlines. Schedules. Decay models. Temporal reasoning.", size: "~0.5-1 GB / 20 yr" },
   { ext: ".acon", name: "AgenticContract", desc: "Policies. Risk limits. Approvals. Self-healing governance.", size: "~0.5-1 GB / 20 yr" },
+  { ext: ".acomm", name: "AgenticComm", desc: "Channels. Messages. Subscriptions. Structured coordination.", size: "~0.5-1 GB / 20 yr" },
+  { ext: ".aplan", name: "AgenticPlanning", desc: "Goals. Decisions. Commitments. Strategic reasoning.", size: "~0.5-1 GB / 20 yr" },
 ]
 
-const COMM_FILE: FileCard = {
-  ext: ".acomm", name: "AgenticComm", desc: "Channels. Messages. Subscriptions. Structured coordination.", size: "~0.5-1 GB / 20 yr",
-}
+/* Border classes for 8 items in grid-cols-1 / sm:grid-cols-2 / lg:grid-cols-4 */
+const FILE_BORDERS = [
+  "border-b sm:border-r border-foreground",                        // 0: .amem
+  "border-b lg:border-r border-foreground",                        // 1: .avis
+  "border-b sm:border-r border-foreground",                        // 2: .acb
+  "border-b border-foreground",                                    // 3: .aid
+  "border-b lg:border-b-0 sm:border-r border-foreground",         // 4: .atime
+  "border-b lg:border-b-0 lg:border-r border-foreground",         // 5: .acon
+  "border-b sm:border-b-0 sm:border-r border-foreground",         // 6: .acomm
+  "",                                                              // 7: .aplan
+]
 
 function BlinkDot() {
   return <span className="inline-block h-2 w-2 bg-[#ea580c] animate-blink" />
@@ -66,8 +76,8 @@ export function AStarFilesSection() {
         </p>
       </motion.div>
 
-      {/* File cards grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 border-2 border-foreground">
+      {/* File cards grid — 4 columns on lg, 2 rows of 4 */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 border-2 border-foreground">
         {FILES.map((file, i) => (
           <motion.div
             key={file.ext}
@@ -75,9 +85,7 @@ export function AStarFilesSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: i * 0.08, duration: 0.5, ease }}
-            className={`p-5 flex flex-col gap-3 ${
-              i < FILES.length - 1 ? "border-b sm:border-b-0 sm:border-r border-foreground" : ""
-            } ${i === 1 ? "lg:border-r" : ""} ${i === 2 ? "sm:border-r-0 lg:border-r" : ""}`}
+            className={`p-5 flex flex-col gap-3 ${FILE_BORDERS[i]}`}
           >
             <span className="text-2xl font-mono font-bold text-[#ea580c]">{file.ext}</span>
             <span className="text-xs font-mono font-bold text-foreground uppercase tracking-wider">{file.name}</span>
@@ -86,18 +94,6 @@ export function AStarFilesSection() {
           </motion.div>
         ))}
       </div>
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.5, duration: 0.5, ease }}
-        className="border-2 border-t-0 border-foreground p-5 flex flex-col gap-3"
-      >
-        <span className="text-2xl font-mono font-bold text-[#ea580c]">{COMM_FILE.ext}</span>
-        <span className="text-xs font-mono font-bold text-foreground uppercase tracking-wider">{COMM_FILE.name}</span>
-        <span className="text-xs font-mono text-muted-foreground leading-relaxed">{COMM_FILE.desc}</span>
-        <span className="text-[10px] font-mono text-muted-foreground mt-auto">{COMM_FILE.size}</span>
-      </motion.div>
 
       {/* Value proposition */}
       <motion.div
@@ -122,7 +118,7 @@ export function AStarFilesSection() {
         <div className="border border-border p-5">
           <h4 className="text-[10px] font-mono uppercase tracking-[0.2em] text-foreground mb-2">~10-15 GB</h4>
           <p className="text-xs font-mono text-muted-foreground leading-relaxed">
-            20 years of memory, vision, code, identity, time, governance, and communication. Fits on your phone. Backs up like photos.
+            20 years of memory, vision, code, identity, time, governance, communication, and planning. Fits on your phone. Backs up like photos.
           </p>
         </div>
       </motion.div>

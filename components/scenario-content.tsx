@@ -2020,3 +2020,160 @@ export function CommAllTogetherContent() {
     </>
   )
 }
+
+/* ─────────────────────────────── PLANNING ── */
+
+export function GoalGraphContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        An agent is asked to &quot;improve the checkout flow.&quot; Without a goal structure, it picks the first thing it thinks of — maybe faster load times, maybe better error messages, maybe a redesign. There is no way to know if it chose the <B>highest-impact objective</B> or just the first one that came to mind.
+      </P>
+
+      <SectionLabel>With AgenticPlanning</SectionLabel>
+      <P>
+        The agent creates a goal graph: &quot;Improve checkout flow&quot; as the parent, with three sub-goals ranked by priority — reduce cart abandonment (0.95), add guest checkout (0.8), and improve error feedback (0.6). Dependencies are explicit: guest checkout <B>requires</B> a new auth flow, which blocks the error feedback work.
+      </P>
+
+      <Agent>
+        Goal graph → root: &quot;Improve checkout flow&quot;. Sub-goals: 3. Top priority: &quot;Reduce cart abandonment&quot; (0.95). Dependency chain: guest-checkout → new-auth-flow → error-feedback. Conflict: none. Next action: start with highest-priority unblocked goal.
+      </Agent>
+    </>
+  )
+}
+
+export function DecisionRecordsContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        Three sessions ago, the agent chose React over Vue for a new component. Now a different agent is extending that component and asks <B>why React was chosen</B>. Without a decision record, the reasoning is lost — it might have been performance benchmarks, team familiarity, or ecosystem compatibility.
+      </P>
+
+      <SectionLabel>With AgenticPlanning</SectionLabel>
+      <P>
+        Every strategic decision is recorded with the choice made, alternatives considered, rationale, and confidence level. The second agent queries the decision log and finds: &quot;React chosen over Vue — rationale: team has 3 years React experience, existing component library is React-based, <B>performance delta was negligible</B>.&quot;
+      </P>
+
+      <Agent>
+        Decision #42 → choice: React. Alternatives: [Vue, Svelte]. Rationale: team expertise (3yr), existing component library compatibility. Confidence: 0.88. Recorded: session 7. Status: active, no superseding decision.
+      </Agent>
+    </>
+  )
+}
+
+export function CommitmentTrackingContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        An agent promises to &quot;finish the API integration by Friday.&quot; By Monday, nobody remembers the commitment. The user asks what happened and the agent has <B>no record of ever making that promise</B>.
+      </P>
+
+      <SectionLabel>With AgenticPlanning</SectionLabel>
+      <P>
+        Commitments are first-class objects with an owner, deadline, deliverable description, and status. When the agent says &quot;I will finish the API integration by Friday,&quot; that becomes a tracked commitment. Status updates flow automatically as progress is made, and <B>missed deadlines are flagged</B>.
+      </P>
+
+      <Agent>
+        Commitment #18 → deliverable: &quot;Complete Stripe API integration.&quot; Owner: agent-dev-3. Deadline: 2026-03-07. Status: in-progress (60%). Dependencies: [auth-flow complete]. Risk: medium — auth-flow delayed by 1 day.
+      </Agent>
+    </>
+  )
+}
+
+export function ProgressSignalsContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        A user asks &quot;how far along is the migration?&quot; The agent has no structured progress data. It guesses: &quot;I think we are about halfway done.&quot; There is <B>no objective measurement</B>.
+      </P>
+
+      <SectionLabel>With AgenticPlanning</SectionLabel>
+      <P>
+        Progress is tracked against explicit criteria defined in the goal. Each sub-goal has measurable completion signals. The agent reports: &quot;Migration is 65% complete — 13 of 20 tables migrated, 4 API endpoints updated out of 7, <B>test coverage at 82%</B> of target.&quot;
+      </P>
+
+      <Agent>
+        Progress → goal: &quot;Database migration.&quot; Overall: 65%. Sub-signals: tables (13/20), endpoints (4/7), test coverage (82%). Blockers: 1 (legacy schema incompatibility on users table). ETA: 2 sessions at current velocity.
+      </Agent>
+    </>
+  )
+}
+
+export function PlanningSessionsContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        An agent makes a critical priority change in session 14, but by session 17, nobody remembers <B>when or why the priority shifted</B>. The context is lost in the conversation history.
+      </P>
+
+      <SectionLabel>With AgenticPlanning</SectionLabel>
+      <P>
+        Every planning action is linked to the session that produced it. The context log records why a goal was created, a priority changed, or a commitment was made. Operators can audit: &quot;Session 14 deprioritized caching goal because <B>deadline pressure on auth goal increased</B>.&quot;
+      </P>
+
+      <Agent>
+        Context log → session 14: deprioritized goal #7 (caching) from 0.8 → 0.4. Reason: goal #3 (auth) deadline moved up by 2 days. Decision #51 recorded. Commitment #18 unaffected.
+      </Agent>
+    </>
+  )
+}
+
+export function AplanArtifactContent() {
+  return (
+    <>
+      <SectionLabel>Single-file portability</SectionLabel>
+      <P>
+        The entire planning state — goals, decisions, commitments, progress signals, and session links — lives in <B>one .aplan file</B>. Copy the file to a new environment and the strategic context moves with it. No database, no cloud service, no external dependencies.
+      </P>
+
+      <SectionLabel>Integrity verification</SectionLabel>
+      <P>
+        The .aplan format includes checksums for structural integrity. On load, the runtime verifies that <B>no goals or decisions have been tampered with or lost</B>. Corruption is detected before any agent reads stale or incomplete state.
+      </P>
+
+      <Agent>
+        Artifact stats → file: project.aplan, size: 3.8 KB. Goals: 5. Decisions: 12. Commitments: 4. Progress entries: 18. Integrity: verified, 0 errors. Portable: yes, zero external dependencies.
+      </Agent>
+    </>
+  )
+}
+
+export function PlanningAllTogetherContent() {
+  return (
+    <>
+      <SectionLabel>End-to-end: conflicting priorities sprint</SectionLabel>
+      <P>
+        A product team has three competing priorities: ship a new auth system (hard deadline), refactor the database layer (tech debt), and add a caching layer (performance). Without AgenticPlanning, the agent picks one and hopes it is right. With it, every trade-off flows through <B>a structured goal graph with recorded decisions</B>.
+      </P>
+
+      <SectionLabel>Goal creation</SectionLabel>
+      <P>
+        The agent creates three goals with priorities: auth (0.95, hard deadline), database refactor (0.7, blocks caching), and caching (0.6, depends on refactor). The dependency chain is explicit. Setup takes <B>one planning call</B>.
+      </P>
+
+      <SectionLabel>Decision recording</SectionLabel>
+      <P>
+        The agent records decision #1: &quot;Defer caching until after auth ships. Rationale: auth has a hard deadline in 48 hours, caching is blocked by DB refactor anyway.&quot; The decision includes alternatives considered and <B>confidence level (0.92)</B>.
+      </P>
+
+      <SectionLabel>Commitment and progress</SectionLabel>
+      <P>
+        The agent commits to completing auth in 2 days. Progress signals update as work proceeds: endpoint 1/4 done, tests passing, integration pending. At 75% completion, the agent broadcasts status and <B>re-evaluates remaining goals</B>.
+      </P>
+
+      <SectionLabel>Post-sprint review</SectionLabel>
+      <P>
+        After auth ships, the agent reviews the goal graph: auth complete, DB refactor now unblocked, caching can begin. The full decision chain shows why caching was deferred and <B>when it became actionable</B>. Everything is preserved in a single .aplan file.
+      </P>
+
+      <Agent>
+        Sprint complete → Goals: 3 (1 complete, 2 active). Decisions: 3 recorded. Commitments: 1 fulfilled on time. Progress entries: 8. Decision chain intact. Artifact: project.aplan (3.8 KB).
+      </Agent>
+    </>
+  )
+}

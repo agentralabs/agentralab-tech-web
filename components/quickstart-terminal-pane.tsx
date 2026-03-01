@@ -4,7 +4,7 @@ import { useMemo, useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { ArrowLeft, ArrowRight, Check, Copy } from "lucide-react"
 
-type ProjectKey = "AgenticMemory" | "AgenticVision" | "AgenticCodebase" | "AgenticIdentity" | "AgenticTime" | "AgenticContract" | "AgenticComm"
+type ProjectKey = "AgenticMemory" | "AgenticVision" | "AgenticCodebase" | "AgenticIdentity" | "AgenticTime" | "AgenticContract" | "AgenticComm" | "AgenticPlanning"
 type CommandType = "GLOBAL" | "RUST" | "MCP" | "PYTHON" | "NPM"
 type ModeType = "LOCAL" | "MCP"
 
@@ -13,7 +13,7 @@ interface CommandEntry {
   note: string
 }
 
-const PROJECTS: ProjectKey[] = ["AgenticMemory", "AgenticVision", "AgenticCodebase", "AgenticIdentity", "AgenticTime", "AgenticContract", "AgenticComm"]
+const PROJECTS: ProjectKey[] = ["AgenticMemory", "AgenticVision", "AgenticCodebase", "AgenticIdentity", "AgenticTime", "AgenticContract", "AgenticComm", "AgenticPlanning"]
 const COMMAND_TYPES: CommandType[] = ["GLOBAL", "RUST", "MCP", "PYTHON", "NPM"]
 
 const COMMANDS: Record<ProjectKey, Record<CommandType, CommandEntry[]>> = {
@@ -409,6 +409,62 @@ const COMMANDS: Record<ProjectKey, Record<CommandType, CommandEntry[]>> = {
       },
     ],
   },
+  AgenticPlanning: {
+    GLOBAL: [
+      {
+        command: "curl -fsSL https://agentralabs.tech/install/planning | bash",
+        note: "Default desktop profile (backward-compatible): installs binaries and auto-merges MCP config for common clients when detected (Claude, Cursor, VS Code, Codex, Windsurf).",
+      },
+      {
+        command: "curl -fsSL https://agentralabs.tech/install/planning/desktop | bash",
+        note: "Explicit desktop profile with MCP auto-merge for common desktop clients.",
+      },
+      {
+        command: "curl -fsSL https://agentralabs.tech/install/planning/terminal | bash",
+        note: "Terminal profile: installs binaries only, no desktop config writes.",
+      },
+      {
+        command: "curl -fsSL https://agentralabs.tech/install/planning/server | bash",
+        note: "Server profile: installs binaries only for remote hosts and service-style environments.",
+      },
+      {
+        command: "cargo install agentic-planning-cli agentic-planning-mcp",
+        note: "Installs aplan CLI and agentic-planning-mcp from crates.io.",
+      },
+    ],
+    RUST: [
+      {
+        command: "cargo install agentic-planning-cli agentic-planning-mcp",
+        note: "Installs both aplan CLI and planning MCP server from crates.io.",
+      },
+      {
+        command: "aplan init ~/.strategy.aplan",
+        note: "Creates a portable strategic planning artifact.",
+      },
+      {
+        command: "aplan goal add --label 'Ship v2.0' --horizon long",
+        note: "Adds a persistent goal to the planning store.",
+      },
+    ],
+    MCP: [
+      {
+        command: "agentic-planning-mcp --planning ~/.strategy.aplan serve",
+        note: "Starts MCP stdio transport for strategic planning tools.",
+      },
+    ],
+    PYTHON: [
+      {
+        command: "pip install agentic-planning",
+        note: "Installs Python bindings for strategic planning and goal management workflows.",
+      },
+    ],
+    NPM: [
+      {
+        command: "npm install @agenticamem/planning",
+        note: "WASM-based planning SDK for Node.js and browser environments.",
+      },
+    ],
+  },
 }
 
 const ease = [0.22, 1, 0.36, 1] as const
@@ -424,9 +480,9 @@ export function QuickstartTerminalPane() {
 
   const modeCopy = useMemo(() => {
     if (mode === "LOCAL") {
-      return "Local mode keeps .amem, .avis, .acb, .aid, .atime, .acon, and .acomm as portable files under your control. After install, run: agentra status --session and agentra doctor."
+      return "Local mode keeps .amem, .avis, .acb, .aid, .atime, .acon, .acomm, and .aplan as portable files under your control. After install, run: agentra status --session and agentra doctor."
     }
-    return "MCP mode exposes the same .amem, .avis, .acb, .aid, .atime, .acon, and .acomm artifacts to MCP clients. Restart your MCP host/client after install to reload config."
+    return "MCP mode exposes the same .amem, .avis, .acb, .aid, .atime, .acon, .acomm, and .aplan artifacts to MCP clients. Restart your MCP host/client after install to reload config."
   }, [mode])
 
   const unsupportedNote = `No official ${commandType} commands documented for ${project} yet.`
@@ -625,7 +681,7 @@ export function QuickstartTerminalPane() {
             ))}
           </div>
           <span className="text-[10px] tracking-[0.15em] uppercase text-muted-foreground font-mono">
-            .amem / .avis / .acb / .aid / .atime / .acon / .acomm
+            .amem / .avis / .acb / .aid / .atime / .acon / .acomm / .aplan
           </span>
         </div>
         <p className="text-xs font-mono text-muted-foreground mt-2">{modeCopy}</p>
