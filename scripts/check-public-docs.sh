@@ -12,7 +12,7 @@ fail() {
 scan_forbidden() {
   local pattern="$1"
   local message="$2"
-  if rg -n "$pattern" "$DOC_ROOT_EN" "$DOC_ROOT_ZH" >/tmp/public-docs-match.txt 2>/dev/null; then
+  if grep -rn "$pattern" "$DOC_ROOT_EN" "$DOC_ROOT_ZH" >/tmp/public-docs-match.txt 2>/dev/null; then
     echo "[public-docs] Forbidden pattern: $message" >&2
     cat /tmp/public-docs-match.txt >&2
     fail "$message"

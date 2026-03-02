@@ -82,6 +82,7 @@ const NPM_PACKAGES = {
   identity: "@agenticamem/identity",
   time: "@agenticamem/time",
   contract: "@agenticamem/contract",
+  planning: "@agenticamem/planning",
 }
 const CLI_PACKAGES = {
   memory: "agentic-memory-cli",
@@ -91,6 +92,7 @@ const CLI_PACKAGES = {
   identity: "agentic-identity-cli",
   time: "agentic-time-cli",
   contract: "agentic-contract-cli",
+  planning: "agentic-planning-cli",
 }
 const MCP_PACKAGES = {
   memory: "agentic-memory-mcp",
@@ -100,6 +102,7 @@ const MCP_PACKAGES = {
   identity: "agentic-identity-mcp",
   time: "agentic-time-mcp",
   contract: "agentic-contract-mcp",
+  planning: "agentic-planning-mcp",
 }
 const PYPI_PACKAGES = {
   memory: "agentic-brain",
@@ -109,6 +112,7 @@ const PYPI_PACKAGES = {
   identity: "agentic-identity",
   time: "agentic-time",
   contract: "agentic-contract",
+  planning: "agentic-planning",
 }
 const NUMBER_WORDS = {
   1: "one",
@@ -376,6 +380,7 @@ const artifacts = sisterKeys.map((k) => {
     case "identity": return ".aid"
     case "time": return ".atime"
     case "contract": return ".acon"
+    case "planning": return ".aplan"
     default: return `.${k}`
   }
 })
