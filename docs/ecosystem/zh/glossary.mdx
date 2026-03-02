@@ -11,7 +11,7 @@ Agentra Labs 项目中使用的关键术语。
 
 **Sister** — One of the eight Agentra runtime components: AgenticMemory, AgenticVision, AgenticCodebase, AgenticIdentity, AgenticTime, AgenticContract, AgenticComm, and AgenticPlanning. Each sister runs as an independent MCP server and produces its own artifact.
 
-**Artifact** — A portable binary file produced by a sister. Artifacts store all state and can be moved between machines. Formats: `.amem` (memory), `.avis` (vision), `.acb` (codebase), `.aid` (identity), `.atime` (time), `.acon` (contract), `.acomm` (comm), `.aplan` (planning).
+**Artifact** — A portable binary file produced by a sister. Artifacts store all state and can be moved between machines. Formats: `.amem` (memory), `.avis` (vision), `.acb` (codebase), `.aid` (identity), `.atime` (time), `.acon` (contract), `.acomm` (communication), `.aplan` (planning).
 
 **Workspace** — The parent directory containing the web repo and all sister repos. The docs sync script reads from this workspace to build the documentation site.
 
@@ -123,22 +123,20 @@ Agentra Labs 项目中使用的关键术语。
 
 ## AgenticComm
 
-**Channel** — A named communication pathway between agents. Channels can be direct (1:1), group, broadcast, or pub/sub. Each channel has configurable persistence, encryption, and TTL.
+**Channel** — A named communication pathway between agents. Channel types include direct (1:1), group, broadcast, and pub/sub.
 
-**Message** — The atomic unit of communication. Each message has a sender, content, type (text, command, event, data), priority, and optional threading via parent references.
+**Pub/Sub** — Publish-subscribe messaging pattern where agents subscribe to topics and receive messages published to those topics without direct addressing.
 
-**Pub/sub** — Publish-subscribe messaging where agents subscribe to topics and receive messages published to those topics without direct coupling.
+**Message routing** — The process of delivering messages to the correct recipients through channels, topics, or direct addressing. Supports priority levels and delivery guarantees.
 
-**.acomm** — The AgenticComm artifact file. Stores channels, messages, subscriptions, consent records, and routing configuration.
+**.acomm** — The AgenticComm artifact file. Stores channels, messages, subscriptions, encryption keys, and routing configuration.
 
 ## AgenticPlanning
 
-**Goal** — A persistent objective with status tracking, priority, stakeholders, and relationships to other goals. Goals form the top-level planning construct.
+**Goal** — A high-level objective with optional decomposition into sub-goals. Goals track status, priority, and progress toward completion.
 
-**Decision** — A recorded choice with reasoning, alternatives considered, and traceability to goals. Decisions can be linked to stakeholders and commitments.
+**Decision** — A structured choice between options with criteria evaluation. Decisions record the options considered, criteria used, and final selection with rationale.
 
-**Commitment** — A promise or obligation tied to a decision or goal, with deadline tracking and fulfillment status.
+**Commitment** — A time-bound promise to deliver a specific outcome. Commitments track deadlines, progress, and risk status.
 
-**Decision path** — A sequence of decisions forming a strategic trajectory. Paths can branch, merge, and be analyzed for counterfactual outcomes.
-
-**.aplan** — The AgenticPlanning artifact file. Stores goals, decisions, commitments, stakeholder records, and strategic reasoning chains.
+**.aplan** — The AgenticPlanning artifact file. Stores goals, decisions, commitments, progress records, and strategic reasoning chains.

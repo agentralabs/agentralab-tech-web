@@ -31,8 +31,7 @@
       "docs": {
         "landingSlug": "memory-docs",
         "includeLanding": true
-      },
-      "tiers": "A,B,C"
+      }
     },
     {
       "key": "vision",
@@ -65,8 +64,7 @@
       "docs": {
         "landingSlug": "vision-docs",
         "includeLanding": true
-      },
-      "tiers": "A,B,C"
+      }
     },
     {
       "key": "codebase",
@@ -99,8 +97,7 @@
       "docs": {
         "landingSlug": "codebase-docs",
         "includeLanding": true
-      },
-      "tiers": "A,B,C"
+      }
     },
     {
       "key": "identity",
@@ -133,8 +130,7 @@
       "docs": {
         "landingSlug": "identity-docs",
         "includeLanding": true
-      },
-      "tiers": "A,B,C"
+      }
     },
     {
       "key": "time",
@@ -167,8 +163,7 @@
       "docs": {
         "landingSlug": "time-docs",
         "includeLanding": true
-      },
-      "tiers": "A,B,C"
+      }
     },
     {
       "key": "contract",
@@ -201,8 +196,7 @@
       "docs": {
         "landingSlug": "contract-docs",
         "includeLanding": true
-      },
-      "tiers": "A,B,C"
+      }
     },
     {
       "key": "comm",
@@ -235,8 +229,7 @@
       "docs": {
         "landingSlug": "comm-docs",
         "includeLanding": true
-      },
-      "tiers": "A,B,C"
+      }
     },
     {
       "key": "planning",
@@ -269,8 +262,7 @@
       "docs": {
         "landingSlug": "planning-docs",
         "includeLanding": true
-      },
-      "tiers": "A,B,C"
+      }
     }
   ]
 }
