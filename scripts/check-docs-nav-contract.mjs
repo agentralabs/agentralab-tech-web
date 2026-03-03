@@ -6,7 +6,6 @@ import path from "node:path"
 const root = process.cwd()
 const navContractPath = path.join(root, "docs", "ecosystem", "navigation-contract.json")
 const metaEnPath = path.join(root, "docs", "ecosystem", "en", "meta.json")
-const metaZhPath = path.join(root, "docs", "ecosystem", "zh", "meta.json")
 
 const EXPECTED_CORE_GROUP_ORDER = [
   "Overview",
@@ -63,21 +62,19 @@ async function readJson(file) {
 }
 
 async function main() {
-  const [navContract, metaEn, metaZh] = await Promise.all([
+  const [navContract, metaEn] = await Promise.all([
     readJson(navContractPath),
     readJson(metaEnPath),
-    readJson(metaZhPath),
   ])
 
   expectArrayEquals(navContract.coreGroupOrder, EXPECTED_CORE_GROUP_ORDER, "coreGroupOrder")
   expectArrayEquals(navContract.requiredCoreSlugOrder, EXPECTED_CORE_SLUG_ORDER, "requiredCoreSlugOrder")
 
-  if (!Array.isArray(metaEn.pages) || !Array.isArray(metaZh.pages)) {
-    fail("meta.json pages arrays are missing")
+  if (!Array.isArray(metaEn.pages)) {
+    fail("en/meta.json pages array is missing")
   }
 
   expectIncludesInOrder(metaEn.pages, EXPECTED_CORE_SLUG_ORDER, "en/meta.json")
-  expectIncludesInOrder(metaZh.pages, EXPECTED_CORE_SLUG_ORDER, "zh/meta.json")
 
   if (!Array.isArray(navContract.sisters)) {
     fail("sisters contract missing")
