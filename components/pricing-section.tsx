@@ -301,6 +301,38 @@ const MODULES: ModuleCard[] = [
     scenarioHref: "/projects/scenarios/agentic-planning",
     highlighted: false,
   },
+  {
+    id: "agentic-cognition",
+    frame: "PROJECTS",
+    value: "AgenticCognition",
+    period: "/ AVAILABLE",
+    tag: "READY",
+    description: "\"The AI doesn't know me.\" Every conversation starts from zero. No model of your beliefs, values, decision patterns, or psychological tendencies. AgenticCognition creates living models of human consciousness that evolve with every interaction.",
+    summary:
+      "Every user gets a longitudinal cognitive model — beliefs with crystallization dynamics, decision fingerprints, shadow psychology mapping, and predictive simulation. The Mirror knows you better than you know yourself. All state lives in portable .acog files.",
+    deepSummary: [
+      {
+        lead: "Belief physics:",
+        body: "Beliefs modeled as physical entities with crystallization, entanglement, gravity, and collapse dynamics. Track how convictions form and shatter.",
+      },
+      {
+        lead: "Decision fingerprints:",
+        body: "Unique cognitive signatures extracted from decision patterns. Risk tolerance, time orientation, and value hierarchies mapped over time.",
+      },
+      {
+        lead: "Shadow psychology:",
+        body: "Invisible patterns detected beneath conscious reasoning. Fear of failure, avoidance behaviors, and hidden motivations surfaced.",
+      },
+      {
+        lead: "Predictive simulation:",
+        body: "Run what-if scenarios against the user model. Predict reactions, decisions, and emotional responses before they happen.",
+      },
+    ],
+    cta: "VIEW REPO",
+    href: "https://github.com/agentralabs/agentic-cognition",
+    scenarioHref: "/projects/scenarios/agentic-cognition",
+    highlighted: false,
+  },
 ]
 
 function ModuleGlyph({ id, highlighted }: { id: ModuleCard["id"]; highlighted: boolean }) {
@@ -589,12 +621,12 @@ export function PricingSection() {
       >
         <div className="flex flex-col gap-3">
           <h2 className="text-2xl lg:text-3xl font-mono font-bold tracking-tight uppercase text-foreground text-balance">
-            Eight systems. One cognitive layer.
+            Nine systems. One cognitive layer.
           </h2>
           <p className="text-xs lg:text-sm font-mono text-muted-foreground leading-relaxed max-w-md">
             AgenticMemory — reasoning that persists. AgenticVision — visual state that&apos;s queryable.
             AgenticCodebase — code understanding with prediction. AgenticIdentity — cryptographic proof of agent action. AgenticTime — temporal reasoning with deadlines. AgenticContract — policy governance for agents.
-            AgenticComm — structured channels and message routing for cross-agent coordination. AgenticPlanning — persistent goals, decisions, and commitments. All open source. All shipped.
+            AgenticComm — structured channels and message routing for cross-agent coordination. AgenticPlanning — persistent goals, decisions, and commitments. AgenticCognition — longitudinal user modeling and living models of human consciousness. All open source. All shipped.
           </p>
         </div>
         <StatusLine />
@@ -625,7 +657,7 @@ export function PricingSection() {
       >
         <span className="text-[10px] tracking-[0.2em] uppercase text-muted-foreground font-mono">
           {
-            "* Eight independent systems that work well together. Research-backed. MIT licensed. Production ready."
+            "* Nine independent systems that work well together. Research-backed. MIT licensed. Production ready."
           }
         </span>
         <div className="flex-1 border-t border-border" />

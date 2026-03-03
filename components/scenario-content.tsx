@@ -2177,3 +2177,212 @@ export function PlanningAllTogetherContent() {
     </>
   )
 }
+
+/* ─────────────────────────────── COGNITION ── */
+
+export function ReasoningChainsContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        You ask the agent to diagnose a production outage. It returns: &quot;The database is likely the bottleneck.&quot; <B>Why?</B> What evidence supports that conclusion? What alternatives did it consider? Without reasoning chains, the agent&apos;s thinking is a black box — you get an answer but no way to evaluate the path that produced it.
+      </P>
+
+      <SectionLabel>With reasoning chains</SectionLabel>
+      <P>
+        The agent constructs an explicit chain: Premise 1 (&quot;CPU is at 12%, not bottlenecked&quot;), Premise 2 (&quot;P99 latency spiked from 40ms to 1,200ms&quot;), Premise 3 (&quot;Slow query log shows 47 queries exceeding 500ms&quot;), Inference (&quot;Database query performance is the primary bottleneck&quot;). Each step carries a <B>confidence score</B> that propagates through the chain.
+      </P>
+      <Agent>
+        Reasoning chain (4 steps, confidence 0.91): CPU idle (fact, 0.98) + latency spike (fact, 0.97) + slow query log (fact, 0.95) → database bottleneck (inference, 0.91). Alternative considered: network saturation (rejected, confidence 0.23 — packet loss at 0.01%).
+      </Agent>
+    </>
+  )
+}
+
+export function HypothesisEvaluationContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        Users report intermittent 500 errors. The agent picks the first plausible explanation — maybe a memory leak — and pursues it for two hours. It turns out to be a <B>connection pool exhaustion issue</B>. Without hypothesis evaluation, the agent locks onto one explanation and ignores competing theories.
+      </P>
+
+      <SectionLabel>With hypothesis evaluation</SectionLabel>
+      <P>
+        The agent generates three hypotheses: memory leak (evidence weight 0.35), connection pool exhaustion (evidence weight 0.82), and DNS resolution timeout (evidence weight 0.18). Each hypothesis is scored against 5 pieces of evidence. Connection pool exhaustion ranks highest because it explains both the <B>intermittent pattern and the correlation with traffic spikes</B>.
+      </P>
+      <Agent>
+        Hypothesis evaluation → 3 candidates. Winner: connection pool exhaustion (score 0.82, explains 4/5 observations). Runner-up: memory leak (0.35, explains 2/5). Rejected: DNS timeout (0.18, contradicted by latency profile). Recommendation: increase pool size from 25 to 100.
+      </Agent>
+    </>
+  )
+}
+
+export function CognitiveStrategiesContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        The agent always reasons the same way regardless of the problem type. A logic puzzle, a creative brainstorm, and a root cause analysis all get the same <B>undifferentiated chain-of-thought</B>. There is no selection of reasoning approach based on the nature of the problem.
+      </P>
+
+      <SectionLabel>With cognitive strategies</SectionLabel>
+      <P>
+        The agent selects from typed reasoning modes. For the outage diagnosis, it uses <B>abductive reasoning</B> (best explanation from observations). For the architecture review, it uses <B>deductive reasoning</B> (applying known principles to specific cases). For the unfamiliar API, it uses <B>analogical reasoning</B> (mapping from a known similar system). Each strategy is recorded in the cognitive log.
+      </P>
+      <Agent>
+        Strategy selected: abductive (inference to best explanation). Rationale: problem presents symptoms without known cause. Alternative strategies considered: deductive (insufficient axioms), decomposition (problem is singular, not composite). Strategy recorded in cognitive log for replay.
+      </Agent>
+    </>
+  )
+}
+
+export function SelfEvaluationContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        The agent concludes that &quot;Service A caused the outage because Service B depends on it.&quot; But the reasoning is circular — it assumed Service A was the cause to explain why Service B failed, then used Service B&apos;s failure as evidence that Service A was the cause. Without self-evaluation, <B>circular reasoning goes undetected</B>.
+      </P>
+
+      <SectionLabel>With self-evaluation</SectionLabel>
+      <P>
+        After completing a reasoning chain, the agent runs a metacognitive audit. It checks for: circular dependencies between premises and conclusions, <B>unsupported leaps</B> (conclusions that skip evidence steps), confidence inflation (high confidence on thin evidence), and missing counter-evidence. The circular argument is flagged in <B>under 2 milliseconds</B>.
+      </P>
+      <Agent>
+        Self-evaluation audit → 1 issue found: circular reasoning detected. Step 3 (&quot;Service A caused failure&quot;) uses Step 5 (&quot;Service B failed&quot;) as evidence, but Step 5 assumes Step 3. Recommendation: gather independent evidence for Service A failure before concluding causation.
+      </Agent>
+    </>
+  )
+}
+
+export function ConfidenceCalibrationContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        The agent says it is &quot;95% confident&quot; in its diagnosis. But over the last 20 diagnoses where it claimed 95% confidence, it was <B>correct only 60% of the time</B>. Without calibration tracking, overconfidence is invisible and operators cannot trust the agent&apos;s uncertainty estimates.
+      </P>
+
+      <SectionLabel>With confidence calibration</SectionLabel>
+      <P>
+        The cognition layer tracks predicted confidence vs actual outcomes across sessions. A calibration curve reveals the drift: at the 0.90-0.95 band, actual accuracy is <B>0.62</B>. The agent&apos;s confidence estimates are automatically adjusted using the historical calibration data.
+      </P>
+      <Agent>
+        Calibration report → 142 predictions tracked. Band 0.90-0.95: predicted accuracy 92%, actual accuracy 62% (overconfident by 30 points). Band 0.70-0.80: predicted 75%, actual 73% (well-calibrated). Adjustment applied: current 0.95 prediction recalibrated to 0.64.
+      </Agent>
+    </>
+  )
+}
+
+export function CognitiveLoadContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        The agent is simultaneously reasoning about a database migration, an API redesign, and a security audit. It starts mixing up facts from different problems — the migration deadline appears in the security audit reasoning, and the API rate limits get confused with database connection limits. <B>Too many open threads degrade reasoning quality.</B>
+      </P>
+
+      <SectionLabel>With cognitive load management</SectionLabel>
+      <P>
+        The cognition layer enforces working memory limits. When the agent exceeds <B>5 active reasoning threads</B>, the oldest or lowest-priority thread is archived to persistent storage. The archived thread can be recalled when needed, but it does not compete for active reasoning bandwidth.
+      </P>
+      <Agent>
+        Cognitive load → 5/5 active threads (limit reached). Archived: &quot;API redesign analysis&quot; (lowest priority, 0.4). Active: database migration (0.95), security audit (0.88), incident response (0.92), deployment planning (0.75), test coverage analysis (0.60). Recall &quot;API redesign&quot; when a slot opens.
+      </Agent>
+    </>
+  )
+}
+
+export function ThoughtProvenanceContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        The agent recommends &quot;switch to Redis for session storage.&quot; Three weeks later, a different agent asks <B>where that recommendation came from</B>. Without thought provenance, the conclusion exists without any trace of its origins. It might have been based on a benchmark, a blog post, or a misremembered conversation.
+      </P>
+
+      <SectionLabel>With thought provenance</SectionLabel>
+      <P>
+        Every conclusion links to its source evidence through a provenance chain. The Redis recommendation traces back to: benchmark data (session 4), latency requirements (session 2), and a comparison of Redis vs Memcached vs DynamoDB (session 5). The full chain is traversable in <B>under 3 milliseconds</B>.
+      </P>
+      <Agent>
+        Provenance for &quot;switch to Redis&quot; → 3 sources: benchmark showing Redis at 0.3ms vs Memcached at 0.8ms (session 4, confidence 0.94), latency requirement of sub-1ms (session 2, confidence 0.99), feature comparison showing Redis pub/sub advantage (session 5, confidence 0.87). Full chain: 7 nodes, 6 edges.
+      </Agent>
+    </>
+  )
+}
+
+export function ReasoningReplayContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        An agent made an architectural decision in session 8 that is now causing problems in session 22. You need to understand <B>what the agent was thinking at the time</B> — not its current post-hoc rationalization, but the actual reasoning that led to the decision when it was made.
+      </P>
+
+      <SectionLabel>With reasoning replay</SectionLabel>
+      <P>
+        The cognitive log preserves every reasoning step in sequence. Replaying session 8 shows the agent considered three architectures, evaluated each against four criteria, and chose a monolith because <B>the team was 2 people at the time</B>. The reasoning was sound for the original context — it just didn&apos;t anticipate the team growing to 15.
+      </P>
+      <Agent>
+        Replay session 8 reasoning → Strategy: deductive. Premises: team size 2, deadline 3 weeks, no microservice experience. Evaluation: monolith (score 0.88), modular monolith (0.72), microservices (0.31). Decision: monolith. Note: team size premise has since changed (now 15). Recommend re-evaluation with updated premises.
+      </Agent>
+    </>
+  )
+}
+
+export function AcogArtifactContent() {
+  return (
+    <>
+      <SectionLabel>Single-file portability</SectionLabel>
+      <P>
+        The entire cognition state — reasoning chains, hypotheses, strategies, metacognitive audits, calibration data, and cognitive load state — lives in <B>one .acog file</B>. Copy the file to a new environment and the reasoning context moves with it. No database, no cloud service, no external dependencies.
+      </P>
+
+      <SectionLabel>Integrity verification</SectionLabel>
+      <P>
+        The .acog format includes checksums for structural integrity. On load, the runtime verifies that <B>no reasoning chains or hypotheses have been tampered with or lost</B>. Corruption is detected before any agent reads stale or incomplete cognitive state.
+      </P>
+
+      <Agent>
+        Artifact stats → file: project.acog, size: 5.2 KB. Reasoning chains: 18. Hypotheses evaluated: 7. Strategies used: 4. Self-evaluations: 12. Calibration entries: 142. Integrity: verified, 0 errors. Portable: yes, zero external dependencies.
+      </Agent>
+    </>
+  )
+}
+
+export function CognitionAllTogetherContent() {
+  return (
+    <>
+      <SectionLabel>End-to-end: diagnosing a cascading production failure</SectionLabel>
+      <P>
+        A production system experiences cascading failures across three services. Without AgenticCognition, the agent guesses at root causes and hopes for the best. With it, every step of the diagnosis flows through <B>structured reasoning with hypothesis evaluation and self-correction</B>.
+      </P>
+
+      <SectionLabel>Strategy selection</SectionLabel>
+      <P>
+        The agent selects abductive reasoning — inference to the best explanation from observed symptoms. It logs the strategy choice: &quot;Symptoms without known cause, multiple possible explanations.&quot; Strategy selection takes <B>0.4 ms</B>.
+      </P>
+
+      <SectionLabel>Hypothesis generation</SectionLabel>
+      <P>
+        Three hypotheses emerge: database connection pool exhaustion (initial evidence weight 0.45), cascading timeout propagation (0.62), and memory pressure from a leaked goroutine (0.28). Each hypothesis links to <B>specific observational evidence</B>.
+      </P>
+
+      <SectionLabel>Self-evaluation and correction</SectionLabel>
+      <P>
+        The metacognitive audit catches a gap: the timeout hypothesis assumed Service B calls Service C synchronously, but the actual call is async. Confidence drops from 0.62 to 0.38. Connection pool exhaustion rises to <B>top-ranked hypothesis (0.71)</B> after the correction.
+      </P>
+
+      <SectionLabel>Resolution and calibration</SectionLabel>
+      <P>
+        The diagnosis is confirmed: connection pool exhaustion was the root cause. The calibration tracker records the outcome. The full reasoning chain, hypothesis evaluations, and self-correction are <B>preserved in a single .acog file</B> for future reference.
+      </P>
+
+      <Agent>
+        Diagnosis complete → Strategy: abductive. Hypotheses evaluated: 3. Winner: connection pool exhaustion (final confidence 0.71, confirmed). Self-corrections: 1 (async call assumption). Calibration updated. Reasoning chain: 14 steps. Artifact: incident.acog (5.2 KB).
+      </Agent>
+    </>
+  )
+}

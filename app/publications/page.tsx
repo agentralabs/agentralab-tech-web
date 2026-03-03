@@ -9,7 +9,7 @@ const ease = [0.22, 1, 0.36, 1] as const
 
 interface Paper {
   title: string
-  project: "AgenticMemory" | "AgenticVision" | "AgenticCodebase" | "AgenticIdentity" | "AgenticTime" | "AgenticContract" | "AgenticComm" | "AgenticPlanning"
+  project: "AgenticMemory" | "AgenticVision" | "AgenticCodebase" | "AgenticIdentity" | "AgenticTime" | "AgenticContract" | "AgenticComm" | "AgenticPlanning" | "AgenticCognition"
   type: string
   summary: string
   pdf: string
@@ -114,6 +114,15 @@ const PAPERS: Paper[] = [
     source:
       "https://github.com/agentralabs/agentic-planning/blob/main/paper/paper-i-intention-format/agenticplanning-paper.tex",
   },
+  {
+    title: "AgenticCognition: Longitudinal User Modeling Through Living Models of Human Consciousness for AI Agents",
+    project: "AgenticCognition",
+    type: "Paper I",
+    summary: "Introduces 24 inventions for modeling beliefs as physical entities with crystallization, entanglement, gravity, and collapse dynamics — enabling AI agents to build living cognitive models of users that evolve with every interaction.",
+    pdf: "https://github.com/agentralabs/agentic-cognition/blob/main/paper/paper-i-cognition-format/agenticcognition-paper.pdf",
+    source:
+      "https://github.com/agentralabs/agentic-cognition/blob/main/paper/paper-i-cognition-format/agenticcognition-paper.tex",
+  },
 ]
 
 function SectionRail({ label, step }: { label: string; step: string }) {
@@ -212,17 +221,17 @@ export default function PublicationsPage() {
               Publications and technical papers
             </h1>
             <p className="mt-4 max-w-3xl text-xs lg:text-sm font-mono text-muted-foreground leading-relaxed">
-              Research corpus for AgenticMemory, AgenticVision, AgenticCodebase, AgenticIdentity, AgenticTime, AgenticContract, AgenticComm, and AgenticPlanning. Each paper documents core
+              Research corpus for AgenticMemory, AgenticVision, AgenticCodebase, AgenticIdentity, AgenticTime, AgenticContract, AgenticComm, AgenticPlanning, and AgenticCognition. Each paper documents core
               architecture decisions, data formats, and MCP integration pathways.
             </p>
             <div className="mt-5 grid grid-cols-1 sm:grid-cols-3 gap-0 border-2 border-foreground">
               <div className="px-4 py-3 border-b-2 sm:border-b-0 sm:border-r-2 border-foreground">
                 <p className="text-[10px] tracking-[0.15em] uppercase font-mono text-muted-foreground">Total Papers</p>
-                <p className="text-2xl font-mono font-bold">11</p>
+                <p className="text-2xl font-mono font-bold">12</p>
               </div>
               <div className="px-4 py-3 border-b-2 sm:border-b-0 sm:border-r-2 border-foreground">
                 <p className="text-[10px] tracking-[0.15em] uppercase font-mono text-muted-foreground">Projects</p>
-                <p className="text-2xl font-mono font-bold">8</p>
+                <p className="text-2xl font-mono font-bold">9</p>
               </div>
               <div className="px-4 py-3">
                 <p className="text-[10px] tracking-[0.15em] uppercase font-mono text-muted-foreground">Open Access</p>
@@ -240,6 +249,7 @@ export default function PublicationsPage() {
         <GroupBlock project="AgenticContract" step="016d" />
         <GroupBlock project="AgenticComm" step="016e" />
         <GroupBlock project="AgenticPlanning" step="016f" />
+        <GroupBlock project="AgenticCognition" step="016g" />
 
         <section className="w-full px-6 pb-20 lg:px-12">
           <SectionRail label="// SECTION: RESEARCH_DIRECTION" step="017" />

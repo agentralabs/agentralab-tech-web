@@ -9,7 +9,7 @@ import { Footer } from "@/components/footer"
 
 const ease = [0.22, 1, 0.36, 1] as const
 
-type ProjectKey = "AgenticMemory" | "AgenticVision" | "AgenticCodebase" | "AgenticIdentity" | "AgenticTime" | "AgenticContract" | "AgenticComm" | "AgenticPlanning"
+type ProjectKey = "AgenticMemory" | "AgenticVision" | "AgenticCodebase" | "AgenticIdentity" | "AgenticTime" | "AgenticContract" | "AgenticComm" | "AgenticPlanning" | "AgenticCognition"
 
 interface QueryRow {
   id: number
@@ -89,6 +89,14 @@ const PROJECTS: {
     repo: "https://github.com/agentralabs/agentic-planning",
     scenarioHref: "/projects/scenarios/agentic-planning",
     line: "Persistent goals, strategic decisions, commitments, and progress tracking for AI agent reasoning.",
+  },
+  {
+    key: "AgenticCognition",
+    artifact: ".acog",
+    capacity: "belief physics + decision fingerprints + shadow psychology + simulation",
+    repo: "https://github.com/agentralabs/agentic-cognition",
+    scenarioHref: "/projects/scenarios/agentic-cognition",
+    line: "Longitudinal user modeling — living models of human consciousness for AI agents.",
   },
 ]
 

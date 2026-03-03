@@ -89,6 +89,15 @@ const SCENARIOS: Scenario[] = [
       '"Analyzing goal graph: 3 active goals, 2 share a dependency. Goal #1 (ship auth) has hard deadline in 48h, priority 0.95. Goal #2 (refactor DB) blocks Goal #3 (add caching). Decision recorded: defer Goal #3, commit to Goal #1 with 2-day sprint, revisit Goal #2 after deadline. Full decision chain preserved in .aplan artifact."',
     href: "/projects/scenarios/agentic-planning",
   },
+  {
+    question: "\"How would this user decide?\"",
+    without:
+      "AI has no theory of the user. Every conversation starts fresh with zero understanding of beliefs, values, or patterns.",
+    withLabel: "WITH AGENTICCOGNITION",
+    withResponse:
+      "\"Based on their belief system (crystallized: 'I value work-life balance'), decision fingerprint (risk-averse, long-term oriented), and shadow pattern (fear of failure), the model predicts they would negotiate rather than accept or decline outright.\"",
+    href: "/projects/scenarios/agentic-cognition",
+  },
 ]
 
 function ScenarioCard({ scenario, index }: { scenario: Scenario; index: number }) {

@@ -4,7 +4,7 @@ import { useMemo, useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { ArrowLeft, ArrowRight, Check, Copy } from "lucide-react"
 
-type ProjectKey = "AgenticMemory" | "AgenticVision" | "AgenticCodebase" | "AgenticIdentity" | "AgenticTime" | "AgenticContract" | "AgenticComm" | "AgenticPlanning"
+type ProjectKey = "AgenticMemory" | "AgenticVision" | "AgenticCodebase" | "AgenticIdentity" | "AgenticTime" | "AgenticContract" | "AgenticComm" | "AgenticPlanning" | "AgenticCognition"
 type CommandType = "GLOBAL" | "RUST" | "MCP" | "PYTHON" | "NPM"
 type ModeType = "LOCAL" | "MCP"
 
@@ -13,7 +13,7 @@ interface CommandEntry {
   note: string
 }
 
-const PROJECTS: ProjectKey[] = ["AgenticMemory", "AgenticVision", "AgenticCodebase", "AgenticIdentity", "AgenticTime", "AgenticContract", "AgenticComm", "AgenticPlanning"]
+const PROJECTS: ProjectKey[] = ["AgenticMemory", "AgenticVision", "AgenticCodebase", "AgenticIdentity", "AgenticTime", "AgenticContract", "AgenticComm", "AgenticPlanning", "AgenticCognition"]
 const COMMAND_TYPES: CommandType[] = ["GLOBAL", "RUST", "MCP", "PYTHON", "NPM"]
 
 const COMMANDS: Record<ProjectKey, Record<CommandType, CommandEntry[]>> = {
@@ -465,6 +465,54 @@ const COMMANDS: Record<ProjectKey, Record<CommandType, CommandEntry[]>> = {
       },
     ],
   },
+  AgenticCognition: {
+    GLOBAL: [
+      {
+        command: "curl -fsSL https://agentralabs.tech/install/cognition | sh",
+        note: "Default desktop profile (backward-compatible): installs binaries and auto-merges MCP config for common clients when detected (Claude, Cursor, VS Code, Codex, Windsurf).",
+      },
+      {
+        command: "curl -fsSL https://agentralabs.tech/install/cognition/desktop | sh",
+        note: "Explicit desktop profile with MCP auto-merge for common desktop clients.",
+      },
+      {
+        command: "curl -fsSL https://agentralabs.tech/install/cognition/terminal | sh",
+        note: "Terminal profile: installs binaries only, no desktop config writes.",
+      },
+      {
+        command: "curl -fsSL https://agentralabs.tech/install/cognition/server | sh",
+        note: "Server profile: installs binaries only for remote hosts and service-style environments.",
+      },
+    ],
+    RUST: [
+      {
+        command: "cargo install agentic-cognition-cli",
+        note: "Installs the acog CLI from crates.io.",
+      },
+      {
+        command: "acog init ~/.mirror.acog",
+        note: "Creates a portable cognitive user-model artifact.",
+      },
+    ],
+    MCP: [
+      {
+        command: "acog-mcp --storage ~/.agentic/cognition",
+        note: "Starts MCP stdio transport for cognition and user-modeling tools.",
+      },
+    ],
+    PYTHON: [
+      {
+        command: "pip install agentic-cognition",
+        note: "Installs Python bindings for longitudinal user modeling workflows.",
+      },
+    ],
+    NPM: [
+      {
+        command: "npm install @agenticamem/cognition",
+        note: "WASM-based cognition SDK for Node.js and browser environments.",
+      },
+    ],
+  },
 }
 
 const ease = [0.22, 1, 0.36, 1] as const
@@ -480,9 +528,9 @@ export function QuickstartTerminalPane() {
 
   const modeCopy = useMemo(() => {
     if (mode === "LOCAL") {
-      return "Local mode keeps .amem, .avis, .acb, .aid, .atime, .acon, .acomm, and .aplan as portable files under your control. After install, run: agentra status --session and agentra doctor."
+      return "Local mode keeps .amem, .avis, .acb, .aid, .atime, .acon, .acomm, .aplan, and .acog as portable files under your control. After install, run: agentra status --session and agentra doctor."
     }
-    return "MCP mode exposes the same .amem, .avis, .acb, .aid, .atime, .acon, .acomm, and .aplan artifacts to MCP clients. Restart your MCP host/client after install to reload config."
+    return "MCP mode exposes the same .amem, .avis, .acb, .aid, .atime, .acon, .acomm, .aplan, and .acog artifacts to MCP clients. Restart your MCP host/client after install to reload config."
   }, [mode])
 
   const unsupportedNote = `No official ${commandType} commands documented for ${project} yet.`
@@ -681,7 +729,7 @@ export function QuickstartTerminalPane() {
             ))}
           </div>
           <span className="text-[10px] tracking-[0.15em] uppercase text-muted-foreground font-mono">
-            .amem / .avis / .acb / .aid / .atime / .acon / .acomm / .aplan
+            .amem / .avis / .acb / .aid / .atime / .acon / .acomm / .aplan / .acog
           </span>
         </div>
         <p className="text-xs font-mono text-muted-foreground mt-2">{modeCopy}</p>

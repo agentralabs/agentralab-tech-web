@@ -17,6 +17,8 @@ const INSTALL_TARGETS: Record<string, string> = {
   "agentic-contract": "https://raw.githubusercontent.com/agentralabs/agentic-contract/main/scripts/install.sh",
   planning: "https://raw.githubusercontent.com/agentralabs/agentic-planning/main/scripts/install.sh",
   "agentic-planning": "https://raw.githubusercontent.com/agentralabs/agentic-planning/main/scripts/install.sh",
+  cognition: "https://raw.githubusercontent.com/agentralabs/agentic-cognition/main/scripts/install.sh",
+  "agentic-cognition": "https://raw.githubusercontent.com/agentralabs/agentic-cognition/main/scripts/install.sh",
 }
 
 function resolveTarget(target: string): string | undefined {
@@ -44,7 +46,7 @@ export async function GET(
     return NextResponse.json(
       {
         error: "Unknown installer target",
-        supported: ["memory", "vision", "codebase", "comm", "identity", "time", "contract", "planning"],
+        supported: ["memory", "vision", "codebase", "comm", "identity", "time", "contract", "planning", "cognition"],
       },
       { status: 404 }
     )
