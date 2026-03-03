@@ -9,7 +9,7 @@ import { Footer } from "@/components/footer"
 
 const ease = [0.22, 1, 0.36, 1] as const
 
-type ProjectKey = "AgenticMemory" | "AgenticVision" | "AgenticCodebase" | "AgenticIdentity" | "AgenticTime" | "AgenticContract" | "AgenticComm" | "AgenticPlanning" | "AgenticCognition"
+type ProjectKey = "AgenticMemory" | "AgenticVision" | "AgenticCodebase" | "AgenticIdentity" | "AgenticTime" | "AgenticContract" | "AgenticComm" | "AgenticPlanning" | "AgenticCognition" | "AgenticReality"
 
 interface QueryRow {
   id: number
@@ -97,6 +97,14 @@ const PROJECTS: {
     repo: "https://github.com/agentralabs/agentic-cognition",
     scenarioHref: "/projects/scenarios/agentic-cognition",
     line: "Longitudinal user modeling — living models of human consciousness for AI agents.",
+  },
+  {
+    key: "AgenticReality",
+    artifact: ".areal",
+    capacity: "deployment consciousness + resource awareness + reality physics + 15 MCP tools",
+    repo: "https://github.com/agentralabs/agentic-reality",
+    scenarioHref: "/projects/scenarios/agentic-reality",
+    line: "Existential grounding — deployment consciousness, resource awareness, and reality physics for AI agents.",
   },
 ]
 

@@ -12,6 +12,7 @@ const DEFAULT_RELEASE_REPOS = [
   "agentralabs/agentic-time",
   "agentralabs/agentic-planning",
   "agentralabs/agentic-cognition",
+  "agentralabs/agentic-reality",
   "agentralabs/agentralab-tech-web",
   "agentralabs/agentralabs-tech",
 ]

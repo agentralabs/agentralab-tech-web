@@ -172,6 +172,21 @@
     "time-mcp-resources",
     "time-mcp-tools",
     "time-playbooks-agent-integration",
-    "time-troubleshooting"
+    "time-troubleshooting",
+    "reality-docs",
+    "reality-experience-with-vs-without",
+    "reality-quickstart",
+    "reality-installation",
+    "reality-command-surface",
+    "reality-runtime-install-sync",
+    "reality-integration-guide",
+    "reality-concepts",
+    "reality-api-reference",
+    "reality-file-format",
+    "reality-benchmarks",
+    "reality-faq",
+    "reality-initial-problem-coverage",
+    "reality-primary-problem-coverage",
+    "reality-playbooks-agent-integration"
   ]
 }

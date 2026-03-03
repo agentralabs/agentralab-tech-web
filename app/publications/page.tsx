@@ -9,7 +9,7 @@ const ease = [0.22, 1, 0.36, 1] as const
 
 interface Paper {
   title: string
-  project: "AgenticMemory" | "AgenticVision" | "AgenticCodebase" | "AgenticIdentity" | "AgenticTime" | "AgenticContract" | "AgenticComm" | "AgenticPlanning" | "AgenticCognition"
+  project: "AgenticMemory" | "AgenticVision" | "AgenticCodebase" | "AgenticIdentity" | "AgenticTime" | "AgenticContract" | "AgenticComm" | "AgenticPlanning" | "AgenticCognition" | "AgenticReality"
   type: string
   summary: string
   pdf: string
@@ -123,6 +123,15 @@ const PAPERS: Paper[] = [
     source:
       "https://github.com/agentralabs/agentic-cognition/blob/main/paper/paper-i-cognition-format/agenticcognition-paper.tex",
   },
+  {
+    title: "AgenticReality: Existential Grounding for AI Agents Through Deployment Consciousness and Reality Physics",
+    project: "AgenticReality",
+    type: "Paper I",
+    summary: "Introduces 26 inventions across deployment consciousness, resource proprioception, reality physics, topology awareness, temporal grounding, stakes perception, and coherence maintenance — enabling AI agents to know where they exist and the consequences of their actions.",
+    pdf: "https://github.com/agentralabs/agentic-reality/blob/main/paper/paper-i-reality-format/agenticreality-paper.pdf",
+    source:
+      "https://github.com/agentralabs/agentic-reality/blob/main/paper/paper-i-reality-format/agenticreality-paper.tex",
+  },
 ]
 
 function SectionRail({ label, step }: { label: string; step: string }) {
@@ -221,17 +230,17 @@ export default function PublicationsPage() {
               Publications and technical papers
             </h1>
             <p className="mt-4 max-w-3xl text-xs lg:text-sm font-mono text-muted-foreground leading-relaxed">
-              Research corpus for AgenticMemory, AgenticVision, AgenticCodebase, AgenticIdentity, AgenticTime, AgenticContract, AgenticComm, AgenticPlanning, and AgenticCognition. Each paper documents core
+              Research corpus for AgenticMemory, AgenticVision, AgenticCodebase, AgenticIdentity, AgenticTime, AgenticContract, AgenticComm, AgenticPlanning, AgenticCognition, and AgenticReality. Each paper documents core
               architecture decisions, data formats, and MCP integration pathways.
             </p>
             <div className="mt-5 grid grid-cols-1 sm:grid-cols-3 gap-0 border-2 border-foreground">
               <div className="px-4 py-3 border-b-2 sm:border-b-0 sm:border-r-2 border-foreground">
                 <p className="text-[10px] tracking-[0.15em] uppercase font-mono text-muted-foreground">Total Papers</p>
-                <p className="text-2xl font-mono font-bold">12</p>
+                <p className="text-2xl font-mono font-bold">13</p>
               </div>
               <div className="px-4 py-3 border-b-2 sm:border-b-0 sm:border-r-2 border-foreground">
                 <p className="text-[10px] tracking-[0.15em] uppercase font-mono text-muted-foreground">Projects</p>
-                <p className="text-2xl font-mono font-bold">9</p>
+                <p className="text-2xl font-mono font-bold">10</p>
               </div>
               <div className="px-4 py-3">
                 <p className="text-[10px] tracking-[0.15em] uppercase font-mono text-muted-foreground">Open Access</p>
@@ -250,6 +259,7 @@ export default function PublicationsPage() {
         <GroupBlock project="AgenticComm" step="016e" />
         <GroupBlock project="AgenticPlanning" step="016f" />
         <GroupBlock project="AgenticCognition" step="016g" />
+        <GroupBlock project="AgenticReality" step="016h" />
 
         <section className="w-full px-6 pb-20 lg:px-12">
           <SectionRail label="// SECTION: RESEARCH_DIRECTION" step="017" />

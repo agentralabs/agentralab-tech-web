@@ -2386,3 +2386,212 @@ export function CognitionAllTogetherContent() {
     </>
   )
 }
+
+/* ─────────────────────────────── REALITY ── */
+
+export function DeploymentSoulContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        You deploy the same agent to staging and production. It behaves identically in both — same confidence levels, same tool usage patterns, same risk tolerance. It has <B>no awareness that it is running in production</B> where a wrong action costs real money, or in staging where experimentation is safe. Every deployment is a blank slate with zero situational identity.
+      </P>
+
+      <SectionLabel>With deployment soul</SectionLabel>
+      <P>
+        The agent reads its deployment soul on startup and instantly knows: environment is <B>production</B>, region is us-east-1, deployment timestamp was 2026-02-28T14:00Z, owning team is platform-infra, and risk profile is conservative. Tool invocations are automatically gated by the deployment context — destructive operations require explicit confirmation in production but run freely in staging.
+      </P>
+      <Agent>
+        Deployment soul loaded → environment: production, region: us-east-1, team: platform-infra, risk profile: conservative. Destructive tool calls gated. Confidence threshold elevated to 0.92 for autonomous actions. I know where I am and what I am allowed to do here.
+      </Agent>
+    </>
+  )
+}
+
+export function EnvironmentSensingContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        The agent runs inside a container but has no idea what resources surround it. It tries to call an external API that doesn&apos;t exist in this network. It attempts to write to a directory that is read-only. It assumes a GPU is available when only CPU is present. Every failure is <B>discovered at runtime through crashes</B>, not through awareness.
+      </P>
+
+      <SectionLabel>With environment sensing</SectionLabel>
+      <P>
+        On initialization, the agent probes its environment: available network endpoints, filesystem permissions, hardware capabilities, installed runtimes, and accessible services. The sensing sweep completes in <B>12 milliseconds</B> and populates a structured environment map. The agent plans actions only against resources it has confirmed exist.
+      </P>
+      <Agent>
+        Environment scan complete → 12 ms. Network: 3 reachable endpoints (API gateway, Redis, PostgreSQL), 1 unreachable (ML inference cluster — timeout). Filesystem: /data read-write, /config read-only. Compute: 4 vCPU, 8 GB RAM, no GPU. Adapting tool selection to available resources.
+      </Agent>
+    </>
+  )
+}
+
+export function ContextFingerprintContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        Two instances of the same agent run simultaneously on different tasks. They produce outputs, write logs, and make decisions — but there is <B>no way to distinguish which instance did what</B>. Audit trails merge into an undifferentiated stream. When something goes wrong, you cannot trace the action back to the specific execution context that produced it.
+      </P>
+
+      <SectionLabel>With context fingerprinting</SectionLabel>
+      <P>
+        Each agent execution receives a unique context fingerprint — a deterministic hash combining deployment soul, environment state, session ID, and initialization timestamp. Every action, log entry, and artifact is tagged with this fingerprint. Forensic analysis in <B>under 2 milliseconds</B> traces any output back to the exact execution context that created it.
+      </P>
+      <Agent>
+        Context fingerprint: cf-8a3f2b. Derived from: deployment soul (prod-us-east), environment hash (env-4c1d), session (sess-0092), timestamp (2026-02-28T14:03:12Z). All outputs tagged. Any artifact I produce links back to this exact execution context.
+      </Agent>
+    </>
+  )
+}
+
+export function ResourceBodyContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        The agent plans a complex workflow that requires 32 GB of memory, but it is running on a machine with 8 GB. It generates an image using a model that needs a GPU, but no GPU is attached. It schedules 50 parallel API calls, but the rate limit is 10 per second. The agent has <B>no model of its own physical constraints</B> and plans as if resources are infinite.
+      </P>
+
+      <SectionLabel>With resource body schema</SectionLabel>
+      <P>
+        The agent maintains a live resource body — a structured representation of its compute, memory, storage, network, and API budget constraints. Before planning any action, it checks the body schema. A workflow requiring 32 GB is <B>automatically decomposed into streaming chunks</B> that fit within the 8 GB envelope. Planning respects physical reality.
+      </P>
+      <Agent>
+        Resource body → compute: 4 vCPU (72% available), memory: 8 GB (3.1 GB free), storage: 20 GB (11.4 GB free), network: 100 Mbps, API budget: 10 req/s (Stripe), 50 req/s (internal). Planned workflow requires 32 GB — automatically splitting into 4 streaming phases of 2.8 GB each.
+      </Agent>
+    </>
+  )
+}
+
+export function CapabilityDiscoveryContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        The agent is configured with a list of tools from its system prompt. But the available tools change between deployments — a staging environment has a mock payment processor, production has the real Stripe API, and a local dev environment has neither. The agent <B>assumes capabilities that may not exist</B> and fails when it tries to use them.
+      </P>
+
+      <SectionLabel>With capability discovery</SectionLabel>
+      <P>
+        Instead of assuming a fixed tool list, the agent discovers available capabilities at runtime. It probes MCP servers, REST endpoints, and local binaries, building a <B>verified capability manifest</B> in 18 milliseconds. Tools are only available in the agent&apos;s planner if they respond to health checks. Capabilities that disappear mid-session trigger automatic re-discovery.
+      </P>
+      <Agent>
+        Capability discovery complete → 18 ms. Verified: 12 tools across 3 MCP servers. Unavailable: image-generation (ML cluster unreachable), payment-process (sandbox only in this environment). Capability manifest locked. Re-discovery scheduled on tool failure or every 5 minutes.
+      </Agent>
+    </>
+  )
+}
+
+export function CostConsciousnessContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        The agent calls GPT-4 for every subtask, makes 200 API calls to gather data it could have cached, and spawns a large compute job to process 50 rows of data. There is <B>no awareness of cost</B>. The agent optimizes for output quality without any constraint on resource expenditure. A $0.50 task costs $47 because nobody told the agent that money exists.
+      </P>
+
+      <SectionLabel>With cost consciousness</SectionLabel>
+      <P>
+        Every action has a cost estimate attached before execution. The agent maintains a running budget: token costs, API call costs, compute time costs, and storage costs. When the running total approaches the budget ceiling, the agent <B>downgrades strategies automatically</B> — switching from GPT-4 to a smaller model, batching API calls, or caching aggressively. Total cost for the task: <B>$0.62</B>.
+      </P>
+      <Agent>
+        Cost tracker → budget: $5.00, spent: $0.62 (12.4%). Breakdown: LLM tokens $0.38 (switched to GPT-4o-mini after phase 1), API calls $0.18 (batched 200→12 requests), compute $0.06. Savings vs unconstrained: $46.38. Budget headroom: $4.38 remaining.
+      </Agent>
+    </>
+  )
+}
+
+export function RealityAnchorsContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        The agent generates a deployment plan that references a Kubernetes cluster that was decommissioned last month. It recommends a library version that doesn&apos;t exist. It produces a SQL query for a table that was renamed. The agent&apos;s internal model has <B>drifted from reality</B>, and there is no mechanism to detect or correct the drift.
+      </P>
+
+      <SectionLabel>With reality anchors</SectionLabel>
+      <P>
+        Reality anchors are verified ground-truth checkpoints that the agent validates before acting. Before referencing the Kubernetes cluster, the agent pings it — <B>anchor check fails in 340 ms</B>, and the plan is revised. Before recommending a library version, it queries the package registry. Every claim about the external world passes through an anchor before becoming an action.
+      </P>
+      <Agent>
+        Reality anchor check → 3 anchors validated, 1 failed. Failed: k8s-cluster-west (decommissioned, last seen 2026-01-15). Revised plan: targeting k8s-cluster-east instead. Library version 3.2.1 confirmed in npm registry. Database table &quot;users_v2&quot; confirmed via schema introspection. Plan is reality-grounded.
+      </Agent>
+    </>
+  )
+}
+
+export function HallucinationDetectionContent() {
+  return (
+    <>
+      <SectionLabel>The problem today</SectionLabel>
+      <P>
+        The agent confidently states that &quot;the /api/v3/users endpoint supports pagination via cursor tokens.&quot; It sounds plausible. The developer trusts it and builds against that API. Three hours later, the build fails — <B>the endpoint only supports offset pagination</B>. The agent hallucinated a detail and presented it as fact. There was no warning, no confidence flag, no verification step.
+      </P>
+
+      <SectionLabel>With hallucination detection</SectionLabel>
+      <P>
+        Every factual claim the agent makes is tagged with a provenance category: <B>verified</B> (confirmed against a reality anchor), <B>recalled</B> (from memory with confidence score), or <B>inferred</B> (generated without direct evidence). Claims tagged as inferred are automatically flagged for verification before any downstream action depends on them. The pagination claim would be tagged inferred and <B>blocked from becoming an action input</B>.
+      </P>
+      <Agent>
+        Hallucination scan → 7 claims in current plan. Verified: 4 (anchored). Recalled: 2 (memory confidence 0.89 and 0.94). Inferred: 1 — &quot;/api/v3/users supports cursor pagination&quot; (NO anchor, NO memory source). Flagged for verification. Blocking downstream actions until confirmed. Querying API schema now.
+      </Agent>
+    </>
+  )
+}
+
+export function ArealArtifactContent() {
+  return (
+    <>
+      <SectionLabel>Single-file portability</SectionLabel>
+      <P>
+        The entire reality state — deployment soul, environment map, context fingerprint, resource body, capability manifest, cost tracking, reality anchors, and hallucination flags — lives in <B>one .areal file</B>. Move the file to a new deployment and the agent instantly knows where it is, what it can do, and what it cannot trust. No external database, no cloud dependency.
+      </P>
+
+      <SectionLabel>Integrity verification</SectionLabel>
+      <P>
+        The .areal format includes checksums for structural integrity. On load, the runtime verifies that <B>no deployment context or reality anchors have been tampered with</B>. Stale environment data is flagged for re-sensing. The file is both a snapshot and a verification contract.
+      </P>
+
+      <Agent>
+        Artifact stats → file: service.areal, size: 3.8 KB. Deployment soul: prod-us-east. Environment sensors: 6 probed. Context fingerprint: cf-8a3f2b. Resource body: 4 constraints active. Capabilities: 12 verified. Cost spent: $0.62 of $5.00. Reality anchors: 4 (3 valid, 1 stale). Hallucination flags: 1 pending. Integrity: verified, 0 errors.
+      </Agent>
+    </>
+  )
+}
+
+export function RealityAllTogetherContent() {
+  return (
+    <>
+      <SectionLabel>End-to-end: deploying to production with full situational awareness</SectionLabel>
+      <P>
+        A new version of a payment service needs to be deployed to production. Without AgenticReality, the agent follows a generic deployment script with no awareness of its environment, resource limits, or the truthfulness of its own assumptions. With it, every step is <B>grounded in verified reality</B>.
+      </P>
+
+      <SectionLabel>Deployment soul activation</SectionLabel>
+      <P>
+        The agent reads its deployment soul: production, us-east-1, payment-service team, <B>risk profile: critical</B>. All destructive operations require double confirmation. Rollback plan must be verified before any deployment step executes.
+      </P>
+
+      <SectionLabel>Environment sensing and capability discovery</SectionLabel>
+      <P>
+        The environment sweep discovers: Kubernetes cluster healthy, container registry accessible, database accepting connections, <B>but the canary analysis service is unreachable</B>. The agent adapts — it will use manual health-check polling instead of automated canary analysis. Capability manifest updated in 22 ms.
+      </P>
+
+      <SectionLabel>Resource body and cost consciousness</SectionLabel>
+      <P>
+        The deployment plan requires spinning up 3 canary pods. Resource body check confirms sufficient cluster capacity. Cost estimate: <B>$2.40 for the rolling deployment</B> (compute + monitoring + rollback reserve). Within the $10 budget ceiling. Proceeding.
+      </P>
+
+      <SectionLabel>Reality anchors and hallucination detection</SectionLabel>
+      <P>
+        Before applying the deployment manifest, the agent validates 5 reality anchors: container image exists in registry (verified), database migration applied (verified), feature flags set correctly (verified), load balancer configuration updated (<B>FAILED — stale config detected</B>), and rollback image tagged (verified). The deployment pauses until the load balancer anchor is resolved.
+      </P>
+
+      <Agent>
+        Deployment grounded → Soul: prod-critical. Environment: 4/5 services reachable (canary analysis down, adapted). Resources: sufficient. Cost: $2.40 estimated within $10 budget. Reality anchors: 4/5 passed, 1 failed (load balancer config stale). Deployment PAUSED pending anchor resolution. Hallucination flags: 0. Context fingerprint: cf-9b4e1a. Artifact: deploy-v2.14.areal (4.1 KB).
+      </Agent>
+    </>
+  )
+}

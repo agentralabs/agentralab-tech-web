@@ -98,6 +98,15 @@ const SCENARIOS: Scenario[] = [
       "\"Based on their belief system (crystallized: 'I value work-life balance'), decision fingerprint (risk-averse, long-term oriented), and shadow pattern (fear of failure), the model predicts they would negotiate rather than accept or decline outright.\"",
     href: "/projects/scenarios/agentic-cognition",
   },
+  {
+    question: "\"Where am I and what can I do?\"",
+    without:
+      "AI agents have no awareness of their deployment context, available resources, or the consequences of their actions.",
+    withLabel: "WITH AGENTICREALITY",
+    withResponse:
+      "\"Deployment: cloud-us-east-1, GPU: A100 (72% utilized), memory pressure: moderate. This is a production environment with 847 active users. Blast radius for this operation: HIGH. Recommend staging first.\"",
+    href: "/projects/scenarios/agentic-reality",
+  },
 ]
 
 function ScenarioCard({ scenario, index }: { scenario: Scenario; index: number }) {

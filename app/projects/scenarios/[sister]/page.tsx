@@ -4,7 +4,7 @@ import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { ScenarioPageView } from "@/components/scenario-page"
 
-const VALID_SISTERS = ["agentic-memory", "agentic-vision", "agentic-codebase", "agentic-identity", "agentic-time", "agentic-contract", "agentic-comm", "agentic-planning", "agentic-cognition"] as const
+const VALID_SISTERS = ["agentic-memory", "agentic-vision", "agentic-codebase", "agentic-identity", "agentic-time", "agentic-contract", "agentic-comm", "agentic-planning", "agentic-cognition", "agentic-reality"] as const
 
 const META: Record<string, { title: string; description: string }> = {
   "agentic-memory": {
@@ -51,6 +51,11 @@ const META: Record<string, { title: string; description: string }> = {
     title: "AgenticCognition Scenarios — Agentra Labs",
     description:
       "See AgenticCognition capabilities in action: longitudinal user modeling, belief physics, decision fingerprints, shadow psychology, and predictive simulation in portable .acog artifacts.",
+  },
+  "agentic-reality": {
+    title: "AgenticReality Scenarios — Agentra Labs",
+    description:
+      "See AgenticReality capabilities in action: deployment consciousness, resource proprioception, reality physics, topology awareness, temporal grounding, stakes perception, and coherence maintenance in portable .areal artifacts.",
   },
 }
 

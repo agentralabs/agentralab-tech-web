@@ -20,6 +20,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "agentic-vision",
     "agentic-codebase",
     "agentic-cognition",
+    "agentic-reality",
   ].map((sister) => ({
     url: `${siteConfig.url}/projects/scenarios/${sister}`,
     lastModified,

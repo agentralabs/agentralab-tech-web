@@ -333,6 +333,38 @@ const MODULES: ModuleCard[] = [
     scenarioHref: "/projects/scenarios/agentic-cognition",
     highlighted: false,
   },
+  {
+    id: "agentic-reality",
+    frame: "PROJECTS",
+    value: "AgenticReality",
+    period: "/ AVAILABLE",
+    tag: "READY",
+    description: "\"Where am I running?\" Your agent has no idea it's on a GPU with 72% utilization, in a production environment with 847 active users, or that the next action has a high blast radius. AgenticReality gives agents existential grounding.",
+    summary:
+      "Every agent gets deployment consciousness: knowing where it exists, what resources it has, what's real vs hallucinated, and the consequences of its actions. All grounding state lives in portable .areal files.",
+    deepSummary: [
+      {
+        lead: "Deployment consciousness:",
+        body: "Agents know their environment, region, GPU state, memory pressure, and active user count in real time.",
+      },
+      {
+        lead: "Resource proprioception:",
+        body: "Awareness of compute, memory, storage, and network resources available — and their utilization trajectories.",
+      },
+      {
+        lead: "Reality physics:",
+        body: "Distinguish real observations from hallucinated inferences. Confidence-weighted grounding for every claim.",
+      },
+      {
+        lead: "Stakes perception:",
+        body: "Blast radius analysis before every action. Production vs staging awareness with consequence modeling.",
+      },
+    ],
+    cta: "VIEW REPO",
+    href: "https://github.com/agentralabs/agentic-reality",
+    scenarioHref: "/projects/scenarios/agentic-reality",
+    highlighted: false,
+  },
 ]
 
 function ModuleGlyph({ id, highlighted }: { id: ModuleCard["id"]; highlighted: boolean }) {
@@ -431,6 +463,34 @@ function ModuleGlyph({ id, highlighted }: { id: ModuleCard["id"]; highlighted: b
         <circle cx="82" cy="54" r="6" className={accentClass} stroke="currentColor" strokeWidth="2" />
         <path d="M79 54l2 2 4-4" className={accentClass} stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
         <path d="M20 20l10-4M100 20l-10-4" className={baseClass} stroke="currentColor" strokeWidth="1.5" strokeDasharray="4 3" />
+      </svg>
+    )
+  }
+
+  if (id === "agentic-cognition") {
+    return (
+      <svg viewBox="0 0 120 80" className="w-full h-24" fill="none" aria-label="AgenticCognition glyph">
+        <circle cx="60" cy="40" r="24" className={baseClass} stroke="currentColor" strokeWidth="2" />
+        <circle cx="60" cy="40" r="10" className={accentClass} stroke="currentColor" strokeWidth="2" />
+        <circle cx="60" cy="40" r="3" className={accentClass} fill="currentColor" />
+        <path d="M60 16V8M60 72v-8M36 40H28M92 40h-8" className={baseClass} stroke="currentColor" strokeWidth="1.5" />
+        <path d="M42 22l-4-4M78 58l4 4M42 58l-4 4M78 22l4-4" className={accentClass} stroke="currentColor" strokeWidth="1.5" strokeDasharray="3 2" />
+      </svg>
+    )
+  }
+
+  if (id === "agentic-reality") {
+    return (
+      <svg viewBox="0 0 120 80" className="w-full h-24" fill="none" aria-label="AgenticReality glyph">
+        <rect x="20" y="12" width="80" height="56" rx="2" className={baseClass} stroke="currentColor" strokeWidth="2" />
+        <path d="M20 28h80" className={baseClass} stroke="currentColor" strokeWidth="1.5" />
+        <circle cx="30" cy="20" r="3" className={accentClass} fill="currentColor" />
+        <circle cx="40" cy="20" r="3" className={baseClass} fill="currentColor" />
+        <circle cx="50" cy="20" r="3" className={baseClass} fill="currentColor" />
+        <rect x="30" y="34" width="24" height="10" rx="1" className={accentClass} stroke="currentColor" strokeWidth="1.5" />
+        <rect x="30" y="50" width="16" height="10" rx="1" className={baseClass} stroke="currentColor" strokeWidth="1.5" />
+        <rect x="66" y="34" width="24" height="26" rx="1" className={baseClass} stroke="currentColor" strokeWidth="1.5" />
+        <path d="M70 42h16M70 48h12M70 54h8" className={accentClass} stroke="currentColor" strokeWidth="1.5" />
       </svg>
     )
   }
@@ -621,12 +681,12 @@ export function PricingSection() {
       >
         <div className="flex flex-col gap-3">
           <h2 className="text-2xl lg:text-3xl font-mono font-bold tracking-tight uppercase text-foreground text-balance">
-            Nine systems. One cognitive layer.
+            Ten systems. One cognitive layer.
           </h2>
           <p className="text-xs lg:text-sm font-mono text-muted-foreground leading-relaxed max-w-md">
             AgenticMemory — reasoning that persists. AgenticVision — visual state that&apos;s queryable.
             AgenticCodebase — code understanding with prediction. AgenticIdentity — cryptographic proof of agent action. AgenticTime — temporal reasoning with deadlines. AgenticContract — policy governance for agents.
-            AgenticComm — structured channels and message routing for cross-agent coordination. AgenticPlanning — persistent goals, decisions, and commitments. AgenticCognition — longitudinal user modeling and living models of human consciousness. All open source. All shipped.
+            AgenticComm — structured channels and message routing for cross-agent coordination. AgenticPlanning — persistent goals, decisions, and commitments. AgenticCognition — longitudinal user modeling and living models of human consciousness. AgenticReality — existential grounding with deployment consciousness and reality physics. All open source. All shipped.
           </p>
         </div>
         <StatusLine />
@@ -657,7 +717,7 @@ export function PricingSection() {
       >
         <span className="text-[10px] tracking-[0.2em] uppercase text-muted-foreground font-mono">
           {
-            "* Nine independent systems that work well together. Research-backed. MIT licensed. Production ready."
+            "* Ten independent systems that work well together. Research-backed. MIT licensed. Production ready."
           }
         </span>
         <div className="flex-1 border-t border-border" />

@@ -19,6 +19,8 @@ const TARGET_SCRIPTS: Record<string, string> = {
   "agentic-planning": "https://raw.githubusercontent.com/agentralabs/agentic-planning/main/scripts/install.sh",
   cognition: "https://raw.githubusercontent.com/agentralabs/agentic-cognition/main/scripts/install.sh",
   "agentic-cognition": "https://raw.githubusercontent.com/agentralabs/agentic-cognition/main/scripts/install.sh",
+  reality: "https://raw.githubusercontent.com/agentralabs/agentic-reality/main/scripts/install.sh",
+  "agentic-reality": "https://raw.githubusercontent.com/agentralabs/agentic-reality/main/scripts/install.sh",
 }
 
 const VALID_PROFILES = new Set(["desktop", "terminal", "server"])
@@ -55,7 +57,7 @@ export async function GET(
     return NextResponse.json(
       {
         error: "Unknown installer target",
-        supported: ["memory", "vision", "codebase", "identity", "time", "contract", "comm", "planning", "cognition"],
+        supported: ["memory", "vision", "codebase", "identity", "time", "contract", "comm", "planning", "cognition", "reality"],
       },
       { status: 404 }
     )

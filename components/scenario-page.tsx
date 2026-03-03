@@ -15,6 +15,7 @@ import { CONTRACT_HERO, CONTRACT_SCENARIOS } from "@/data/scenarios-contract"
 import { COMM_HERO, COMM_SCENARIOS } from "@/data/scenarios-comm"
 import { PLANNING_HERO, PLANNING_SCENARIOS } from "@/data/scenarios-planning"
 import { COGNITION_HERO, COGNITION_SCENARIOS } from "@/data/scenarios-cognition"
+import { REALITY_HERO, REALITY_SCENARIOS } from "@/data/scenarios-reality"
 import * as SC from "@/components/scenario-content"
 
 const ease = [0.22, 1, 0.36, 1] as const
@@ -137,6 +138,16 @@ const CONTENT_MAP: Record<string, () => React.ReactNode> = {
   "thought-provenance": () => <SC.ThoughtProvenanceContent />,
   "reasoning-replay": () => <SC.ReasoningReplayContent />,
   "acog-artifact": () => <SC.AcogArtifactContent />,
+  // Reality
+  "deployment-soul": () => <SC.DeploymentSoulContent />,
+  "environment-sensing": () => <SC.EnvironmentSensingContent />,
+  "context-fingerprint": () => <SC.ContextFingerprintContent />,
+  "resource-body": () => <SC.ResourceBodyContent />,
+  "capability-discovery": () => <SC.CapabilityDiscoveryContent />,
+  "cost-consciousness": () => <SC.CostConsciousnessContent />,
+  "reality-anchors": () => <SC.RealityAnchorsContent />,
+  "hallucination-detection": () => <SC.HallucinationDetectionContent />,
+  "areal-artifact": () => <SC.ArealArtifactContent />,
 }
 
 const ALL_TOGETHER_MAP: Record<string, () => React.ReactNode> = {
@@ -149,6 +160,7 @@ const ALL_TOGETHER_MAP: Record<string, () => React.ReactNode> = {
   "agentic-comm": () => <SC.CommAllTogetherContent />,
   "agentic-planning": () => <SC.PlanningAllTogetherContent />,
   "agentic-cognition": () => <SC.CognitionAllTogetherContent />,
+  "agentic-reality": () => <SC.RealityAllTogetherContent />,
 }
 
 const ALL_TOGETHER_PLAIN: Record<string, string> = {
@@ -170,6 +182,8 @@ const ALL_TOGETHER_PLAIN: Record<string, string> = {
     "This is the difference between an agent that picks the next task off a list and one that maintains a living goal graph with priorities, trade-offs, and recorded decisions. AgenticPlanning turns reactive task execution into strategic reasoning where every commitment is tracked, every decision has a rationale, and every goal conflict is resolved with an auditable chain.",
   "agentic-cognition":
     "This is the difference between an agent that produces answers from a black box and one that maintains explicit reasoning chains, evaluates competing hypotheses, and audits its own logic for gaps and circular reasoning. AgenticCognition turns opaque inference into structured, replayable, self-correcting thought processes where every conclusion traces back to evidence and every confidence estimate is calibrated against reality.",
+  "agentic-reality":
+    "This is the difference between an agent that operates in a vacuum and one that knows exactly where it is deployed, what resources it has, what it can actually do, and whether its beliefs match reality. AgenticReality turns context-blind execution into situationally aware operation where every action is grounded in verified deployment state, resource constraints, and reality-anchored facts.",
 }
 
 function getConfig(sister: string) {
@@ -190,6 +204,8 @@ function getConfig(sister: string) {
       return { hero: PLANNING_HERO, groups: PLANNING_SCENARIOS, repo: "https://github.com/agentralabs/agentic-planning" }
     case "agentic-cognition":
       return { hero: COGNITION_HERO, groups: COGNITION_SCENARIOS, repo: "https://github.com/agentralabs/agentic-cognition" }
+    case "agentic-reality":
+      return { hero: REALITY_HERO, groups: REALITY_SCENARIOS, repo: "https://github.com/agentralabs/agentic-reality" }
     default:
       return { hero: MEMORY_HERO, groups: MEMORY_SCENARIOS, repo: "https://github.com/agentralabs/agentic-memory" }
   }
