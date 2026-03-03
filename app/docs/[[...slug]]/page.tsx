@@ -1,18 +1,11 @@
 import type { Metadata } from "next"
 import type { ComponentType } from "react"
-import { cookies } from "next/headers"
 import { notFound } from "next/navigation"
 import { createRelativeLink } from "fumadocs-ui/mdx"
 import type { TOCItemType } from "fumadocs-core/toc"
 import { getMDXComponents } from "@/mdx-components"
-import { getDocsSource, source } from "@/lib/source"
-import {
-  DOCS_LANGUAGE_COOKIE,
-  docsUi,
-  localizeDocsHref,
-  localizeDocsLabel,
-  normalizeDocsLanguage,
-} from "@/lib/docs-i18n"
+import { source } from "@/lib/source"
+import { docsUi } from "@/lib/docs-i18n"
 
 interface DocsPageProps {
   params: Promise<{ slug?: string[] }>
@@ -25,43 +18,41 @@ interface DocsPageData {
   toc?: TOCItemType[]
 }
 
-function tocTitleToText(value: unknown, language: "en" | "zh"): string {
+function tocTitleToText(value: unknown): string {
   if (typeof value === "string" || typeof value === "number") {
-    const label = String(value)
-    return localizeDocsLabel(label, language)
+    return String(value)
   }
 
   if (Array.isArray(value)) {
-    const joined = value.map((item) => tocTitleToText(item, language)).join("").trim()
-    return localizeDocsLabel(joined, language)
+    return value.map((item) => tocTitleToText(item)).join("").trim()
   }
 
   if (value && typeof value === "object") {
     const record = value as Record<string, unknown>
-    const localized = language === "zh" ? record.zh : record.en
+    const localized = record.en
     if (localized != null) {
-      const fromLocalized = tocTitleToText(localized, language)
+      const fromLocalized = tocTitleToText(localized)
       if (fromLocalized) return fromLocalized
     }
 
     if ("props" in record && record.props && typeof record.props === "object") {
       const props = record.props as Record<string, unknown>
-      const fromChildren = tocTitleToText(props.children, language)
+      const fromChildren = tocTitleToText(props.children)
       if (fromChildren) return fromChildren
     }
 
     if ("children" in record) {
-      const fromChildren = tocTitleToText(record.children, language)
+      const fromChildren = tocTitleToText(record.children)
       if (fromChildren) return fromChildren
     }
 
     if ("value" in record) {
-      const fromValue = tocTitleToText(record.value, language)
+      const fromValue = tocTitleToText(record.value)
       if (fromValue) return fromValue
     }
 
     if ("title" in record) {
-      const fromTitle = tocTitleToText(record.title, language)
+      const fromTitle = tocTitleToText(record.title)
       if (fromTitle) return fromTitle
     }
   }
@@ -74,16 +65,15 @@ function tocHrefToText(value: unknown): string {
   return value.startsWith("#") ? value : `#${value.replace(/^#*/, "")}`
 }
 
-function fallbackLabelFromHref(href: string, language: "en" | "zh"): string {
+function fallbackLabelFromHref(href: string): string {
   const normalized = href.replace(/^#/, "").trim()
   if (!normalized) return ""
-  const label = normalized
+  return normalized
     .split("-")
     .map((part) => part.trim())
     .filter(Boolean)
     .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
     .join(" ")
-  return localizeDocsLabel(label, language)
 }
 
 function isInvalidTocLabel(label: string): boolean {
@@ -92,42 +82,36 @@ function isInvalidTocLabel(label: string): boolean {
   return false
 }
 
-function parseDocsLanguageFromSlug(
+function parseDocsSlug(
   slug: string[] | undefined,
-  fallback: "en" | "zh",
-): { language: "en" | "zh"; normalizedSlug: string[] | undefined } {
+): { normalizedSlug: string[] | undefined } {
   if (!slug?.length) {
-    return { language: fallback, normalizedSlug: slug }
+    return { normalizedSlug: slug }
   }
 
   const [first, ...rest] = slug
+  // Strip locale prefix if present
   if (first === "en" || first === "zh") {
-    return {
-      language: first,
-      normalizedSlug: rest.length ? rest : undefined,
-    }
+    return { normalizedSlug: rest.length ? rest : undefined }
   }
 
-  return { language: fallback, normalizedSlug: slug }
+  return { normalizedSlug: slug }
 }
 
 export default async function Page({ params }: DocsPageProps) {
   const { slug: rawSlug } = await params
-  const cookieStore = await cookies()
-  const fallbackLanguage = normalizeDocsLanguage(cookieStore.get(DOCS_LANGUAGE_COOKIE)?.value)
-  const { language, normalizedSlug: slug } = parseDocsLanguageFromSlug(rawSlug, fallbackLanguage)
-  const ui = docsUi(language)
-  const docsSource = getDocsSource(language)
-  const page = docsSource.getPage(slug) ?? source.getPage(slug)
+  const { normalizedSlug: slug } = parseDocsSlug(rawSlug)
+  const ui = docsUi("en")
+  const page = source.getPage(slug)
   if (!page) notFound()
 
   const data = page.data as DocsPageData
   const MDX = data.body
   const pageSlugRaw = page.url.replace(/^\/docs\/?/, "") || "index"
   const pageSlug =
-    pageSlugRaw === "en" || pageSlugRaw === "zh"
+    pageSlugRaw === "en"
       ? "index"
-      : pageSlugRaw.replace(/^(en|zh)\//, "") || "index"
+      : pageSlugRaw.replace(/^en\//, "") || "index"
   const sectionLabel =
     pageSlug.startsWith("workspace-") ? "Workspace" :
     pageSlug.startsWith("memory-") ? "AgenticMemory" :
@@ -146,13 +130,13 @@ export default async function Page({ params }: DocsPageProps) {
   return (
     <div className="docs-article-wrap">
       <article className="docs-article">
-        <p className="docs-eyebrow">{localizeDocsLabel(sectionLabel, language)}</p>
-        <h1>{data.title ? localizeDocsLabel(data.title, language) : data.title}</h1>
-        {data.description ? <p className="docs-description">{localizeDocsLabel(data.description, language)}</p> : null}
+        <p className="docs-eyebrow">{sectionLabel}</p>
+        <h1>{data.title}</h1>
+        {data.description ? <p className="docs-description">{data.description}</p> : null}
         <div className="docs-content">
           <MDX
             components={getMDXComponents({
-              a: createRelativeLink(docsSource, page),
+              a: createRelativeLink(source, page),
             })}
           />
         </div>
@@ -164,8 +148,8 @@ export default async function Page({ params }: DocsPageProps) {
           {(data.toc ?? [])
             .map((item) => {
               const href = tocHrefToText(item.url)
-              const rawLabel = tocTitleToText(item.title, language)
-              const label = isInvalidTocLabel(rawLabel) ? fallbackLabelFromHref(href, language) : rawLabel
+              const rawLabel = tocTitleToText(item.title)
+              const label = isInvalidTocLabel(rawLabel) ? fallbackLabelFromHref(href) : rawLabel
               return { href, label }
             })
             .filter((item) => item.href && item.label)
@@ -186,17 +170,14 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: DocsPageProps): Promise<Metadata> {
   const { slug: rawSlug } = await params
-  const cookieStore = await cookies()
-  const fallbackLanguage = normalizeDocsLanguage(cookieStore.get(DOCS_LANGUAGE_COOKIE)?.value)
-  const { language, normalizedSlug: slug } = parseDocsLanguageFromSlug(rawSlug, fallbackLanguage)
-  const docsSource = getDocsSource(language)
-  const page = docsSource.getPage(slug) ?? source.getPage(slug)
+  const { normalizedSlug: slug } = parseDocsSlug(rawSlug)
+  const page = source.getPage(slug)
   if (!page) notFound()
   const data = page.data as { title?: string; description?: string }
 
   return {
-    title: data.title ? localizeDocsLabel(data.title, language) : data.title,
-    description: data.description ? localizeDocsLabel(data.description, language) : data.description,
-    alternates: { canonical: localizeDocsHref(page.url, language) },
+    title: data.title,
+    description: data.description,
+    alternates: { canonical: page.url },
   }
 }

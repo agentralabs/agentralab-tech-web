@@ -2,14 +2,9 @@ import { NextRequest, NextResponse } from "next/server"
 
 const DOCS_LANGUAGE_COOKIE = "agentra_docs_lang"
 const DOCS_ROOT = "/docs"
-const LOCALES = new Set(["en", "zh"])
-
-function normalizeLanguage(value: string | undefined): "en" | "zh" {
-  return value === "zh" ? "zh" : "en"
-}
 
 function splitDocsPath(pathname: string): {
-  localeInPath?: "en" | "zh"
+  localeInPath?: "en"
   remainder: string
 } {
   if (pathname === DOCS_ROOT) {
@@ -23,10 +18,18 @@ function splitDocsPath(pathname: string): {
   const segments = pathname.slice(`${DOCS_ROOT}/`.length).split("/")
   const first = segments[0]
 
-  if (LOCALES.has(first)) {
+  if (first === "en") {
     const rest = segments.slice(1).join("/")
     return {
-      localeInPath: first as "en" | "zh",
+      localeInPath: "en",
+      remainder: rest ? `/${rest}` : "",
+    }
+  }
+
+  // Redirect any old /docs/zh/... URLs to /docs/en/...
+  if (first === "zh") {
+    const rest = segments.slice(1).join("/")
+    return {
       remainder: rest ? `/${rest}` : "",
     }
   }
@@ -41,44 +44,19 @@ export function proxy(request: NextRequest) {
     return NextResponse.next()
   }
 
-  const cookieValue = request.cookies.get(DOCS_LANGUAGE_COOKIE)?.value
-  const cookieLang = normalizeLanguage(cookieValue)
   const { localeInPath, remainder } = splitDocsPath(nextUrl.pathname)
 
-  if (localeInPath) {
-    if (localeInPath === "zh") {
-      const redirectUrl = nextUrl.clone()
-      redirectUrl.pathname = `${DOCS_ROOT}/en${remainder}`
-      const response = NextResponse.redirect(redirectUrl)
-      response.cookies.set(DOCS_LANGUAGE_COOKIE, "en", {
-        path: "/",
-        maxAge: 60 * 60 * 24 * 365,
-        sameSite: "lax",
-      })
-      return response
-    }
-
-    if (cookieLang !== localeInPath) {
-      const redirectUrl = nextUrl.clone()
-      const response = NextResponse.redirect(redirectUrl)
-      response.cookies.set(DOCS_LANGUAGE_COOKIE, localeInPath, {
-        path: "/",
-        maxAge: 60 * 60 * 24 * 365,
-        sameSite: "lax",
-      })
-      return response
-    }
-
+  if (localeInPath === "en") {
     return NextResponse.next()
   }
 
-  const targetLang = "en"
+  // Redirect bare /docs, /docs/zh/..., or any non-locale path to /docs/en/...
   const redirectUrl = nextUrl.clone()
-  redirectUrl.pathname = `${DOCS_ROOT}/${targetLang}${remainder}`
+  redirectUrl.pathname = `${DOCS_ROOT}/en${remainder}`
   redirectUrl.searchParams.delete("lang")
 
   const response = NextResponse.redirect(redirectUrl)
-  response.cookies.set(DOCS_LANGUAGE_COOKIE, targetLang, {
+  response.cookies.set(DOCS_LANGUAGE_COOKIE, "en", {
     path: "/",
     maxAge: 60 * 60 * 24 * 365,
     sameSite: "lax",

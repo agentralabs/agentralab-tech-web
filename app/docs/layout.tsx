@@ -2,17 +2,10 @@ import type { ReactNode } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { Manrope } from "next/font/google"
-import { cookies } from "next/headers"
-import { getDocsSource } from "@/lib/source"
+import { source } from "@/lib/source"
 import { DocsSidebarNav } from "@/components/docs-sidebar-nav"
 import { DocsTopControls } from "@/components/docs-top-controls"
-import {
-  DOCS_LANGUAGE_COOKIE,
-  docsUi,
-  localizeDocsHref,
-  localizeDocsLabel,
-  normalizeDocsLanguage,
-} from "@/lib/docs-i18n"
+import { docsUi } from "@/lib/docs-i18n"
 import navContract from "@/docs/ecosystem/navigation-contract.json"
 import "./docs.css"
 
@@ -75,8 +68,8 @@ function titleFor(url: string, title?: string) {
 
 function slugFromUrl(url: string) {
   const raw = url.replace(/^\/docs\/?/, "") || "index"
-  if (raw === "en" || raw === "zh") return "index"
-  return raw.replace(/^(en|zh)\//, "") || "index"
+  if (raw === "en") return "index"
+  return raw.replace(/^en\//, "") || "index"
 }
 
 function suffixForPrefix(slug: string, prefix: string) {
@@ -84,10 +77,7 @@ function suffixForPrefix(slug: string, prefix: string) {
   return slug.slice(prefix.length)
 }
 
-function toSisterGroupLabel(rawLabel: string, language: "en" | "zh") {
-  if (language === "zh") {
-    return rawLabel.replace(/\s*文档总览$/u, "").trim()
-  }
+function toSisterGroupLabel(rawLabel: string) {
   return rawLabel.replace(/\s*Docs$/i, "").trim()
 }
 
@@ -121,17 +111,14 @@ function sortPrefixedGroup(items: DocsNavItem[], prefix: string, orderedSuffixes
 }
 
 export default async function DocsRouteLayout({ children }: DocsRouteLayoutProps) {
-  const cookieStore = await cookies()
-  const language = normalizeDocsLanguage(cookieStore.get(DOCS_LANGUAGE_COOKIE)?.value)
-  const ui = docsUi(language)
-  const docsSource = getDocsSource(language)
+  const ui = docsUi("en")
 
-  const allItems: DocsNavItem[] = docsSource
+  const allItems: DocsNavItem[] = source
     .getPages()
     .filter((page) => page.url.startsWith("/docs"))
     .map((page) => ({
-      href: localizeDocsHref(page.url, language),
-      label: localizeDocsLabel(titleFor(page.url, page.data.title), language),
+      href: page.url,
+      label: titleFor(page.url, page.data.title),
       description: typeof page.data.description === "string" ? page.data.description : undefined,
     }))
 
@@ -183,15 +170,12 @@ export default async function DocsRouteLayout({ children }: DocsRouteLayoutProps
       if (!landing) return null
 
       const derivedLabel = landing
-        ? toSisterGroupLabel(landing.label, language)
-        : localizeDocsLabel(
-            prefix
-              .replace(/-$/, "")
-              .split("-")
-              .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-              .join(" "),
-            language,
-          )
+        ? toSisterGroupLabel(landing.label)
+        : prefix
+            .replace(/-$/, "")
+            .split("-")
+            .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+            .join(" ")
 
       return {
         prefix,
@@ -240,27 +224,27 @@ export default async function DocsRouteLayout({ children }: DocsRouteLayoutProps
 
   const coreGroups = {
     Overview: {
-      label: localizeDocsLabel("Overview", language),
+      label: "Overview",
       items: overviewItems,
       defaultOpen: true,
     },
     Workspace: {
-      label: localizeDocsLabel("Workspace", language),
+      label: "Workspace",
       items: workspaceItems,
       defaultOpen: true,
     },
     "Feedback and Community": {
-      label: localizeDocsLabel("Feedback and Community", language),
+      label: "Feedback and Community",
       items: feedbackItems,
       defaultOpen: true,
     },
     "System Architecture": {
-      label: localizeDocsLabel("System Architecture", language),
+      label: "System Architecture",
       items: architectureItems,
       defaultOpen: true,
     },
     "Use-Case Playbooks": {
-      label: localizeDocsLabel("Use-Case Playbooks", language),
+      label: "Use-Case Playbooks",
       items: playbookItems,
       defaultOpen: true,
     },
@@ -279,7 +263,7 @@ export default async function DocsRouteLayout({ children }: DocsRouteLayoutProps
   return (
     <div className={`docs-shell docs-variant-aspen ${manrope.variable}`}>
       <header className="docs-topbar">
-        <Link href={localizeDocsHref("/docs", language)} className="docs-brand">
+        <Link href="/docs/en" className="docs-brand">
           <span className="docs-brand-mark">
             <Image
               src="/images/agentra-logo-current.svg"
@@ -295,10 +279,10 @@ export default async function DocsRouteLayout({ children }: DocsRouteLayoutProps
           </span>
         </Link>
         <nav className="docs-topnav">
-          <Link href={localizeDocsHref("/docs", language)}>{localizeDocsLabel("Guides", language)}</Link>
-          {apiReferenceHref ? <Link href={apiReferenceHref}>{localizeDocsLabel("API Reference", language)}</Link> : null}
+          <Link href="/docs/en">Guides</Link>
+          {apiReferenceHref ? <Link href={apiReferenceHref}>API Reference</Link> : null}
         </nav>
-        <DocsTopControls language={language} items={orderedItems} />
+        <DocsTopControls language="en" items={orderedItems} />
         <div className="docs-top-links">
           <a className="docs-top-link docs-top-link-ghost" href="https://agentralabs.tech" target="_blank" rel="noreferrer">
             {ui.links.website}

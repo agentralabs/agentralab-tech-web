@@ -42,10 +42,19 @@
       "enabled": true
     },
     {
+      "key": "cognition",
+      "repo": "agentic-cognition",
+      "name": "AgenticCognition",
+      "order": 1003,
+      "landingSlug": "cognition-docs",
+      "includeLanding": true,
+      "enabled": true
+    },
+    {
       "key": "comm",
       "repo": "agentic-comm",
       "name": "AgenticComm",
-      "order": 1003,
+      "order": 1004,
       "landingSlug": "comm-docs",
       "includeLanding": true,
       "enabled": true
@@ -54,7 +63,7 @@
       "key": "contract",
       "repo": "agentic-contract",
       "name": "AgenticContract",
-      "order": 1004,
+      "order": 1005,
       "landingSlug": "contract-docs",
       "includeLanding": true,
       "enabled": true
@@ -63,7 +72,7 @@
       "key": "identity",
       "repo": "agentic-identity",
       "name": "AgenticIdentity",
-      "order": 1005,
+      "order": 1006,
       "landingSlug": "identity-docs",
       "includeLanding": true,
       "enabled": true
@@ -72,7 +81,7 @@
       "key": "planning",
       "repo": "agentic-planning",
       "name": "AgenticPlanning",
-      "order": 1006,
+      "order": 1007,
       "landingSlug": "planning-docs",
       "includeLanding": true,
       "enabled": true
@@ -81,7 +90,7 @@
       "key": "time",
       "repo": "agentic-time",
       "name": "AgenticTime",
-      "order": 1007,
+      "order": 1008,
       "landingSlug": "time-docs",
       "includeLanding": true,
       "enabled": true
