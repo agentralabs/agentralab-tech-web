@@ -949,12 +949,41 @@ async function main() {
 
   await writeIfChanged(NAV_CONTRACT_FILE, `${JSON.stringify(navContract, null, 2)}\n`)
 
-  // Copy sisters-registry.json from monorepo into web repo (single-source sync)
+  // Copy sisters-registry.json from monorepo into web repo when the source
+  // contains all enabled sisters from the nav contract. If the source lags,
+  // keep the committed registry to avoid dropping active sisters.
   const registrySource = path.join(workspaceRoot, "docs", "sisters-registry.json")
   const registryDest = path.join(repoRoot, "docs", "ecosystem", "sisters-registry.json")
   try {
     const registryContent = await fs.readFile(registrySource, "utf8")
-    await writeIfChanged(registryDest, registryContent)
+    let shouldCopyRegistry = true
+    try {
+      const parsed = JSON.parse(registryContent)
+      const sourceRepos = new Set(
+        Array.isArray(parsed?.sisters)
+          ? parsed.sisters
+            .map((entry) => (entry && typeof entry.repo === "string" ? entry.repo : ""))
+            .filter(Boolean)
+          : [],
+      )
+      const requiredRepos = navContract.sisters
+        .filter((entry) => entry.enabled !== false)
+        .map((entry) => entry.repo)
+      const missingRepos = requiredRepos.filter((repo) => !sourceRepos.has(repo))
+      if (missingRepos.length) {
+        shouldCopyRegistry = false
+        console.warn(
+          `[sync] skipped sisters-registry.json copy; source missing required repos: ${missingRepos.join(", ")}`,
+        )
+      }
+    } catch {
+      // If the source registry is malformed, keep current committed copy.
+      shouldCopyRegistry = false
+      console.warn("[sync] skipped sisters-registry.json copy (source JSON invalid)")
+    }
+    if (shouldCopyRegistry) {
+      await writeIfChanged(registryDest, registryContent)
+    }
   } catch {
     if (strict) throw new Error(`[sync] sisters-registry.json not found at ${registrySource}`)
     console.warn(`[sync] skipped sisters-registry.json copy (source not found)`)

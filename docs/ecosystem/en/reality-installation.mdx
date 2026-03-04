@@ -1,0 +1,142 @@
+---
+title: "Installation"
+description: "AgenticReality can be installed through several channels depending on"
+---
+
+AgenticReality can be installed through several channels depending on
+your workflow.
+
+## Install Channels
+
+### One-Line Installer (recommended)
+
+```bash
+curl -fsSL https://agentralabs.com/install/reality | bash
+```
+
+The installer auto-detects your platform (macOS x86_64/aarch64, Linux
+x86_64/aarch64) and installs the `areal` binary to `~/.local/bin/`.
+
+### From crates.io
+
+```bash
+cargo install agentic-reality-cli
+```
+
+This builds from source and installs the `areal` binary into your Cargo
+bin directory.
+
+### From Source
+
+```bash
+git clone https://github.com/agentralabs/agentic-reality.git
+cd agentic-reality
+cargo build --release
+cp target/release/areal ~/.local/bin/
+```
+
+### npm (Node.js / WASM)
+
+```bash
+npm install @agenticamem/reality
+```
+
+Provides WASM bindings for Node.js and browser environments.
+
+### PyPI (Python)
+
+```bash
+pip install agentic-reality
+```
+
+Provides Python bindings compiled via maturin.
+
+### As a Library Dependency
+
+Add to your `Cargo.toml`:
+
+```toml
+[dependencies]
+agentic-reality = "0.1.0"
+```
+
+For MCP server integration:
+
+```toml
+[dependencies]
+agentic-reality-mcp = "0.1.0"
+```
+
+## Environment Profiles
+
+AgenticReality auto-detects the runtime environment and configures an
+appropriate profile:
+
+| Environment | Detection | Stakes Default |
+|---|---|---|
+| Production | `NODE_ENV=production`, cloud metadata | High |
+| Staging | `NODE_ENV=staging`, staging hostnames | Medium |
+| Development | `NODE_ENV=development`, localhost | Low |
+| CI/CD | `CI=true`, GitHub Actions, GitLab CI | Low |
+| Sandbox | `SANDBOX=true`, isolated networks | Trivial |
+| Simulation | `SIMULATED=true` | Trivial |
+
+The profile sets default values for stakes level, environment type,
+behavioural expectations, and logging verbosity. All defaults can be
+overridden through the API or CLI.
+
+## Verification
+
+After installation, verify everything works:
+
+```bash
+# Check version
+areal --version
+
+# Initialise a workspace
+areal workspace init
+
+# Sense the environment
+areal workspace sense
+
+# Run a reality check
+areal soul init --spawned-by "manual" --purpose "verification"
+areal workspace sense
+areal coherence check
+```
+
+Expected output for the coherence check:
+
+```
+Coherence: Full
+Violations: 0
+Contradictions: 0
+```
+
+## Platform Support
+
+| Platform | Architecture | Status |
+|---|---|---|
+| macOS | x86_64 | Supported |
+| macOS | aarch64 (Apple Silicon) | Supported |
+| Linux | x86_64 | Supported |
+| Linux | aarch64 | Supported |
+| Windows | x86_64 (WSL) | Supported |
+| Windows | Native | Planned |
+
+## Minimum Requirements
+
+- Rust 1.70 or later (MSRV) for building from source
+- 10 MB disk space for the binary
+- 10 MB RAM for the base engine
+- No network access required for core functionality
+
+## Shell Completions
+
+Generate shell completions for your shell:
+
+```bash
+areal completions bash > ~/.bash_completion.d/areal
+areal completions zsh > ~/.zfunc/_areal
+areal completions fish > ~/.config/fish/completions/areal.fish
+```

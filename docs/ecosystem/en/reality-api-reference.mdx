@@ -1,0 +1,187 @@
+---
+title: "API Reference"
+description: "AgenticReality exposes three API surfaces: the Rust library, the MCP tool"
+---
+
+AgenticReality exposes three API surfaces: the Rust library, the MCP tool
+layer, and the CLI. An FFI crate provides C-compatible bindings for
+non-Rust consumers.
+
+## Rust Library
+
+The core API is organised around the `RealityEngine`, which provides two
+sub-engines:
+
+- **Write Engine** (~90 operations) -- mutations to reality state.
+- **Query Engine** (~78 operations) -- read-only access to reality state.
+
+```rust
+use agentic_reality::RealityEngine;
+
+let mut engine = RealityEngine::new();
+
+// Write operations
+engine.write().initialize_soul(request)?;
+engine.write().sense_environment()?;
+engine.write().sense_resources()?;
+
+// Query operations
+let soul = engine.query().get_soul();
+let body = engine.query().get_body();
+```
+
+### Construction and Persistence
+
+```rust
+// Create a new engine with empty state
+let engine = RealityEngine::new();
+
+// Load from a .areal file
+let engine = RealityEngine::load(path)?;
+
+// Load with decryption
+let engine = RealityEngine::load_encrypted(path, &key)?;
+
+// Save state
+engine.save(path)?;
+
+// Save with encryption
+engine.save_encrypted(path, &key)?;
+```
+
+### Write Operations by Domain
+
+| Domain | Operations | Examples |
+|---|---|---|
+| Deployment | 12 | initialize_soul, update_vitals, record_death, set_nature |
+| Environment | 10 | sense_environment, update_mood, record_incident, update_physics |
+| Resource | 14 | sense_resources, update_mind, add_sensation, discover_capability |
+| Reality | 12 | set_reality_layer, add_anchor, verify_anchor, detect_hallucination |
+| Topology | 14 | set_position, add_downstream, add_sibling, update_topology_health |
+| Temporal | 10 | ground_time, add_deadline, add_causal_event, link_causality |
+| Stakes | 10 | set_stakes_level, add_guardrail, update_risk_field, update_blast_radius |
+| Coherence | 8 | run_coherence_check, begin_transition, complete_transition |
+
+### Query Operations by Domain
+
+| Domain | Operations | Examples |
+|---|---|---|
+| Deployment | 10 | get_soul, get_vitals, get_past_lives, get_wisdom |
+| Environment | 10 | get_environment, get_mood, get_physics, get_fingerprint |
+| Resource | 14 | get_body, get_mind, get_pressure_gradient, can_do |
+| Reality | 12 | get_layer, get_anchors, get_hallucinations, is_grounded |
+| Topology | 12 | get_position, get_downstream, get_critical_deps, get_failing_deps |
+| Temporal | 10 | get_temporal_context, get_deadlines, has_deadline_pressure |
+| Stakes | 8 | get_stakes_level, get_blast_radius, should_proceed, get_guardrails |
+| Coherence | 8 | get_coherence_level, get_violations, is_coherent, get_drift_report |
+
+## MCP Tools (15)
+
+All 15 tools use operation-based routing. Each tool accepts a JSON object
+with an `operation` field plus optional parameters.
+
+### Tool Signatures
+
+**reality_deployment** -- Manage the deployment soul and incarnation identity
+- Operations: `initialize`, `get_soul`, `get_vitals`, `get_summary`, `update_vitals`, `set_nature`
+
+**reality_memory** -- Access incarnation memory across past lives
+- Operations: `get_past_lives`, `get_wisdom`, `add_wisdom`, `get_karma`
+
+**reality_environment** -- Sense and manage the operational environment
+- Operations: `sense`, `get`, `get_mood`, `set_mood`, `record_incident`, `clear_incident`, `get_physics`
+
+**reality_resource** -- Sense and query the agent's resource body
+- Operations: `sense`, `get_body`, `get_mind`, `get_pressure`, `get_bottleneck`, `get_cost`
+
+**reality_capability** -- Discover and check available capabilities
+- Operations: `discover`, `list`, `check`, `missing`
+
+**reality_layer** -- Manage reality layers and trust levels
+- Operations: `get`, `list`, `set`
+
+**reality_anchor** -- Manage reality anchors for truth grounding
+- Operations: `add`, `list`, `get`, `verify`, `verify_all`, `get_drift`, `remove`
+
+**reality_hallucination** -- Detect and manage hallucination state
+- Operations: `detect`, `list`, `clear`, `add_claim`, `verify_claim`
+
+**reality_topology** -- Map and manage the deployment topology
+- Operations: `get_map`, `add_downstream`, `add_sibling`, `add_observer`, `get_health`, `get_critical_deps`, `get_failing`
+
+**reality_temporal** -- Access temporal grounding and deadlines
+- Operations: `get_context`, `add_deadline`, `get_deadlines`, `has_pressure`, `get_business_context`
+
+**reality_stakes** -- Assess stakes and check action safety
+- Operations: `set_level`, `get_level`, `should_proceed`, `get_risk`, `get_blast_radius`, `add_guardrail`, `list_guardrails`
+
+**reality_coherence** -- Run coherence checks and manage transitions
+- Operations: `check`, `get_level`, `get_violations`, `begin_transition`, `advance_transition`, `complete_transition`
+
+**reality_context** -- Access the context fingerprint
+- Operations: `get_fingerprint`, `has_shifted`, `diff`
+
+**reality_ground** -- High-level grounding operations
+- Operations: `full_sense`, `grounding_status`, `reality_check`
+
+**reality_workspace** -- Manage the .areal workspace
+- Operations: `init`, `status`, `save`, `load`, `export`
+
+### Error Handling
+
+Tool execution errors set `isError: true`:
+
+```json
+{
+  "content": [{ "type": "text", "text": "Error: No deployment soul initialized." }],
+  "isError": true
+}
+```
+
+Protocol errors use JSON-RPC error codes:
+
+| Code | Meaning |
+|---|---|
+| `-32700` | Parse error |
+| `-32600` | Invalid request |
+| `-32601` | Method not found |
+| `-32602` | Invalid params |
+| `-32803` | Tool not found (TOOL_NOT_FOUND) |
+
+## CLI Commands (~40)
+
+The `areal` binary provides approximately 40 commands across 12 subcommand
+groups. All commands support `--json` for machine-readable output.
+
+See [Command Surface](/docs/en/reality-command-surface) for the full list.
+
+## FFI Bindings
+
+The `agentic-reality-ffi` crate exposes C-compatible bindings:
+
+```c
+// Create and destroy engine
+ArealEngine *areal_engine_new(void);
+void areal_engine_free(ArealEngine *engine);
+
+// Initialise soul (JSON string in, JSON string out)
+const char *areal_initialize_soul(ArealEngine *engine, const char *json);
+
+// Sense environment
+const char *areal_sense_environment(ArealEngine *engine);
+
+// Query (returns JSON)
+const char *areal_get_soul(const ArealEngine *engine);
+const char *areal_get_body(const ArealEngine *engine);
+
+// Persistence
+int areal_save(const ArealEngine *engine, const char *path);
+int areal_load(ArealEngine *engine, const char *path);
+
+// Free returned strings
+void areal_string_free(const char *s);
+```
+
+Error codes are returned as integers. JSON responses include an `error`
+field when the operation fails. All returned strings must be freed with
+`areal_string_free`.

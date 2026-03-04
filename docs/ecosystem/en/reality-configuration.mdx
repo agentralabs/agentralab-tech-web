@@ -1,0 +1,113 @@
+---
+title: "Configuration"
+description: "AgenticReality is configured through environment variables. No configuration file is required. The engine auto-detects the deployment environment and applies sensible defaults."
+---
+
+AgenticReality is configured through environment variables. No configuration file is required. The engine auto-detects the deployment environment and applies sensible defaults.
+
+## Core Environment Variables
+
+| Variable | Default | Description |
+|:---|:---|:---|
+| `AREAL_STORAGE` | `~/.agentic/reality/` | Directory for `.areal` state files |
+| `AREAL_MCP_TOOL_SURFACE` | `compact` | MCP tool surface: `compact` or `full` |
+| `AGENTIC_TOKEN` | (none) | Bearer token for HTTP/SSE authenticated mode |
+| `AGENTIC_REALITY_VERSION` | (latest) | Pinned version for install script |
+| `AREAL_LOG` | `warn` | Log level: `error`, `warn`, `info`, `debug`, `trace` |
+| `AREAL_SENSE_INTERVAL_MS` | `30000` | Auto-sense interval in milliseconds |
+
+## Deployment Environment Detection
+
+AgenticReality auto-detects the deployment environment from standard signals. You can override with `AREAL_ENV`:
+
+| Variable | Values | Description |
+|:---|:---|:---|
+| `AREAL_ENV` | `production`, `staging`, `development`, `ci`, `sandbox`, `simulation` | Force a specific environment tier |
+| `NODE_ENV` | `production`, `staging`, `development` | Detected automatically |
+| `CI` | `true` | Detected automatically (GitHub Actions, GitLab CI, CircleCI) |
+| `SANDBOX` | `true` | Detected automatically |
+| `SIMULATED` | `true` | Detected automatically |
+
+## MCP Server Configuration
+
+The MCP server reads from standard MCP client config files. Add to your client config:
+
+**Claude Desktop** (`~/Library/Application Support/Claude/claude_desktop_config.json`):
+```json
+{
+  "mcpServers": {
+    "agentic-reality": {
+      "command": "areal-mcp",
+      "args": []
+    }
+  }
+}
+```
+
+**Claude Code** (`~/.claude/settings.json`):
+```json
+{
+  "mcpServers": {
+    "agentic-reality": {
+      "command": "areal-mcp",
+      "args": []
+    }
+  }
+}
+```
+
+**VS Code / Cursor** (`.vscode/settings.json`):
+```json
+{
+  "mcp.servers": {
+    "agentic-reality": {
+      "command": "areal-mcp",
+      "args": ["--storage", "~/.agentic/reality"]
+    }
+  }
+}
+```
+
+## Compact vs Full Tool Surface
+
+The `AREAL_MCP_TOOL_SURFACE` variable controls how many MCP tools are exposed:
+
+| Value | Tool Count | Use Case |
+|:---|:---|:---|
+| `compact` (default) | 15 | Standard usage; one facade per domain |
+| `full` | 78 | Developer usage; all granular operations exposed |
+
+Compact mode is strongly recommended. It reduces LLM confusion and aligns with the MCP consolidation contract.
+
+## Storage Paths
+
+| Path | Contents |
+|:---|:---|
+| `$AREAL_STORAGE/state.areal` | Current reality state |
+| `$AREAL_STORAGE/history/` | Past incarnation snapshots |
+| `$AREAL_STORAGE/anchors/` | Persisted reality anchors |
+| `$AREAL_STORAGE/logs/` | Operation logs (if enabled) |
+
+## Logging
+
+Set `AREAL_LOG` to control verbosity:
+
+```bash
+AREAL_LOG=debug areal workspace sense
+```
+
+In MCP server mode, logs go to stderr (not stdout) so they don't corrupt the JSON-RPC stream.
+
+## Authentication (HTTP/SSE mode)
+
+For remote deployment with HTTP or SSE transport:
+
+```bash
+# Generate a token
+export AGENTIC_TOKEN=$(openssl rand -hex 32)
+
+# Start MCP server with auth
+areal-mcp serve --mode http --port 3010 --auth
+
+# Clients must send: Authorization: Bearer <token>
+```

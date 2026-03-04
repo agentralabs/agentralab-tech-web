@@ -1,0 +1,183 @@
+---
+title: "CLI Reference"
+description: "The areal binary is installed by agentic-reality-cli. It exposes approximately 40 commands across 12 command groups."
+---
+
+The `areal` binary is installed by `agentic-reality-cli`. It exposes approximately 40 commands across 12 command groups.
+
+## Global Flags
+
+| Flag | Description |
+|:---|:---|
+| `--storage <path>` | Override storage directory (default: `~/.agentic/reality/`) |
+| `--format json` | Output JSON instead of human-readable text |
+| `--quiet` | Suppress informational output |
+| `--version` | Print version and exit |
+
+## workspace
+
+Initialize, sense, and manage the reality workspace.
+
+| Command | Description |
+|:---|:---|
+| `areal workspace init` | Initialize a new reality workspace |
+| `areal workspace sense` | Sense all domains (deployment, resources, topology, temporal, stakes) |
+| `areal workspace save` | Persist current state to `.areal` file |
+| `areal workspace load <file>` | Load state from an `.areal` file |
+| `areal workspace info` | Show workspace path, file size, and last-sensed timestamp |
+| `areal workspace status` | Show current sensing status across all domains |
+
+## soul
+
+Manage deployment soul and incarnation identity.
+
+| Command | Description |
+|:---|:---|
+| `areal soul init` | Create a new deployment soul for the current context |
+| `areal soul summary` | Print full context summary across all domains |
+| `areal soul show` | Show raw soul data |
+| `areal soul incarnation` | Show current incarnation identity |
+| `areal soul substrate` | Show detected substrate (cloud, metal, container, wasm) |
+| `areal soul fingerprint` | Show context fingerprint hash |
+
+Key flags for `soul init`:
+- `--env <tier>` — production, staging, development, ci, sandbox, simulation
+- `--region <id>` — e.g. us-east-1
+- `--purpose <text>` — what this process does
+- `--spawned-by <entity>` — what launched this process
+
+## memory
+
+Access incarnation memory across past lives.
+
+| Command | Description |
+|:---|:---|
+| `areal memory incarnations` | List all past incarnations |
+| `areal memory wisdom` | Show accumulated wisdom from past incarnations |
+| `areal memory karma` | Show karma score for this deployment identity |
+| `areal memory recall <id>` | Recall context from a specific incarnation |
+| `areal memory forget <id>` | Forget a specific incarnation |
+
+## resource
+
+Monitor resource body and capacity.
+
+| Command | Description |
+|:---|:---|
+| `areal resource body` | Show memory, CPU, network, and storage state |
+| `areal resource pressure` | Show resource pressure gradients and warnings |
+| `areal resource capacity` | Show available capacity across all resources |
+| `areal resource cost` | Show resource cost metrics |
+| `areal resource capabilities` | Show resource-constrained capability assessment |
+
+## reality
+
+Manage reality layers and freshness.
+
+| Command | Description |
+|:---|:---|
+| `areal reality layers` | Show all reality layers and their freshness |
+| `areal reality freshness` | Show freshness status for all data in the current context |
+| `areal reality status` | Show overall reality layer health |
+
+## anchor
+
+Create and verify reality anchors for ground truth.
+
+| Command | Description |
+|:---|:---|
+| `areal anchor create` | Create a new reality anchor from a verified source |
+| `areal anchor verify <claim>` | Verify a specific claim against existing anchors |
+| `areal anchor list` | List all reality anchors |
+| `areal anchor delete <id>` | Delete a specific anchor |
+| `areal anchor refresh <id>` | Refresh an anchor from its source |
+
+Key flags for `anchor create`:
+- `--source <name>` — source of truth (e.g. health-check, config, env)
+- `--claim <text>` — the claim being anchored
+- `--evidence <text>` — supporting evidence
+
+## hallucination
+
+Detect and report on unverified claims.
+
+| Command | Description |
+|:---|:---|
+| `areal hallucination check <claim>` | Score a claim for hallucination risk |
+| `areal hallucination scan` | Scan current context for ungrounded claims |
+| `areal hallucination report` | Generate a full hallucination risk report |
+
+## topology
+
+Map and query the service mesh.
+
+| Command | Description |
+|:---|:---|
+| `areal topology map` | Show the full topology map (upstream, downstream, siblings, observers) |
+| `areal topology neighbors` | Show direct neighbors in the mesh |
+| `areal topology dependencies` | Show upstream dependencies |
+| `areal topology observers` | Show observing services |
+
+## temporal
+
+Ground temporal awareness and track causality.
+
+| Command | Description |
+|:---|:---|
+| `areal temporal now` | Show current temporal grounding |
+| `areal temporal causality` | Show the causality chain for recent events |
+| `areal temporal timeline` | Show the event timeline |
+
+## stakes
+
+Assess consequence awareness and risk.
+
+| Command | Description |
+|:---|:---|
+| `areal stakes assess` | Full stakes assessment (consequence, risk field, blast radius) |
+| `areal stakes risk-field` | Show the risk field for the current context |
+| `areal stakes blast-radius` | Show estimated blast radius of an action |
+
+## coherence
+
+Check and maintain cross-domain coherence.
+
+| Command | Description |
+|:---|:---|
+| `areal coherence check` | Check coherence across all 7 domains |
+| `areal coherence report` | Generate a full coherence report |
+| `areal coherence resolve` | Attempt to resolve detected incoherence |
+
+## context
+
+Get unified context summaries and detect shifts.
+
+| Command | Description |
+|:---|:---|
+| `areal context summary` | Get a unified context summary across all domains |
+| `areal context shift-check` | Detect context shifts since last sensing cycle |
+| `areal context diff` | Show what changed since the last save |
+
+## ground
+
+Verify claims against reality anchors.
+
+| Command | Description |
+|:---|:---|
+| `areal ground verify <claim>` | Verify a claim and show grounding evidence |
+| `areal ground status` | Show grounding status for the current context |
+| `areal ground evidence <claim>` | Show evidence chain for a verified claim |
+
+## Exit Codes
+
+| Code | Meaning |
+|:---|:---|
+| 0 | Success |
+| 1 | General error |
+| 2 | Storage not found or corrupted |
+| 3 | BLAKE3 integrity failure |
+| 4 | Coherence violation detected |
+
+## Environment Variables
+
+See [Configuration](/docs/en/reality-configuration) for all supported environment variables.

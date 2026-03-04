@@ -87,20 +87,20 @@
       "enabled": true
     },
     {
-      "key": "time",
-      "repo": "agentic-time",
-      "name": "AgenticTime",
+      "key": "reality",
+      "repo": "agentic-reality",
+      "name": "AgenticReality",
       "order": 1008,
-      "landingSlug": "time-docs",
+      "landingSlug": "reality-docs",
       "includeLanding": true,
       "enabled": true
     },
     {
-      "key": "reality",
-      "repo": "agentic-reality",
-      "name": "AgenticReality",
+      "key": "time",
+      "repo": "agentic-time",
+      "name": "AgenticTime",
       "order": 1009,
-      "landingSlug": "reality-docs",
+      "landingSlug": "time-docs",
       "includeLanding": true,
       "enabled": true
     }

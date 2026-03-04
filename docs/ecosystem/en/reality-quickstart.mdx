@@ -1,0 +1,105 @@
+---
+title: "Quickstart"
+description: "Get reality grounding for your AI agent in under five minutes."
+---
+
+Get reality grounding for your AI agent in under five minutes.
+
+## Step 1: Install
+
+```bash
+cargo install agentic-reality-cli
+```
+
+Or use the one-line installer:
+
+```bash
+curl -fsSL https://agentralabs.com/install/reality | bash
+```
+
+Verify:
+
+```bash
+areal --version
+```
+
+## Step 2: Initialise the Deployment Soul
+
+```bash
+areal workspace init
+areal soul init --spawned-by "kubernetes" --purpose "API server"
+```
+
+This creates a `.areal` file in your project directory and initialises
+the deployment soul with birth context and substrate auto-detection.
+
+## Step 3: Sense the Environment
+
+```bash
+areal workspace sense
+```
+
+The agent senses its deployment substrate, environment type, and available
+resources:
+
+```
+Sensing reality...
+  Substrate:   Cloud (AWS, m5.xlarge, us-east-1)
+  Environment: Production (tier-1, critical)
+  Mind:        Active (6.2 GB / 16 GB, 39%)
+  Energy:      Steady (4 cores, 28% utilisation)
+  Reach:       Connected (< 5ms to dependencies)
+  Storage:     Clear (120 GB / 500 GB, 24%)
+Reality grounded.
+```
+
+## Step 4: Add Reality Anchors
+
+Ground the agent to verifiable truth:
+
+```bash
+areal anchor add --type time --source ntp.org --frequency 300
+areal anchor add --type configuration --source env --frequency 60
+areal anchor add --type state --source postgres --frequency 120
+```
+
+## Step 5: Verify Grounding
+
+```bash
+areal anchor verify-all
+```
+
+```
+Verifying 3 anchors...
+  [OK]  time (ntp.org) - drift: 12ms
+  [OK]  configuration (env) - drift: 0
+  [OK]  state (postgres) - drift: 2 rows
+All anchors verified.
+```
+
+## Step 6: Connect to an MCP Client
+
+Add to your Claude Desktop configuration:
+
+```json
+{
+  "mcpServers": {
+    "agentic-reality": {
+      "command": "areal",
+      "args": ["serve"]
+    }
+  }
+}
+```
+
+Restart Claude Desktop. The agent now has access to all 15 reality tools.
+
+## Next Steps
+
+- [Installation](/docs/en/reality-installation) -- install channels and environment
+  profiles.
+- [Concepts](/docs/en/reality-concepts) -- deployment soul, resource body, reality
+  layers.
+- [Command Surface](/docs/en/reality-command-surface) -- full tool and CLI reference.
+- [Integration Guide](/docs/en/reality-integration-guide) -- sister bridges and
+  standalone usage.

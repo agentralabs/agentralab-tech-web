@@ -1,0 +1,148 @@
+---
+title: "Runtime, Install, and Sync"
+description: "How AgenticReality behaves at install time, at runtime, and how state"
+---
+
+How AgenticReality behaves at install time, at runtime, and how state
+stays synchronised across restarts and incarnations.
+
+## Install Guarantees
+
+When AgenticReality is installed, the following invariants hold:
+
+1. **Binary completeness** -- the `areal` binary is self-contained with
+   no runtime dependencies beyond libc.
+2. **No implicit state** -- no files are created until the user
+   explicitly runs `areal workspace init`.
+3. **No network calls** -- installation and initialisation work entirely
+   offline.
+4. **Deterministic defaults** -- environment profiles produce the same
+   default configuration on the same platform.
+5. **Version compatibility** -- `.areal` files created by older versions
+   can be read by newer versions. The format header includes a version
+   field for forward-compatible parsing.
+
+## Runtime Behaviour
+
+### Engine Lifecycle
+
+```
+new() --> initialize_soul() --> sense_environment() --> sense_resources()
+  |           |                      |                       |
+  v           v                      v                       v
+ Empty     Soul Born           Env Perceived          Body Perceived
+  |                                                        |
+  +--- add_anchor / add_downstream / set_stakes / ... -----+
+  |                                                        |
+  v                                                        v
+ Grounded (ready for coherence checks and action decisions)
+```
+
+The engine begins empty. Each sensing operation populates a domain.
+Once the deployment soul and environment are initialised, the engine
+is at minimum viable reality.
+
+### State Mutation Rules
+
+- Every write operation validates input strictly. No silent fallbacks.
+- Each write marks the engine as dirty.
+- The dirty flag is cleared on save.
+- Concurrent writes are serialised through mutable borrow rules.
+- MCP sessions hold their own engine instance (no shared mutable state
+  between sessions).
+
+### Coherence Invariants
+
+The coherence engine enforces cross-domain consistency at runtime:
+
+- Environment type and stakes level must be compatible.
+- Network health and dependency health must not contradict.
+- Anchor trust levels must be above minimum thresholds.
+- Context fingerprint must be recalculated after significant changes.
+
+Violations are recorded but do not block operations. The agent receives
+coherence warnings and can choose how to respond.
+
+## Profile Parity
+
+Environment profiles ensure consistent behaviour across development,
+staging, and production:
+
+| Profile | Auto-Detection | Stakes | Logging | Approval |
+|---|---|---|---|---|
+| Production | Cloud metadata, `NODE_ENV=production` | High | Full audit | Required for irreversible |
+| Staging | Staging hostnames, `NODE_ENV=staging` | Medium | Structured | Recommended |
+| Development | Localhost, `NODE_ENV=development` | Low | Standard | None |
+| CI/CD | `CI=true`, runner env vars | Low | Minimal | None |
+| Sandbox | `SANDBOX=true` | Trivial | Debug | None |
+
+All profiles can be overridden programmatically. The profile serves as a
+sensible starting point, not a constraint.
+
+## Sync and Persistence
+
+### Save and Load
+
+```bash
+# Save current state
+areal workspace export --format json > snapshot.json
+
+# Restore from file
+areal workspace import snapshot.json
+```
+
+Programmatically:
+
+```rust
+engine.save("app.areal")?;
+let engine = RealityEngine::load("app.areal")?;
+```
+
+### Incarnation Memory
+
+When the agent restarts, it creates a new incarnation (new soul) but can
+load the previous incarnation's state:
+
+1. Previous incarnation calls `record_death(cause, graceful)`.
+2. State is saved to `.areal` file.
+3. New incarnation loads the file with `RealityEngine::load()`.
+4. Past life is accessible through `get_past_lives()`.
+5. Wisdom is available through `get_wisdom()`.
+6. Karmic debts (inherited problems) are surfaced through `get_karma()`.
+
+### Encrypted Persistence
+
+For sensitive deployments:
+
+```bash
+export AGENTIC_ENCRYPTION_KEY=<64-char-hex-key>
+```
+
+The engine will use AES-256-GCM encryption for all `.areal` file
+operations.
+
+## Update Path
+
+### Binary Updates
+
+Update the CLI binary through your original install channel:
+
+```bash
+# crates.io
+cargo install agentic-reality-cli --force
+
+# One-line installer
+curl -fsSL https://agentralabs.com/install/reality | bash
+```
+
+### Format Migration
+
+The `.areal` format includes a version field. When a newer binary
+encounters an older format file it performs an automatic in-place
+migration. No manual intervention is required.
+
+### MCP Protocol Compatibility
+
+MCP tools maintain backward compatibility within a major version. New
+operations may be added to existing tools. Existing operations will not
+change their parameter shapes or response formats within v0.x releases.

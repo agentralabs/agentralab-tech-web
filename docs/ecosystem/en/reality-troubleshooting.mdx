@@ -1,0 +1,149 @@
+---
+title: "Troubleshooting"
+description: "The installer places areal in ~/.agentic/bin/. Add this to your PATH:"
+---
+
+## Installation Issues
+
+### `areal: command not found` after installation
+
+The installer places `areal` in `~/.agentic/bin/`. Add this to your PATH:
+
+```bash
+export PATH="$HOME/.agentic/bin:$PATH"
+```
+
+Add this line to your `~/.bashrc`, `~/.zshrc`, or `~/.profile` to make it permanent.
+
+### curl installer fails with 404
+
+The release may not have been published for your platform yet. Build from source instead:
+
+```bash
+git clone https://github.com/agentralabs/agentic-reality.git
+cd agentic-reality
+cargo build --release
+cp target/release/areal ~/.local/bin/
+```
+
+### `cargo install agentic-reality-cli` fails
+
+Ensure you have Rust 1.70 or later:
+
+```bash
+rustup update stable
+cargo install agentic-reality-cli
+```
+
+## Storage and .areal File Issues
+
+### `Error: no .areal file found`
+
+The workspace has not been initialized. Run:
+
+```bash
+areal workspace init
+```
+
+### `Error: BLAKE3 integrity check failed`
+
+The `.areal` file is corrupted. This should not happen under normal operation because atomic writes prevent partial corruption.
+
+**Causes:**
+- Disk full during write (the atomic write still leaves the previous valid file)
+- Manual file modification
+
+**Recovery:**
+1. Check if a backup exists: `ls ~/.agentic/reality/`
+2. If backups are present, restore the most recent valid one
+3. If no backup, re-initialize: `areal workspace init && areal workspace sense`
+
+### State file grows unexpectedly large
+
+Incarnation history accumulates over time. To trim old incarnations:
+
+```bash
+areal memory forget --older-than 90d
+```
+
+## MCP Server Issues
+
+### MCP server not appearing in Claude Desktop
+
+1. Verify the binary is installed: `which areal-mcp` or `~/.agentic/bin/areal-mcp --version`
+2. Check the Claude Desktop config file:
+   - macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
+   - Linux: `~/.config/claude/claude_desktop_config.json`
+3. Ensure the `command` path in the config is absolute, not relative
+4. Restart Claude Desktop after any config change
+
+### MCP tools return "storage_not_found"
+
+The workspace needs to be initialized:
+```json
+{ "tool": "reality_workspace", "arguments": { "operation": "init" } }
+```
+
+### MCP server exits immediately
+
+Check that the binary has execute permission:
+
+```bash
+chmod +x ~/.agentic/bin/areal-mcp
+```
+
+Run it manually to see the error:
+
+```bash
+~/.agentic/bin/areal-mcp 2>&1
+```
+
+## Coherence Issues
+
+### Coherence check reports violations
+
+Violations occur when sensed data from different domains is internally inconsistent. Common causes:
+
+- **Deployment changed mid-session** — Re-sense: `areal workspace sense`
+- **Stale topology data** — Refresh: `areal topology map`
+- **Expired anchors** — Refresh: `areal anchor refresh --all`
+
+### Context shift detected unexpectedly
+
+If `areal context shift-check` reports a shift when nothing changed:
+
+1. The sensing cycle may have captured a transient resource spike
+2. Lower the shift threshold: `areal context shift-check --threshold 0.5`
+3. Re-sense to update the baseline: `areal workspace sense`
+
+## Performance Issues
+
+### `areal workspace sense` is slow
+
+Sensing all domains polls system resources and network topology. Reduce the scope:
+
+```bash
+areal workspace sense --domains deployment,resources
+```
+
+For the MCP server, increase the sense interval to reduce background polling:
+
+```bash
+export AREAL_SENSE_INTERVAL_MS=60000  # 60 seconds
+```
+
+### `.areal` write is slow
+
+The atomic write serializes the full state. For large states (many incarnations, many anchors), prune old data:
+
+```bash
+areal memory forget --older-than 30d
+areal anchor delete --older-than 7d
+```
+
+## Getting Help
+
+- [GitHub Issues](https://github.com/agentralabs/agentic-reality/issues)
+- [FAQ](/docs/en/reality-faq)
+- Run `areal --help` or `areal <command> --help` for command-specific help
+- Enable debug logging: `AREAL_LOG=debug areal workspace sense`

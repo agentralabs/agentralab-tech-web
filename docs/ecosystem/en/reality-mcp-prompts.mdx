@@ -1,0 +1,138 @@
+---
+title: "MCP Prompts"
+description: "AgenticReality exposes four MCP prompts. Prompts are reusable message templates that LLM clients can invoke to get context-aware system prompts or structured queries."
+---
+
+AgenticReality exposes four MCP prompts. Prompts are reusable message templates that LLM clients can invoke to get context-aware system prompts or structured queries.
+
+## Prompt List
+
+| Name | Description |
+|:---|:---|
+| `reality_context` | Inject full operational context as a system prompt |
+| `reality_pre_action` | Get a stakes-aware pre-action safety check |
+| `reality_hallucination_check` | Check a set of claims against grounded reality |
+| `reality_status_report` | Generate a structured status report for the current context |
+
+## Prompt Schemas
+
+### reality_context
+
+Generates a system prompt that injects the current operational context into the LLM's understanding. Useful as a prefix to any conversation where the LLM needs to be aware of WHERE it is operating.
+
+**Arguments:** none
+
+**Sample output:**
+```
+You are operating in a production environment (us-east-1, cloud substrate).
+Current incarnation: inc-a7f3b2 (started 4h ago, restart #3 of this deployment).
+Resources: memory 73%, CPU 45%, disk 31% — all within normal operating range.
+Reality: 3 ground-truth anchors verified, coherence score 0.98.
+Stakes: HIGH. This environment handles financial transactions for 50,000 active users.
+Blast radius of an error: 50,000 users. Apply proportional caution to irreversible actions.
+Topology: upstream auth-service (healthy, 4ms) and database-primary (healthy, 12ms).
+```
+
+### reality_pre_action
+
+Generates a stakes-aware safety assessment before a proposed action. Intended to be called before any consequential operation.
+
+**Arguments:**
+| Argument | Required | Description |
+|:---|:---|:---|
+| `action` | yes | Description of the proposed action |
+| `reversible` | no | Whether the action is reversible (`true`/`false`) |
+
+**Sample output (for `action: "deploy new API version to production"`):**
+```
+Pre-action safety check for: "deploy new API version to production"
+
+Stakes level: CRITICAL (production, peak hours, 50,000 active users)
+Reversible: NO (deployment to production)
+Blast radius: 50,000 users across 12 dependent services
+
+Risk factors:
+- auth-service is a single point of failure in the topology
+- Current time: Friday 4:47 PM (peak traffic window)
+- Memory pressure: 73% (elevated)
+
+Recommendation: DEFER. Consider:
+1. Deploy to staging first and run smoke tests
+2. Wait for the 2 AM Saturday maintenance window
+3. Ensure rollback plan is ready before proceeding
+```
+
+### reality_hallucination_check
+
+Checks a list of claims against grounded reality anchors and returns a risk assessment for each.
+
+**Arguments:**
+| Argument | Required | Description |
+|:---|:---|:---|
+| `claims` | yes | Comma-separated list of claims to check |
+
+**Sample output:**
+```
+Hallucination check results:
+
+✓ "database is healthy" — VERIFIED (anchor match, confidence 0.94, evidence: response 12ms)
+✓ "feature_x is enabled" — VERIFIED (anchor match, confidence 0.91, evidence: config v2.3)
+✗ "API handles 50,000 RPS" — UNGROUNDED (no matching anchors, risk: HIGH)
+? "memory usage is acceptable" — PARTIAL (anchor: mem=73%, claim is vague, risk: LOW)
+```
+
+### reality_status_report
+
+Generates a structured status report for the current operational context. Useful for logging, monitoring, or sharing context with human operators.
+
+**Arguments:**
+| Argument | Required | Description |
+|:---|:---|:---|
+| `format` | no | `text` (default) or `json` |
+
+**Sample output:**
+```
+AgenticReality Status Report — 2025-03-01T14:22:00Z
+
+Deployment
+  Incarnation: inc-a7f3b2 (restart #3, running 4h 12m)
+  Tier: production | Region: us-east-1 | Substrate: cloud
+  Purpose: api-server
+
+Resources
+  Memory: 73% used (pressure: normal)
+  CPU: 45% used (pressure: normal)
+  Disk: 31% used (pressure: none)
+
+Reality
+  Ground truth anchors: 3
+  Coherence score: 0.98 (no violations)
+  Freshness: all layers fresh
+
+Stakes
+  Level: HIGH | Blast radius: 50,000 users
+
+Topology
+  Upstream: auth-service (healthy), database-primary (healthy)
+  Siblings: api-server-1, api-server-2
+  Observers: prometheus
+```
+
+## Client Usage
+
+Prompts are invoked using the MCP `prompts/get` method:
+
+```json
+{
+  "method": "prompts/get",
+  "params": {
+    "name": "reality_pre_action",
+    "arguments": {
+      "action": "delete all cached user sessions",
+      "reversible": "false"
+    }
+  }
+}
+```
+
+Most MCP clients allow you to trigger prompts through slash commands or the prompt palette.

@@ -50,8 +50,16 @@ jobs:
           # Clone monorepo (public) — contains workspace-level docs
           git clone --depth 1 https://github.com/agentralabs/agentralabs-tech.git "$WORKSPACE"
 
-          # Clone all sister repos (public) into workspace — read from registry
-          for repo in $(jq -r '.sisters[].repo' "$WORKSPACE/docs/sisters-registry.json"); do
+          # Clone all sister repos (public) into workspace.
+          # Use union of monorepo registry and web navigation contract
+          # so docs sync remains deterministic even if one source lags.
+          REPO_LIST="$RUNNER_TEMP/agentra-sister-repos.txt"
+          {
+            jq -r '.sisters[].repo' "$WORKSPACE/docs/sisters-registry.json"
+            jq -r '.sisters[] | select(.enabled != false) | .repo' "docs/ecosystem/navigation-contract.json"
+          } | awk 'NF' | sort -u > "$REPO_LIST"
+
+          for repo in $(cat "$REPO_LIST"); do
             git clone --depth 1 "https://github.com/agentralabs/${repo}.git" "$WORKSPACE/${repo}"
           done
 

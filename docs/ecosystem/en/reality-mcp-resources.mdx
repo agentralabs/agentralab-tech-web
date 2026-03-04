@@ -1,0 +1,132 @@
+---
+title: "MCP Resources"
+description: "AgenticReality exposes five read-only MCP resources. Resources provide structured snapshots of the current reality state that LLM clients can read without calling tools."
+---
+
+AgenticReality exposes five read-only MCP resources. Resources provide structured snapshots of the current reality state that LLM clients can read without calling tools.
+
+## Resource URIs
+
+| URI | MIME Type | Description |
+|:---|:---|:---|
+| `reality://soul/summary` | `application/json` | Full context summary across all domains |
+| `reality://layers/all` | `application/json` | All reality layers with freshness status |
+| `reality://resources/current` | `application/json` | Current resource body (memory, CPU, disk, network) |
+| `reality://coherence/score` | `application/json` | Current coherence score and violation summary |
+| `reality://topology/local` | `application/json` | Local topology map (neighbors, dependencies, observers) |
+
+## Resource Schemas
+
+### reality://soul/summary
+
+Provides the full context summary. Equivalent to calling `reality_soul` with `operation: "summary"`.
+
+```json
+{
+  "incarnation_id": "inc-a7f3b2...",
+  "deployment": {
+    "tier": "production",
+    "region": "us-east-1",
+    "substrate": "cloud",
+    "purpose": "api-server"
+  },
+  "resources": {
+    "memory_pct": 73,
+    "cpu_pct": 45,
+    "disk_pct": 31,
+    "pressure": "normal"
+  },
+  "reality": {
+    "anchors": 3,
+    "coherence": 0.98,
+    "freshness": "fresh"
+  },
+  "stakes": {
+    "level": "HIGH",
+    "blast_radius": 50000
+  },
+  "context_fingerprint": "cf-9e2d4a7b...",
+  "last_sensed": "2025-03-01T14:22:00Z"
+}
+```
+
+### reality://layers/all
+
+Lists all reality layers and their freshness status.
+
+```json
+{
+  "layers": [
+    { "id": 0, "name": "GROUND_TRUTH", "items": 3, "freshness": "verified" },
+    { "id": 1, "name": "VERIFIED_STATE", "items": 5, "freshness": "fresh" },
+    { "id": 2, "name": "CACHED_STATE", "items": 8, "freshness": "aging", "age_seconds": 120 },
+    { "id": 3, "name": "INFERRED", "items": 2, "freshness": "stale", "age_seconds": 3600 }
+  ]
+}
+```
+
+### reality://resources/current
+
+Current resource body with pressure indicators.
+
+```json
+{
+  "memory": { "used_pct": 73, "available_mb": 4200, "pressure": "normal" },
+  "cpu": { "used_pct": 45, "load_avg_1m": 2.1, "pressure": "normal" },
+  "disk": { "used_pct": 31, "available_gb": 128, "pressure": "none" },
+  "network": { "rx_mbps": 12, "tx_mbps": 8, "pressure": "none" }
+}
+```
+
+### reality://coherence/score
+
+Coherence score and violations summary.
+
+```json
+{
+  "coherent": true,
+  "score": 0.98,
+  "violations": 0,
+  "contradictions": 0,
+  "domains_checked": 7,
+  "last_checked": "2025-03-01T14:22:00Z"
+}
+```
+
+### reality://topology/local
+
+Local topology map showing the service mesh neighborhood.
+
+```json
+{
+  "self": { "id": "api-server-3", "role": "service" },
+  "upstream": [
+    { "id": "auth-service", "health": "healthy", "latency_ms": 4 },
+    { "id": "database-primary", "health": "healthy", "latency_ms": 12 }
+  ],
+  "downstream": [
+    { "id": "mobile-api-gateway", "health": "healthy" }
+  ],
+  "siblings": [
+    { "id": "api-server-1" }, { "id": "api-server-2" }
+  ],
+  "observers": [
+    { "id": "prometheus", "type": "metrics" }
+  ]
+}
+```
+
+## Resource Freshness
+
+Resources are updated each time `reality_workspace` with `operation: sense` runs. If the MCP server starts without an existing `.areal` file, resources return empty snapshots with a `no_state` status until the workspace is initialized and sensed.
+
+## Client Usage
+
+Resources are read using the MCP `resources/read` method. Most LLM clients display them in context automatically when the server is connected.
+
+```json
+{
+  "method": "resources/read",
+  "params": { "uri": "reality://soul/summary" }
+}
+```

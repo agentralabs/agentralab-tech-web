@@ -1,0 +1,156 @@
+---
+title: "MCP Tools"
+description: "AgenticReality exposes 15 compact MCP tools in default (compact) surface mode. Each tool is a domain facade accepting an operation field plus operation-specific parameters."
+---
+
+AgenticReality exposes 15 compact MCP tools in default (`compact`) surface mode. Each tool is a domain facade accepting an `operation` field plus operation-specific parameters.
+
+## Tool List
+
+| Tool | Domain | Key Operations |
+|:---|:---|:---|
+| `reality_workspace` | Workspace management | init, sense, save, load, info, status |
+| `reality_soul` | Deployment soul + incarnation | init, summary, show, incarnation, substrate, fingerprint |
+| `reality_memory` | Incarnation memory | incarnations, wisdom, karma, recall, forget |
+| `reality_resource` | Resource body | body, pressure, capacity, cost, capabilities |
+| `reality_layer` | Reality layers | get, add, set_freshness, list, detect_simulation |
+| `reality_anchor` | Ground truth anchors | create, verify, list, delete, refresh |
+| `reality_hallucination` | Hallucination detection | check, scan, report, score |
+| `reality_topology` | Service mesh topology | map, neighbors, dependencies, observers |
+| `reality_temporal` | Temporal grounding | now, causality, timeline, anchor_time |
+| `reality_stakes` | Stakes perception | assess, risk_field, blast_radius, get |
+| `reality_coherence` | Coherence maintenance | check, report, resolve, status |
+| `reality_context` | Unified context | summary, shift_check, diff, fingerprint |
+| `reality_ground` | Claim grounding | verify, status, evidence, suggest |
+| `reality_deployment` | Deployment lifecycle | birth, rebirth, death, transition |
+| `reality_workspace_file` | .areal file management | list, inspect, compare, export |
+
+## Tool Schemas
+
+### reality_workspace
+
+```json
+{
+  "operation": "sense",
+  "domains": ["deployment", "resources", "topology"]
+}
+```
+
+| Operation | Parameters | Description |
+|:---|:---|:---|
+| `init` | — | Initialize workspace |
+| `sense` | `domains?` (array) | Sense all or selected domains |
+| `save` | — | Persist to .areal |
+| `load` | `path` | Load from .areal |
+| `info` | — | Workspace metadata |
+| `status` | — | Current sensing status |
+
+### reality_anchor
+
+```json
+{
+  "operation": "create",
+  "source": "health-check",
+  "claim": "database is healthy",
+  "evidence": "response time 12ms, status 200"
+}
+```
+
+| Operation | Parameters | Description |
+|:---|:---|:---|
+| `create` | `source`, `claim`, `evidence` | Create a ground-truth anchor |
+| `verify` | `claim` | Verify claim against anchors |
+| `list` | — | List all anchors |
+| `delete` | `anchor_id` | Delete an anchor |
+| `refresh` | `anchor_id` | Refresh anchor from source |
+
+### reality_ground
+
+```json
+{
+  "operation": "verify",
+  "claim": "the database handles 10,000 RPS"
+}
+```
+
+Returns:
+```json
+{
+  "status": "UNGROUNDED",
+  "confidence": 0.0,
+  "matching_anchors": [],
+  "risk": "HIGH",
+  "message": "No anchors match this claim. Hallucination risk is high."
+}
+```
+
+### reality_stakes
+
+```json
+{ "operation": "assess" }
+```
+
+Returns:
+```json
+{
+  "level": "HIGH",
+  "consequence": "financial transactions, 50000 active users",
+  "risk_field": ["external-payments", "auth-service", "user-data"],
+  "blast_radius": 50000,
+  "recommendation": "Apply extra caution. Prefer reversible actions."
+}
+```
+
+### reality_coherence
+
+```json
+{ "operation": "check" }
+```
+
+Returns:
+```json
+{
+  "coherent": true,
+  "violations": 0,
+  "contradictions": 0,
+  "domains_checked": 7,
+  "score": 0.98
+}
+```
+
+### reality_hallucination
+
+```json
+{
+  "operation": "check",
+  "claim": "memory usage is under 50%"
+}
+```
+
+Returns:
+```json
+{
+  "claim": "memory usage is under 50%",
+  "risk": "LOW",
+  "confidence": 0.91,
+  "grounding_evidence": ["resource anchor: mem=43%, timestamp: 30s ago"]
+}
+```
+
+## Error Handling
+
+All tools return a standard error shape on failure:
+
+```json
+{
+  "error": "storage_not_found",
+  "message": "No .areal file found. Run reality_workspace with operation init first.",
+  "suggestion": "reality_workspace { \"operation\": \"init\" }"
+}
+```
+
+Tools never throw JSON-RPC errors for execution failures. Only protocol-level failures (unknown tool, malformed JSON) produce JSON-RPC error responses.
+
+## Full Surface Mode
+
+Set `AREAL_MCP_TOOL_SURFACE=full` to expose all 78 granular operations as individual tools. This is intended for development and debugging only.

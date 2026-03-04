@@ -1,0 +1,157 @@
+---
+title: "Integration Guide"
+description: "AgenticReality integrates with the broader AgenticOS ecosystem through"
+---
+
+AgenticReality integrates with the broader AgenticOS ecosystem through
+nine bridge traits, and also operates standalone without any sister
+dependencies.
+
+## Standalone Usage
+
+AgenticReality works out of the box without any other Agentra sisters.
+All nine bridge traits have NoOp default implementations that provide
+sensible fallback behaviour:
+
+```rust
+use agentic_reality::RealityEngine;
+
+let mut engine = RealityEngine::new();
+engine.write().initialize_soul(request)?;
+engine.write().sense_environment()?;
+engine.write().sense_resources()?;
+
+// All queries work -- no sisters needed
+let soul = engine.query().get_soul();
+let coherent = engine.query().is_coherent();
+```
+
+When a bridge has no sister backing it, the affected features degrade
+gracefully rather than failing.
+
+## Nine Sister Bridge Traits
+
+| Bridge | Sister | Purpose | NoOp Behaviour |
+|---|---|---|---|
+| TimeBridge | AgenticTime | Temporal grounding | System clock without verification |
+| ContractBridge | AgenticContract | Stakes constraints and SLAs | All actions permitted |
+| IdentityBridge | AgenticIdentity | Incarnation verification | Identities unverified |
+| MemoryBridge | AgenticMemory | Incarnation memory persistence | Memory lost on restart |
+| CognitionBridge | AgenticCognition | Risk perception modelling | Heuristic risk assessment |
+| CommBridge | AgenticComm | Neighbour communication | Local-only topology |
+| CodebaseBridge | AgenticCodebase | Code context awareness | Version from env vars only |
+| VisionBridge | AgenticVision | Visual environment sensing | No visual sensing |
+| HydraBridge | Hydra | Orchestrator integration | Fully autonomous operation |
+
+### Required Dependencies (enhanced functionality)
+
+**TimeBridge** (AgenticTime >= 0.1.0)
+
+Provides verified time sources, deadline management, freshness
+calculations, and temporal context enrichment.
+
+```rust
+pub trait TimeBridge: Send + Sync {
+    fn verified_now(&self) -> Result<VerifiedTimestamp>;
+    fn freshness(&self, data_timestamp: Timestamp) -> Result<FreshnessAssessment>;
+    fn deadline_check(&self, deadline: &Deadline) -> Result<DeadlineProximity>;
+    fn temporal_context(&self) -> Result<TemporalEnrichment>;
+    fn verify_time_anchor(&self, anchor: &RealityAnchor) -> Result<AnchorVerificationResult>;
+}
+```
+
+**ContractBridge** (AgenticContract >= 0.1.0)
+
+Provides SLA definitions, compliance requirements, and contractual limits
+on agent behaviour.
+
+**IdentityBridge** (AgenticIdentity >= 0.3.0)
+
+Provides cryptographic identity for deployment souls, trust scoring, and
+lineage verification.
+
+### Optional Dependencies (additive features)
+
+**MemoryBridge** (AgenticMemory >= 0.4.0) -- persists incarnation memory
+and wisdom across restarts.
+
+**CognitionBridge** (AgenticCognition >= 0.1.0) -- enriches risk
+perception with cognitive modelling and consequence prediction.
+
+**CommBridge** (AgenticComm >= 0.1.0) -- enables real-time communication
+with neighbour agents for coordinated reality awareness.
+
+**CodebaseBridge** (AgenticCodebase >= 0.1.0) -- provides deployed version
+info, recent changes, and code health metrics.
+
+**VisionBridge** (AgenticVision >= 0.1.0) -- enables visual environment
+sensing from monitoring dashboards and UIs.
+
+**HydraBridge** (Hydra) -- connects to the orchestrator for mesh-wide
+reality coordination.
+
+## Bridge Registration
+
+Bridges are registered at engine creation using the builder pattern:
+
+```rust
+let engine = RealityEngine::builder()
+    .with_time_bridge(AgenticTimeBridge::new())
+    .with_contract_bridge(AgenticContractBridge::new())
+    .with_identity_bridge(AgenticIdentityBridge::new())
+    .with_memory_bridge(AgenticMemoryBridge::new())
+    .build();
+```
+
+Unregistered bridges use the NoOp default implementation.
+
+## MCP Integration
+
+### Claude Desktop
+
+```json
+{
+  "mcpServers": {
+    "agentic-reality": {
+      "command": "areal",
+      "args": ["serve"]
+    }
+  }
+}
+```
+
+### HTTP Server Mode
+
+For production deployments that require network transport:
+
+```bash
+AGENTIC_AUTH_TOKEN=secret areal serve --mode http --port 3010 --auth
+```
+
+### SSE Server Mode
+
+For browser-based clients:
+
+```bash
+areal serve --mode sse --port 3010 --cors
+```
+
+## Graceful Degradation Pattern
+
+All bridges follow the graceful degradation pattern. When a sister is
+unavailable the feature degrades rather than fails:
+
+```rust
+fn ground_temporal_context(&self) -> Result<TemporalContext> {
+    match self.time_bridge.temporal_context() {
+        Ok(enriched) => Ok(enriched.into()),
+        Err(_) => Ok(TemporalContext::from_system_clock()),
+    }
+}
+```
+
+## SDK Reference
+
+All sisters reference `agentic-sdk v0.2.0` for shared types and
+protocols. The SDK provides common type definitions used across bridge
+boundaries.

@@ -1,0 +1,187 @@
+---
+title: "Core Concepts"
+description: "AgenticReality is built around seven reality domains that give AI agents"
+---
+
+AgenticReality is built around seven reality domains that give AI agents
+existential grounding. Each domain answers a fundamental question about
+the agent's operational context.
+
+## The Seven Reality Domains
+
+| # | Domain | Question | Key Types |
+|---|---|---|---|
+| 1 | Deployment Consciousness | Where do I exist? | DeploymentSoul, BirthContext |
+| 2 | Resource Proprioception | What do I have? | ResourceBody, MindCapacity |
+| 3 | Reality Physics | What is real? | RealityLayers, RealityAnchor |
+| 4 | Topology Awareness | What surrounds me? | TopologyMap, DownstreamEntity |
+| 5 | Temporal Grounding | When am I? | TemporalContext, Deadline |
+| 6 | Stakes Perception | What are the consequences? | StakesLevel, BlastRadius |
+| 7 | Coherence Maintenance | How do I stay grounded? | CoherenceCheck, ContextTransition |
+
+## The Deployment Soul
+
+The deployment soul is the agent's existential identity in its current
+incarnation. It is not configuration -- it is who the agent IS.
+
+A human does not "read" that they have two arms. They are a being with two
+arms. An agent should not "read" that it is on server-7. It should be the
+entity incarnated on server-7.
+
+The soul encompasses:
+
+- **Incarnation ID** -- a unique identifier for this specific instance of
+  existence. When the agent restarts, it gets a new incarnation.
+- **Birth context** -- how this instance came to be. Was it a fresh
+  deployment (virgin)? Scaled out from a parent? Resurrected after a crash?
+  Migrated, forked, or created for an ephemeral task?
+- **Physical substrate** -- the hardware reality hosting this soul. Options
+  range from laptop to mobile to browser to edge to cloud to bare metal to
+  GPU cluster to HPC partition.
+- **Existential nature** -- cardinality (singleton, replica, swarm),
+  expendability, persistence model, clonability, and primacy.
+- **Vitals** -- current health, uptime, restart count, and active issues.
+
+## The Resource Body
+
+The agent has a body of resources it can feel, similar to proprioception
+for computation. Resources are sensations, not metrics.
+
+### Mind (Memory)
+
+Memory is felt as mental capacity. When memory is low the agent feels
+"crowded" or "strained." When memory is abundant it feels "clear."
+
+Feelings: Clear (\< 30%), Active (30-60%), Crowded (60-80%), Strained
+(80-90%), Overwhelmed (90-95%), Drowning (> 95%).
+
+### Energy (CPU)
+
+CPU is felt as processing energy. When the CPU is underutilised the agent
+feels "vigorous." When it is maxed out it feels "depleted."
+
+Feelings: Vigorous (\< 30%), Steady (30-50%), Busy (50-70%), Strained
+(70-85%), Depleted (85-95%), Constrained (> 95%).
+
+### Reach (Network)
+
+Network is felt as reach -- the agent's ability to communicate with the
+world. Good connectivity is "connected." Network issues feel like
+"isolation."
+
+Feelings: Connected (excellent), Normal (typical), Sluggish (elevated
+latency), Constrained (bandwidth limited), Isolated (major issues),
+Partitioned (cannot reach critical services).
+
+### Pressure Gradient
+
+All resources are connected through a pressure gradient. When one resource
+is constrained it becomes the bottleneck. The gradient shows where
+pressure is flowing, building, and releasing.
+
+## Reality Layers
+
+Reality is not monolithic. There are seven layers, each with a different
+trust level:
+
+1. **Physical** (trust 0.99) -- Hardware reality: servers, cables, power.
+2. **Virtual** (trust 0.95) -- VMs, containers, abstracted but real.
+3. **Logical** (trust 0.85) -- Services, APIs, configurations.
+4. **Cached** (trust 0.70 * freshness) -- Stored representations that
+   degrade with age.
+5. **Predicted** (trust 0.50 * confidence) -- Forecasts and estimates.
+6. **Simulated** (trust 0.30) -- Test doubles, mocks, synthetic data.
+7. **Hallucinated** (trust 0.00) -- Agent false beliefs, confabulations.
+
+An agent should always know which layer it is operating in and adjust its
+confidence accordingly.
+
+## Reality Anchors
+
+Reality anchors are verifiable reference points that ground the agent in
+truth. Like a ship at anchor, they prevent drift.
+
+Types of anchors:
+
+- **Time anchors** -- verified against NTP or authoritative time sources.
+- **Configuration anchors** -- verified against authoritative config.
+- **State anchors** -- verified against authoritative state (database, API).
+- **Heartbeat anchors** -- verified by periodic health checks.
+- **Checksum anchors** -- verified by data integrity checks.
+
+Each anchor has a trust level that can drift over time. When an anchor
+drifts beyond its threshold the agent knows its understanding of reality
+may be inaccurate.
+
+## Hallucination Detection
+
+AgenticReality tracks unverified claims the agent makes and detects
+hallucinations -- false beliefs the agent holds about its environment.
+
+Hallucinations are recorded with severity (low, medium, high, critical)
+and source (self, upstream, cached, predicted). The hallucination state
+tracks active hallucinations, unverified claims, and resolved findings.
+
+## The Context Fingerprint
+
+The context fingerprint is a hash of the entire operational context. It
+captures deployment, version, environment, configuration, resources,
+capabilities, temporal state, load, network, and dependencies.
+
+The fingerprint enables:
+
+- **Shift detection** -- something changed, the agent should re-evaluate.
+- **Drift tracking** -- the context is gradually changing.
+- **Stability assessment** -- this is a volatile context, stay cautious.
+- **Similarity matching** -- this context resembles a past context.
+
+## Stakes Perception
+
+Stakes are a felt sense of consequence weight. An agent in a test sandbox
+feels lightness -- actions are inconsequential. An agent processing
+production financial transactions feels gravity -- every action carries
+weight.
+
+Stakes levels:
+
+- **Trivial** -- experiment freely, no audit needed.
+- **Low** -- standard care, basic logging.
+- **Medium** -- verify before acting, structured logging.
+- **High** -- multiple checks, full audit trail, caution.
+- **Critical** -- multiple approvals, zero risk tolerance, complete audit.
+
+Blast radius awareness quantifies who would be affected if something goes
+wrong: how many users, which systems, what data, what revenue impact, and
+how long to recover.
+
+## Coherence Maintenance
+
+With seven domains generating independent perceptions, contradictions can
+arise. The coherence engine cross-checks all domains:
+
+- Production environment but expendable nature? Contradiction.
+- Healthy network but all dependencies failing? Inconsistency.
+- Critical stakes but sandbox environment? Mismatch.
+
+Coherence levels: Full, Partial, Degraded, Incoherent.
+
+## Context Transitions
+
+Transitions are the dangerous moments when reality changes rapidly:
+scaling events, migrations, failovers, deployments, configuration changes.
+During these moments the agent's perceptions may be temporarily invalid.
+
+The context transition manager ensures pre-transition state is captured,
+the transition is tracked through phases, post-transition state is
+verified, a new baseline is established, and rollback is available if
+verification fails.
+
+## Design Principles
+
+1. **Sense, do not query** -- resources are felt, not polled.
+2. **Ground to truth** -- always maintain anchors to verifiable reality.
+3. **Context is identity** -- the deployment context shapes the agent.
+4. **Coherence over completeness** -- better to have coherent partial
+   knowledge than incoherent complete knowledge.
+5. **Stakes awareness** -- always know the consequences.
+6. **Graceful degradation** -- can operate with partial reality awareness.

@@ -1,0 +1,84 @@
+---
+title: "FAQ"
+description: "Frequently asked questions about AgenticReality."
+---
+
+Frequently asked questions about AgenticReality.
+
+## What is the .areal file format?
+
+The `.areal` format is a binary file that persists the complete reality
+state: deployment soul, environment, resources, reality layers, topology,
+temporal context, stakes, and coherence. Each section is individually
+compressed with LZ4 and the file includes BLAKE3 integrity checksums.
+Optional AES-256-GCM encryption is available by setting the
+`AGENTIC_ENCRYPTION_KEY` environment variable.
+
+## Which MCP clients are supported?
+
+Any MCP-compatible client can use AgenticReality. Tested clients include
+Claude Desktop, VS Code with the MCP extension, and custom HTTP clients.
+The server supports stdio transport (default), HTTP, and SSE modes.
+
+## Can I use AgenticReality standalone?
+
+Yes. All nine sister bridge traits have NoOp default implementations, so
+AgenticReality works without any other Agentra sisters installed.
+Integration with AgenticTime, AgenticContract, and AgenticIdentity
+enhances functionality but is not required.
+
+## Does it require network access?
+
+No. Core functionality works entirely offline. Some features (time anchor
+verification against NTP, external state anchors) benefit from network
+access but degrade gracefully when offline.
+
+## How is this different from monitoring?
+
+Monitoring watches an agent from the outside. Reality grounding is
+perception from the inside. A monitored agent has dashboards about it. A
+reality-grounded agent feels its own state. The difference is like reading
+a medical chart versus feeling your own body.
+
+## What platforms are supported?
+
+macOS (x86_64, aarch64), Linux (x86_64, aarch64), and Windows via WSL.
+Native Windows support is planned for a future release.
+
+## What Rust version is required?
+
+Rust 1.70 or later (MSRV). The CLI binary `areal` can be used without
+writing Rust code. The FFI crate provides C-compatible bindings for
+integration with other languages.
+
+## What is the minimum viable reality?
+
+Deployment soul plus environment sensing. These two provide the
+foundation for all other reality domains. You can add more domains
+incrementally as needed.
+
+## How do I handle agent restarts?
+
+Save state before shutdown with `engine.save("app.areal")`. On restart,
+load the previous incarnation's state and use incarnation memory to learn
+from the past life. The current incarnation gets a new soul but inherits
+wisdom from its predecessor.
+
+## Can I use it in CI/CD pipelines?
+
+Yes. The environment auto-detection recognises CI/CD environments
+(GitHub Actions, GitLab CI, Jenkins, and others) and sets appropriate
+environment type, stakes level, and behavioural expectations
+automatically.
+
+## What error code is used for unknown MCP tools?
+
+Error code `-32803` (TOOL_NOT_FOUND), per the Agentra MCP quality
+standard. This is distinct from the standard JSON-RPC method-not-found
+code (`-32601`) and invalid-params code (`-32602`).
+
+## How much memory does it use?
+
+Base engine: less than 10 MB. Typical deployment: less than 50 MB. Large
+topology with 1000+ dependencies: less than 200 MB. Per MCP session
+overhead: less than 5 MB.

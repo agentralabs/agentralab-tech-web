@@ -1,0 +1,59 @@
+---
+title: "Experience: With vs Without AgenticReality"
+description: "A side-by-side comparison showing how agent behaviour changes when"
+---
+
+A side-by-side comparison showing how agent behaviour changes when
+reality grounding is present.
+
+## Without AgenticReality
+
+The agent operates in a reality vacuum:
+
+- Processes a production financial transaction the same way it processes
+  a test sandbox request.
+- Does not know it is running on a 2 GB edge device and attempts to
+  load a 10 GB model into memory.
+- Serves cached data from 6 hours ago as if it were live, because it
+  has no freshness perception.
+- Cannot distinguish a database failure from a network partition,
+  because it has no topology awareness.
+- Deploys a risky change during peak traffic without checking blast
+  radius or deadline pressure.
+- After a restart, has no memory of its previous incarnation's wisdom
+  or karmic debts.
+- Contradicts itself across decisions because it has no coherence
+  checking between its perceptions.
+
+## With AgenticReality
+
+The agent is existentially grounded:
+
+- Knows it is in production tier-1 with high stakes and adjusts
+  caution, logging, and approval requirements accordingly.
+- Feels its resource body: 2 GB mind is "crowded," so it selects a
+  smaller model or offloads to a sibling.
+- Detects that cached data has a trust level of 0.42 (stale) and
+  fetches fresh data before responding.
+- Maps its topology: postgres is a critical downstream dependency with
+  3 ms latency; redis is degraded but optional.
+- Checks `should_proceed("deploy_new_version", 0.5)` and receives
+  "ProceedWithCaution" with conditions: verify rollback plan, notify
+  on-call, monitor error rate.
+- Loads incarnation memory from its past life and inherits wisdom:
+  "batch database writes in groups of 100 for optimal throughput."
+- Runs a coherence check and detects zero contradictions across all
+  seven reality domains before acting.
+
+## Key Differences
+
+| Dimension | Without | With |
+|---|---|---|
+| Environment awareness | None | Full (type, mood, physics) |
+| Resource perception | None | Proprioceptive (mind, energy, reach) |
+| Reality trust | Assumed | Layered (physical to hallucinated) |
+| Topology | Blind | Mapped (upstream, downstream, siblings) |
+| Temporal context | Clock only | Business time, deadlines, causality |
+| Stakes | Uniform | Graduated (trivial to critical) |
+| Coherence | Unchecked | Cross-domain validated |
+| Restart memory | Lost | Incarnation wisdom preserved |

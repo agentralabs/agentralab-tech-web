@@ -1,0 +1,200 @@
+---
+title: "Command Surface"
+description: "AgenticReality exposes 15 MCP tools and approximately 40 CLI commands."
+---
+
+AgenticReality exposes 15 MCP tools and approximately 40 CLI commands.
+Every MCP tool uses **operation-based routing**: a single tool receives an
+`operation` string that selects the action to perform.
+
+## Compact Facade Tools
+
+All 15 tools follow the MCP quality standard (verb-first imperative
+descriptions, `isError: true` for tool execution errors, error code
+`-32803` for unknown tools).
+
+| # | Tool | Domain | Description |
+|---|---|---|---|
+| 1 | `reality_deployment` | Deployment | Manage the deployment soul and incarnation identity |
+| 2 | `reality_memory` | Deployment | Access incarnation memory across past lives |
+| 3 | `reality_environment` | Environment | Sense and manage the operational environment |
+| 4 | `reality_resource` | Resource | Sense and query the agent's resource body |
+| 5 | `reality_capability` | Resource | Discover and check available capabilities |
+| 6 | `reality_layer` | Reality | Manage reality layers and trust levels |
+| 7 | `reality_anchor` | Reality | Manage reality anchors for truth grounding |
+| 8 | `reality_hallucination` | Reality | Detect and manage hallucination state |
+| 9 | `reality_topology` | Topology | Map and manage the deployment topology |
+| 10 | `reality_temporal` | Temporal | Access temporal grounding and deadlines |
+| 11 | `reality_stakes` | Stakes | Assess stakes and check action safety |
+| 12 | `reality_coherence` | Coherence | Run coherence checks and manage transitions |
+| 13 | `reality_context` | Cross-domain | Access the context fingerprint |
+| 14 | `reality_ground` | Cross-domain | High-level grounding operations |
+| 15 | `reality_workspace` | Workspace | Manage the .areal workspace |
+
+Each tool accepts a JSON object with an `operation` field plus optional
+parameters. For example:
+
+```json
+{
+  "operation": "sense",
+  "tool": "reality_environment"
+}
+```
+
+## CLI Commands by Group
+
+The `areal` binary organises approximately 40 commands into 12 subcommand
+groups.
+
+### areal workspace
+
+```
+areal workspace init [--path <DIR>]
+areal workspace sense
+areal workspace status
+areal workspace summary
+areal workspace export [--format json]
+areal workspace import <FILE>
+```
+
+### areal soul
+
+```
+areal soul init [--spawned-by <ID>] [--purpose <TEXT>]
+areal soul summary
+areal soul vitals
+areal soul lineage
+areal soul nature
+areal soul birth
+```
+
+### areal env
+
+```
+areal env sense
+areal env show
+areal env mood
+areal env mood set <MOOD> [--cause <TEXT>]
+areal env incidents
+areal env incident add <DESC> --severity <LEVEL>
+areal env incident clear <ID>
+```
+
+### areal resource
+
+```
+areal resource sense
+areal resource body
+areal resource mind
+areal resource energy
+areal resource reach
+areal resource storage
+areal resource pressure
+areal resource bottleneck
+areal resource sensations
+```
+
+### areal capability
+
+```
+areal capability discover
+areal capability list
+areal capability check <NAME>
+areal capability missing
+```
+
+### areal anchor
+
+```
+areal anchor add --type <TYPE> --source <SRC> [--frequency <SECS>]
+areal anchor list
+areal anchor verify <ID>
+areal anchor verify-all
+areal anchor remove <ID>
+areal anchor drift
+```
+
+### areal layer
+
+```
+areal layer show
+areal layer list
+areal layer trust
+areal layer set <LAYER>
+```
+
+### areal topology
+
+```
+areal topology show
+areal topology position
+areal topology upstream
+areal topology downstream
+areal topology siblings
+areal topology observers
+areal topology health
+areal topology add-downstream <SVC> --type <TYPE> --criticality <LEVEL>
+areal topology add-sibling <ID>
+```
+
+### areal temporal
+
+```
+areal temporal context
+areal temporal deadlines
+areal temporal deadline add <DESC> --at <TIME>
+areal temporal causality <EVENT>
+areal temporal business
+```
+
+### areal stakes
+
+```
+areal stakes level
+areal stakes set <LEVEL>
+areal stakes should-proceed <ACTION> --tolerance <0-1>
+areal stakes risk
+areal stakes blast-radius
+areal stakes guardrails
+areal stakes guardrail add <DESC>
+```
+
+### areal coherence
+
+```
+areal coherence check
+areal coherence level
+areal coherence violations
+areal coherence transitions
+```
+
+### areal serve and areal completions
+
+```
+areal serve [--mode stdio|http|sse] [--port <PORT>] [--auth] [--cors]
+areal completions bash|zsh|fish
+```
+
+## Global Options
+
+| Option | Description |
+|---|---|
+| `--file <PATH>` | Path to .areal file (default: `./.areal`) |
+| `--json` | Output in JSON format |
+| `--quiet` | Suppress non-essential output |
+| `--verbose` | Enable verbose output |
+| `--version` | Print version information |
+| `--help` | Print help |
+
+## Exit Codes
+
+| Code | Meaning |
+|---|---|
+| 0 | Success |
+| 1 | General error |
+| 2 | Invalid arguments |
+| 3 | File not found |
+| 4 | Permission denied |
+| 5 | Not initialized |
+| 6 | Coherence violation |
+| 7 | Stakes rejection |

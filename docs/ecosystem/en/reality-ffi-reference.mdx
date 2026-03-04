@@ -1,0 +1,146 @@
+---
+title: "FFI Reference"
+description: "The agentic-reality-ffi crate exposes the Reality Engine to non-Rust languages through a stable C ABI. Python bindings are provided via maturin/PyO3. WASM bindings are provided ..."
+---
+
+The `agentic-reality-ffi` crate exposes the Reality Engine to non-Rust languages through a stable C ABI. Python bindings are provided via maturin/PyO3. WASM bindings are provided via wasm-bindgen.
+
+## C ABI
+
+Link against `libagentic_reality_ffi` and include the generated header.
+
+### Core Functions
+
+```c
+#include "agentic_reality.h"
+
+// Initialize a reality engine
+RealityEngine* areal_engine_new(const char* storage_path);
+
+// Free an engine
+void areal_engine_free(RealityEngine* engine);
+
+// Sense all domains
+int areal_workspace_sense(RealityEngine* engine);
+
+// Get a JSON summary of the current context
+// Caller must free the returned string with areal_string_free()
+char* areal_soul_summary_json(RealityEngine* engine);
+
+// Assess stakes
+// Returns: 0=trivial, 1=low, 2=medium, 3=high, 4=critical
+int areal_stakes_level(RealityEngine* engine);
+
+// Create a reality anchor
+int areal_anchor_create(
+    RealityEngine* engine,
+    const char* source,
+    const char* claim,
+    const char* evidence
+);
+
+// Verify a claim against reality anchors
+// Returns: confidence 0.0-1.0, or -1.0 on error
+double areal_ground_verify(RealityEngine* engine, const char* claim);
+
+// Check coherence across all domains
+// Returns: 0=coherent, 1=violations detected, -1=error
+int areal_coherence_check(RealityEngine* engine);
+
+// Save state to .areal file
+int areal_workspace_save(RealityEngine* engine);
+
+// Load state from .areal file
+int areal_workspace_load(RealityEngine* engine, const char* path);
+
+// Free a string returned by the FFI layer
+void areal_string_free(char* s);
+```
+
+### Error Handling
+
+All functions that return `int` use:
+- `0` — success
+- `-1` — general error
+- `-2` — storage error
+- `-3` — integrity failure
+
+Call `areal_last_error()` to get a human-readable error message after a non-zero return.
+
+```c
+const char* areal_last_error(void);
+```
+
+## Python Bindings
+
+Install via pip:
+
+```bash
+pip install agentic-reality
+```
+
+```python
+from agentic_reality import RealityEngine
+
+# Initialize
+engine = RealityEngine(storage="~/.agentic/reality/")
+
+# Sense the environment
+engine.workspace_sense()
+
+# Get context summary
+summary = engine.soul_summary()
+print(summary)
+# { "deployment": "production", "stakes": "HIGH", "coherence": 0.98, ... }
+
+# Create an anchor
+engine.anchor_create(
+    source="config",
+    claim="feature_x enabled",
+    evidence="config v2.3"
+)
+
+# Verify a claim
+confidence = engine.ground_verify("feature_x is enabled")
+print(f"Confidence: {confidence:.2f}")
+# Confidence: 0.94
+
+# Assess stakes
+stakes = engine.stakes_level()
+print(f"Stakes: {stakes}")
+# Stakes: HIGH
+
+# Save state
+engine.workspace_save()
+```
+
+## WASM Bindings (Node.js)
+
+Install via npm:
+
+```bash
+npm install @agenticamem/reality
+```
+
+```javascript
+import { RealityEngine } from '@agenticamem/reality';
+
+const engine = new RealityEngine({ storage: '~/.agentic/reality/' });
+await engine.workspaceSense();
+
+const summary = engine.soulSummary();
+console.log(summary);
+
+const stakes = engine.stakesLevel();
+console.log(`Stakes: ${stakes}`);
+
+await engine.workspaceSave();
+```
+
+## Versioning
+
+The FFI ABI follows semantic versioning. Breaking changes only occur on major version bumps. The `areal_abi_version()` function returns the current ABI version string.
+
+```c
+const char* areal_abi_version(void);
+```
