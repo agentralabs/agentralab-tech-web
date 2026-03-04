@@ -381,6 +381,8 @@ const artifacts = sisterKeys.map((k) => {
     case "time": return ".atime"
     case "contract": return ".acon"
     case "planning": return ".aplan"
+    case "cognition": return ".acog"
+    case "reality": return ".areal"
     default: return `.${k}`
   }
 })

@@ -468,19 +468,19 @@ const COMMANDS: Record<ProjectKey, Record<CommandType, CommandEntry[]>> = {
   AgenticCognition: {
     GLOBAL: [
       {
-        command: "curl -fsSL https://agentralabs.tech/install/cognition | sh",
+        command: "curl -fsSL https://agentralabs.tech/install/cognition | bash",
         note: "Default desktop profile (backward-compatible): installs binaries and auto-merges MCP config for common clients when detected (Claude, Cursor, VS Code, Codex, Windsurf).",
       },
       {
-        command: "curl -fsSL https://agentralabs.tech/install/cognition/desktop | sh",
+        command: "curl -fsSL https://agentralabs.tech/install/cognition/desktop | bash",
         note: "Explicit desktop profile with MCP auto-merge for common desktop clients.",
       },
       {
-        command: "curl -fsSL https://agentralabs.tech/install/cognition/terminal | sh",
+        command: "curl -fsSL https://agentralabs.tech/install/cognition/terminal | bash",
         note: "Terminal profile: installs binaries only, no desktop config writes.",
       },
       {
-        command: "curl -fsSL https://agentralabs.tech/install/cognition/server | sh",
+        command: "curl -fsSL https://agentralabs.tech/install/cognition/server | bash",
         note: "Server profile: installs binaries only for remote hosts and service-style environments.",
       },
     ],
@@ -516,19 +516,19 @@ const COMMANDS: Record<ProjectKey, Record<CommandType, CommandEntry[]>> = {
   AgenticReality: {
     GLOBAL: [
       {
-        command: "curl -fsSL https://agentralabs.tech/install/reality | sh",
+        command: "curl -fsSL https://agentralabs.tech/install/reality | bash",
         note: "Default desktop profile (backward-compatible): installs binaries and auto-merges MCP config for common clients when detected (Claude, Cursor, VS Code, Codex, Windsurf).",
       },
       {
-        command: "curl -fsSL https://agentralabs.tech/install/reality/desktop | sh",
+        command: "curl -fsSL https://agentralabs.tech/install/reality/desktop | bash",
         note: "Explicit desktop profile with MCP auto-merge for common desktop clients.",
       },
       {
-        command: "curl -fsSL https://agentralabs.tech/install/reality/terminal | sh",
+        command: "curl -fsSL https://agentralabs.tech/install/reality/terminal | bash",
         note: "Terminal profile: installs binaries only, no desktop config writes.",
       },
       {
-        command: "curl -fsSL https://agentralabs.tech/install/reality/server | sh",
+        command: "curl -fsSL https://agentralabs.tech/install/reality/server | bash",
         note: "Server profile: installs binaries only for remote hosts and service-style environments.",
       },
     ],

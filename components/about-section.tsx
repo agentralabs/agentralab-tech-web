@@ -83,7 +83,7 @@ const STATS = [
   { label: "CONTRACT_TOOLS", value: "38" },
   { label: "COMM_TOOLS", value: "17" },
   { label: "PLANNING_TOOLS", value: "13" },
-  { label: "CORE_FORMATS", value: ".amem/.avis/.acb/.aid/.atime/.acon/.acomm/.aplan" },
+  { label: "CORE_FORMATS", value: ".amem/.avis/.acb/.aid/.atime/.acon/.acomm/.aplan/.acog/.areal" },
 ]
 
 function StatBlock({ label, value, index }: { label: string; value: string; index: number }) {
@@ -222,7 +222,9 @@ export function AboutSection() {
                   coordination across long-running agent sessions, and
                   AgenticPlanning manages persistent goals, decisions,
                   commitments, and strategic reasoning with dream simulations
-                  and multi-agent federation.
+                  and multi-agent federation. AgenticCognition adds longitudinal
+                  user modeling with belief physics, and AgenticReality adds
+                  deployment consciousness with existential grounding.
                 </p>
                 <p className="text-xs lg:text-sm font-mono text-muted-foreground leading-relaxed">
                   The stack is MCP-native, artifact-portable, and designed for

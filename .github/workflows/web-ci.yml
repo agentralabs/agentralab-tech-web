@@ -14,15 +14,20 @@ jobs:
 
       - name: Checkout sister repos for cross-validation
         run: |
+          MONOREPO="$RUNNER_TEMP/agentra-monorepo"
+          git clone --depth 1 https://github.com/agentralabs/agentralabs-tech.git "$MONOREPO"
+
+          REPO_LIST="$RUNNER_TEMP/agentra-sister-repos.txt"
+          {
+            jq -r '.sisters[].repo' "$MONOREPO/docs/sisters-registry.json"
+            jq -r '.sisters[] | select(.enabled != false) | .repo' docs/ecosystem/navigation-contract.json
+          } | awk 'NF' | sort -u > "$REPO_LIST"
+
           cd ..
-          git clone --depth 1 https://github.com/agentralabs/agentic-memory.git
-          git clone --depth 1 https://github.com/agentralabs/agentic-vision.git
-          git clone --depth 1 https://github.com/agentralabs/agentic-codebase.git
-          git clone --depth 1 https://github.com/agentralabs/agentic-identity.git
-          git clone --depth 1 https://github.com/agentralabs/agentic-time.git
-          git clone --depth 1 https://github.com/agentralabs/agentic-contract.git
-          git clone --depth 1 https://github.com/agentralabs/agentic-comm.git
-          git clone --depth 1 https://github.com/agentralabs/agentic-planning.git
+          for repo in $(cat "$REPO_LIST"); do
+            rm -rf "$repo"
+            git clone --depth 1 "https://github.com/agentralabs/${repo}.git" "$repo"
+          done
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4

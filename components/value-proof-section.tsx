@@ -129,8 +129,9 @@ export function ValueProofSection() {
         </h2>
         <p className="mt-3 text-sm font-mono text-muted-foreground leading-relaxed max-w-4xl">
           These systems are built for one outcome: less repeated work, fewer blind releases, and faster incident
-          resolution. The links below show real with-vs-without simulations with commands, tradeoffs, and practical
-          operating limits.
+          resolution. The links below show real with-vs-without simulations for AgenticMemory, AgenticVision,
+          AgenticCodebase, AgenticIdentity, AgenticTime, AgenticContract, AgenticComm, AgenticPlanning,
+          AgenticCognition, and AgenticReality with commands, tradeoffs, and practical operating limits.
         </p>
       </div>
 
