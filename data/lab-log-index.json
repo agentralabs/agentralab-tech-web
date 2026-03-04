@@ -1,5 +1,59 @@
 [
   {
+    "slug": "lab-log-20260304T0515",
+    "title": "Blog Update · 2026-03-04",
+    "dateIso": "2026-03-04",
+    "publishedAt": "2026-03-04T05:15:21.482Z",
+    "summary": "6 fresh signals across 2 repos in the latest 4-5 day publishing window.",
+    "category": "Release",
+    "notes": [
+      "This blog update captures the latest publishing window ending on 2026-03-04. We recorded 6 signals across 2 repositories, including 0 releases, 6 commit updates, and 0 manually curated notes. The latest release cycle prioritized deployable improvements tied to reliability and operator speed.",
+      "Highlights from this cycle: agentic-memory: commit mcp: harden deterministic capture and resume behavior; agentralab-tech-web: commit fix web parity and ci coverage for cognition/reality; agentralab-tech-web: commit fix web ci typing and regenerate ecosystem docs for cognition/reality; agentralab-tech-web: commit chore: add AgenticReality to navigation contract. Taken together, these changes focus on runtime reliability, clearer operations flow, and lower adoption friction across the Agentra systems. Commercially, this batch improves deployment readiness and lowers the support burden during rollout. Core repositories touched in this cycle: agentic-memory, agentralab-tech-web.",
+      "Recommended action is phased rollout through staging, then controlled promotion into shared environments after MCP and artifact checks. For each item, source links are attached below so teams can validate scope, migration impact, and follow-up tasks without context loss before broad release communication."
+    ],
+    "highlights": [
+      "agentic-memory (commit): mcp: harden deterministic capture and resume behavior",
+      "agentralab-tech-web (commit): fix web parity and ci coverage for cognition/reality",
+      "agentralab-tech-web (commit): fix web ci typing and regenerate ecosystem docs for cognition/reality",
+      "agentralab-tech-web (commit): chore: add AgenticReality to navigation contract",
+      "agentralab-tech-web (commit): feat: add AgenticReality (Sister #10) across entire web platform",
+      "agentralab-tech-web (commit): chore: remove Chinese locale from canonical scripts and guardrails"
+    ],
+    "sources": [
+      {
+        "label": "agentic-memory · commit",
+        "href": "https://github.com/agentralabs/agentic-memory/commit/993126dae9a87ebc1ec97213d6b013caa93f2b55"
+      },
+      {
+        "label": "agentralab-tech-web · commit",
+        "href": "https://github.com/agentralabs/agentralab-tech-web/commit/e6e7e887754a7c357e782f691cdf3bf07fb6e335"
+      },
+      {
+        "label": "agentralab-tech-web · commit",
+        "href": "https://github.com/agentralabs/agentralab-tech-web/commit/b4abd73d629a62ebde5525108b02d89a64638093"
+      },
+      {
+        "label": "agentralab-tech-web · commit",
+        "href": "https://github.com/agentralabs/agentralab-tech-web/commit/e363dcd9b3ebe6d4bc9f362dac925b8aad2eb2b5"
+      },
+      {
+        "label": "agentralab-tech-web · commit",
+        "href": "https://github.com/agentralabs/agentralab-tech-web/commit/dae2d080bdc35c92ac9673af69fcb94373f2eabe"
+      },
+      {
+        "label": "agentralab-tech-web · commit",
+        "href": "https://github.com/agentralabs/agentralab-tech-web/commit/0a427b75c8eb9d0923a5f64dc393794a3a4d939b"
+      }
+    ],
+    "sourceCount": 6,
+    "signalCount": 6,
+    "carryoverMode": false,
+    "reposTouched": [
+      "agentic-memory",
+      "agentralab-tech-web"
+    ]
+  },
+  {
     "slug": "lab-log-20260228T0506",
     "title": "Blog Update · 2026-02-28",
     "dateIso": "2026-02-28",
