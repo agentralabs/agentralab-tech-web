@@ -94,6 +94,15 @@
       "landingSlug": "time-docs",
       "includeLanding": true,
       "enabled": true
+    },
+    {
+      "key": "reality",
+      "repo": "agentic-reality",
+      "name": "AgenticReality",
+      "order": 1009,
+      "landingSlug": "reality-docs",
+      "includeLanding": true,
+      "enabled": true
     }
   ]
 }
