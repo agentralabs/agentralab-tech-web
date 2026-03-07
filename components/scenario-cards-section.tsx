@@ -107,6 +107,42 @@ const SCENARIOS: Scenario[] = [
       "\"Deployment: cloud-us-east-1, GPU: A100 (72% utilized), memory pressure: moderate. This is a production environment with 847 active users. Blast radius for this operation: HIGH. Recommend staging first.\"",
     href: "/projects/scenarios/agentic-reality",
   },
+  {
+    question: "\"Design the architecture before you start coding.\"",
+    without:
+      "Agent jumps straight into implementation. No entity model, no dependency map, no test plan. Discovers structural problems 2,000 lines in.",
+    withLabel: "WITH AGENTICFORGE",
+    withResponse:
+      "\"Blueprint generated: 12 entities, 34 operations, 8 module boundaries. Dependency graph validated — no cycles. File layout: 47 files across 6 crates. Code skeletons with trait signatures ready. Test scaffold: 89 test stubs covering all operations. Ready to generate.\"",
+    href: "/projects/scenarios/agentic-forge",
+  },
+  {
+    question: "\"How do I know the generated code is safe?\"",
+    without:
+      "Agent generates the entire file, you review it manually afterward. Bugs, security issues, and architectural violations discovered post-generation.",
+    withLabel: "WITH AGENTICAEGIS",
+    withResponse:
+      "\"Streaming validation active. Token 847: quality score 0.94. Token 1,203: SQL injection pattern detected — generation paused. Auto-rollback to last safe checkpoint at token 1,180. Shield blocked 3 issues during this generation session. Resume with corrected prompt.\"",
+    href: "/projects/scenarios/agentic-aegis",
+  },
+  {
+    question: "\"Is the agent actually doing what I asked?\"",
+    without:
+      "Agent confidently produces output that drifts from your original intent. No way to verify alignment between what you wanted and what was built.",
+    withLabel: "WITH AGENTICVERITAS",
+    withResponse:
+      "\"Intent compiled: 'build a rate limiter with sliding window.' Verification chain: 4/5 intent criteria met. Uncertainty flag: token bucket implementation detected — this is fixed-window, not sliding-window. Confidence: 0.62 for intent alignment. Recommend correction before proceeding.\"",
+    href: "/projects/scenarios/agentic-veritas",
+  },
+  {
+    question: "\"We built this exact pattern last month.\"",
+    without:
+      "Agent rebuilds the same authentication flow from scratch. No memory of previous solutions, no pattern reuse, no cross-project learning.",
+    withLabel: "WITH AGENTICEVOLVE",
+    withResponse:
+      "\"Pattern match found: 'JWT auth with refresh tokens' — crystallized from project Alpha (93% success rate, 12 reuses). Applying pattern with project-specific adaptations. Estimated time savings: 4 hours. Pattern evolution: v3 incorporates rate limiting learned from project Gamma.\"",
+    href: "/projects/scenarios/agentic-evolve",
+  },
 ]
 
 function ScenarioCard({ scenario, index }: { scenario: Scenario; index: number }) {
