@@ -89,8 +89,10 @@ function matchesAnyCategory(node: GitHubDiscussionNode, allowedSlugs: string[]):
   return !!slug && allowedSlugs.includes(slug)
 }
 
-function detectProject(text: string): "AgenticMemory" | "AgenticVision" | "AgenticCodebase" | "AgenticIdentity" | "AgenticTime" | "AgenticContract" | "AgenticComm" | "AgenticPlanning" {
+function detectProject(text: string): "AgenticMemory" | "AgenticVision" | "AgenticCodebase" | "AgenticIdentity" | "AgenticTime" | "AgenticContract" | "AgenticComm" | "AgenticPlanning" | "AgenticCognition" | "AgenticReality" {
   const lower = text.toLowerCase()
+  if (lower.includes("reality") || lower.includes("grounding") || lower.includes(".areal") || lower.includes("deployment soul")) return "AgenticReality"
+  if (lower.includes("cognition") || lower.includes("user model") || lower.includes(".acog") || lower.includes("belief")) return "AgenticCognition"
   if (lower.includes("planning") || lower.includes("strategy") || lower.includes(".aplan") || lower.includes("goal")) return "AgenticPlanning"
   if (lower.includes("comm") || lower.includes("channel") || lower.includes(".acomm") || lower.includes("messaging")) return "AgenticComm"
   if (lower.includes("contract") || lower.includes("governance") || lower.includes(".acon") || lower.includes("policy engine")) return "AgenticContract"

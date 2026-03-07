@@ -19,6 +19,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "agentic-memory",
     "agentic-vision",
     "agentic-codebase",
+    "agentic-identity",
+    "agentic-time",
+    "agentic-contract",
+    "agentic-comm",
+    "agentic-planning",
     "agentic-cognition",
     "agentic-reality",
   ].map((sister) => ({
