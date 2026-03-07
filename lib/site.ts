@@ -2,7 +2,7 @@ export const siteConfig = {
   name: "AGENTRA LABS",
   shortName: "AGENTRA",
   description:
-    "Open-source tools that give AI agents persistent memory, visual understanding, code intelligence, cryptographic identity, temporal reasoning, policy governance, structured communication, strategic planning, cognitive reasoning, and existential grounding. AgenticMemory, AgenticVision, AgenticCodebase, AgenticIdentity, AgenticTime, AgenticContract, AgenticComm, AgenticPlanning, AgenticCognition, and AgenticReality work with any MCP-compatible client.",
+    "Open-source tools that give AI agents persistent memory, visual understanding, code intelligence, cryptographic identity, temporal reasoning, policy governance, structured communication, strategic planning, cognitive reasoning, existential grounding, blueprint architecture, streaming validation, truth verification, and pattern learning. AgenticMemory, AgenticVision, AgenticCodebase, AgenticIdentity, AgenticTime, AgenticContract, AgenticComm, AgenticPlanning, AgenticCognition, AgenticReality, AgenticForge, AgenticAegis, AgenticVeritas, and AgenticEvolve work with any MCP-compatible client.",
   url: "https://www.agentralabs.tech",
   locale: "en_US",
   xHandle: "@agentralab",
