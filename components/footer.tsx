@@ -28,6 +28,10 @@ const PROJECT_LINKS = [
   { label: "AgenticPlanning", href: "https://github.com/agentralabs/agentic-planning" },
   { label: "AgenticCognition", href: "https://github.com/agentralabs/agentic-cognition" },
   { label: "AgenticReality", href: "https://github.com/agentralabs/agentic-reality" },
+  { label: "AgenticForge", href: "https://github.com/agentralabs/agentic-forge" },
+  { label: "AgenticAegis", href: "https://github.com/agentralabs/agentic-aegis" },
+  { label: "AgenticVeritas", href: "https://github.com/agentralabs/agentic-veritas" },
+  { label: "AgenticEvolve", href: "https://github.com/agentralabs/agentic-evolve" },
   { label: "AgentraLabsWeb", href: "https://github.com/agentralabs/agentralabs-tech-web" },
 ]
 

@@ -2,7 +2,7 @@ export type FeedbackType = "Bug Report" | "Feature Request" | "Integration Win" 
 
 export interface FeedbackEntry {
   id: string
-  project: "AgenticMemory" | "AgenticVision" | "AgenticCodebase" | "AgenticIdentity" | "AgenticTime" | "AgenticContract" | "AgenticComm" | "AgenticPlanning" | "AgenticCognition" | "AgenticReality"
+  project: "AgenticMemory" | "AgenticVision" | "AgenticCodebase" | "AgenticIdentity" | "AgenticTime" | "AgenticContract" | "AgenticComm" | "AgenticPlanning" | "AgenticCognition" | "AgenticReality" | "AgenticForge" | "AgenticAegis" | "AgenticVeritas" | "AgenticEvolve"
   type: FeedbackType
   quote: string
   author: string
@@ -28,7 +28,7 @@ export interface IntegrationEntry {
   status: "Production" | "Pilot" | "Community"
   description: string
   runtime: "MCP" | "CLI" | "Python" | "Rust" | "REST"
-  project: "AgenticMemory" | "AgenticVision" | "AgenticCodebase" | "AgenticIdentity" | "AgenticTime" | "AgenticContract" | "AgenticComm" | "AgenticPlanning" | "AgenticCognition" | "AgenticReality"
+  project: "AgenticMemory" | "AgenticVision" | "AgenticCodebase" | "AgenticIdentity" | "AgenticTime" | "AgenticContract" | "AgenticComm" | "AgenticPlanning" | "AgenticCognition" | "AgenticReality" | "AgenticForge" | "AgenticAegis" | "AgenticVeritas" | "AgenticEvolve"
   link: string
 }
 

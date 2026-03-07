@@ -4,7 +4,7 @@ import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { ScenarioPageView } from "@/components/scenario-page"
 
-const VALID_SISTERS = ["agentic-memory", "agentic-vision", "agentic-codebase", "agentic-identity", "agentic-time", "agentic-contract", "agentic-comm", "agentic-planning", "agentic-cognition", "agentic-reality"] as const
+const VALID_SISTERS = ["agentic-memory", "agentic-vision", "agentic-codebase", "agentic-identity", "agentic-time", "agentic-contract", "agentic-comm", "agentic-planning", "agentic-cognition", "agentic-reality", "agentic-forge", "agentic-aegis", "agentic-veritas", "agentic-evolve"] as const
 
 const META: Record<string, { title: string; description: string }> = {
   "agentic-memory": {
@@ -56,6 +56,26 @@ const META: Record<string, { title: string; description: string }> = {
     title: "AgenticReality Scenarios — Agentra Labs",
     description:
       "See AgenticReality capabilities in action: deployment consciousness, resource proprioception, reality physics, topology awareness, temporal grounding, stakes perception, and coherence maintenance in portable .areal artifacts.",
+  },
+  "agentic-forge": {
+    title: "AgenticForge Scenarios — Agentra Labs",
+    description:
+      "See AgenticForge capabilities in action: complete project architecture, entity design, operation planning, dependency mapping, file layout, code skeletons, and test generation in portable .forge artifacts.",
+  },
+  "agentic-aegis": {
+    title: "AgenticAegis Scenarios — Agentra Labs",
+    description:
+      "See AgenticAegis capabilities in action: real-time validation during generation, continuous quality gates, rollback triggers, and streaming shield protection in portable .aegis artifacts.",
+  },
+  "agentic-veritas": {
+    title: "AgenticVeritas Scenarios — Agentra Labs",
+    description:
+      "See AgenticVeritas capabilities in action: intent compilation, uncertainty detection, truth verification, and verifiable agent reasoning in portable .veritas artifacts.",
+  },
+  "agentic-evolve": {
+    title: "AgenticEvolve Scenarios — Agentra Labs",
+    description:
+      "See AgenticEvolve capabilities in action: pattern crystallization, instant rebuilds, cross-project learning, and pattern library management in portable .evolve artifacts.",
   },
 }
 

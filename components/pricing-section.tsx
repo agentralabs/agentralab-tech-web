@@ -365,6 +365,134 @@ const MODULES: ModuleCard[] = [
     scenarioHref: "/projects/scenarios/agentic-reality",
     highlighted: false,
   },
+  {
+    id: "agentic-forge",
+    frame: "PROJECTS",
+    value: "AgenticForge",
+    period: "/ AVAILABLE",
+    tag: "READY",
+    description: "\"Just start coding.\" Your agent dives into implementation with no architecture, no entity model, no dependency map, no test plan. It builds a house without blueprints. AgenticForge designs complete project architecture before a single line is generated.",
+    summary:
+      "Every project gets a full blueprint: entities, operations, dependencies, file layout, code skeletons, and test scaffolds. The architecture is validated before generation begins. All blueprint state lives in portable .forge files.",
+    deepSummary: [
+      {
+        lead: "Blueprint Engine:",
+        body: "Complete project architecture designed upfront. Entities, operations, relationships, and constraints mapped before code generation.",
+      },
+      {
+        lead: "Dependency mapping:",
+        body: "Every module dependency traced and validated. Circular dependencies caught before they exist. Clean layering enforced.",
+      },
+      {
+        lead: "Code skeletons:",
+        body: "Type-safe scaffolds generated from the blueprint. Interfaces, traits, and contracts defined before implementation.",
+      },
+      {
+        lead: "Test scaffolds:",
+        body: "Test structure generated alongside code structure. Every entity and operation has a test plan before implementation begins.",
+      },
+    ],
+    cta: "VIEW REPO",
+    href: "https://github.com/agentralabs/agentic-forge",
+    scenarioHref: "/projects/scenarios/agentic-forge",
+    highlighted: false,
+  },
+  {
+    id: "agentic-aegis",
+    frame: "PROJECTS",
+    value: "AgenticAegis",
+    period: "/ AVAILABLE",
+    tag: "READY",
+    description: "\"Ship it.\" Your agent generates code and you discover the bugs after deployment. No validation during generation, no quality gates, no rollback triggers. AgenticAegis validates in real time as code is being generated.",
+    summary:
+      "Every generation stream is validated continuously. Quality gates catch issues as they appear, not after. Rollback triggers activate before bad code propagates. All validation state lives in portable .aegis files.",
+    deepSummary: [
+      {
+        lead: "Streaming Shield:",
+        body: "Real-time validation during code generation. Every token stream checked against quality constraints as it flows.",
+      },
+      {
+        lead: "Quality gates:",
+        body: "Continuous quality scoring with configurable thresholds. Generation pauses or rolls back when quality drops below safe levels.",
+      },
+      {
+        lead: "Rollback triggers:",
+        body: "Automatic rollback when validation detects breaking changes, security vulnerabilities, or architectural violations mid-stream.",
+      },
+      {
+        lead: "Shield history:",
+        body: "Complete audit trail of every validation decision. What was caught, what passed, and why. Patterns tracked across sessions.",
+      },
+    ],
+    cta: "VIEW REPO",
+    href: "https://github.com/agentralabs/agentic-aegis",
+    scenarioHref: "/projects/scenarios/agentic-aegis",
+    highlighted: false,
+  },
+  {
+    id: "agentic-veritas",
+    frame: "PROJECTS",
+    value: "AgenticVeritas",
+    period: "/ AVAILABLE",
+    tag: "READY",
+    description: "\"Are you sure?\" Your agent speaks with false confidence. It can't distinguish certain knowledge from uncertain inference. It never flags what it doesn't know. AgenticVeritas compiles intent and detects uncertainty.",
+    summary:
+      "Every claim is compiled against intent with uncertainty quantification. The agent knows what it knows, what it infers, and what it's guessing. All truth state lives in portable .veritas files.",
+    deepSummary: [
+      {
+        lead: "Truth Engine:",
+        body: "Intent compilation that maps user goals to agent actions. Every step verified against the original intent, not just syntax.",
+      },
+      {
+        lead: "Uncertainty detection:",
+        body: "Confidence scoring for every claim and recommendation. Explicit flagging of unknowns, assumptions, and inference gaps.",
+      },
+      {
+        lead: "Verification chains:",
+        body: "Traceable reasoning from intent to output. Every conclusion links back to the evidence and logic that produced it.",
+      },
+      {
+        lead: "Calibration tracking:",
+        body: "Historical accuracy of confidence estimates. The agent learns when it overestimates or underestimates its own certainty.",
+      },
+    ],
+    cta: "VIEW REPO",
+    href: "https://github.com/agentralabs/agentic-veritas",
+    scenarioHref: "/projects/scenarios/agentic-veritas",
+    highlighted: false,
+  },
+  {
+    id: "agentic-evolve",
+    frame: "PROJECTS",
+    value: "AgenticEvolve",
+    period: "/ AVAILABLE",
+    tag: "READY",
+    description: "\"We solved this before.\" Your agent rebuilds the same patterns from scratch every time. No pattern memory, no reusable solutions, no cross-project learning. AgenticEvolve crystallizes successful patterns for instant rebuilds.",
+    summary:
+      "Every successful pattern is captured, catalogued, and made reusable. Cross-project learning means solutions discovered once are available everywhere. All pattern state lives in portable .evolve files.",
+    deepSummary: [
+      {
+        lead: "Pattern Library:",
+        body: "Crystallized solutions from successful builds. Patterns tagged, versioned, and searchable across all projects.",
+      },
+      {
+        lead: "Instant rebuilds:",
+        body: "Previously solved problems are recognized and resolved immediately. No redundant work, no reinventing wheels.",
+      },
+      {
+        lead: "Cross-project learning:",
+        body: "Patterns discovered in one project are available to all projects. Knowledge compounds across the entire workspace.",
+      },
+      {
+        lead: "Evolution tracking:",
+        body: "Patterns improve over time. Usage frequency, success rates, and refinements tracked. The library gets smarter with every build.",
+      },
+    ],
+    cta: "VIEW REPO",
+    href: "https://github.com/agentralabs/agentic-evolve",
+    scenarioHref: "/projects/scenarios/agentic-evolve",
+    highlighted: false,
+  },
 ]
 
 function ModuleGlyph({ id, highlighted }: { id: ModuleCard["id"]; highlighted: boolean }) {
@@ -681,12 +809,13 @@ export function PricingSection() {
       >
         <div className="flex flex-col gap-3">
           <h2 className="text-2xl lg:text-3xl font-mono font-bold tracking-tight uppercase text-foreground text-balance">
-            Ten systems. One cognitive layer.
+            Fourteen systems. One cognitive layer.
           </h2>
           <p className="text-xs lg:text-sm font-mono text-muted-foreground leading-relaxed max-w-md">
             AgenticMemory — reasoning that persists. AgenticVision — visual state that&apos;s queryable.
             AgenticCodebase — code understanding with prediction. AgenticIdentity — cryptographic proof of agent action. AgenticTime — temporal reasoning with deadlines. AgenticContract — policy governance for agents.
-            AgenticComm — structured channels and message routing for cross-agent coordination. AgenticPlanning — persistent goals, decisions, and commitments. AgenticCognition — longitudinal user modeling and living models of human consciousness. AgenticReality — existential grounding with deployment consciousness and reality physics. All open source. All shipped.
+            AgenticComm — structured channels and message routing for cross-agent coordination. AgenticPlanning — persistent goals, decisions, and commitments. AgenticCognition — longitudinal user modeling and living models of human consciousness. AgenticReality — existential grounding with deployment consciousness and reality physics.
+            AgenticForge — blueprint engine for complete project architecture. AgenticAegis — streaming shield for real-time validation. AgenticVeritas — truth engine for intent compilation. AgenticEvolve — pattern library for instant rebuilds. All open source. All shipped.
           </p>
         </div>
         <StatusLine />
@@ -703,8 +832,18 @@ export function PricingSection() {
         ))}
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0 mt-0">
-        {MODULES.slice(6).map((module, i) => (
+        {MODULES.slice(6, 9).map((module, i) => (
           <ModuleCardView key={module.id} module={module} index={i + 6} />
+        ))}
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0 mt-0">
+        {MODULES.slice(9, 12).map((module, i) => (
+          <ModuleCardView key={module.id} module={module} index={i + 9} />
+        ))}
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0 mt-0">
+        {MODULES.slice(12).map((module, i) => (
+          <ModuleCardView key={module.id} module={module} index={i + 12} />
         ))}
       </div>
 
@@ -717,7 +856,7 @@ export function PricingSection() {
       >
         <span className="text-[10px] tracking-[0.2em] uppercase text-muted-foreground font-mono">
           {
-            "* Ten independent systems that work well together. Research-backed. MIT licensed. Production ready."
+            "* Fourteen independent systems that work well together. Research-backed. MIT licensed. Production ready."
           }
         </span>
         <div className="flex-1 border-t border-border" />

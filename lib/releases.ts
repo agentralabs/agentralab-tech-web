@@ -13,6 +13,10 @@ const DEFAULT_RELEASE_REPOS = [
   "agentralabs/agentic-planning",
   "agentralabs/agentic-cognition",
   "agentralabs/agentic-reality",
+  "agentralabs/agentic-forge",
+  "agentralabs/agentic-aegis",
+  "agentralabs/agentic-veritas",
+  "agentralabs/agentic-evolve",
   "agentralabs/agentralab-tech-web",
   "agentralabs/agentralabs-tech",
 ]
