@@ -1,5 +1,61 @@
 [
   {
+    "slug": "lab-log-20260308T0515",
+    "title": "Blog Update · 2026-03-08",
+    "dateIso": "2026-03-08",
+    "publishedAt": "2026-03-08T05:15:56.166Z",
+    "summary": "6 fresh signals across 4 repos in the latest 4-5 day publishing window.",
+    "category": "Release",
+    "notes": [
+      "This blog update captures the latest publishing window ending on 2026-03-08. We recorded 6 signals across 4 repositories, including 0 releases, 6 commit updates, and 0 manually curated notes. This publishing window concentrated on execution quality, with delivery aimed at production confidence.",
+      "Highlights from this cycle: agentic-memory: commit fix(clippy): derive default for migration strategy; agentic-codebase: commit fix(ci): satisfy strict clippy checks and guardrails; agentic-time: commit fix(ci): satisfy strict clippy checks; agentic-vision: commit fix(ci): satisfy clippy and primary regression checks. Taken together, these changes focus on runtime reliability, clearer operations flow, and lower adoption friction across the Agentra systems. Operationally, these updates reduce onboarding overhead and improve release confidence across environments. Core repositories touched in this cycle: agentic-memory, agentic-codebase, agentic-time, agentic-vision.",
+      "The safest rollout path is staged verification first, followed by controlled promotion once telemetry and MCP wiring are clean. For each item, source links are attached below so teams can validate scope, migration impact, and follow-up tasks without context loss before broad release communication."
+    ],
+    "highlights": [
+      "agentic-memory (commit): fix(clippy): derive default for migration strategy",
+      "agentic-codebase (commit): fix(ci): satisfy strict clippy checks and guardrails",
+      "agentic-time (commit): fix(ci): satisfy strict clippy checks",
+      "agentic-vision (commit): fix(ci): satisfy clippy and primary regression checks",
+      "agentic-memory (commit): fix(ci): resolve strict warnings and test compile failures",
+      "agentic-codebase (commit): fix(guardrails): stop tracking internal-only docs"
+    ],
+    "sources": [
+      {
+        "label": "agentic-memory · commit",
+        "href": "https://github.com/agentralabs/agentic-memory/commit/695e4349520f22ae08943742afd33f0acb9643ac"
+      },
+      {
+        "label": "agentic-codebase · commit",
+        "href": "https://github.com/agentralabs/agentic-codebase/commit/e85766809341cbaa3a65a6f903e505003b29b132"
+      },
+      {
+        "label": "agentic-time · commit",
+        "href": "https://github.com/agentralabs/agentic-time/commit/a9b5a8e01894cd62b85cc57f0b781d43309713a6"
+      },
+      {
+        "label": "agentic-vision · commit",
+        "href": "https://github.com/agentralabs/agentic-vision/commit/0b2c9cd6b7c39ab70618bb3c583453f91585ad08"
+      },
+      {
+        "label": "agentic-memory · commit",
+        "href": "https://github.com/agentralabs/agentic-memory/commit/cbf9813a38bc6f1d9d4abc39f17dcfd5c7c34852"
+      },
+      {
+        "label": "agentic-codebase · commit",
+        "href": "https://github.com/agentralabs/agentic-codebase/commit/4ff3839dd0ea5bf9c185dfcf1ba2de59122f2402"
+      }
+    ],
+    "sourceCount": 6,
+    "signalCount": 6,
+    "carryoverMode": false,
+    "reposTouched": [
+      "agentic-memory",
+      "agentic-codebase",
+      "agentic-time",
+      "agentic-vision"
+    ]
+  },
+  {
     "slug": "lab-log-20260304T0515",
     "title": "Blog Update · 2026-03-04",
     "dateIso": "2026-03-04",
