@@ -1,5 +1,62 @@
 [
   {
+    "slug": "lab-log-20260329T0553",
+    "title": "Blog Update · 2026-03-29",
+    "dateIso": "2026-03-29",
+    "publishedAt": "2026-03-29T05:53:06.604Z",
+    "summary": "6 fresh signals across 5 repos in the latest 4-5 day publishing window.",
+    "category": "Release",
+    "notes": [
+      "This blog update captures the latest publishing window ending on 2026-03-29. We recorded 6 signals across 5 repositories, including 1 release, 5 commit updates, and 0 manually curated notes. The latest release cycle prioritized deployable improvements tied to reliability and operator speed.",
+      "Highlights from this cycle: agentralab-tech-web: released Blog Update · 2026-03-25 · Release Broadcast; agentralab-tech-web: commit chore(lab-log): publish automated entry; agentic-memory: commit feat: add token conservation infrastructure (cache, metrics, query, MCP params, benchmarks); agentic-vision: commit feat: add token conservation infrastructure (cache, metrics, query, MCP params, benchmarks). Taken together, these changes focus on runtime reliability, clearer operations flow, and lower adoption friction across the Agentra systems. Commercially, this batch improves deployment readiness and lowers the support burden during rollout. Core repositories touched in this cycle: agentralab-tech-web, agentic-memory, agentic-vision, agentic-codebase.",
+      "Recommended action is phased rollout through staging, then controlled promotion into shared environments after MCP and artifact checks. For each item, source links are attached below so teams can validate scope, migration impact, and follow-up tasks without context loss before broad release communication."
+    ],
+    "highlights": [
+      "agentralab-tech-web (release): Blog Update · 2026-03-25 · Release Broadcast",
+      "agentralab-tech-web (commit): chore(lab-log): publish automated entry",
+      "agentic-memory (commit): feat: add token conservation infrastructure (cache, metrics, query, MCP params, benchmarks)",
+      "agentic-vision (commit): feat: add token conservation infrastructure (cache, metrics, query, MCP params, benchmarks)",
+      "agentic-codebase (commit): feat: add token conservation infrastructure (cache, metrics, query, MCP params, benchmarks)",
+      "agentic-identity (commit): feat: add token conservation infrastructure (cache, metrics, query, MCP params, benchmarks)"
+    ],
+    "sources": [
+      {
+        "label": "agentralab-tech-web · release",
+        "href": "https://github.com/agentralabs/agentralab-tech-web/releases/tag/lab-log-20260325-0540"
+      },
+      {
+        "label": "agentralab-tech-web · commit",
+        "href": "https://github.com/agentralabs/agentralab-tech-web/commit/af0bb4f44d6c938e35ba2cf92c0de8c2f17e09a4"
+      },
+      {
+        "label": "agentic-memory · commit",
+        "href": "https://github.com/agentralabs/agentic-memory/commit/145d49901e3d5e877376978b3ed4a2b4357a0172"
+      },
+      {
+        "label": "agentic-vision · commit",
+        "href": "https://github.com/agentralabs/agentic-vision/commit/541e0da38dce9457192fcc18f89f4c838fbd9cd1"
+      },
+      {
+        "label": "agentic-codebase · commit",
+        "href": "https://github.com/agentralabs/agentic-codebase/commit/b8a5a24a7349325d3e68416f6c0d30143edba6e9"
+      },
+      {
+        "label": "agentic-identity · commit",
+        "href": "https://github.com/agentralabs/agentic-identity/commit/01716823786664064628bb0f43d0fce0739f3239"
+      }
+    ],
+    "sourceCount": 6,
+    "signalCount": 6,
+    "carryoverMode": false,
+    "reposTouched": [
+      "agentralab-tech-web",
+      "agentic-memory",
+      "agentic-vision",
+      "agentic-codebase",
+      "agentic-identity"
+    ]
+  },
+  {
     "slug": "lab-log-20260325T0540",
     "title": "Blog Update · 2026-03-25",
     "dateIso": "2026-03-25",
