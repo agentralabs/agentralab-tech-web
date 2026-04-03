@@ -1,5 +1,61 @@
 [
   {
+    "slug": "lab-log-20260403T0551",
+    "title": "Blog Update · 2026-04-03",
+    "dateIso": "2026-04-03",
+    "publishedAt": "2026-04-03T05:51:37.338Z",
+    "summary": "6 fresh signals across 4 repos in the latest 4-5 day publishing window.",
+    "category": "Release",
+    "notes": [
+      "This blog update captures the latest publishing window ending on 2026-04-03. We recorded 6 signals across 4 repositories, including 1 release, 5 commit updates, and 0 manually curated notes. This publishing window concentrated on execution quality, with delivery aimed at production confidence.",
+      "Highlights from this cycle: agentralab-tech-web: released Blog Update · 2026-03-29 · Release Broadcast; agentralab-tech-web: commit chore(lab-log): publish automated entry; agentic-time: commit feat: add token conservation infrastructure (cache, metrics, query, MCP params, benchmarks); agentic-vision: commit feat: implement Perception Revolution — adaptive perception stack, site grammar system, .avis v2. Taken together, these changes focus on runtime reliability, clearer operations flow, and lower adoption friction across the Agentra systems. Operationally, these updates reduce onboarding overhead and improve release confidence across environments. Core repositories touched in this cycle: agentralab-tech-web, agentic-time, agentic-vision, agentralabs-tech.",
+      "The safest rollout path is staged verification first, followed by controlled promotion once telemetry and MCP wiring are clean. For each item, source links are attached below so teams can validate scope, migration impact, and follow-up tasks without context loss before broad release communication."
+    ],
+    "highlights": [
+      "agentralab-tech-web (release): Blog Update · 2026-03-29 · Release Broadcast",
+      "agentralab-tech-web (commit): chore(lab-log): publish automated entry",
+      "agentic-time (commit): feat: add token conservation infrastructure (cache, metrics, query, MCP params, benchmarks)",
+      "agentic-vision (commit): feat: implement Perception Revolution — adaptive perception stack, site grammar system, .avis v2",
+      "agentralabs-tech (commit): docs: bring agentic-cognition to canonical parity",
+      "agentralabs-tech (commit): feat: achieve cognition parity + expand agentra-cli to all ten sisters"
+    ],
+    "sources": [
+      {
+        "label": "agentralab-tech-web · release",
+        "href": "https://github.com/agentralabs/agentralab-tech-web/releases/tag/lab-log-20260329-0553"
+      },
+      {
+        "label": "agentralab-tech-web · commit",
+        "href": "https://github.com/agentralabs/agentralab-tech-web/commit/1b8b1e171a25dbef079d28d20b826bba46ee959b"
+      },
+      {
+        "label": "agentic-time · commit",
+        "href": "https://github.com/agentralabs/agentic-time/commit/fa70a808deef68389eaa51949d0094b4e8f1af94"
+      },
+      {
+        "label": "agentic-vision · commit",
+        "href": "https://github.com/agentralabs/agentic-vision/commit/0d1c3b7c1500d015a72a56d6e99171fc9dd06b73"
+      },
+      {
+        "label": "agentralabs-tech · commit",
+        "href": "https://github.com/agentralabs/agentralabs-tech/commit/2c3d1c9a2cf1ac8c24146ad6ae4c8354895957ef"
+      },
+      {
+        "label": "agentralabs-tech · commit",
+        "href": "https://github.com/agentralabs/agentralabs-tech/commit/650d58ef56a379e7f4319cf18328893ce01cad3c"
+      }
+    ],
+    "sourceCount": 6,
+    "signalCount": 6,
+    "carryoverMode": false,
+    "reposTouched": [
+      "agentralab-tech-web",
+      "agentic-time",
+      "agentic-vision",
+      "agentralabs-tech"
+    ]
+  },
+  {
     "slug": "lab-log-20260329T0553",
     "title": "Blog Update · 2026-03-29",
     "dateIso": "2026-03-29",
