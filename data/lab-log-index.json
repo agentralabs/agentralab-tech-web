@@ -1,5 +1,61 @@
 [
   {
+    "slug": "lab-log-20260407T0557",
+    "title": "Blog Update · 2026-04-07",
+    "dateIso": "2026-04-07",
+    "publishedAt": "2026-04-07T05:57:44.066Z",
+    "summary": "6 fresh signals across 4 repos in the latest 4-5 day publishing window.",
+    "category": "Release",
+    "notes": [
+      "This blog update captures the latest publishing window ending on 2026-04-07. We recorded 6 signals across 4 repositories, including 1 release, 5 commit updates, and 0 manually curated notes. This publishing window concentrated on execution quality, with delivery aimed at production confidence.",
+      "Highlights from this cycle: agentralab-tech-web: released Blog Update · 2026-04-03 · Release Broadcast; agentralab-tech-web: commit chore(lab-log): publish automated entry; agentic-time: commit fix: harden install fallback package selection and merge temp handling; agentic-time: commit fix: enforce non-zero CLI parse errors and remove sdk path pin. Taken together, these changes focus on runtime reliability, clearer operations flow, and lower adoption friction across the Agentra systems. Operationally, these updates reduce onboarding overhead and improve release confidence across environments. Core repositories touched in this cycle: agentralab-tech-web, agentic-time, agentic-vision, agentic-codebase.",
+      "The safest rollout path is staged verification first, followed by controlled promotion once telemetry and MCP wiring are clean. For each item, source links are attached below so teams can validate scope, migration impact, and follow-up tasks without context loss before broad release communication."
+    ],
+    "highlights": [
+      "agentralab-tech-web (release): Blog Update · 2026-04-03 · Release Broadcast",
+      "agentralab-tech-web (commit): chore(lab-log): publish automated entry",
+      "agentic-time (commit): fix: harden install fallback package selection and merge temp handling",
+      "agentic-time (commit): fix: enforce non-zero CLI parse errors and remove sdk path pin",
+      "agentic-vision (commit): chore: ignore latex log artifacts",
+      "agentic-codebase (commit): Fix bridge lint/format regressions for CI"
+    ],
+    "sources": [
+      {
+        "label": "agentralab-tech-web · release",
+        "href": "https://github.com/agentralabs/agentralab-tech-web/releases/tag/lab-log-20260403-0551"
+      },
+      {
+        "label": "agentralab-tech-web · commit",
+        "href": "https://github.com/agentralabs/agentralab-tech-web/commit/12cbad568fe78834fdfafcbf93354e2aec7c9863"
+      },
+      {
+        "label": "agentic-time · commit",
+        "href": "https://github.com/agentralabs/agentic-time/commit/f350bb15afe04c1118c40d78eb6de84c6b1b6f2c"
+      },
+      {
+        "label": "agentic-time · commit",
+        "href": "https://github.com/agentralabs/agentic-time/commit/5a7fed9aee0755bdfd36d247bc4d26b019695d0e"
+      },
+      {
+        "label": "agentic-vision · commit",
+        "href": "https://github.com/agentralabs/agentic-vision/commit/02e22677ecc24f2cfe36fdd2bb759ef280285f81"
+      },
+      {
+        "label": "agentic-codebase · commit",
+        "href": "https://github.com/agentralabs/agentic-codebase/commit/a8b606154a72467fa784f0dc79f2240dc429251b"
+      }
+    ],
+    "sourceCount": 6,
+    "signalCount": 6,
+    "carryoverMode": false,
+    "reposTouched": [
+      "agentralab-tech-web",
+      "agentic-time",
+      "agentic-vision",
+      "agentic-codebase"
+    ]
+  },
+  {
     "slug": "lab-log-20260403T0551",
     "title": "Blog Update · 2026-04-03",
     "dateIso": "2026-04-03",
