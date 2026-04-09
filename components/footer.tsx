@@ -4,36 +4,56 @@ import { motion } from "framer-motion"
 
 const ease = [0.22, 1, 0.36, 1] as const
 
-const SITE_LINKS = [
-  { label: "Home", href: "/" },
-  { label: "Projects", href: "/projects" },
-  { label: "Publications", href: "/publications" },
-  { label: "Releases", href: "/releases" },
-  { label: "Docs", href: "/docs", newTab: true },
-  { label: "Feedback", href: "/feedback" },
-  { label: "Showcase", href: "/showcase" },
-  { label: "Integrations", href: "/integrations" },
-  { label: "Blog", href: "/blog" },
-  { label: "Partner", href: "/partners" },
+const MODELS = [
+  { label: "Solen", href: "https://huggingface.co/agentralabs/solen-e4b" },
+  { label: "Verac", href: "https://huggingface.co/agentralabs/verac-e4b" },
+  { label: "Axiom", href: "https://huggingface.co/agentralabs/axiom-e4b" },
 ]
 
-const PROJECT_LINKS = [
+const SUBSTRATE_PRIMARY = [
   { label: "AgenticMemory", href: "https://github.com/agentralabs/agentic-memory" },
   { label: "AgenticVision", href: "https://github.com/agentralabs/agentic-vision" },
   { label: "AgenticCodebase", href: "https://github.com/agentralabs/agentic-codebase" },
   { label: "AgenticIdentity", href: "https://github.com/agentralabs/agentic-identity" },
-  { label: "AgenticTime", href: "https://github.com/agentralabs/agentic-time" },
-  { label: "AgenticContract", href: "https://github.com/agentralabs/agentic-contract" },
-  { label: "AgenticComm", href: "https://github.com/agentralabs/agentic-comm" },
-  { label: "AgenticPlanning", href: "https://github.com/agentralabs/agentic-planning" },
-  { label: "AgenticCognition", href: "https://github.com/agentralabs/agentic-cognition" },
-  { label: "AgenticReality", href: "https://github.com/agentralabs/agentic-reality" },
-  { label: "AgenticForge", href: "https://github.com/agentralabs/agentic-forge" },
-  { label: "AgenticAegis", href: "https://github.com/agentralabs/agentic-aegis" },
-  { label: "AgenticVeritas", href: "https://github.com/agentralabs/agentic-veritas" },
-  { label: "AgenticEvolve", href: "https://github.com/agentralabs/agentic-evolve" },
-  { label: "AgentraLabsWeb", href: "https://github.com/agentralabs/agentralabs-tech-web" },
 ]
+
+const SUBSTRATE_REST = [
+  { label: "Time", href: "https://github.com/agentralabs/agentic-time" },
+  { label: "Contract", href: "https://github.com/agentralabs/agentic-contract" },
+  { label: "Comm", href: "https://github.com/agentralabs/agentic-comm" },
+  { label: "Planning", href: "https://github.com/agentralabs/agentic-planning" },
+  { label: "Cognition", href: "https://github.com/agentralabs/agentic-cognition" },
+  { label: "Reality", href: "https://github.com/agentralabs/agentic-reality" },
+  { label: "+ 8 more", href: "https://github.com/agentralabs" },
+]
+
+const SETTLEMENT = [
+  { label: "XAP Protocol", href: "https://github.com/agentra-commerce/xap-protocol" },
+  { label: "Verity Engine", href: "https://github.com/agentra-commerce/verity-engine" },
+]
+
+const SITE_LINKS = [
+  { label: "Stack", href: "/projects" },
+  { label: "Research", href: "/publications" },
+  { label: "Docs", href: "/docs", newTab: true },
+  { label: "Blog", href: "/blog" },
+  { label: "Partners", href: "/partners" },
+  { label: "Community", href: "/community" },
+  { label: "Releases", href: "/releases" },
+]
+
+function FooterLink({ label, href, newTab, className }: { label: string; href: string; newTab?: boolean; className?: string }) {
+  return (
+    <a
+      href={href}
+      target={href.startsWith("http") || newTab ? "_blank" : undefined}
+      rel={href.startsWith("http") || newTab ? "noreferrer" : undefined}
+      className={`text-[10px] font-mono tracking-widest uppercase text-muted-foreground hover:text-foreground transition-colors duration-200 ${className ?? ""}`}
+    >
+      {label}
+    </a>
+  )
+}
 
 export function Footer() {
   return (
@@ -45,73 +65,68 @@ export function Footer() {
       className="w-full border-t-2 border-foreground px-6 py-8 lg:px-12"
     >
       <div className="flex flex-col gap-6">
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-          <div className="flex flex-col gap-1">
+        {/* Top: brand + layer groups */}
+        <div className="flex flex-col lg:flex-row items-start gap-8 lg:gap-12">
+          {/* Brand */}
+          <div className="flex flex-col gap-1 shrink-0">
             <span className="text-xs font-mono tracking-[0.15em] uppercase font-bold text-foreground">
               AGENTRA LABS
             </span>
             <span className="text-[10px] font-mono tracking-widest text-muted-foreground">
-              {"(C) 2026 AGENTRA LABS | OPEN SOURCE AGENTIC LAB"}
+              {"(C) 2026 AGENTRA LABS"}
+            </span>
+            <span className="text-[10px] font-mono tracking-widest text-muted-foreground">
+              DOMAIN AI + OPEN INFRASTRUCTURE
             </span>
           </div>
-          <div className="flex flex-col items-start gap-3">
-            <div className="flex items-center gap-5 flex-wrap">
-              {SITE_LINKS.map((link, i) => (
-                <motion.a
-                  key={link.label}
-                  href={link.href}
-                  target={link.href.startsWith("http") || link.newTab ? "_blank" : undefined}
-                  rel={link.href.startsWith("http") || link.newTab ? "noreferrer" : undefined}
-                  initial={{ opacity: 0, y: 6 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.1 + i * 0.03, duration: 0.35, ease }}
-                  className="text-[10px] font-mono tracking-widest uppercase text-muted-foreground hover:text-foreground transition-colors duration-200"
-                >
-                  {link.label}
-                </motion.a>
+
+          {/* Layer groups */}
+          <div className="flex-1 grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+            {/* Models */}
+            <div className="flex flex-col gap-2">
+              <span className="text-[10px] font-mono tracking-[0.2em] uppercase text-[#ea580c] font-bold">Models</span>
+              {MODELS.map((link) => (
+                <FooterLink key={link.label} {...link} />
               ))}
             </div>
-            <div className="w-full border-t border-border pt-3 flex items-center gap-5 flex-wrap">
-              {PROJECT_LINKS.slice(0, 6).map((link, i) => (
-                <motion.a
-                  key={link.label}
-                  href={link.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  initial={{ opacity: 0, y: 6 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.2 + i * 0.04, duration: 0.35, ease }}
-                  className="text-[10px] font-mono tracking-widest uppercase text-muted-foreground hover:text-foreground transition-colors duration-200"
-                >
-                  {link.label}
-                </motion.a>
+
+            {/* Substrate */}
+            <div className="flex flex-col gap-2">
+              <span className="text-[10px] font-mono tracking-[0.2em] uppercase text-muted-foreground font-bold">Substrate</span>
+              {SUBSTRATE_PRIMARY.map((link) => (
+                <FooterLink key={link.label} {...link} />
               ))}
+              <div className="flex flex-wrap gap-x-3 gap-y-1 mt-1">
+                {SUBSTRATE_REST.map((link) => (
+                  <FooterLink key={link.label} {...link} className="text-[9px] text-muted-foreground/60" />
+                ))}
+              </div>
             </div>
-            <div className="w-full flex items-center gap-5 flex-wrap">
-              {PROJECT_LINKS.slice(6).map((link, i) => (
-                <motion.a
-                  key={link.label}
-                  href={link.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  initial={{ opacity: 0, y: 6 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.3 + i * 0.04, duration: 0.35, ease }}
-                  className="text-[10px] font-mono tracking-widest uppercase text-muted-foreground hover:text-foreground transition-colors duration-200"
-                >
-                  {link.label}
-                </motion.a>
+
+            {/* Settlement + Showcase */}
+            <div className="flex flex-col gap-2">
+              <span className="text-[10px] font-mono tracking-[0.2em] uppercase text-muted-foreground font-bold">Settlement</span>
+              {SETTLEMENT.map((link) => (
+                <FooterLink key={link.label} {...link} />
+              ))}
+              <span className="text-[10px] font-mono tracking-[0.2em] uppercase text-muted-foreground font-bold mt-3">Showcase</span>
+              <FooterLink label="Hydra" href="https://github.com/agentralabs/hydra" />
+            </div>
+
+            {/* Site */}
+            <div className="flex flex-col gap-2">
+              <span className="text-[10px] font-mono tracking-[0.2em] uppercase text-muted-foreground font-bold">Site</span>
+              {SITE_LINKS.map((link) => (
+                <FooterLink key={link.label} {...link} newTab={link.newTab} />
               ))}
             </div>
           </div>
         </div>
 
+        {/* Bottom */}
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 pt-4 border-t border-border">
           <span className="text-[10px] font-mono tracking-[0.15em] uppercase text-muted-foreground">
-            Open to feedback, showcases, integrations, and research collaboration.
+            Open to research collaboration, model partnerships, and infrastructure sponsorship.
           </span>
           <div className="flex items-center gap-5 flex-wrap">
             <a

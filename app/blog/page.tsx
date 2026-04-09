@@ -26,8 +26,7 @@ export default function BlogPage() {
           <div className="border-2 border-foreground p-6 lg:p-8">
             <h1 className="text-3xl lg:text-5xl font-mono font-bold uppercase tracking-tight">Blog</h1>
             <p className="mt-4 max-w-4xl text-xs lg:text-sm font-mono text-muted-foreground leading-relaxed">
-              Field notes on what teams are learning while running Agentra in production-like environments: what
-              changed, what failed, what held up, and what others can reuse.
+              Field notes on domain AI models, agent infrastructure, and what teams learn running the Agentra stack in production.
             </p>
           </div>
         </section>

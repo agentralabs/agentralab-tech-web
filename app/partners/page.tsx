@@ -12,12 +12,20 @@ export const metadata: Metadata = {
 
 const TRACKS = [
   {
+    name: "Model Fine-Tuning",
+    detail: "Joint training of domain-specific models for your vertical. Bring domain expertise, we bring the reasoning-first training pipeline.",
+  },
+  {
     name: "Research Collaboration",
     detail: "Joint experiments, publication pathways, and reproducible benchmarking on agent infrastructure.",
   },
   {
-    name: "Ecosystem Integration",
-    detail: "MCP/client integration support for production teams using memory, vision, and code intelligence layers.",
+    name: "Infrastructure Integration",
+    detail: "MCP/substrate integration for teams deploying persistent memory, identity, and governance primitives.",
+  },
+  {
+    name: "Settlement Pilots",
+    detail: "Pilot XAP Protocol and Verity Engine for autonomous agent commerce in your operations.",
   },
   {
     name: "Sponsorship",
@@ -35,8 +43,7 @@ export default function PartnersPage() {
           <div className="border-2 border-foreground p-6 lg:p-8">
             <h1 className="text-3xl lg:text-5xl font-mono font-bold uppercase tracking-tight">Partnerships and Sponsorships</h1>
             <p className="mt-4 max-w-4xl text-xs lg:text-sm font-mono text-muted-foreground leading-relaxed">
-              We partner with teams operating real systems. If your work touches persistent memory, web perception,
-              semantic code intelligence, or governance infrastructure, we can collaborate.
+              We partner with teams that need auditable AI decisions in regulated industries. Our stack combines domain-specialist models, open-source infrastructure, and deterministic settlement.
             </p>
             <a
               href="/partners/intake"
@@ -56,7 +63,7 @@ export default function PartnersPage() {
 
         <section className="w-full px-6 pb-20 lg:px-12">
           <SectionRail label="// SECTION: COLLAB_TRACKS" step="027" />
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-5 gap-4">
             {TRACKS.map((track) => (
               <article key={track.name} className="border-2 border-foreground p-4">
                 <h2 className="text-base font-mono font-bold uppercase tracking-tight">{track.name}</h2>

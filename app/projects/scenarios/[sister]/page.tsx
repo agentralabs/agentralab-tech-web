@@ -4,7 +4,7 @@ import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { ScenarioPageView } from "@/components/scenario-page"
 
-const VALID_SISTERS = ["agentic-memory", "agentic-vision", "agentic-codebase", "agentic-identity", "agentic-time", "agentic-contract", "agentic-comm", "agentic-planning", "agentic-cognition", "agentic-reality", "agentic-forge", "agentic-aegis", "agentic-veritas", "agentic-evolve"] as const
+const VALID_SISTERS = ["agentic-memory", "agentic-vision", "agentic-codebase", "agentic-identity", "agentic-time", "agentic-contract", "agentic-comm", "agentic-planning", "agentic-cognition", "agentic-reality", "agentic-forge", "agentic-aegis", "agentic-veritas", "agentic-evolve", "solen", "verac", "axiom"] as const
 
 const META: Record<string, { title: string; description: string }> = {
   "agentic-memory": {
@@ -76,6 +76,21 @@ const META: Record<string, { title: string; description: string }> = {
     title: "AgenticEvolve Scenarios — Agentra Labs",
     description:
       "See AgenticEvolve capabilities in action: pattern crystallization, instant rebuilds, cross-project learning, and pattern library management in portable .evolve artifacts.",
+  },
+  "solen": {
+    title: "Solen Scenarios — Agentra Labs",
+    description:
+      "See Solen in action: supply chain reasoning, tariff analysis, and logistics decision-making compared to generalist AI.",
+  },
+  "verac": {
+    title: "Verac Scenarios — Agentra Labs",
+    description:
+      "See Verac in action: financial reconciliation, credit analysis, and settlement reasoning compared to generalist AI.",
+  },
+  "axiom": {
+    title: "Axiom Scenarios — Agentra Labs",
+    description:
+      "See Axiom in action: portfolio impact analysis, consequence reasoning, and market intelligence compared to generalist AI.",
   },
 }
 

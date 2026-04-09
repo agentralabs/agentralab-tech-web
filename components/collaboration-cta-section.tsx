@@ -7,11 +7,12 @@ export function CollaborationCtaSection() {
       <SectionRail label="// SECTION: COLLABORATION_CTA" step="003B" />
       <div className="border-2 border-foreground p-5 lg:p-6 bg-background">
         <h2 className="text-2xl lg:text-3xl font-mono font-bold tracking-tight uppercase text-balance">
-          Built for institutions and sponsors operating real systems
+          Built for teams that need auditable AI decisions in regulated industries
         </h2>
         <p className="mt-3 text-sm font-mono text-muted-foreground leading-relaxed max-w-4xl">
-          We collaborate with research labs, enterprise engineering teams, and infrastructure sponsors building
-          reliable long-lived agent systems. Our focus is continuity, governed execution, and audit-ready operations.
+          We collaborate with research labs, enterprise engineering teams, and infrastructure sponsors.
+          Our stack combines domain-specialist models for reasoning, open-source substrate for memory
+          and governance, and deterministic settlement for value.
         </p>
         <div className="mt-5 flex flex-col sm:flex-row gap-3">
           <Link

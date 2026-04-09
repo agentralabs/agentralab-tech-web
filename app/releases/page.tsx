@@ -37,8 +37,7 @@ export default async function ReleasesPage() {
               <div>
                 <h1 className="text-3xl lg:text-5xl font-mono font-bold uppercase tracking-tight">Releases</h1>
                 <p className="mt-3 max-w-4xl text-xs lg:text-sm font-mono text-muted-foreground leading-relaxed">
-                  Official release index for Agentra Labs repositories. This page is sourced from GitHub releases and is
-                  intended for quick verification and direct access to full release notes.
+                  Official release index for Agentra Labs — models, substrate, and settlement.
                 </p>
               </div>
               <a
@@ -70,6 +69,15 @@ export default async function ReleasesPage() {
                 <p className="mt-1 text-xs font-mono uppercase">{formatNumber(feed.totalForks)}</p>
               </div>
             </div>
+          </div>
+        </section>
+
+        <section className="w-full px-6 pb-12 lg:px-12">
+          <SectionRail label="// SECTION: MODEL_RELEASES" step="035a" />
+          <div className="border-2 border-foreground p-5">
+            <p className="text-xs font-mono text-muted-foreground leading-relaxed">
+              Model releases in preparation. Solen, Verac, and Axiom will appear here upon HuggingFace publication.
+            </p>
           </div>
         </section>
 

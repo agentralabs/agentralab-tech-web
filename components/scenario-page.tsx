@@ -16,6 +16,10 @@ import { COMM_HERO, COMM_SCENARIOS } from "@/data/scenarios-comm"
 import { PLANNING_HERO, PLANNING_SCENARIOS } from "@/data/scenarios-planning"
 import { COGNITION_HERO, COGNITION_SCENARIOS } from "@/data/scenarios-cognition"
 import { REALITY_HERO, REALITY_SCENARIOS } from "@/data/scenarios-reality"
+import { SOLEN_HERO, solenScenarios } from "@/data/scenarios-solen"
+import type { ModelScenarioItem } from "@/data/scenarios-solen"
+import { VERAC_HERO, veracScenarios } from "@/data/scenarios-verac"
+import { AXIOM_HERO, axiomScenarios } from "@/data/scenarios-axiom"
 import * as SC from "@/components/scenario-content"
 
 const ease = [0.22, 1, 0.36, 1] as const
@@ -211,6 +215,68 @@ function getConfig(sister: string) {
   }
 }
 
+const MODEL_SISTERS = ["solen", "verac", "axiom"] as const
+
+function getModelConfig(sister: string): { hero: { title: string; subtitle: string; artifact: string }; scenarios: ModelScenarioItem[] } | null {
+  switch (sister) {
+    case "solen":
+      return { hero: SOLEN_HERO, scenarios: solenScenarios }
+    case "verac":
+      return { hero: VERAC_HERO, scenarios: veracScenarios }
+    case "axiom":
+      return { hero: AXIOM_HERO, scenarios: axiomScenarios }
+    default:
+      return null
+  }
+}
+
+/* ── Model scenario comparison tile ── */
+
+function ModelScenarioTile({
+  scenario,
+  index,
+}: {
+  scenario: ModelScenarioItem
+  index: number
+}) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ delay: index * 0.1, duration: 0.5, ease }}
+      className="border-2 border-foreground bg-background p-6 lg:p-8"
+    >
+      {/* Question */}
+      <p className="text-sm lg:text-base font-mono font-bold text-foreground leading-relaxed mb-6">
+        {scenario.question}
+      </p>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        {/* WITHOUT */}
+        <div className="border border-border bg-foreground/[0.02] p-4">
+          <p className="text-[10px] tracking-[0.2em] uppercase font-mono text-muted-foreground mb-2">
+            Without — Generic AI
+          </p>
+          <p className="text-xs font-mono text-muted-foreground leading-relaxed">
+            {scenario.without}
+          </p>
+        </div>
+
+        {/* WITH */}
+        <div className="border-2 border-[#ea580c]/40 bg-[#ea580c]/[0.03] p-4">
+          <p className="text-[10px] tracking-[0.2em] uppercase font-mono text-[#ea580c] mb-2">
+            {scenario.withLabel}
+          </p>
+          <p className="text-xs font-mono text-foreground leading-relaxed">
+            {scenario.withAnswer}
+          </p>
+        </div>
+      </div>
+    </motion.div>
+  )
+}
+
 /* ── Individual capability accordion tile ── */
 
 function ScenarioTile({
@@ -293,6 +359,114 @@ function ScenarioTile({
 /* ── Main exported page component ── */
 
 export function ScenarioPageView({ sister }: { sister: string }) {
+  const modelConfig = getModelConfig(sister)
+
+  /* ── Model scenario layout (Solen / Verac / Axiom) ── */
+  if (modelConfig) {
+    const { hero, scenarios } = modelConfig
+    return (
+      <div className="w-full">
+        {/* ── Back link ── */}
+        <section className="w-full px-6 pt-6 lg:px-12">
+          <Link
+            href="/projects"
+            className="inline-flex items-center gap-2 text-[10px] tracking-[0.2em] uppercase font-mono text-muted-foreground hover:text-foreground transition-colors"
+          >
+            <ArrowLeft size={12} />
+            Back to Projects
+          </Link>
+        </section>
+
+        {/* ── Hero ── */}
+        <section className="w-full px-6 pt-6 pb-10 lg:px-12">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, ease }}
+            className="flex items-center gap-4 mb-8"
+          >
+            <span className="text-[10px] tracking-[0.2em] uppercase text-muted-foreground font-mono">
+              {"// SECTION: MODEL_SCENARIOS"}
+            </span>
+            <div className="flex-1 border-t border-border" />
+            <span className="h-1.5 w-1.5 bg-[#ea580c] animate-blink" />
+            <span className="text-[10px] tracking-[0.2em] uppercase text-muted-foreground font-mono">
+              {String(scenarios.length).padStart(3, "0")}
+            </span>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease }}
+            className="border-2 border-foreground p-6 lg:p-8"
+          >
+            <div className="flex items-center gap-3 mb-3">
+              <span className="bg-[#ea580c] text-background text-[9px] tracking-[0.15em] uppercase px-2 py-0.5 font-mono">
+                SCENARIOS
+              </span>
+              <span className="text-[10px] tracking-[0.15em] font-mono text-muted-foreground uppercase">
+                domain-specialist {hero.artifact}
+              </span>
+            </div>
+            <h1 className="text-3xl lg:text-5xl font-mono font-bold uppercase tracking-tight">
+              {hero.title}
+            </h1>
+            <p className="mt-4 max-w-3xl text-xs lg:text-sm font-mono text-muted-foreground leading-relaxed">
+              {hero.subtitle}
+            </p>
+            <div className="flex items-center gap-6 mt-6">
+              <span className="text-[10px] tracking-[0.2em] uppercase font-mono text-muted-foreground">
+                {scenarios.length} scenario{scenarios.length !== 1 ? "s" : ""}
+              </span>
+              <span className="text-[10px] tracking-[0.2em] uppercase font-mono text-muted-foreground">
+                Generic AI vs domain specialist
+              </span>
+            </div>
+          </motion.div>
+        </section>
+
+        {/* ── Scenario comparison cards ── */}
+        <section className="w-full px-6 pb-10 lg:px-12">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.5, ease }}
+            className="flex items-center gap-4 mb-6"
+          >
+            <span className="text-[10px] tracking-[0.2em] uppercase text-muted-foreground font-mono">
+              Side-by-Side Comparisons
+            </span>
+            <div className="flex-1 border-t border-border" />
+            <span className="text-[10px] tracking-[0.2em] font-mono text-muted-foreground">
+              {scenarios.length}
+            </span>
+          </motion.div>
+
+          <div className="flex flex-col gap-6">
+            {scenarios.map((scenario, i) => (
+              <ModelScenarioTile key={scenario.id} scenario={scenario} index={i} />
+            ))}
+          </div>
+        </section>
+
+        {/* CTA */}
+        <section className="w-full px-6 pb-16 lg:px-12">
+          <div className="flex flex-col sm:flex-row gap-4">
+            <Link
+              href="/projects"
+              className="flex items-center justify-center gap-2 px-6 py-2.5 border-2 border-foreground text-xs font-mono tracking-wider uppercase hover:bg-foreground hover:text-background transition-colors"
+            >
+              Explore Capacity Surface
+            </Link>
+          </div>
+        </section>
+      </div>
+    )
+  }
+
+  /* ── Sister scenario layout (substrate sisters) ── */
   const { hero, groups, repo } = getConfig(sister)
   const allTogetherFn = ALL_TOGETHER_MAP[sister]
   const allTogetherPlain = ALL_TOGETHER_PLAIN[sister]

@@ -1,97 +1,87 @@
 "use client"
 
-import { WorkflowDiagram } from "@/components/workflow-diagram"
 import { ArrowRight } from "lucide-react"
 import { motion } from "framer-motion"
-import { QuickstartTerminalPane } from "@/components/quickstart-terminal-pane"
 
 const ease = [0.22, 1, 0.36, 1] as const
 
 export function HeroSection() {
   return (
-    <section className="relative w-full px-12 pt-6 pb-12 lg:px-24 lg:pt-10 lg:pb-16">
+    <section className="relative w-full px-6 pt-6 pb-16 lg:px-12 lg:pt-10 lg:pb-24">
       <div className="flex flex-col items-center text-center">
-        {/* Top headline: DEPLOY. SCALE. -- Geist Pixel Grid */}
         <motion.h1
           initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
           transition={{ duration: 0.7, ease }}
-          className="font-pixel text-4xl sm:text-6xl lg:text-7xl xl:text-8xl tracking-tight text-foreground mb-2 select-none"
+          className="font-pixel text-3xl sm:text-5xl lg:text-6xl xl:text-7xl tracking-tight text-foreground mb-2 select-none"
         >
-          REMEMBER. SEE. PROVE.
+          DOMAIN AI THAT REASONS.
         </motion.h1>
 
-        {/* Central Workflow Diagram */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6, delay: 0.15, ease }}
-          className="w-full max-w-2xl my-4 lg:my-6"
-        >
-          <WorkflowDiagram />
-        </motion.div>
-
-        {/* Bottom headline */}
         <motion.h1
           initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          transition={{ duration: 0.7, delay: 0.25, ease }}
-          className="font-pixel text-4xl sm:text-6xl lg:text-7xl xl:text-8xl tracking-tight text-foreground mb-4 select-none"
+          transition={{ duration: 0.7, delay: 0.15, ease }}
+          className="font-pixel text-3xl sm:text-5xl lg:text-6xl xl:text-7xl tracking-tight text-foreground mb-6 select-none"
           aria-hidden="true"
         >
-          UNDERSTAND.
+          INFRASTRUCTURE THAT REMEMBERS.
         </motion.h1>
 
-        {/* Pain-point hook */}
         <motion.p
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.45, ease }}
-          className="text-sm lg:text-base text-foreground max-w-2xl mb-2 leading-relaxed font-mono font-bold"
+          transition={{ duration: 0.5, delay: 0.35, ease }}
+          className="text-sm lg:text-base text-foreground max-w-2xl mb-3 leading-relaxed font-mono font-bold"
         >
-          Your AI forgets you exist. Ours remembers for 20 years.
+          Your AI guesses. Ours reasons like a 30-year domain expert — and remembers every decision it ever made.
         </motion.p>
 
-        {/* Sub-headline */}
         <motion.p
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.52, ease }}
-          className="text-xs lg:text-sm text-muted-foreground max-w-2xl mb-2 leading-relaxed font-mono"
+          transition={{ duration: 0.5, delay: 0.42, ease }}
+          className="text-xs lg:text-sm text-muted-foreground max-w-2xl mb-3 leading-relaxed font-mono"
         >
-          Eight open-source systems. Eight file formats. Forever yours.
+          Three domain-specialist models. Open-source substrate. Auditable settlement.
         </motion.p>
 
-        {/* File format strip */}
         <motion.p
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.56, ease }}
-          className="text-xs text-[#ea580c] font-mono tracking-[0.3em] mb-6"
+          transition={{ duration: 0.5, delay: 0.48, ease }}
+          className="text-sm lg:text-base text-[#ea580c] font-mono tracking-[0.3em] font-bold mb-8"
         >
-          .amem &middot; .avis &middot; .acb &middot; .aid &middot; .atime &middot; .acon
-          <br />
-          .acomm &middot; .aplan
+          SOLEN &middot; VERAC &middot; AXIOM
         </motion.p>
 
         <div className="flex flex-col sm:flex-row items-center gap-3">
           <motion.a
-            href="#quickstart-pane"
+            href="#models"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.6, ease }}
+            transition={{ duration: 0.5, delay: 0.55, ease }}
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
             className="group flex items-center gap-0 bg-foreground text-background text-sm font-mono tracking-wider uppercase"
           >
             <span className="flex items-center justify-center w-10 h-10 bg-[#ea580c]">
-              <motion.span
-                className="inline-flex"
-                whileHover={{ x: 3 }}
-                transition={{ type: "spring", stiffness: 400, damping: 20 }}
-              >
-                <ArrowRight size={16} strokeWidth={2} className="text-background" />
-              </motion.span>
+              <ArrowRight size={16} strokeWidth={2} className="text-background" />
+            </span>
+            <span className="px-5 py-2.5">Meet the Models</span>
+          </motion.a>
+
+          <motion.a
+            href="/docs"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.6, ease }}
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
+            className="group flex items-center gap-0 border border-foreground bg-background text-foreground text-sm font-mono tracking-wider uppercase"
+          >
+            <span className="flex items-center justify-center w-10 h-10 border-r border-foreground">
+              <ArrowRight size={16} strokeWidth={2} />
             </span>
             <span className="px-5 py-2.5">Run Quickstart</span>
           </motion.a>
@@ -100,19 +90,12 @@ export function HeroSection() {
             href="/partners"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.68, ease }}
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.97 }}
-            className="group flex items-center gap-0 border border-foreground bg-background text-foreground text-sm font-mono tracking-wider uppercase"
+            transition={{ duration: 0.5, delay: 0.65, ease }}
+            className="text-xs font-mono tracking-widest uppercase text-muted-foreground hover:text-foreground transition-colors px-4 py-2.5"
           >
-            <span className="flex items-center justify-center w-10 h-10 border-r border-foreground bg-background">
-              <ArrowRight size={16} strokeWidth={2} className="text-foreground" />
-            </span>
-            <span className="px-5 py-2.5">Collaborate</span>
+            Collaborate
           </motion.a>
         </div>
-
-        <QuickstartTerminalPane />
       </div>
     </section>
   )

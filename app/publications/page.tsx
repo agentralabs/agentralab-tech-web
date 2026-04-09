@@ -1,7 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { ArrowRight } from "lucide-react"
+import { ArrowRight, FileText, Code } from "lucide-react"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 
@@ -134,6 +134,9 @@ const PAPERS: Paper[] = [
   },
 ]
 
+const MEMORY_PAPERS = PAPERS.filter((p) => p.project === "AgenticMemory")
+const SUBSTRATE_PAPERS = PAPERS.filter((p) => p.project !== "AgenticMemory")
+
 function SectionRail({ label, step }: { label: string; step: string }) {
   return (
     <motion.div
@@ -192,32 +195,12 @@ function PaperCard({ paper, index }: { paper: Paper; index: number }) {
   )
 }
 
-function GroupBlock({ project, step }: { project: Paper["project"]; step: string }) {
-  const papers = PAPERS.filter((paper) => paper.project === project)
-
-  return (
-    <section className="w-full px-6 pb-14 lg:px-12">
-      <SectionRail label={`// SECTION: ${project.toUpperCase()}_PAPERS`} step={step} />
-      <div className="border-2 border-foreground">
-        <div className="px-5 py-3 border-b-2 border-foreground flex items-center justify-between">
-          <span className="text-[10px] tracking-[0.2em] uppercase text-muted-foreground font-mono">archive.index</span>
-          <span className="text-[10px] tracking-[0.2em] uppercase text-muted-foreground font-mono">{project}</span>
-        </div>
-        <div className="px-5 py-2">
-          {papers.map((paper, index) => (
-            <PaperCard key={paper.title} paper={paper} index={index} />
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
-
 export default function PublicationsPage() {
   return (
     <div className="min-h-screen dot-grid-bg">
       <Navbar />
       <main>
+        {/* Hero */}
         <section className="w-full px-6 pt-10 pb-14 lg:px-12">
           <SectionRail label="// SECTION: PUBLICATIONS_INDEX" step="013" />
           <motion.div
@@ -227,11 +210,10 @@ export default function PublicationsPage() {
             className="border-2 border-foreground p-6 lg:p-8"
           >
             <h1 className="text-3xl lg:text-5xl font-mono font-bold uppercase tracking-tight">
-              Publications and technical papers
+              Publications
             </h1>
             <p className="mt-4 max-w-3xl text-xs lg:text-sm font-mono text-muted-foreground leading-relaxed">
-              Research corpus for AgenticMemory, AgenticVision, AgenticCodebase, AgenticIdentity, AgenticTime, AgenticContract, AgenticComm, AgenticPlanning, AgenticCognition, and AgenticReality. Each paper documents core
-              architecture decisions, data formats, and MCP integration pathways.
+              Research corpus for the Agentra stack.
             </p>
             <div className="mt-5 grid grid-cols-1 sm:grid-cols-3 gap-0 border-2 border-foreground">
               <div className="px-4 py-3 border-b-2 sm:border-b-0 sm:border-r-2 border-foreground">
@@ -250,17 +232,84 @@ export default function PublicationsPage() {
           </motion.div>
         </section>
 
-        <GroupBlock project="AgenticMemory" step="014" />
-        <GroupBlock project="AgenticVision" step="015" />
-        <GroupBlock project="AgenticCodebase" step="016" />
-        <GroupBlock project="AgenticIdentity" step="016b" />
-        <GroupBlock project="AgenticTime" step="016c" />
-        <GroupBlock project="AgenticContract" step="016d" />
-        <GroupBlock project="AgenticComm" step="016e" />
-        <GroupBlock project="AgenticPlanning" step="016f" />
-        <GroupBlock project="AgenticCognition" step="016g" />
-        <GroupBlock project="AgenticReality" step="016h" />
+        {/* Model Research Placeholder */}
+        <section className="w-full px-6 pb-14 lg:px-12">
+          <SectionRail label="// SECTION: MODEL_RESEARCH" step="013a" />
+          <div className="border-2 border-foreground">
+            <div className="px-5 py-3 border-b-2 border-foreground flex items-center justify-between">
+              <span className="text-[10px] tracking-[0.2em] uppercase text-muted-foreground font-mono">archive.index</span>
+              <span className="text-[10px] tracking-[0.2em] uppercase text-muted-foreground font-mono">REASONING LAYER</span>
+            </div>
+            <div className="px-5 py-6">
+              <p className="text-xs font-mono text-muted-foreground leading-relaxed">
+                Model research papers in preparation. Training methodology, benchmark reports, and domain evaluation for Solen, Verac, and Axiom will be published here upon completion.
+              </p>
+            </div>
+          </div>
+        </section>
 
+        {/* AgenticMemory Papers — full cards */}
+        <section className="w-full px-6 pb-14 lg:px-12">
+          <SectionRail label="// SECTION: AGENTICMEMORY_PAPERS" step="014" />
+          <div className="border-2 border-foreground">
+            <div className="px-5 py-3 border-b-2 border-foreground flex items-center justify-between">
+              <span className="text-[10px] tracking-[0.2em] uppercase text-muted-foreground font-mono">archive.index</span>
+              <span className="text-[10px] tracking-[0.2em] uppercase text-muted-foreground font-mono">AgenticMemory</span>
+            </div>
+            <div className="px-5 py-2">
+              {MEMORY_PAPERS.map((paper, index) => (
+                <PaperCard key={paper.title} paper={paper} index={index} />
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Substrate Papers — compact data table */}
+        <section className="w-full px-6 pb-14 lg:px-12">
+          <SectionRail label="// SECTION: SUBSTRATE_PAPERS" step="015" />
+          <div className="border-2 border-foreground overflow-hidden">
+            <div className="px-5 py-3 border-b-2 border-foreground flex items-center justify-between">
+              <span className="text-[10px] tracking-[0.2em] uppercase text-muted-foreground font-mono">archive.index</span>
+              <span className="text-[10px] tracking-[0.2em] uppercase text-muted-foreground font-mono">SUBSTRATE PAPERS</span>
+            </div>
+            <div className="overflow-x-auto">
+              <div className="min-w-[700px]">
+                <div className="grid grid-cols-[40px_140px_80px_1fr_100px] border-b-2 border-foreground">
+                  <span className="px-3 py-2 text-[10px] uppercase tracking-[0.15em] font-mono text-muted-foreground">#</span>
+                  <span className="px-3 py-2 text-[10px] uppercase tracking-[0.15em] font-mono text-muted-foreground">Project</span>
+                  <span className="px-3 py-2 text-[10px] uppercase tracking-[0.15em] font-mono text-muted-foreground">Type</span>
+                  <span className="px-3 py-2 text-[10px] uppercase tracking-[0.15em] font-mono text-muted-foreground">Title</span>
+                  <span className="px-3 py-2 text-[10px] uppercase tracking-[0.15em] font-mono text-muted-foreground">Links</span>
+                </div>
+                {SUBSTRATE_PAPERS.map((paper, index) => (
+                  <motion.div
+                    key={paper.title}
+                    initial={{ opacity: 0, y: 8 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-20px" }}
+                    transition={{ duration: 0.3, delay: index * 0.03, ease }}
+                    className="grid grid-cols-[40px_140px_80px_1fr_100px] border-b border-border last:border-b-0"
+                  >
+                    <span className="px-3 py-3 text-xs font-mono text-muted-foreground">{String(index + 1).padStart(2, "0")}</span>
+                    <span className="px-3 py-3 text-xs font-mono">{paper.project.replace("Agentic", "")}</span>
+                    <span className="px-3 py-3 text-xs font-mono text-muted-foreground">{paper.type}</span>
+                    <span className="px-3 py-3 text-xs font-mono text-muted-foreground leading-relaxed truncate">{paper.title}</span>
+                    <span className="px-3 py-3 flex items-center gap-2">
+                      <a href={paper.pdf} target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-[#ea580c]" title="PDF">
+                        <FileText size={14} />
+                      </a>
+                      <a href={paper.source} target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-[#ea580c]" title="TeX Source">
+                        <Code size={14} />
+                      </a>
+                    </span>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Ongoing Research */}
         <section className="w-full px-6 pb-20 lg:px-12">
           <SectionRail label="// SECTION: RESEARCH_DIRECTION" step="017" />
           <div className="border-2 border-foreground">
@@ -296,6 +345,20 @@ export default function PublicationsPage() {
                 <p className="mt-2 text-xs font-mono text-muted-foreground leading-relaxed">
                   Delegation chain verification, cross-agent trust revocation, and multi-party receipt attestation
                   for production agent orchestration.
+                </p>
+              </div>
+              <div className="border-2 border-foreground p-4">
+                <h3 className="text-sm font-mono font-bold uppercase">Domain Model Training Methodology</h3>
+                <p className="mt-2 text-xs font-mono text-muted-foreground leading-relaxed">
+                  Reasoning-first fine-tuning methodology for domain-specialist models. Covers training pipeline design,
+                  benchmark selection, and evaluation frameworks for Solen, Verac, and Axiom.
+                </p>
+              </div>
+              <div className="border-2 border-foreground p-4">
+                <h3 className="text-sm font-mono font-bold uppercase">Settlement Protocol Verification</h3>
+                <p className="mt-2 text-xs font-mono text-muted-foreground leading-relaxed">
+                  Formal verification methods for XAP Protocol settlement flows and Verity Engine proof generation.
+                  Deterministic audit trails for autonomous agent commerce.
                 </p>
               </div>
             </div>
