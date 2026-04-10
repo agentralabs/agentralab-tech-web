@@ -190,17 +190,17 @@ export function MemoryFeatureSection() {
       >
         <button
           onClick={() => setExpanded(!expanded)}
-          className="w-full border-2 border-foreground p-4 flex items-center justify-between hover:bg-foreground/[0.03] transition-colors"
+          className="w-full border-2 border-foreground p-5 lg:p-6 flex items-center justify-between hover:bg-foreground/[0.03] transition-colors group"
         >
           <div className="flex items-center gap-3">
-            <span className="text-[10px] font-mono tracking-[0.2em] uppercase text-muted-foreground">
+            <span className="text-[10px] font-mono tracking-[0.2em] uppercase text-muted-foreground group-hover:text-foreground transition-colors">
               Deep Dive: Query Engine, Event Types, Memory Pipeline
             </span>
           </div>
           <motion.span
             animate={{ rotate: expanded ? 180 : 0 }}
-            transition={{ duration: 0.2 }}
-            className="text-muted-foreground"
+            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            className="text-muted-foreground flex items-center justify-center w-8 h-8 border border-foreground/20 rounded-full group-hover:border-foreground/40 transition-colors"
           >
             <ArrowRight size={14} className="rotate-90" />
           </motion.span>
@@ -227,12 +227,12 @@ export function MemoryFeatureSection() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-40px" }}
         transition={{ duration: 0.5, delay: 0.3, ease }}
-        className="mt-8 border-2 border-foreground p-6"
+        className="mt-8 border-2 border-foreground p-6 lg:p-8"
       >
         <span className="text-[10px] font-mono tracking-[0.2em] uppercase text-muted-foreground">
           How Memory Serves the Models
         </span>
-        <div className="mt-5 flex flex-col lg:flex-row gap-4">
+        <div className="mt-5 flex flex-col lg:flex-row gap-6">
           {[
             { step: "01", text: "Solen recommends changing suppliers" },
             { step: "02", text: "Memory stores the reasoning chain — 3 facts, 2 decisions, 1 inference" },

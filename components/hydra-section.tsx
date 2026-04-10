@@ -212,7 +212,7 @@ const stats = [
 
 export function HydraSection() {
   return (
-    <section className="w-full px-6 pb-14 lg:px-12" aria-label="Showcase">
+    <section className="w-full px-6 py-20 lg:px-12 lg:py-28" aria-label="Showcase">
       <SectionRail label="// SECTION: SHOWCASE" step="007" />
 
       <motion.div
@@ -225,8 +225,13 @@ export function HydraSection() {
         {/* Two-column layout */}
         <div className="flex flex-col lg:flex-row">
           {/* LEFT — SVG visualization (40%) */}
-          <div className="lg:w-[40%] bg-background p-6 lg:p-8 flex items-center justify-center border-b lg:border-b-0 lg:border-r border-foreground">
-            <HydraNetworkSVG />
+          <div className="lg:w-[40%] bg-background p-6 lg:p-8 flex flex-col border-b lg:border-b-0 lg:border-r-2 border-foreground">
+            <span className="text-[9px] tracking-[0.2em] uppercase font-mono text-muted-foreground block mb-3">
+              HYDRA.NETWORK
+            </span>
+            <div className="border border-foreground p-4 bg-background/50 flex-1 flex items-center justify-center">
+              <HydraNetworkSVG />
+            </div>
           </div>
 
           {/* RIGHT — Text content (60%) */}
@@ -242,7 +247,7 @@ export function HydraSection() {
             </div>
 
             {/* Body */}
-            <div className="px-4 py-5 lg:px-6 lg:py-6 space-y-4">
+            <div className="p-6 lg:p-8 space-y-4">
               <motion.p
                 initial={{ opacity: 0, x: 16 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -297,7 +302,7 @@ export function HydraSection() {
         </div>
 
         {/* Stat blocks at bottom */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 border-t border-foreground">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 p-4 border-t-2 border-foreground">
           {stats.map((stat, i) => (
             <motion.div
               key={stat.label}
@@ -305,9 +310,7 @@ export function HydraSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: 0.3 + i * 0.1, ease }}
-              className={`px-4 py-4 bg-background text-foreground text-center ${
-                i < 2 ? "border-b sm:border-b-0 sm:border-r border-foreground" : ""
-              }`}
+              className="border-2 border-foreground bg-background text-foreground text-center p-4"
             >
               <span className="block text-lg font-mono font-bold tracking-tight text-[#ea580c]">
                 {stat.value}

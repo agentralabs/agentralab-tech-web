@@ -35,14 +35,21 @@ export default function Page() {
   return (
     <div className="min-h-screen dot-grid-bg">
       <Navbar />
-      <main>
+      <main className="space-y-0">
         <HeroSection />
+        <div className="border-t border-border/30 mx-6 lg:mx-12" />
         <StackDiagramSection />
+        <div className="border-t border-border/30 mx-6 lg:mx-12" />
         <ModelShowcaseSection />
+        <div className="border-t border-border/30 mx-6 lg:mx-12" />
         <MemoryFeatureSection />
+        <div className="border-t border-border/30 mx-6 lg:mx-12" />
         <SubstrateSummarySection />
+        <div className="border-t border-border/30 mx-6 lg:mx-12" />
         <ProofSection />
+        <div className="border-t border-border/30 mx-6 lg:mx-12" />
         <HydraSection />
+        <div className="border-t border-border/30 mx-6 lg:mx-12" />
         <HomeReleaseStrip />
         <CollaborationCtaSection />
         <CommunityRoutingTable step="017" />

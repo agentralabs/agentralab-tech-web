@@ -197,10 +197,10 @@ export function SubstrateSummarySection() {
   let runningIndex = 0
 
   return (
-    <section className="w-full px-6 pb-14 lg:px-12" aria-label="Substrate Directory">
+    <section className="w-full px-6 py-16 lg:px-12 lg:py-24" aria-label="Substrate Directory">
       <SectionRail label="// SECTION: SUBSTRATE_DIRECTORY" step="005" />
 
-      <div className="flex flex-col lg:flex-row gap-0 lg:gap-0">
+      <div className="flex flex-col lg:flex-row gap-4 lg:gap-0">
         {/* ─── LEFT: visual showcase ─── */}
         <motion.div
           initial={{ opacity: 0, x: -40 }}
@@ -209,7 +209,7 @@ export function SubstrateSummarySection() {
           transition={{ duration: 0.7, ease }}
           className="w-full lg:w-1/2 border-2 border-foreground bg-background text-foreground flex flex-col justify-between"
         >
-          <div className="px-6 pt-8 pb-4">
+          <div className="px-8 lg:px-10 pt-8 lg:pt-10 pb-4">
             <p className="text-[10px] font-mono tracking-[0.3em] uppercase text-muted-foreground mb-3">
               Open-Source Substrate
             </p>
@@ -224,8 +224,13 @@ export function SubstrateSummarySection() {
           </div>
 
           {/* constellation */}
-          <div className="px-6 py-4 flex-1 flex items-center justify-center min-h-[220px]">
-            <ConstellationSVG />
+          <div className="px-8 lg:px-10 py-4 flex-1 flex flex-col min-h-[220px]">
+            <span className="text-[9px] tracking-[0.2em] uppercase font-mono text-muted-foreground block mb-2">
+              MODULE.GLYPH
+            </span>
+            <div className="border border-foreground p-4 bg-background/50 flex-1 flex items-center justify-center">
+              <ConstellationSVG />
+            </div>
           </div>
 
           {/* stats row */}
@@ -237,7 +242,7 @@ export function SubstrateSummarySection() {
             ].map((stat, i) => (
               <div
                 key={stat.label}
-                className={`px-4 py-4 text-center ${i < 2 ? "border-r border-foreground" : ""}`}
+                className={`p-4 text-center ${i < 2 ? "border-r border-foreground" : ""}`}
               >
                 <span className="block text-xl font-bold font-mono tracking-tight">
                   <AnimatedNumber value={stat.value} suffix={stat.suffix} />
@@ -250,13 +255,15 @@ export function SubstrateSummarySection() {
           </div>
 
           {/* CTA */}
-          <div className="px-6 py-5 border-t border-foreground">
+          <div className="px-8 lg:px-10 py-5 border-t border-foreground">
             <Link
               href="/projects"
-              className="inline-flex items-center gap-2 text-xs font-mono tracking-[0.14em] uppercase hover:opacity-70 transition-opacity"
+              className="inline-flex items-center gap-0 bg-foreground text-background text-[10px] font-mono tracking-wider uppercase hover:opacity-90 transition-opacity"
             >
-              View All Projects
-              <ArrowUpRight className="h-3.5 w-3.5" />
+              <span className="flex items-center justify-center w-8 h-8 bg-[#ea580c]">
+                <ArrowUpRight className="h-3.5 w-3.5 text-background" />
+              </span>
+              <span className="px-4 py-2">View All Projects</span>
             </Link>
           </div>
         </motion.div>

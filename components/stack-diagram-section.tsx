@@ -51,7 +51,7 @@ function IconShield({ className }: { className?: string }) {
 /* ------------------------------------------------------------------ */
 function AnimatedConnector({ text, delay }: { text: string; delay: number }) {
   return (
-    <div className="flex flex-col items-center py-3">
+    <div className="flex flex-col items-center py-4">
       <motion.div
         className="w-px bg-foreground origin-top"
         initial={{ scaleY: 0 }}
@@ -135,7 +135,7 @@ function LayerCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.6, delay, ease }}
-      className="relative border-2 border-foreground p-5 overflow-hidden"
+      className="relative border-2 border-foreground p-5 lg:p-6 overflow-hidden"
     >
       {/* animated pulsing left border accent */}
       <motion.div
@@ -145,10 +145,15 @@ function LayerCard({
         transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
       />
 
-      <div className="flex items-start gap-4">
-        {/* icon */}
-        <div className="shrink-0 mt-1 w-7 h-7 text-muted-foreground">
-          {icon}
+      <div className="flex items-start gap-5">
+        {/* icon in MODULE.GLYPH-style container */}
+        <div className="shrink-0 mt-1">
+          <span className="text-[9px] tracking-[0.2em] uppercase font-mono text-muted-foreground block mb-1.5">
+            LAYER.ICON
+          </span>
+          <div className="border border-foreground p-2.5 bg-background/50 w-12 h-12 flex items-center justify-center text-muted-foreground">
+            {icon}
+          </div>
         </div>
 
         <div className="min-w-0">
@@ -170,10 +175,10 @@ function LayerCard({
 /* ------------------------------------------------------------------ */
 export function StackDiagramSection() {
   return (
-    <section className="w-full px-6 py-16 lg:px-12 lg:py-24">
+    <section className="w-full px-6 py-20 lg:px-12 lg:py-28">
       <SectionRail label="// SECTION: THE_STACK" step="002" />
 
-      <div className="max-w-3xl mx-auto flex flex-col items-stretch">
+      <div className="max-w-3xl mx-auto flex flex-col items-stretch gap-0">
         {/* Layer 1: Reasoning */}
         <LayerCard
           layerNum="Layer 1"
@@ -250,15 +255,20 @@ export function StackDiagramSection() {
         </motion.div>
 
         {/* Pull quote */}
-        <motion.blockquote
+        <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-40px" }}
           transition={{ duration: 0.6, delay: 0.3, ease }}
-          className="mt-12 text-xl sm:text-2xl lg:text-3xl font-pixel text-foreground text-center leading-snug select-none"
+          className="mt-12 border-2 border-foreground p-6 lg:p-8"
         >
-          The only stack where a domain-specialist AI can make decisions a regulator can audit.
-        </motion.blockquote>
+          <span className="text-[9px] tracking-[0.2em] uppercase font-mono text-muted-foreground block mb-4">
+            MODULE.THESIS
+          </span>
+          <blockquote className="text-xl sm:text-2xl lg:text-3xl font-pixel text-foreground text-center leading-snug select-none">
+            The only stack where a domain-specialist AI can make decisions a regulator can audit.
+          </blockquote>
+        </motion.div>
       </div>
     </section>
   )

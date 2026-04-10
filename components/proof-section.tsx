@@ -115,11 +115,11 @@ function DotGrid() {
 
 export function ProofSection() {
   return (
-    <section className="w-full px-6 pb-14 lg:px-12" aria-label="Proof">
+    <section className="w-full px-6 py-20 lg:px-12 lg:py-28" aria-label="Proof">
       <SectionRail label="// SECTION: PROOF" step="006" />
 
       {/* Two-column benchmarks + speed */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
         {/* Left: Model Benchmarks */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
@@ -137,7 +137,7 @@ export function ProofSection() {
             {benchmarks.map((b, i) => (
               <div
                 key={b.label}
-                className={`flex items-center justify-between gap-4 px-3 py-3 border border-border/40 ${
+                className={`flex items-center justify-between gap-4 px-4 py-3 border border-border/40 ${
                   i > 0 ? "-mt-px" : ""
                 }`}
               >
@@ -207,7 +207,7 @@ export function ProofSection() {
       {/* Value cards with dot-grid overlay */}
       <div className="relative">
         <DotGrid />
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 relative">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative">
           {valueCards.map((card, i) => (
             <motion.div
               key={card.headline}
@@ -215,14 +215,20 @@ export function ProofSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.45, ease, delay: i * 0.08 }}
-              className="border-2 border-foreground bg-background p-4"
+              className="border-2 border-foreground bg-background p-5"
             >
-              <div className="flex items-start gap-3 mb-3">
-                <card.Icon />
-                <span className="text-sm font-mono font-bold tracking-tight uppercase pt-0.5">
-                  {card.headline}
+              {/* MODULE.GLYPH-style icon container */}
+              <div className="mb-4">
+                <span className="text-[9px] tracking-[0.2em] uppercase font-mono text-muted-foreground block mb-1.5">
+                  MODULE.GLYPH
                 </span>
+                <div className="border border-foreground p-3 bg-background/50 w-14 h-14 flex items-center justify-center">
+                  <card.Icon />
+                </div>
               </div>
+              <span className="text-sm font-mono font-bold tracking-tight uppercase block mb-2">
+                {card.headline}
+              </span>
               <p className="text-xs font-mono text-muted-foreground leading-relaxed">
                 {card.body}
               </p>
