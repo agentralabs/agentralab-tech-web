@@ -12,43 +12,80 @@ const ease = [0.22, 1, 0.36, 1] as const
 function CognitiveGraph() {
   return (
     <svg viewBox="0 0 480 260" fill="none" className="w-full h-full">
-      {/* Edges */}
-      <line x1="100" y1="80" x2="240" y2="130" stroke="currentColor" strokeWidth="1.5" strokeOpacity="0.2" />
-      <line x1="140" y1="200" x2="240" y2="130" stroke="currentColor" strokeWidth="1.5" strokeOpacity="0.2" />
-      <line x1="380" y1="180" x2="240" y2="130" stroke="currentColor" strokeWidth="1.5" strokeOpacity="0.2" />
-      <line x1="380" y1="60" x2="240" y2="130" stroke="#ea580c" strokeWidth="1.5" strokeOpacity="0.4" strokeDasharray="6 4" />
-      <line x1="240" y1="130" x2="300" y2="230" stroke="currentColor" strokeWidth="1.5" strokeOpacity="0.15" />
+      {/* Brain folds — subtle gyri background curves */}
+      <path d="M160 80 Q200 60 240 75 Q280 90 300 70" stroke="currentColor" strokeWidth="1" strokeOpacity="0.08" fill="none" />
+      <path d="M140 110 Q180 95 220 105 Q260 115 290 100" stroke="currentColor" strokeWidth="1" strokeOpacity="0.08" fill="none" />
+      <path d="M130 140 Q170 130 210 140 Q250 150 280 135" stroke="currentColor" strokeWidth="1" strokeOpacity="0.08" fill="none" />
+      <path d="M150 165 Q190 155 230 165 Q270 175 300 160" stroke="currentColor" strokeWidth="1" strokeOpacity="0.08" fill="none" />
+      <path d="M165 190 Q200 180 235 190 Q265 198 285 185" stroke="currentColor" strokeWidth="1" strokeOpacity="0.08" fill="none" />
 
-      {/* Edge labels */}
-      <text x="160" y="95" textAnchor="middle" className="font-mono" fontSize="7" fill="currentColor" opacity="0.3">CAUSED_BY</text>
-      <text x="178" y="172" textAnchor="middle" className="font-mono" fontSize="7" fill="currentColor" opacity="0.3">CAUSED_BY</text>
-      <text x="320" y="145" textAnchor="middle" className="font-mono" fontSize="7" fill="currentColor" opacity="0.3">CAUSED_BY</text>
-      <text x="320" y="85" textAnchor="middle" className="font-mono" fontSize="7" fill="#ea580c" opacity="0.5">SUPERSEDES</text>
+      {/* Brain outline — left-facing profile, anatomical silhouette */}
+      <path
+        d="M280 45 Q310 50 330 70 Q350 95 345 125 Q340 155 320 175 Q300 195 280 210 Q260 225 235 235 Q210 240 190 235 Q165 228 150 215 Q130 200 120 180 Q110 155 115 130 Q120 105 135 85 Q150 65 175 52 Q200 40 230 40 Q255 40 280 45 Z"
+        stroke="currentColor"
+        strokeWidth="2"
+        fill="none"
+        strokeOpacity="0.9"
+      />
 
-      {/* Fact nodes */}
-      <circle cx="100" cy="80" r="18" fill="currentColor" fillOpacity="0.08" stroke="currentColor" strokeWidth="1.5" strokeOpacity="0.3" />
-      <text x="100" y="83" textAnchor="middle" className="font-mono" fontSize="7" fill="currentColor" opacity="0.5">FACT</text>
+      {/* Cerebellum bump */}
+      <path
+        d="M150 215 Q135 220 128 210 Q120 198 120 180"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        fill="none"
+        strokeOpacity="0.6"
+      />
 
-      <circle cx="140" cy="200" r="18" fill="currentColor" fillOpacity="0.08" stroke="currentColor" strokeWidth="1.5" strokeOpacity="0.3" />
-      <text x="140" y="203" textAnchor="middle" className="font-mono" fontSize="7" fill="currentColor" opacity="0.5">FACT</text>
+      {/* Central fissure dividing frontal/parietal */}
+      <path d="M240 52 Q235 90 230 130" stroke="currentColor" strokeWidth="1" strokeOpacity="0.15" fill="none" />
 
-      <circle cx="380" cy="180" r="18" fill="currentColor" fillOpacity="0.08" stroke="currentColor" strokeWidth="1.5" strokeOpacity="0.3" />
-      <text x="380" y="183" textAnchor="middle" className="font-mono" fontSize="7" fill="currentColor" opacity="0.5">FACT</text>
+      {/* Lateral fissure dividing temporal */}
+      <path d="M175 130 Q210 140 260 135" stroke="currentColor" strokeWidth="1" strokeOpacity="0.15" fill="none" />
 
-      {/* Correction node */}
-      <circle cx="380" cy="60" r="20" fill="currentColor" fillOpacity="0.06" stroke="#ea580c" strokeWidth="1.5" strokeOpacity="0.4" strokeDasharray="4 3" />
-      <text x="380" y="57" textAnchor="middle" className="font-mono" fontSize="6.5" fill="#ea580c" opacity="0.6">CORRECT</text>
-      <text x="380" y="67" textAnchor="middle" className="font-mono" fontSize="6.5" fill="#ea580c" opacity="0.6">-ION</text>
+      {/* Neural pathway: Frontal to Decision zone */}
+      <path d="M200 75 Q210 90 225 100 Q240 108 255 100" stroke="#ea580c" strokeWidth="1.5" strokeOpacity="0.6" fill="none" />
+      {/* Junction nodes on frontal pathway */}
+      <circle cx="200" cy="75" r="2.5" fill="#ea580c" fillOpacity="0.8" />
+      <circle cx="225" cy="100" r="3" fill="#ea580c" fillOpacity="0.9" />
+      <circle cx="255" cy="100" r="2" fill="#ea580c" fillOpacity="0.7" />
 
-      {/* Central DECISION node — the hero */}
-      <circle cx="240" cy="130" r="32" fill="#ea580c" fillOpacity="0.15" stroke="#ea580c" strokeWidth="2" />
-      <circle cx="240" cy="130" r="26" fill="#ea580c" />
-      <text x="240" y="127" textAnchor="middle" className="font-mono" fontSize="8" fill="white" fontWeight="700">DECI</text>
-      <text x="240" y="137" textAnchor="middle" className="font-mono" fontSize="8" fill="white" fontWeight="700">SION</text>
+      {/* Neural pathway: Temporal to Memory zone */}
+      <path d="M185 170 Q200 160 220 165 Q240 170 255 160" stroke="#ea580c" strokeWidth="1.5" strokeOpacity="0.5" fill="none" />
+      {/* Junction nodes on temporal pathway */}
+      <circle cx="185" cy="170" r="2.5" fill="#ea580c" fillOpacity="0.8" />
+      <circle cx="220" cy="165" r="2.5" fill="#ea580c" fillOpacity="0.7" />
+      <circle cx="255" cy="160" r="2" fill="#ea580c" fillOpacity="0.6" />
 
-      {/* Inference node */}
-      <circle cx="300" cy="230" r="16" fill="currentColor" fillOpacity="0.06" stroke="currentColor" strokeWidth="1.5" strokeOpacity="0.25" />
-      <text x="300" y="233" textAnchor="middle" className="font-mono" fontSize="6.5" fill="currentColor" opacity="0.4">INFER</text>
+      {/* Neural pathway: Connecting frontal to temporal (CAUSED_BY link) */}
+      <path d="M225 100 Q218 125 215 140 Q212 155 220 165" stroke="#ea580c" strokeWidth="1.2" strokeOpacity="0.4" strokeDasharray="4 3" fill="none" />
+      {/* Mid-junction spark */}
+      <circle cx="215" cy="140" r="2" fill="#ea580c" fillOpacity="0.6" />
+
+      {/* Neural pathway: Occipital branch */}
+      <path d="M290 110 Q310 130 315 155 Q318 175 300 190" stroke="currentColor" strokeWidth="1.2" strokeOpacity="0.25" fill="none" />
+      <circle cx="290" cy="110" r="2" fill="#ea580c" fillOpacity="0.5" />
+      <circle cx="315" cy="155" r="2" fill="#ea580c" fillOpacity="0.4" />
+      <circle cx="300" cy="190" r="2" fill="#ea580c" fillOpacity="0.5" />
+
+      {/* Neural pathway: Brainstem descending */}
+      <path d="M185 170 Q170 190 160 210 Q155 220 160 230" stroke="currentColor" strokeWidth="1" strokeOpacity="0.2" fill="none" />
+      <circle cx="160" cy="210" r="1.5" fill="#ea580c" fillOpacity="0.4" />
+
+      {/* DECISION label — frontal area */}
+      <rect x="165" y="62" width="52" height="14" rx="2" fill="#ea580c" fillOpacity="0.15" />
+      <text x="191" y="72" textAnchor="middle" className="font-mono" fontSize="7" fill="#ea580c" fontWeight="700" opacity="0.8">DECISION</text>
+
+      {/* MEMORY label — temporal area */}
+      <rect x="157" y="177" width="45" height="14" rx="2" fill="#ea580c" fillOpacity="0.12" />
+      <text x="179" y="187" textAnchor="middle" className="font-mono" fontSize="7" fill="#ea580c" fontWeight="700" opacity="0.7">MEMORY</text>
+
+      {/* CAUSED_BY label along connecting pathway */}
+      <text x="198" y="135" textAnchor="middle" className="font-mono" fontSize="6" fill="#ea580c" opacity="0.5" transform="rotate(-75 198 135)">CAUSED_BY</text>
+
+      {/* Additional spark dots at key junctions */}
+      <circle cx="225" cy="100" r="4.5" fill="none" stroke="#ea580c" strokeWidth="0.8" strokeOpacity="0.3" />
+      <circle cx="220" cy="165" r="4" fill="none" stroke="#ea580c" strokeWidth="0.8" strokeOpacity="0.25" />
     </svg>
   )
 }

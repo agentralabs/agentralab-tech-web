@@ -8,29 +8,44 @@ const ease = [0.22, 1, 0.36, 1] as const
 
 /* ── Hydra network SVG ───────────────────────────────────────────── */
 
-const centralNode = { cx: 160, cy: 160, r: 32 }
-
-const branches = [
-  { label: "Memory", cx: 60, cy: 60, r: 16 },
-  { label: "Identity", cx: 270, cy: 50, r: 16 },
-  { label: "Planning", cx: 280, cy: 160, r: 16 },
-  { label: "Contract", cx: 260, cy: 260, r: 16 },
-  { label: "Cognition", cx: 50, cy: 200, r: 12 },
-  { label: "Veritas", cx: 120, cy: 280, r: 12 },
-  { label: "Comm", cx: 50, cy: 130, r: 10 },
-  { label: "Time", cx: 220, cy: 290, r: 10 },
-] as const
-
-const secondaryNodes = [
-  { cx: 30, cy: 30, r: 5 },
-  { cx: 100, cy: 20, r: 4 },
-  { cx: 300, cy: 100, r: 5 },
-  { cx: 310, cy: 200, r: 4 },
-  { cx: 300, cy: 300, r: 5 },
-  { cx: 20, cy: 260, r: 4 },
-] as const
-
 function HydraNetworkSVG() {
+  /* DNA helix parameters */
+  const helixCx = 160
+  const helixTopY = 280
+  const helixBotY = 120
+  const helixAmplitude = 28
+  const helixSteps = 40
+
+  /* Generate two sinusoidal helix strands */
+  const strand1Points: string[] = []
+  const strand2Points: string[] = []
+  const rungPairs: { x1: number; y1: number; x2: number; y2: number }[] = []
+
+  for (let i = 0; i <= helixSteps; i++) {
+    const t = i / helixSteps
+    const y = helixTopY + (helixBotY - helixTopY) * t
+    const phase = t * Math.PI * 4
+    const x1 = helixCx + Math.sin(phase) * helixAmplitude
+    const x2 = helixCx + Math.sin(phase + Math.PI) * helixAmplitude
+    strand1Points.push(`${x1},${y}`)
+    strand2Points.push(`${x2},${y}`)
+    if (i % 5 === 2 && i > 0 && i < helixSteps) {
+      rungPairs.push({ x1, y1: y, x2, y2: y })
+    }
+  }
+
+  const strand1Path = `M ${strand1Points.join(" L ")}`
+  const strand2Path = `M ${strand2Points.join(" L ")}`
+
+  /* Branch tips — spread from the top of the helix */
+  const branchData = [
+    { label: "Memory", tipX: 60, tipY: 30, ctrlX: 100, ctrlY: 60, icon: "brain" },
+    { label: "Identity", tipX: 120, tipY: 18, ctrlX: 135, ctrlY: 55, icon: "shield" },
+    { label: "Planning", tipX: 170, tipY: 12, ctrlX: 165, ctrlY: 50, icon: "gear" },
+    { label: "Contract", tipX: 220, tipY: 22, ctrlX: 195, ctrlY: 55, icon: "doc" },
+    { label: "Vision", tipX: 270, tipY: 40, ctrlX: 230, ctrlY: 65, icon: "eye" },
+  ]
+
   return (
     <motion.svg
       viewBox="0 0 320 320"
@@ -40,162 +55,131 @@ function HydraNetworkSVG() {
       whileInView="visible"
       viewport={{ once: true, margin: "-40px" }}
     >
-      {/* Edges from center to branches */}
-      {branches.map((b, i) => (
+      {/* Helix rungs — subtle horizontal connectors */}
+      {rungPairs.map((r, i) => (
         <motion.line
-          key={b.label}
-          x1={centralNode.cx}
-          y1={centralNode.cy}
-          x2={b.cx}
-          y2={b.cy}
-          stroke="currentColor"
-          strokeWidth={1}
-          strokeOpacity={0.25}
-          variants={{
-            hidden: { pathLength: 0, opacity: 0 },
-            visible: {
-              pathLength: 1,
-              opacity: 1,
-              transition: { duration: 0.5, delay: 0.4 + i * 0.08, ease },
-            },
-          }}
-        />
-      ))}
-
-      {/* Secondary connectors */}
-      {secondaryNodes.map((sn, i) => {
-        const nearest = branches.reduce((a, b) =>
-          Math.hypot(b.cx - sn.cx, b.cy - sn.cy) < Math.hypot(a.cx - sn.cx, a.cy - sn.cy) ? b : a
-        )
-        return (
-          <motion.line
-            key={`sec-${i}`}
-            x1={nearest.cx}
-            y1={nearest.cy}
-            x2={sn.cx}
-            y2={sn.cy}
-            stroke="currentColor"
-            strokeWidth={0.5}
-            strokeOpacity={0.15}
-            variants={{
-              hidden: { opacity: 0 },
-              visible: {
-                opacity: 1,
-                transition: { duration: 0.3, delay: 1.0 + i * 0.05, ease },
-              },
-            }}
-          />
-        )
-      })}
-
-      {/* Secondary dots */}
-      {secondaryNodes.map((sn, i) => (
-        <motion.circle
-          key={`snd-${i}`}
-          cx={sn.cx}
-          cy={sn.cy}
-          r={sn.r}
-          fill="currentColor"
-          fillOpacity={0.1}
-          stroke="currentColor"
-          strokeWidth={0.5}
-          strokeOpacity={0.2}
+          key={`rung-${i}`}
+          x1={r.x1} y1={r.y1} x2={r.x2} y2={r.y2}
+          stroke="currentColor" strokeWidth={0.8} strokeOpacity={0.12}
           variants={{
             hidden: { opacity: 0 },
-            visible: {
-              opacity: 1,
-              transition: { duration: 0.3, delay: 1.0 + i * 0.05, ease },
-            },
+            visible: { opacity: 1, transition: { duration: 0.3, delay: 0.6 + i * 0.08, ease } },
           }}
         />
       ))}
 
-      {/* Branch nodes */}
-      {branches.map((b, i) => (
+      {/* Helix strand 1 */}
+      <motion.path
+        d={strand1Path}
+        stroke="currentColor" strokeWidth={1.8} strokeOpacity={0.6} fill="none"
+        variants={{
+          hidden: { pathLength: 0, opacity: 0 },
+          visible: { pathLength: 1, opacity: 1, transition: { duration: 1.2, delay: 0.1, ease } },
+        }}
+      />
+
+      {/* Helix strand 2 */}
+      <motion.path
+        d={strand2Path}
+        stroke="currentColor" strokeWidth={1.8} strokeOpacity={0.4} fill="none"
+        variants={{
+          hidden: { pathLength: 0, opacity: 0 },
+          visible: { pathLength: 1, opacity: 1, transition: { duration: 1.2, delay: 0.2, ease } },
+        }}
+      />
+
+      {/* HYDRA label at base of helix */}
+      <motion.g
+        variants={{
+          hidden: { opacity: 0 },
+          visible: { opacity: 1, transition: { duration: 0.5, delay: 0.8, ease } },
+        }}
+      >
+        <rect x={helixCx - 28} y={290} width={56} height={18} rx={2} fill="#ea580c" />
+        <text x={helixCx} y={302} textAnchor="middle" className="font-mono" fontSize={9} fontWeight={700} fill="#fff">HYDRA</text>
+      </motion.g>
+
+      {/* Branches spreading from helix top */}
+      {branchData.map((b, i) => (
         <motion.g
           key={b.label}
           variants={{
-            hidden: { opacity: 0, scale: 0.4 },
-            visible: {
-              opacity: 1,
-              scale: 1,
-              transition: { duration: 0.5, delay: 0.2 + i * 0.08, ease },
-            },
+            hidden: { opacity: 0 },
+            visible: { opacity: 1, transition: { duration: 0.5, delay: 0.9 + i * 0.12, ease } },
           }}
-          style={{ originX: `${b.cx}px`, originY: `${b.cy}px` }}
         >
-          <circle
-            cx={b.cx}
-            cy={b.cy}
-            r={b.r}
-            fill="currentColor"
-            fillOpacity={0.08}
-            stroke="currentColor"
-            strokeWidth={1.5}
-            strokeOpacity={0.4}
+          {/* Organic branch curve */}
+          <path
+            d={`M ${helixCx} ${helixBotY} Q ${b.ctrlX} ${b.ctrlY} ${b.tipX} ${b.tipY}`}
+            stroke="currentColor" strokeWidth={1.2} strokeOpacity={0.3} fill="none"
           />
+
+          {/* Branch tip icon */}
+          <g transform={`translate(${b.tipX - 8}, ${b.tipY - 8})`}>
+            {b.icon === "brain" && (
+              /* Small brain — curved outline */
+              <g stroke="#ea580c" strokeWidth={1.2} fill="none">
+                <path d="M8 2 Q14 2 14 8 Q14 14 8 14 Q2 14 2 8 Q2 2 8 2" />
+                <path d="M5 6 Q8 4 11 6" strokeWidth={0.8} />
+                <path d="M5 10 Q8 8 11 10" strokeWidth={0.8} />
+              </g>
+            )}
+            {b.icon === "shield" && (
+              <g stroke="#ea580c" strokeWidth={1.2} fill="none">
+                <path d="M8 1 L14 4 L14 9 Q14 14 8 15 Q2 14 2 9 L2 4 Z" />
+                <circle cx={8} cy={8} r={2} fill="#ea580c" fillOpacity={0.3} />
+              </g>
+            )}
+            {b.icon === "gear" && (
+              <g stroke="#ea580c" strokeWidth={1.2} fill="none">
+                <circle cx={8} cy={8} r={3.5} />
+                <circle cx={8} cy={8} r={1.5} fill="#ea580c" fillOpacity={0.3} />
+                {[0, 60, 120, 180, 240, 300].map((angle) => {
+                  const rad = (angle * Math.PI) / 180
+                  return (
+                    <line
+                      key={angle}
+                      x1={8 + Math.cos(rad) * 3.5}
+                      y1={8 + Math.sin(rad) * 3.5}
+                      x2={8 + Math.cos(rad) * 5.5}
+                      y2={8 + Math.sin(rad) * 5.5}
+                      strokeWidth={1.5}
+                    />
+                  )
+                })}
+              </g>
+            )}
+            {b.icon === "doc" && (
+              <g stroke="#ea580c" strokeWidth={1.2} fill="none">
+                <path d="M3 1 L11 1 L13 3 L13 15 L3 15 Z" />
+                <line x1={5} y1={5} x2={11} y2={5} strokeWidth={0.8} />
+                <line x1={5} y1={8} x2={11} y2={8} strokeWidth={0.8} />
+                <line x1={5} y1={11} x2={9} y2={11} strokeWidth={0.8} />
+              </g>
+            )}
+            {b.icon === "eye" && (
+              <g stroke="#ea580c" strokeWidth={1.2} fill="none">
+                <path d="M1 8 Q8 1 15 8 Q8 15 1 8" />
+                <circle cx={8} cy={8} r={3} />
+                <circle cx={8} cy={8} r={1} fill="#ea580c" />
+              </g>
+            )}
+          </g>
+
+          {/* Label below icon */}
           <text
-            x={b.cx}
-            y={b.cy + 3}
+            x={b.tipX}
+            y={b.tipY + 16}
             textAnchor="middle"
             className="font-mono fill-current"
-            fontSize={7}
+            fontSize={6}
             fontWeight={600}
-            opacity={0.7}
+            opacity={0.5}
           >
             {b.label}
           </text>
         </motion.g>
       ))}
-
-      {/* Central node — Hydra */}
-      <motion.g
-        variants={{
-          hidden: { opacity: 0, scale: 0 },
-          visible: {
-            opacity: 1,
-            scale: 1,
-            transition: { duration: 0.6, delay: 0.1, ease },
-          },
-        }}
-        style={{ originX: `${centralNode.cx}px`, originY: `${centralNode.cy}px` }}
-      >
-        <circle
-          cx={centralNode.cx}
-          cy={centralNode.cy}
-          r={centralNode.r}
-          fill="#ea580c"
-        />
-        {/* Pulse ring */}
-        <motion.circle
-          cx={centralNode.cx}
-          cy={centralNode.cy}
-          r={centralNode.r}
-          fill="none"
-          stroke="#ea580c"
-          strokeWidth={1.5}
-          animate={{
-            r: [centralNode.r, centralNode.r + 12],
-            opacity: [0.6, 0],
-          }}
-          transition={{
-            duration: 2,
-            repeat: Infinity,
-            ease: "easeOut",
-          }}
-        />
-        <text
-          x={centralNode.cx}
-          y={centralNode.cy + 4}
-          textAnchor="middle"
-          className="font-mono"
-          fontSize={11}
-          fontWeight={700}
-          fill="#fff"
-        >
-          HYDRA
-        </text>
-      </motion.g>
     </motion.svg>
   )
 }

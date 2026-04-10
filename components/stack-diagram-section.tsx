@@ -10,38 +10,66 @@ const ease = [0.22, 1, 0.36, 1] as const
 /*  Inline SVG icons (small, monochrome)                              */
 /* ------------------------------------------------------------------ */
 
-/** Three connected nodes — neural / reasoning */
+/** Open book with lightbulb — knowledge + insight */
 function IconBrain({ className }: { className?: string }) {
   return (
-    <svg viewBox="0 0 28 28" fill="none" className={className} aria-hidden>
-      <circle cx="14" cy="6" r="2.5" stroke="currentColor" strokeWidth="1.5" />
-      <circle cx="6" cy="22" r="2.5" stroke="currentColor" strokeWidth="1.5" />
-      <circle cx="22" cy="22" r="2.5" stroke="currentColor" strokeWidth="1.5" />
-      <line x1="14" y1="8.5" x2="7.5" y2="19.5" stroke="currentColor" strokeWidth="1.2" />
-      <line x1="14" y1="8.5" x2="20.5" y2="19.5" stroke="currentColor" strokeWidth="1.2" />
-      <line x1="8.5" y1="22" x2="19.5" y2="22" stroke="currentColor" strokeWidth="1.2" />
+    <svg viewBox="0 0 40 40" fill="none" className={className} aria-hidden>
+      {/* Left page */}
+      <path d="M5 32 L5 12 Q5 10 7 10 L18 10 L18 32 Z" stroke="currentColor" strokeWidth="1.5" fill="none" />
+      {/* Right page */}
+      <path d="M35 32 L35 12 Q35 10 33 10 L22 10 L22 32 Z" stroke="currentColor" strokeWidth="1.5" fill="none" />
+      {/* Spine */}
+      <line x1="20" y1="10" x2="20" y2="32" stroke="currentColor" strokeWidth="1" opacity="0.4" />
+      {/* Text lines on left page */}
+      <line x1="8" y1="16" x2="16" y2="16" stroke="currentColor" strokeWidth="0.8" opacity="0.3" />
+      <line x1="8" y1="20" x2="15" y2="20" stroke="currentColor" strokeWidth="0.8" opacity="0.3" />
+      <line x1="8" y1="24" x2="14" y2="24" stroke="currentColor" strokeWidth="0.8" opacity="0.3" />
+      {/* Lightbulb above book */}
+      <circle cx="20" cy="5" r="3.5" stroke="#ea580c" strokeWidth="1.3" fill="none" />
+      <line x1="18.5" y1="8.5" x2="21.5" y2="8.5" stroke="#ea580c" strokeWidth="1" />
+      {/* Light rays */}
+      <line x1="20" y1="0" x2="20" y2="1" stroke="#ea580c" strokeWidth="0.8" opacity="0.6" />
+      <line x1="15" y1="3" x2="16" y2="3.8" stroke="#ea580c" strokeWidth="0.8" opacity="0.6" />
+      <line x1="25" y1="3" x2="24" y2="3.8" stroke="#ea580c" strokeWidth="0.8" opacity="0.6" />
+      <line x1="14.5" y1="6.5" x2="15.5" y2="6" stroke="#ea580c" strokeWidth="0.8" opacity="0.5" />
+      <line x1="25.5" y1="6.5" x2="24.5" y2="6" stroke="#ea580c" strokeWidth="0.8" opacity="0.5" />
     </svg>
   )
 }
 
-/** Hexagonal nodes — substrate / memory graph */
+/** Three stacked layers — infrastructure strata */
 function IconSubstrate({ className }: { className?: string }) {
   return (
-    <svg viewBox="0 0 28 28" fill="none" className={className} aria-hidden>
-      <polygon points="14,3 24,9 24,19 14,25 4,19 4,9" stroke="currentColor" strokeWidth="1.5" fill="none" />
-      <line x1="14" y1="3" x2="14" y2="25" stroke="currentColor" strokeWidth="1" opacity="0.5" />
-      <line x1="4" y1="9" x2="24" y2="19" stroke="currentColor" strokeWidth="1" opacity="0.5" />
-      <line x1="24" y1="9" x2="4" y2="19" stroke="currentColor" strokeWidth="1" opacity="0.5" />
+    <svg viewBox="0 0 40 40" fill="none" className={className} aria-hidden>
+      {/* Top layer */}
+      <rect x="4" y="4" width="32" height="8" rx="2" stroke="currentColor" strokeWidth="1.5" fill="none" />
+      {/* Middle layer with data dots */}
+      <rect x="4" y="16" width="32" height="8" rx="2" stroke="#ea580c" strokeWidth="1.5" fill="none" />
+      <circle cx="12" cy="20" r="1" fill="#ea580c" fillOpacity="0.6" />
+      <circle cx="18" cy="20" r="1" fill="#ea580c" fillOpacity="0.6" />
+      <circle cx="24" cy="20" r="1" fill="#ea580c" fillOpacity="0.6" />
+      <circle cx="30" cy="20" r="1" fill="#ea580c" fillOpacity="0.4" />
+      {/* Bottom layer */}
+      <rect x="4" y="28" width="32" height="8" rx="2" stroke="currentColor" strokeWidth="1.5" fill="none" />
+      {/* Connecting lines between layers */}
+      <line x1="10" y1="12" x2="10" y2="16" stroke="currentColor" strokeWidth="0.8" opacity="0.25" />
+      <line x1="30" y1="12" x2="30" y2="16" stroke="currentColor" strokeWidth="0.8" opacity="0.25" />
+      <line x1="10" y1="24" x2="10" y2="28" stroke="currentColor" strokeWidth="0.8" opacity="0.25" />
+      <line x1="30" y1="24" x2="30" y2="28" stroke="currentColor" strokeWidth="0.8" opacity="0.25" />
     </svg>
   )
 }
 
-/** Shield + check — verification */
+/** Magnifying glass over checkmark — verification */
 function IconShield({ className }: { className?: string }) {
   return (
-    <svg viewBox="0 0 28 28" fill="none" className={className} aria-hidden>
-      <path d="M14 3 L24 8 L24 16 C24 21 19 25 14 26 C9 25 4 21 4 16 L4 8 Z" stroke="currentColor" strokeWidth="1.5" fill="none" />
-      <polyline points="9,14 12.5,18 19,10" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+    <svg viewBox="0 0 40 40" fill="none" className={className} aria-hidden>
+      {/* Magnifying glass circle */}
+      <circle cx="17" cy="17" r="11" stroke="currentColor" strokeWidth="1.5" fill="none" />
+      {/* Magnifying glass handle */}
+      <line x1="25" y1="25" x2="36" y2="36" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+      {/* Checkmark inside lens */}
+      <polyline points="10,17 15,22 24,12" stroke="#ea580c" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
     </svg>
   )
 }

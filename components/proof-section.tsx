@@ -23,19 +23,27 @@ const substrateStats = [
 function ServerIcon() {
   return (
     <svg
-      viewBox="0 0 24 24"
+      viewBox="0 0 48 48"
       fill="none"
       stroke="currentColor"
-      strokeWidth={2}
-      strokeLinecap="square"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
       className="w-6 h-6 text-[#ea580c]"
     >
-      <rect x="2" y="2" width="20" height="8" />
-      <rect x="2" y="14" width="20" height="8" />
-      <circle cx="6" cy="6" r="1" fill="currentColor" />
-      <circle cx="6" cy="18" r="1" fill="currentColor" />
-      <line x1="10" y1="6" x2="18" y2="6" />
-      <line x1="10" y1="18" x2="18" y2="18" />
+      {/* House outline — peaked roof */}
+      <path d="M6 22 L24 6 L42 22 L42 42 L6 42 Z" fill="none" />
+      {/* Roof peak emphasis */}
+      <line x1="6" y1="22" x2="42" y2="22" strokeOpacity="0.3" />
+      {/* Server rack shelves inside house */}
+      <line x1="14" y1="27" x2="34" y2="27" />
+      <line x1="14" y1="33" x2="34" y2="33" />
+      <line x1="14" y1="39" x2="34" y2="39" />
+      {/* Side rails of rack */}
+      <line x1="14" y1="25" x2="14" y2="41" strokeOpacity="0.4" />
+      <line x1="34" y1="25" x2="34" y2="41" strokeOpacity="0.4" />
+      {/* Blinking activity dot on middle shelf */}
+      <circle cx="17" cy="30" r="1.5" fill="#ea580c" stroke="none" />
     </svg>
   )
 }
@@ -43,16 +51,32 @@ function ServerIcon() {
 function ShieldIcon() {
   return (
     <svg
-      viewBox="0 0 24 24"
+      viewBox="0 0 48 48"
       fill="none"
       stroke="currentColor"
-      strokeWidth={2}
-      strokeLinecap="square"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
       className="w-6 h-6 text-[#ea580c]"
     >
-      <path d="M12 2L3 7v5c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-9-5z" />
-      <rect x="9" y="10" width="6" height="5" />
-      <line x1="12" y1="10" x2="12" y2="8" />
+      {/* Vault door — rounded rectangle */}
+      <rect x="6" y="6" width="36" height="36" rx="4" strokeWidth="2.5" />
+      {/* Inner border */}
+      <rect x="10" y="10" width="28" height="28" rx="2" strokeOpacity="0.3" strokeWidth="1" />
+      {/* Combination lock circle */}
+      <circle cx="24" cy="24" r="10" strokeWidth="1.5" />
+      {/* Tick marks around lock */}
+      <line x1="24" y1="14" x2="24" y2="16" strokeWidth="1" />
+      <line x1="24" y1="32" x2="24" y2="34" strokeWidth="1" />
+      <line x1="14" y1="24" x2="16" y2="24" strokeWidth="1" />
+      <line x1="32" y1="24" x2="34" y2="24" strokeWidth="1" />
+      <line x1="17" y1="17" x2="18.4" y2="18.4" strokeWidth="1" />
+      <line x1="29.6" y1="29.6" x2="31" y2="31" strokeWidth="1" />
+      <line x1="31" y1="17" x2="29.6" y2="18.4" strokeWidth="1" />
+      <line x1="18.4" y1="29.6" x2="17" y2="31" strokeWidth="1" />
+      {/* Keyhole */}
+      <circle cx="24" cy="22" r="2" fill="currentColor" />
+      <path d="M23 24 L23 28 L25 28 L25 24" fill="currentColor" stroke="none" />
     </svg>
   )
 }
@@ -60,17 +84,35 @@ function ShieldIcon() {
 function ClockInfinityIcon() {
   return (
     <svg
-      viewBox="0 0 24 24"
+      viewBox="0 0 48 48"
       fill="none"
       stroke="currentColor"
-      strokeWidth={2}
-      strokeLinecap="square"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
       className="w-6 h-6 text-[#ea580c]"
     >
-      <circle cx="12" cy="12" r="10" />
-      <polyline points="12 6 12 12 16 14" />
-      {/* small infinity at bottom */}
-      <path d="M8 18c0-1 1-2 2-2s2 1 2 0 1-2 2-2 2 1 2 2" strokeWidth={1.5} />
+      {/* Hourglass frame — outer structure */}
+      <line x1="12" y1="4" x2="36" y2="4" strokeWidth="2" />
+      <line x1="12" y1="44" x2="36" y2="44" strokeWidth="2" />
+      {/* Hourglass body — two triangles meeting at waist */}
+      <path d="M14 6 L24 22 L34 6" strokeWidth="1.5" />
+      <path d="M14 42 L24 26 L34 42" strokeWidth="1.5" />
+      {/* Narrow waist connectors */}
+      <line x1="14" y1="6" x2="14" y2="4" strokeWidth="1" />
+      <line x1="34" y1="6" x2="34" y2="4" strokeWidth="1" />
+      <line x1="14" y1="42" x2="14" y2="44" strokeWidth="1" />
+      <line x1="34" y1="42" x2="34" y2="44" strokeWidth="1" />
+      {/* Sand in top chamber — small area */}
+      <path d="M21 15 L24 20 L27 15 Z" fill="#ea580c" fillOpacity="0.3" stroke="none" />
+      {/* Sand stream at waist */}
+      <line x1="24" y1="22" x2="24" y2="26" stroke="#ea580c" strokeWidth="1" />
+      {/* Sand pile in bottom */}
+      <path d="M18 39 Q24 33 30 39" fill="#ea580c" fillOpacity="0.5" stroke="none" />
+      {/* Falling sand particles */}
+      <circle cx="24" cy="29" r="0.8" fill="#ea580c" />
+      <circle cx="23" cy="31" r="0.6" fill="#ea580c" fillOpacity="0.7" />
+      <circle cx="25" cy="32.5" r="0.7" fill="#ea580c" fillOpacity="0.5" />
     </svg>
   )
 }
