@@ -207,10 +207,10 @@ export function SubstrateSummarySection() {
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.7, ease }}
-          className="w-full lg:w-1/2 border-2 border-foreground bg-foreground text-background flex flex-col justify-between"
+          className="w-full lg:w-1/2 border-2 border-foreground bg-background text-foreground flex flex-col justify-between"
         >
           <div className="px-6 pt-8 pb-4">
-            <p className="text-[10px] font-mono tracking-[0.3em] uppercase opacity-50 mb-3">
+            <p className="text-[10px] font-mono tracking-[0.3em] uppercase text-muted-foreground mb-3">
               Open-Source Substrate
             </p>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tight leading-none mb-2">
@@ -218,7 +218,7 @@ export function SubstrateSummarySection() {
               <br />
               SYSTEMS
             </h2>
-            <p className="text-sm opacity-60 max-w-xs">
+            <p className="text-sm text-muted-foreground max-w-xs">
               The substrate your models run on
             </p>
           </div>
@@ -229,7 +229,7 @@ export function SubstrateSummarySection() {
           </div>
 
           {/* stats row */}
-          <div className="grid grid-cols-3 border-t border-background/20">
+          <div className="grid grid-cols-3 border-t border-foreground">
             {[
               { value: 147, suffix: "+", label: "MCP tools" },
               { value: 10, suffix: "", label: "file formats" },
@@ -237,12 +237,12 @@ export function SubstrateSummarySection() {
             ].map((stat, i) => (
               <div
                 key={stat.label}
-                className={`px-4 py-4 text-center ${i < 2 ? "border-r border-background/20" : ""}`}
+                className={`px-4 py-4 text-center ${i < 2 ? "border-r border-foreground" : ""}`}
               >
                 <span className="block text-xl font-bold font-mono tracking-tight">
                   <AnimatedNumber value={stat.value} suffix={stat.suffix} />
                 </span>
-                <span className="block text-[9px] font-mono tracking-[0.15em] uppercase opacity-50 mt-1">
+                <span className="block text-[9px] font-mono tracking-[0.15em] uppercase text-muted-foreground mt-1">
                   {stat.label}
                 </span>
               </div>
@@ -250,7 +250,7 @@ export function SubstrateSummarySection() {
           </div>
 
           {/* CTA */}
-          <div className="px-6 py-5 border-t border-background/20">
+          <div className="px-6 py-5 border-t border-foreground">
             <Link
               href="/projects"
               className="inline-flex items-center gap-2 text-xs font-mono tracking-[0.14em] uppercase hover:opacity-70 transition-opacity"

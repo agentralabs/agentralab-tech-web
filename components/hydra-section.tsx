@@ -230,13 +230,13 @@ export function HydraSection() {
           </div>
 
           {/* RIGHT — Text content (60%) */}
-          <div className="lg:w-[60%] bg-foreground text-background">
+          <div className="lg:w-[60%] bg-background text-foreground">
             {/* Header bar */}
-            <div className="flex items-center justify-between px-4 py-3 border-b border-background/20">
+            <div className="flex items-center justify-between px-4 py-3 border-b border-foreground">
               <span className="text-[10px] font-mono tracking-[0.2em] uppercase font-bold">
                 Hydra
               </span>
-              <span className="text-[10px] font-mono tracking-[0.2em] uppercase text-background/60">
+              <span className="text-[10px] font-mono tracking-[0.2em] uppercase text-muted-foreground">
                 Showcase
               </span>
             </div>
@@ -258,7 +258,7 @@ export function HydraSection() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: 0.3, ease }}
-                className="text-xs font-mono text-background/70 leading-relaxed max-w-3xl"
+                className="text-xs font-mono text-muted-foreground leading-relaxed max-w-3xl"
               >
                 68 Rust crates. Persistent memory via AgenticMemory. Self-writing genome.
                 Constitutional governance via AgenticContract. Planning via AgenticPlanning.
@@ -269,7 +269,7 @@ export function HydraSection() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: 0.4, ease }}
-                className="text-xs font-mono text-background/70 leading-relaxed max-w-3xl"
+                className="text-xs font-mono text-muted-foreground leading-relaxed max-w-3xl"
               >
                 When Hydra needs to reason about supply chain, it calls Solen. When it needs finance,
                 it calls Verac. The first customer of the entire stack.
@@ -286,7 +286,7 @@ export function HydraSection() {
                   href="https://github.com/agentralabs/hydra"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 border border-background/40 px-4 py-2 text-[10px] font-mono uppercase tracking-[0.14em] hover:bg-background hover:text-foreground transition-colors"
+                  className="inline-flex items-center gap-1.5 border border-foreground px-4 py-2 text-[10px] font-mono uppercase tracking-[0.14em] hover:bg-foreground hover:text-background transition-colors"
                 >
                   View on GitHub
                   <ArrowUpRight className="h-3 w-3" />

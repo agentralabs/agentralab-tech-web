@@ -142,19 +142,19 @@ export default function ProjectsPage() {
         {/* Hydra */}
         <section className="w-full px-6 pb-14 lg:px-12">
           <SectionRail label="// SECTION: SHOWCASE" step="013" />
-          <div className="border-2 border-foreground bg-foreground text-background">
-            <div className="px-5 py-3 border-b border-background/20 flex items-center justify-between">
+          <div className="border-2 border-foreground">
+            <div className="px-5 py-3 border-b-2 border-foreground flex items-center justify-between">
               <span className="text-[10px] tracking-[0.2em] uppercase font-mono">Hydra</span>
-              <span className="text-[10px] tracking-[0.2em] uppercase font-mono text-background/60">showcase</span>
+              <span className="text-[10px] tracking-[0.2em] uppercase font-mono text-muted-foreground">showcase</span>
             </div>
             <div className="p-5 space-y-3">
               <p className="text-sm font-mono font-bold uppercase">The living proof that the stack composes.</p>
-              <p className="text-xs font-mono text-background/70 leading-relaxed">
+              <p className="text-xs font-mono text-muted-foreground leading-relaxed">
                 68 Rust crates. Persistent memory via AgenticMemory. Self-writing genome. Constitutional governance via AgenticContract.
                 When Hydra needs to reason about supply chain, it calls Solen. When it needs finance, it calls Verac. The first customer of the entire stack.
               </p>
               <a href="https://github.com/agentralabs/hydra" target="_blank" rel="noreferrer"
-                className="inline-flex items-center gap-1 border border-background/40 px-3 py-1.5 text-[10px] font-mono uppercase tracking-[0.14em] hover:bg-background hover:text-foreground transition-colors">
+                className="inline-flex items-center gap-1 border border-foreground px-3 py-1.5 text-[10px] font-mono uppercase tracking-[0.14em] hover:bg-foreground hover:text-background transition-colors">
                 View on GitHub <ArrowUpRight size={12} />
               </a>
             </div>
