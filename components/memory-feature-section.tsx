@@ -1,134 +1,59 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { ArrowRight, Star, FileText, Layers } from "lucide-react"
+import { ArrowRight, Star, FileText } from "lucide-react"
 import { motion } from "framer-motion"
 import { SectionRail } from "@/components/section-rail"
-import { MemoryCapacity } from "@/components/memory-capacity"
 
 const ease = [0.22, 1, 0.36, 1] as const
 
-/* ── Cognitive graph SVG ─────────────────────────────────────────── */
-
-const nodes = [
-  { id: "decision", label: "DECISION", cx: 260, cy: 120, r: 36, fill: "#ea580c" },
-  { id: "fact1", label: "FACT", cx: 100, cy: 60, r: 22, fill: "currentColor" },
-  { id: "fact2", label: "FACT", cx: 120, cy: 210, r: 22, fill: "currentColor" },
-  { id: "fact3", label: "FACT", cx: 420, cy: 180, r: 22, fill: "currentColor" },
-  { id: "correction", label: "CORRECTION", cx: 440, cy: 60, r: 26, fill: "currentColor" },
-  { id: "inference", label: "INFERENCE", cx: 300, cy: 260, r: 22, fill: "currentColor" },
-] as const
-
-const edges = [
-  { from: "fact1", to: "decision", label: "CAUSED_BY" },
-  { from: "fact2", to: "decision", label: "CAUSED_BY" },
-  { from: "fact3", to: "decision", label: "CAUSED_BY" },
-  { from: "correction", to: "decision", label: "SUPERSEDES" },
-  { from: "decision", to: "inference", label: "INFERRED" },
-] as const
-
-function nodeById(id: string) {
-  return nodes.find((n) => n.id === id)!
-}
+/* ── Cognitive graph SVG — simplified, breathing ────────────────── */
 
 function CognitiveGraph() {
   return (
-    <motion.svg
-      viewBox="0 0 540 300"
-      fill="none"
-      className="w-full max-w-2xl mx-auto"
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: "-40px" }}
-    >
+    <svg viewBox="0 0 480 260" fill="none" className="w-full h-full">
       {/* Edges */}
-      {edges.map((edge, i) => {
-        const from = nodeById(edge.from)
-        const to = nodeById(edge.to)
-        const mx = (from.cx + to.cx) / 2
-        const my = (from.cy + to.cy) / 2
-        return (
-          <g key={`${edge.from}-${edge.to}`}>
-            <motion.line
-              x1={from.cx}
-              y1={from.cy}
-              x2={to.cx}
-              y2={to.cy}
-              stroke="currentColor"
-              strokeWidth={1.5}
-              strokeOpacity={0.35}
-              variants={{
-                hidden: { pathLength: 0, opacity: 0 },
-                visible: {
-                  pathLength: 1,
-                  opacity: 1,
-                  transition: { duration: 0.6, delay: 0.6 + i * 0.12, ease },
-                },
-              }}
-            />
-            <motion.text
-              x={mx}
-              y={my - 6}
-              textAnchor="middle"
-              className="fill-current font-mono"
-              fontSize={8}
-              opacity={0.45}
-              variants={{
-                hidden: { opacity: 0 },
-                visible: {
-                  opacity: 0.45,
-                  transition: { duration: 0.4, delay: 0.9 + i * 0.12, ease },
-                },
-              }}
-            >
-              {edge.label}
-            </motion.text>
-          </g>
-        )
-      })}
+      <line x1="100" y1="80" x2="240" y2="130" stroke="currentColor" strokeWidth="1.5" strokeOpacity="0.2" />
+      <line x1="140" y1="200" x2="240" y2="130" stroke="currentColor" strokeWidth="1.5" strokeOpacity="0.2" />
+      <line x1="380" y1="180" x2="240" y2="130" stroke="currentColor" strokeWidth="1.5" strokeOpacity="0.2" />
+      <line x1="380" y1="60" x2="240" y2="130" stroke="#ea580c" strokeWidth="1.5" strokeOpacity="0.4" strokeDasharray="6 4" />
+      <line x1="240" y1="130" x2="300" y2="230" stroke="currentColor" strokeWidth="1.5" strokeOpacity="0.15" />
 
-      {/* Nodes */}
-      {nodes.map((node, i) => (
-        <motion.g
-          key={node.id}
-          variants={{
-            hidden: { opacity: 0, scale: 0.5 },
-            visible: {
-              opacity: 1,
-              scale: 1,
-              transition: { duration: 0.5, delay: i * 0.1, ease },
-            },
-          }}
-          style={{ originX: `${node.cx}px`, originY: `${node.cy}px` }}
-        >
-          <circle
-            cx={node.cx}
-            cy={node.cy}
-            r={node.r}
-            fill={node.fill}
-            fillOpacity={node.id === "decision" ? 1 : 0.12}
-            stroke={node.fill}
-            strokeWidth={2}
-            strokeOpacity={node.id === "decision" ? 1 : 0.5}
-          />
-          <text
-            x={node.cx}
-            y={node.cy + 3}
-            textAnchor="middle"
-            className="font-mono"
-            fontSize={node.id === "decision" ? 10 : 8}
-            fill={node.id === "decision" ? "#fff" : "currentColor"}
-            fontWeight={node.id === "decision" ? 700 : 500}
-          >
-            {node.label}
-          </text>
-        </motion.g>
-      ))}
-    </motion.svg>
+      {/* Edge labels */}
+      <text x="160" y="95" textAnchor="middle" className="font-mono" fontSize="7" fill="currentColor" opacity="0.3">CAUSED_BY</text>
+      <text x="178" y="172" textAnchor="middle" className="font-mono" fontSize="7" fill="currentColor" opacity="0.3">CAUSED_BY</text>
+      <text x="320" y="145" textAnchor="middle" className="font-mono" fontSize="7" fill="currentColor" opacity="0.3">CAUSED_BY</text>
+      <text x="320" y="85" textAnchor="middle" className="font-mono" fontSize="7" fill="#ea580c" opacity="0.5">SUPERSEDES</text>
+
+      {/* Fact nodes */}
+      <circle cx="100" cy="80" r="18" fill="currentColor" fillOpacity="0.08" stroke="currentColor" strokeWidth="1.5" strokeOpacity="0.3" />
+      <text x="100" y="83" textAnchor="middle" className="font-mono" fontSize="7" fill="currentColor" opacity="0.5">FACT</text>
+
+      <circle cx="140" cy="200" r="18" fill="currentColor" fillOpacity="0.08" stroke="currentColor" strokeWidth="1.5" strokeOpacity="0.3" />
+      <text x="140" y="203" textAnchor="middle" className="font-mono" fontSize="7" fill="currentColor" opacity="0.5">FACT</text>
+
+      <circle cx="380" cy="180" r="18" fill="currentColor" fillOpacity="0.08" stroke="currentColor" strokeWidth="1.5" strokeOpacity="0.3" />
+      <text x="380" y="183" textAnchor="middle" className="font-mono" fontSize="7" fill="currentColor" opacity="0.5">FACT</text>
+
+      {/* Correction node */}
+      <circle cx="380" cy="60" r="20" fill="currentColor" fillOpacity="0.06" stroke="#ea580c" strokeWidth="1.5" strokeOpacity="0.4" strokeDasharray="4 3" />
+      <text x="380" y="57" textAnchor="middle" className="font-mono" fontSize="6.5" fill="#ea580c" opacity="0.6">CORRECT</text>
+      <text x="380" y="67" textAnchor="middle" className="font-mono" fontSize="6.5" fill="#ea580c" opacity="0.6">-ION</text>
+
+      {/* Central DECISION node — the hero */}
+      <circle cx="240" cy="130" r="32" fill="#ea580c" fillOpacity="0.15" stroke="#ea580c" strokeWidth="2" />
+      <circle cx="240" cy="130" r="26" fill="#ea580c" />
+      <text x="240" y="127" textAnchor="middle" className="font-mono" fontSize="8" fill="white" fontWeight="700">DECI</text>
+      <text x="240" y="137" textAnchor="middle" className="font-mono" fontSize="8" fill="white" fontWeight="700">SION</text>
+
+      {/* Inference node */}
+      <circle cx="300" cy="230" r="16" fill="currentColor" fillOpacity="0.06" stroke="currentColor" strokeWidth="1.5" strokeOpacity="0.25" />
+      <text x="300" y="233" textAnchor="middle" className="font-mono" fontSize="6.5" fill="currentColor" opacity="0.4">INFER</text>
+    </svg>
   )
 }
 
-/* ── Animated count-up ───────────────────────────────────────────── */
+/* ── Animated count-up ─────────────────────────────────────────── */
 
 function CountUp({ target, suffix = "" }: { target: number; suffix?: string }) {
   const [count, setCount] = useState(0)
@@ -141,7 +66,7 @@ function CountUp({ target, suffix = "" }: { target: number; suffix?: string }) {
     const start = performance.now()
     function tick(now: number) {
       const t = Math.min((now - start) / duration, 1)
-      setCount(Math.round(t * target))
+      setCount(Math.round(t * t * target))
       if (t < 1) frame = requestAnimationFrame(tick)
     }
     frame = requestAnimationFrame(tick)
@@ -149,183 +74,199 @@ function CountUp({ target, suffix = "" }: { target: number; suffix?: string }) {
   }, [started, target])
 
   return (
-    <motion.span
-      onViewportEnter={() => setStarted(true)}
-      viewport={{ once: true }}
-    >
-      {count}
-      {suffix}
+    <motion.span onViewportEnter={() => setStarted(true)} viewport={{ once: true }}>
+      {count}{suffix}
     </motion.span>
   )
 }
 
-/* ── Integration steps ───────────────────────────────────────────── */
-
-const steps = [
-  { num: 1, text: "Solen recommends changing suppliers" },
-  { num: 2, text: "Memory stores 3 facts, 2 decisions, 1 inference" },
-  { num: 3, text: '6 months later: chain is traversable — "why did we switch?"' },
-] as const
-
-/* ── Main component ──────────────────────────────────────────────── */
+/* ── Main component ────────────────────────────────────────────── */
 
 export function MemoryFeatureSection() {
+  const [expanded, setExpanded] = useState(false)
+
   return (
-    <section id="memory" className="w-full px-6 py-16 lg:px-12 lg:py-24">
+    <section id="memory" className="w-full px-6 py-20 lg:px-12 lg:py-28">
       <SectionRail label="// SECTION: SUBSTRATE_FLAGSHIP" step="004" />
 
-      {/* Title block with LIVE indicator */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-60px" }}
-        transition={{ duration: 0.6, ease }}
-        className="mb-10"
-      >
-        <div className="flex items-center gap-3 mb-3">
-          <h2 className="font-pixel text-2xl sm:text-3xl lg:text-4xl tracking-tight text-foreground select-none">
-            THE SUBSTRATE STARTS WITH MEMORY
-          </h2>
-          <span className="flex items-center gap-1.5 shrink-0">
-            <motion.span
-              className="block w-2 h-2 rounded-full bg-[#ea580c]"
-              animate={{ opacity: [1, 0.3, 1] }}
-              transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
-            />
-            <span className="text-[10px] font-mono font-bold tracking-[0.18em] text-[#ea580c] uppercase">
-              LIVE
+      {/* ── Hero split: Graph left + Copy right ── */}
+      <div className="flex flex-col lg:flex-row gap-0 border-2 border-foreground">
+        {/* LEFT: Cognitive Graph */}
+        <motion.div
+          initial={{ opacity: 0, x: -30 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.7, ease }}
+          className="w-full lg:w-1/2 border-b-2 lg:border-b-0 lg:border-r-2 border-foreground bg-foreground/[0.03] p-6 lg:p-8 flex flex-col"
+        >
+          <div className="flex items-center justify-between mb-4">
+            <span className="text-[10px] font-mono tracking-[0.2em] uppercase text-muted-foreground">
+              cognitive.graph
             </span>
-          </span>
-        </div>
-        <p className="text-xs lg:text-sm font-mono text-muted-foreground max-w-2xl leading-relaxed">
-          Every model decision gets remembered. Every reasoning chain is traversable.
-        </p>
-      </motion.div>
+            <span className="flex items-center gap-1.5">
+              <motion.span
+                className="block w-1.5 h-1.5 bg-[#ea580c]"
+                animate={{ opacity: [1, 0.3, 1] }}
+                transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
+              />
+              <span className="text-[9px] font-mono tracking-[0.2em] text-[#ea580c] uppercase">live</span>
+            </span>
+          </div>
+          <div className="flex-1 flex items-center justify-center min-h-[200px]">
+            <CognitiveGraph />
+          </div>
+          <p className="mt-4 text-[10px] font-mono text-muted-foreground/60 leading-relaxed">
+            Every decision traces back to the facts that caused it. Corrections link to what they replaced. Truth has a history.
+          </p>
+        </motion.div>
 
-      {/* Cognitive Graph SVG */}
-      <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-40px" }}
-        transition={{ duration: 0.6, ease }}
-        className="mb-10 border-2 border-foreground p-6"
-      >
-        <span className="block text-[10px] font-mono tracking-[0.2em] uppercase text-muted-foreground mb-4">
-          Cognitive Graph — Causal Memory
-        </span>
-        <CognitiveGraph />
-      </motion.div>
+        {/* RIGHT: Copy + Stats */}
+        <motion.div
+          initial={{ opacity: 0, x: 30 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.7, delay: 0.1, ease }}
+          className="w-full lg:w-1/2 p-6 lg:p-8 flex flex-col justify-between"
+        >
+          <div>
+            <h2 className="font-pixel text-2xl sm:text-3xl lg:text-4xl tracking-tight text-foreground select-none">
+              MEMORY
+            </h2>
+            <p className="mt-4 text-xs lg:text-sm font-mono text-muted-foreground leading-relaxed">
+              Most AI memory is retrieval over flattened text. AgenticMemory is graph cognition — nodes for what the agent learned, edges for why things connect, traversal for reasoning history.
+            </p>
+            <p className="mt-3 text-xs font-mono text-muted-foreground leading-relaxed">
+              16 query types. 6 event types. One portable .amem file per agent brain. No cloud database. No vector service. Memory-mappable, offline-capable, and designed for 20 years.
+            </p>
+          </div>
 
-      {/* Memory Capacity component (compact mode) */}
-      <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-40px" }}
-        transition={{ duration: 0.6, delay: 0.1, ease }}
-        className="mb-4"
-      >
-        <MemoryCapacity compact={true} />
-      </motion.div>
+          {/* Stats */}
+          <div className="mt-8 grid grid-cols-3 gap-0 border-2 border-foreground">
+            <div className="px-3 py-3 border-r border-foreground">
+              <p className="text-[10px] font-mono tracking-[0.15em] uppercase text-muted-foreground">MCP Tools</p>
+              <p className="text-2xl font-mono font-bold mt-1"><CountUp target={147} /></p>
+            </div>
+            <div className="px-3 py-3 border-r border-foreground">
+              <p className="text-[10px] font-mono tracking-[0.15em] uppercase text-muted-foreground">Query Types</p>
+              <p className="text-2xl font-mono font-bold mt-1"><CountUp target={16} /></p>
+            </div>
+            <div className="px-3 py-3">
+              <p className="text-[10px] font-mono tracking-[0.15em] uppercase text-muted-foreground">Format</p>
+              <p className="text-2xl font-mono font-bold text-[#ea580c] mt-1">.amem</p>
+            </div>
+          </div>
 
-      {/* Animated stats */}
-      <motion.div
-        initial={{ opacity: 0, y: 12 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-40px" }}
-        transition={{ duration: 0.5, delay: 0.15, ease }}
-        className="flex flex-wrap items-center gap-6 mb-10 border-2 border-foreground px-5 py-4"
-      >
-        {[
-          { target: 147, suffix: " MCP tools", label: "147 MCP tools" },
-          { target: 16, suffix: " query types", label: "16 query types" },
-        ].map((stat, i) => (
-          <span
-            key={stat.label}
-            className="text-sm font-mono font-semibold tracking-tight text-foreground"
-          >
-            <CountUp target={stat.target} suffix={stat.suffix} />
-          </span>
-        ))}
-        <span className="text-sm font-mono font-semibold tracking-tight text-[#ea580c]">
-          .amem format
-        </span>
-      </motion.div>
-
-      {/* Integration callout — step-by-step flow */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-60px" }}
-        transition={{ duration: 0.6, delay: 0.2, ease }}
-        className="border-2 border-foreground p-6 mb-10"
-      >
-        <p className="text-sm font-mono font-bold uppercase tracking-tight mb-5">
-          How Memory Serves the Models
-        </p>
-        <div className="space-y-3">
-          {steps.map((step, i) => (
-            <motion.div
-              key={step.num}
-              initial={{ opacity: 0, x: -24 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-40px" }}
-              transition={{ duration: 0.5, delay: 0.3 + i * 0.15, ease }}
-              className="border-l-2 border-[#ea580c] pl-4 py-2"
+          {/* CTAs */}
+          <div className="mt-6 flex flex-wrap items-center gap-3">
+            <a
+              href="https://github.com/agentralabs/agentic-memory"
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center gap-0 bg-foreground text-background text-[10px] font-mono tracking-wider uppercase"
             >
-              <div className="flex items-start gap-3">
-                <span className="text-[10px] font-mono font-bold text-[#ea580c] tracking-widest shrink-0 mt-0.5">
-                  STEP {step.num}
-                </span>
-                <span className="text-xs font-mono text-muted-foreground leading-relaxed">
-                  {step.text}
-                </span>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-        <p className="mt-4 text-[10px] font-mono text-muted-foreground/60 leading-relaxed">
-          Nothing was forgotten. Nothing was hallucinated.
-        </p>
+              <span className="flex items-center justify-center w-8 h-8 bg-[#ea580c]">
+                <Star size={12} className="text-background" />
+              </span>
+              <span className="px-4 py-2">Star on GitHub</span>
+            </a>
+            <a
+              href="/publications"
+              className="flex items-center gap-1 text-[10px] font-mono tracking-widest uppercase text-muted-foreground hover:text-foreground"
+            >
+              <FileText size={12} />
+              Read the Papers
+            </a>
+          </div>
+        </motion.div>
+      </div>
+
+      {/* ── Expandable deep dive ── */}
+      <motion.div
+        initial={{ opacity: 0, y: 16 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-40px" }}
+        transition={{ duration: 0.5, delay: 0.2, ease }}
+        className="mt-4"
+      >
+        <button
+          onClick={() => setExpanded(!expanded)}
+          className="w-full border-2 border-foreground p-4 flex items-center justify-between hover:bg-foreground/[0.03] transition-colors"
+        >
+          <div className="flex items-center gap-3">
+            <span className="text-[10px] font-mono tracking-[0.2em] uppercase text-muted-foreground">
+              Deep Dive: Query Engine, Event Types, Memory Pipeline
+            </span>
+          </div>
+          <motion.span
+            animate={{ rotate: expanded ? 180 : 0 }}
+            transition={{ duration: 0.2 }}
+            className="text-muted-foreground"
+          >
+            <ArrowRight size={14} className="rotate-90" />
+          </motion.span>
+        </button>
+
+        {expanded && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            transition={{ duration: 0.3, ease }}
+            className="border-2 border-t-0 border-foreground p-6 overflow-hidden"
+          >
+            <div className="max-w-4xl">
+              {/* Import the full MemoryCapacity content here */}
+              <MemoryCapacityInline />
+            </div>
+          </motion.div>
+        )}
       </motion.div>
 
-      {/* CTA row */}
+      {/* ── Integration flow ── */}
       <motion.div
-        initial={{ opacity: 0, y: 12 }}
+        initial={{ opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-40px" }}
         transition={{ duration: 0.5, delay: 0.3, ease }}
-        className="flex flex-col sm:flex-row items-start sm:items-center gap-3"
+        className="mt-8 border-2 border-foreground p-6"
       >
-        <a
-          href="https://github.com/agentralabs/agentic-memory"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="group flex items-center gap-0 bg-foreground text-background text-sm font-mono tracking-wider uppercase"
-        >
-          <span className="flex items-center justify-center w-10 h-10 bg-[#ea580c]">
-            <Star size={16} strokeWidth={2} className="text-background" />
-          </span>
-          <span className="px-5 py-2.5">Star on GitHub</span>
-        </a>
-
-        <a
-          href="/docs/memory"
-          className="group flex items-center gap-0 border border-foreground bg-background text-foreground text-sm font-mono tracking-wider uppercase"
-        >
-          <span className="flex items-center justify-center w-10 h-10 border-r border-foreground">
-            <FileText size={16} strokeWidth={2} />
-          </span>
-          <span className="px-5 py-2.5">Read the Papers</span>
-        </a>
-
-        <a
-          href="/scenarios"
-          className="group flex items-center gap-2 text-xs font-mono tracking-widest uppercase text-muted-foreground hover:text-foreground transition-colors px-4 py-2.5"
-        >
-          <Layers size={14} strokeWidth={2} />
-          <span>See All Scenarios</span>
-        </a>
+        <span className="text-[10px] font-mono tracking-[0.2em] uppercase text-muted-foreground">
+          How Memory Serves the Models
+        </span>
+        <div className="mt-5 flex flex-col lg:flex-row gap-4">
+          {[
+            { step: "01", text: "Solen recommends changing suppliers" },
+            { step: "02", text: "Memory stores the reasoning chain — 3 facts, 2 decisions, 1 inference" },
+            { step: "03", text: "6 months later: \"why did we switch?\" — the chain is intact" },
+          ].map((s, i) => (
+            <motion.div
+              key={s.step}
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 + i * 0.15, duration: 0.5, ease }}
+              className="flex-1 border-l-2 border-[#ea580c] pl-4"
+            >
+              <span className="text-[10px] font-mono tracking-[0.2em] text-[#ea580c] font-bold">
+                STEP {s.step}
+              </span>
+              <p className="mt-1 text-xs font-mono text-muted-foreground leading-relaxed">
+                {s.text}
+              </p>
+            </motion.div>
+          ))}
+        </div>
+        <p className="mt-4 text-[10px] font-mono text-muted-foreground/60 italic">
+          Nothing was forgotten. Nothing was hallucinated.
+        </p>
       </motion.div>
     </section>
   )
+}
+
+/* ── Inline Memory Capacity (for expandable section) ─────────── */
+
+import { MemoryCapacity } from "@/components/memory-capacity"
+
+function MemoryCapacityInline() {
+  return <MemoryCapacity compact={false} />
 }
