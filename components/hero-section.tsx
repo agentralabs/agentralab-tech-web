@@ -1,7 +1,8 @@
 "use client"
 
-import { ArrowRight } from "lucide-react"
-import { motion } from "framer-motion"
+import { useState } from "react"
+import { ArrowRight, Copy, Check } from "lucide-react"
+import { motion, AnimatePresence } from "framer-motion"
 
 const ease = [0.22, 1, 0.36, 1] as const
 
@@ -61,6 +62,129 @@ const charContainer = {
 const charVariant = {
   hidden: { opacity: 0, y: 6 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.3, ease } },
+}
+
+/* ------------------------------------------------------------------ */
+/*  Tabbed terminal with copy buttons                                 */
+/* ------------------------------------------------------------------ */
+
+interface CmdEntry { command: string; note: string }
+
+const TERMINAL_TABS: { label: string; commands: CmdEntry[] }[] = [
+  {
+    label: "SOLEN",
+    commands: [
+      { command: "ollama run agentralabs/solen-e4b", note: "Run Solen locally — supply chain reasoning." },
+      { command: "pip install solen-sdk", note: "Python SDK for Solen inference." },
+    ],
+  },
+  {
+    label: "VERAC",
+    commands: [
+      { command: "ollama run agentralabs/verac-e4b", note: "Run Verac locally — financial reasoning." },
+      { command: "pip install verac-sdk", note: "Python SDK for Verac inference." },
+    ],
+  },
+  {
+    label: "AXIOM",
+    commands: [
+      { command: "ollama run agentralabs/axiom-e4b", note: "Run Axiom locally — markets reasoning." },
+    ],
+  },
+  {
+    label: "MEMORY",
+    commands: [
+      { command: "curl -fsSL https://agentralabs.tech/install/memory | bash", note: "Install AgenticMemory — auto-detects MCP clients." },
+      { command: "cargo install agentic-memory-cli agentic-memory-mcp", note: "Install from crates.io." },
+      { command: "pip install agentic-brain", note: "Python bindings for graph memory." },
+    ],
+  },
+]
+
+function CopyButton({ text }: { text: string }) {
+  const [copied, setCopied] = useState(false)
+  const handleCopy = () => {
+    navigator.clipboard.writeText(text)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 1500)
+  }
+  return (
+    <button onClick={handleCopy} className="shrink-0 px-2 py-1 text-background/40 hover:text-background transition-colors" aria-label="Copy">
+      {copied ? <Check size={12} className="text-[#ea580c]" /> : <Copy size={12} />}
+    </button>
+  )
+}
+
+function HeroTerminal() {
+  const [active, setActive] = useState(0)
+  const tab = TERMINAL_TABS[active]
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, delay: 0.8, ease }}
+      className="w-full max-w-3xl mt-10"
+    >
+      {/* Tab buttons */}
+      <div className="flex flex-wrap items-center gap-0 border-2 border-foreground border-b-0">
+        <span className="px-4 py-2.5 text-[10px] font-mono tracking-[0.15em] uppercase text-muted-foreground border-r border-foreground">
+          quickstart.terminal
+        </span>
+        {TERMINAL_TABS.map((t, i) => (
+          <button
+            key={t.label}
+            onClick={() => setActive(i)}
+            className={`px-4 py-2.5 text-[10px] font-mono tracking-[0.12em] uppercase transition-colors border-r border-foreground last:border-r-0 ${
+              i === active
+                ? "bg-foreground text-background font-bold"
+                : "text-foreground hover:bg-foreground/5"
+            }`}
+          >
+            {t.label}
+          </button>
+        ))}
+      </div>
+
+      {/* Terminal body */}
+      <div className="border-2 border-foreground bg-foreground text-background">
+        {/* Traffic lights */}
+        <div className="flex items-center gap-1.5 px-4 py-2 border-b border-background/10">
+          <span className="w-2 h-2 rounded-full bg-[#ea580c]" />
+          <span className="w-2 h-2 rounded-full bg-background/15" />
+          <span className="w-2 h-2 rounded-full bg-background/15" />
+          <span className="flex-1 text-right text-[9px] font-mono tracking-widest text-background/30 uppercase">
+            {tab.label.toLowerCase()}.global
+          </span>
+        </div>
+
+        {/* Commands */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={active}
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.2 }}
+            className="p-4 space-y-3"
+          >
+            {tab.commands.map((cmd) => (
+              <div key={cmd.command} className="flex items-start justify-between gap-3">
+                <div className="min-w-0">
+                  <p className="text-xs font-mono">
+                    <span className="text-background/40 mr-2">{">"}</span>
+                    <span className="text-background/90">{cmd.command}</span>
+                  </p>
+                  <p className="text-[10px] font-mono text-background/35 mt-0.5 italic">{cmd.note}</p>
+                </div>
+                <CopyButton text={cmd.command} />
+              </div>
+            ))}
+          </motion.div>
+        </AnimatePresence>
+      </div>
+    </motion.div>
+  )
 }
 
 /* ------------------------------------------------------------------ */
@@ -195,45 +319,8 @@ export function HeroSection() {
           </motion.a>
         </div>
 
-        {/* Compact terminal pane — models + memory commands */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.8, ease }}
-          className="w-full max-w-3xl mt-10 border-2 border-foreground"
-        >
-          {/* Terminal header */}
-          <div className="flex items-center justify-between px-4 py-2 border-b border-foreground bg-foreground/[0.03]">
-            <div className="flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#ea580c]" />
-              <span className="w-2.5 h-2.5 rounded-full bg-foreground/20" />
-              <span className="w-2.5 h-2.5 rounded-full bg-foreground/20" />
-            </div>
-            <span className="text-[9px] font-mono tracking-[0.2em] uppercase text-muted-foreground">
-              quickstart.terminal
-            </span>
-          </div>
-
-          {/* Terminal body */}
-          <div className="bg-foreground text-background p-4 font-mono text-xs leading-relaxed space-y-3 max-h-[200px] overflow-y-auto">
-            <div>
-              <span className="text-[#ea580c]">{"# Install AgenticMemory"}</span>
-              <p className="text-background/70 mt-1">{">"} curl -fsSL https://agentralabs.tech/install/memory | bash</p>
-            </div>
-            <div>
-              <span className="text-[#ea580c]">{"# Run Solen (supply chain reasoning)"}</span>
-              <p className="text-background/70 mt-1">{">"} ollama run agentralabs/solen-e4b</p>
-            </div>
-            <div>
-              <span className="text-[#ea580c]">{"# Run Verac (financial reasoning)"}</span>
-              <p className="text-background/70 mt-1">{">"} ollama run agentralabs/verac-e4b</p>
-            </div>
-            <div>
-              <span className="text-[#ea580c]">{"# Check memory status"}</span>
-              <p className="text-background/70 mt-1">{">"} agentra status --session and agentra doctor</p>
-            </div>
-          </div>
-        </motion.div>
+        {/* Tabbed terminal pane — buttons for each project */}
+        <HeroTerminal />
       </div>
     </section>
   )
