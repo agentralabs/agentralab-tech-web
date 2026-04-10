@@ -147,7 +147,7 @@ export function HeroSection() {
           ))}
         </motion.p>
 
-        {/* CTAs */}
+        {/* CTAs — all three in the same frame style */}
         <div className="flex flex-col sm:flex-row items-center gap-3">
           <motion.a
             href="#models"
@@ -184,11 +184,56 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.65, ease }}
-            className="text-xs font-mono tracking-widest uppercase text-muted-foreground hover:text-foreground transition-colors px-4 py-2.5"
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
+            className="group flex items-center gap-0 border border-foreground bg-background text-foreground text-sm font-mono tracking-wider uppercase"
           >
-            Collaborate
+            <span className="flex items-center justify-center w-10 h-10 border-r border-foreground">
+              <ArrowRight size={16} strokeWidth={2} />
+            </span>
+            <span className="px-5 py-2.5">Collaborate</span>
           </motion.a>
         </div>
+
+        {/* Compact terminal pane — models + memory commands */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.8, ease }}
+          className="w-full max-w-3xl mt-10 border-2 border-foreground"
+        >
+          {/* Terminal header */}
+          <div className="flex items-center justify-between px-4 py-2 border-b border-foreground bg-foreground/[0.03]">
+            <div className="flex items-center gap-2">
+              <span className="w-2.5 h-2.5 rounded-full bg-[#ea580c]" />
+              <span className="w-2.5 h-2.5 rounded-full bg-foreground/20" />
+              <span className="w-2.5 h-2.5 rounded-full bg-foreground/20" />
+            </div>
+            <span className="text-[9px] font-mono tracking-[0.2em] uppercase text-muted-foreground">
+              quickstart.terminal
+            </span>
+          </div>
+
+          {/* Terminal body */}
+          <div className="bg-foreground text-background p-4 font-mono text-xs leading-relaxed space-y-3 max-h-[200px] overflow-y-auto">
+            <div>
+              <span className="text-[#ea580c]">{"# Install AgenticMemory"}</span>
+              <p className="text-background/70 mt-1">{">"} curl -fsSL https://agentralabs.tech/install/memory | bash</p>
+            </div>
+            <div>
+              <span className="text-[#ea580c]">{"# Run Solen (supply chain reasoning)"}</span>
+              <p className="text-background/70 mt-1">{">"} ollama run agentralabs/solen-e4b</p>
+            </div>
+            <div>
+              <span className="text-[#ea580c]">{"# Run Verac (financial reasoning)"}</span>
+              <p className="text-background/70 mt-1">{">"} ollama run agentralabs/verac-e4b</p>
+            </div>
+            <div>
+              <span className="text-[#ea580c]">{"# Check memory status"}</span>
+              <p className="text-background/70 mt-1">{">"} agentra status --session and agentra doctor</p>
+            </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   )

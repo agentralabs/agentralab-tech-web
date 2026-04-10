@@ -10,7 +10,6 @@ const ease = [0.22, 1, 0.36, 1] as const
 
 const NAV_LINKS = [
   { label: "MODELS", href: "/projects#models" },
-  { label: "MEMORY", href: "/projects#memory" },
   { label: "STACK", href: "/projects" },
 ]
 
