@@ -105,7 +105,7 @@ export function Footer() {
 
             {/* Settlement + Showcase */}
             <div className="flex flex-col gap-2">
-              <span className="text-[10px] font-mono tracking-[0.2em] uppercase text-muted-foreground font-bold">Settlement</span>
+              <span className="text-[10px] font-mono tracking-[0.2em] uppercase text-muted-foreground font-bold">Verification</span>
               {SETTLEMENT.map((link) => (
                 <FooterLink key={link.label} {...link} />
               ))}

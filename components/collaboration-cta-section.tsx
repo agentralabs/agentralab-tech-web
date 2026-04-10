@@ -12,7 +12,7 @@ export function CollaborationCtaSection() {
         <p className="mt-3 text-sm font-mono text-muted-foreground leading-relaxed max-w-4xl">
           We collaborate with research labs, enterprise engineering teams, and infrastructure sponsors.
           Our stack combines domain-specialist models for reasoning, open-source substrate for memory
-          and governance, and deterministic settlement for value.
+          and governance, and deterministic verification for every decision.
         </p>
         <div className="mt-5 flex flex-col sm:flex-row gap-3">
           <Link

@@ -16,7 +16,7 @@ import { siteConfig } from "@/lib/site"
 export const metadata: Metadata = {
   title: "Home",
   description:
-    "Agentra Labs trains domain-specific AI models (Solen, Verac, Axiom) and publishes the open-source infrastructure they run on. Persistent memory. Cryptographic identity. Auditable settlement.",
+    "Agentra Labs trains domain-specific AI models (Solen, Verac, Axiom) and publishes the open-source infrastructure they run on. Persistent memory. Cryptographic identity. Every decision verifiable.",
   alternates: {
     canonical: "/",
   },

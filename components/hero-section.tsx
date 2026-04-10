@@ -5,10 +5,75 @@ import { motion } from "framer-motion"
 
 const ease = [0.22, 1, 0.36, 1] as const
 
+/* ------------------------------------------------------------------ */
+/*  Floating mesh — 10 small dots that drift slowly behind the hero   */
+/* ------------------------------------------------------------------ */
+const meshDots = Array.from({ length: 10 }, (_, i) => ({
+  id: i,
+  size: 2 + (i % 3),                         // 2-4 px
+  left: `${8 + i * 9}%`,                     // spread across width
+  top: `${10 + ((i * 17) % 70)}%`,           // pseudo-random vertical
+  opacity: 0.15 + (i % 3) * 0.07,            // 0.15 - 0.29
+  duration: 5 + (i % 4) * 1.5,               // 5 - 9.5 s
+  delay: i * 0.4,
+  drift: 14 + (i % 5) * 4,                   // y-travel 14-30 px
+}))
+
+function FloatingMesh() {
+  return (
+    <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+      {meshDots.map((d) => (
+        <motion.span
+          key={d.id}
+          className="absolute rounded-full bg-current"
+          style={{
+            width: d.size,
+            height: d.size,
+            left: d.left,
+            top: d.top,
+            opacity: d.opacity,
+          }}
+          animate={{ y: [0, -d.drift, 0] }}
+          transition={{
+            duration: d.duration,
+            delay: d.delay,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+      ))}
+    </div>
+  )
+}
+
+/* ------------------------------------------------------------------ */
+/*  Staggered character reveal for "SOLEN . VERAC . AXIOM"           */
+/* ------------------------------------------------------------------ */
+const modelText = "SOLEN \u00B7 VERAC \u00B7 AXIOM"
+
+const charContainer = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.035, delayChildren: 0.48 },
+  },
+}
+
+const charVariant = {
+  hidden: { opacity: 0, y: 6 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.3, ease } },
+}
+
+/* ------------------------------------------------------------------ */
+/*  Hero                                                              */
+/* ------------------------------------------------------------------ */
 export function HeroSection() {
   return (
-    <section className="relative w-full px-6 pt-6 pb-16 lg:px-12 lg:pt-10 lg:pb-24">
-      <div className="flex flex-col items-center text-center">
+    <section className="relative w-full px-6 pt-6 pb-16 lg:px-12 lg:pt-10 lg:pb-24 overflow-hidden">
+      {/* background mesh */}
+      <FloatingMesh />
+
+      <div className="relative z-10 flex flex-col items-center text-center">
+        {/* headline 1 */}
         <motion.h1
           initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
@@ -18,6 +83,16 @@ export function HeroSection() {
           DOMAIN AI THAT REASONS.
         </motion.h1>
 
+        {/* pulsing orange dot between headlines */}
+        <motion.span
+          initial={{ opacity: 0, scale: 0 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.4, delay: 0.12, ease }}
+          className="h-2 w-2 rounded-full bg-[#ea580c] animate-blink my-1"
+          aria-hidden
+        />
+
+        {/* headline 2 */}
         <motion.h1
           initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
@@ -28,6 +103,7 @@ export function HeroSection() {
           INFRASTRUCTURE THAT REMEMBERS.
         </motion.h1>
 
+        {/* hook */}
         <motion.p
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
@@ -37,24 +113,41 @@ export function HeroSection() {
           Your AI guesses. Ours reasons like a 30-year domain expert — and remembers every decision it ever made.
         </motion.p>
 
+        {/* subtitle */}
         <motion.p
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.42, ease }}
           className="text-xs lg:text-sm text-muted-foreground max-w-2xl mb-3 leading-relaxed font-mono"
         >
-          Three domain-specialist models. Open-source substrate. Auditable settlement.
+          Three domain-specialist models. Open-source infrastructure. Every decision verifiable.
         </motion.p>
 
+        {/* animated line under subtitle */}
+        <motion.div
+          initial={{ scaleX: 0 }}
+          animate={{ scaleX: 1 }}
+          transition={{ duration: 0.8, delay: 0.6, ease }}
+          className="h-px w-full max-w-2xl bg-foreground/20 origin-left mb-4"
+          aria-hidden
+        />
+
+        {/* staggered model names */}
         <motion.p
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.48, ease }}
-          className="text-sm lg:text-base text-[#ea580c] font-mono tracking-[0.3em] font-bold mb-8"
+          variants={charContainer}
+          initial="hidden"
+          animate="visible"
+          className="text-sm lg:text-base text-[#ea580c] font-mono tracking-[0.3em] font-bold mb-8 select-none"
+          aria-label={modelText}
         >
-          SOLEN &middot; VERAC &middot; AXIOM
+          {modelText.split("").map((ch, i) => (
+            <motion.span key={i} variants={charVariant} className="inline-block">
+              {ch === " " ? "\u00A0" : ch}
+            </motion.span>
+          ))}
         </motion.p>
 
+        {/* CTAs */}
         <div className="flex flex-col sm:flex-row items-center gap-3">
           <motion.a
             href="#models"

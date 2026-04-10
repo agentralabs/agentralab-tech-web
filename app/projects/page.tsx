@@ -40,7 +40,7 @@ export default function ProjectsPage() {
           <SectionRail label="// SECTION: REASONING_LAYER" step="010" />
           <div className="mb-4">
             <h2 className="text-xl lg:text-2xl font-mono font-bold uppercase tracking-tight">Reasoning Layer</h2>
-            <p className="mt-2 text-xs font-mono text-muted-foreground">Domain-specialist Gemma 4 fine-tunes. Apache 2.0.</p>
+            <p className="mt-2 text-xs font-mono text-muted-foreground">Domain-specialist open-weight fine-tunes. Apache 2.0.</p>
           </div>
           <ModelDetail />
         </section>

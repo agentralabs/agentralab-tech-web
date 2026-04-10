@@ -16,7 +16,7 @@ export const MODELS: Model[] = [
     name: "Solen",
     domain: "Supply Chain Management",
     powers: "Nexus Planner",
-    base: "Gemma 4",
+    base: "Open-weight foundation",
     license: "Apache 2.0",
     hfUrl: "https://huggingface.co/agentralabs/solen-e4b",
     description:
@@ -29,7 +29,7 @@ export const MODELS: Model[] = [
     name: "Verac",
     domain: "Finance / Settlement Operations",
     powers: "ZexRail",
-    base: "Gemma 4",
+    base: "Open-weight foundation",
     license: "Apache 2.0",
     hfUrl: "https://huggingface.co/agentralabs/verac-e4b",
     description:
@@ -42,7 +42,7 @@ export const MODELS: Model[] = [
     name: "Axiom",
     domain: "Financial Markets / Trading",
     powers: "Standalone",
-    base: "Gemma 4",
+    base: "Open-weight foundation",
     license: "Apache 2.0",
     hfUrl: "https://huggingface.co/agentralabs/axiom-e4b",
     description:

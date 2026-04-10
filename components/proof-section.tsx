@@ -12,26 +12,106 @@ const benchmarks = [
 ]
 
 const substrateStats = [
-  { label: "Memory: causal traversal", value: "< 1 ms", pct: 1 },
-  { label: "Memory: semantic search (100K nodes)", value: "< 10 ms", pct: 10 },
-  { label: "Codebase: symbol lookup", value: "14.3 \u00B5s", pct: 0.5 },
-  { label: "All MCP p99", value: "< 100 ms", pct: 100 },
+  { label: "Memory: causal traversal", value: "< 1 ms", barPct: 95 },
+  { label: "Memory: semantic search (100K nodes)", value: "< 10 ms", barPct: 85 },
+  { label: "Codebase: symbol lookup", value: "14.3 \u00B5s", barPct: 98 },
+  { label: "All MCP p99", value: "< 100 ms", barPct: 70 },
 ]
+
+/* ── SVG Icons ───────────────────────────────────────────────────── */
+
+function ServerIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="square"
+      className="w-6 h-6 text-[#ea580c]"
+    >
+      <rect x="2" y="2" width="20" height="8" />
+      <rect x="2" y="14" width="20" height="8" />
+      <circle cx="6" cy="6" r="1" fill="currentColor" />
+      <circle cx="6" cy="18" r="1" fill="currentColor" />
+      <line x1="10" y1="6" x2="18" y2="6" />
+      <line x1="10" y1="18" x2="18" y2="18" />
+    </svg>
+  )
+}
+
+function ShieldIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="square"
+      className="w-6 h-6 text-[#ea580c]"
+    >
+      <path d="M12 2L3 7v5c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-9-5z" />
+      <rect x="9" y="10" width="6" height="5" />
+      <line x1="12" y1="10" x2="12" y2="8" />
+    </svg>
+  )
+}
+
+function ClockInfinityIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="square"
+      className="w-6 h-6 text-[#ea580c]"
+    >
+      <circle cx="12" cy="12" r="10" />
+      <polyline points="12 6 12 12 16 14" />
+      {/* small infinity at bottom */}
+      <path d="M8 18c0-1 1-2 2-2s2 1 2 0 1-2 2-2 2 1 2 2" strokeWidth={1.5} />
+    </svg>
+  )
+}
 
 const valueCards = [
   {
     headline: "LOCAL-FIRST",
     body: "Every model runs on your hardware. Every .amem file lives on your disk. Zero cloud dependency.",
+    Icon: ServerIcon,
   },
   {
     headline: "DATA STAYS ON-PREMISE",
     body: "Verac runs on your servers. Nothing leaves.",
+    Icon: ShieldIcon,
   },
   {
     headline: "20-YEAR MEMORY",
     body: "2 GB of reasoning continuity in a single .amem file",
+    Icon: ClockInfinityIcon,
   },
 ]
+
+/* ── Dot-grid overlay ────────────────────────────────────────────── */
+
+function DotGrid() {
+  return (
+    <svg
+      className="absolute inset-0 w-full h-full pointer-events-none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <defs>
+        <pattern id="proof-dots" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+          <circle cx="2" cy="2" r="0.8" fill="currentColor" opacity="0.07" />
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#proof-dots)" />
+    </svg>
+  )
+}
+
+/* ── Main component ──────────────────────────────────────────────── */
 
 export function ProofSection() {
   return (
@@ -80,7 +160,7 @@ export function ProofSection() {
           </div>
         </motion.div>
 
-        {/* Right: Substrate Speed — visual bar chart */}
+        {/* Right: Substrate Speed — animated bar chart */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -104,17 +184,17 @@ export function ProofSection() {
                     {s.value}
                   </span>
                 </div>
-                {/* Mini bar */}
-                <div className="w-full h-1.5 bg-border/30 rounded-full overflow-hidden">
+                {/* Animated horizontal bar */}
+                <div className="w-full h-2 bg-border/20 overflow-hidden">
                   <motion.div
-                    className="h-full bg-foreground rounded-full"
+                    className="h-full bg-[#ea580c]"
                     initial={{ width: 0 }}
-                    whileInView={{ width: `${Math.max(s.pct, 2)}%` }}
+                    whileInView={{ width: `${s.barPct}%` }}
                     viewport={{ once: true }}
                     transition={{
-                      duration: 0.8,
+                      duration: 1.0,
                       ease,
-                      delay: 0.2 + i * 0.1,
+                      delay: 0.2 + i * 0.12,
                     }}
                   />
                 </div>
@@ -124,25 +204,31 @@ export function ProofSection() {
         </motion.div>
       </div>
 
-      {/* Value cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {valueCards.map((card, i) => (
-          <motion.div
-            key={card.headline}
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.45, ease, delay: i * 0.08 }}
-            className="border-2 border-foreground bg-background p-4"
-          >
-            <span className="text-sm font-mono font-bold tracking-tight uppercase">
-              {card.headline}
-            </span>
-            <p className="mt-2 text-xs font-mono text-muted-foreground leading-relaxed">
-              {card.body}
-            </p>
-          </motion.div>
-        ))}
+      {/* Value cards with dot-grid overlay */}
+      <div className="relative">
+        <DotGrid />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 relative">
+          {valueCards.map((card, i) => (
+            <motion.div
+              key={card.headline}
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.45, ease, delay: i * 0.08 }}
+              className="border-2 border-foreground bg-background p-4"
+            >
+              <div className="flex items-start gap-3 mb-3">
+                <card.Icon />
+                <span className="text-sm font-mono font-bold tracking-tight uppercase pt-0.5">
+                  {card.headline}
+                </span>
+              </div>
+              <p className="text-xs font-mono text-muted-foreground leading-relaxed">
+                {card.body}
+              </p>
+            </motion.div>
+          ))}
+        </div>
       </div>
     </section>
   )
