@@ -1,5 +1,58 @@
 [
   {
+    "slug": "lab-log-20260412T0603",
+    "title": "Blog Update · 2026-04-12",
+    "dateIso": "2026-04-12",
+    "publishedAt": "2026-04-12T06:03:57.224Z",
+    "summary": "6 fresh signals across 1 repo in the latest 4-5 day publishing window.",
+    "category": "Release",
+    "notes": [
+      "This blog update captures the latest publishing window ending on 2026-04-12. We recorded 6 signals across 1 repository, including 0 releases, 6 commit updates, and 0 manually curated notes. This publishing window concentrated on execution quality, with delivery aimed at production confidence.",
+      "Highlights from this cycle: agentralab-tech-web: commit feat: tabbed terminal pane with SOLEN/VERAC/AXIOM/MEMORY buttons and copy; agentralab-tech-web: commit fix: remove MEMORY from nav (redundant with STACK), match Collaborate CTA style, add compact terminal pane; agentralab-tech-web: commit redesign: stack diagram as ascending staircase SVG illustration; agentralab-tech-web: commit art: replace all identical circle-satellite SVGs with unique meaningful illustrations. Taken together, these changes focus on runtime reliability, clearer operations flow, and lower adoption friction across the Agentra systems. Operationally, these updates reduce onboarding overhead and improve release confidence across environments. Core repositories touched in this cycle: agentralab-tech-web.",
+      "The safest rollout path is staged verification first, followed by controlled promotion once telemetry and MCP wiring are clean. For each item, source links are attached below so teams can validate scope, migration impact, and follow-up tasks without context loss before broad release communication."
+    ],
+    "highlights": [
+      "agentralab-tech-web (commit): feat: tabbed terminal pane with SOLEN/VERAC/AXIOM/MEMORY buttons and copy",
+      "agentralab-tech-web (commit): fix: remove MEMORY from nav (redundant with STACK), match Collaborate CTA style, add compact terminal pane",
+      "agentralab-tech-web (commit): redesign: stack diagram as ascending staircase SVG illustration",
+      "agentralab-tech-web (commit): art: replace all identical circle-satellite SVGs with unique meaningful illustrations",
+      "agentralab-tech-web (commit): polish: premium spacing, MODULE.GLYPH labels, gap-6 consistency, breathing room across all sections",
+      "agentralab-tech-web (commit): fix: remove dark panels everywhere — keep warm cream bg, line drawings on light"
+    ],
+    "sources": [
+      {
+        "label": "agentralab-tech-web · commit",
+        "href": "https://github.com/agentralabs/agentralab-tech-web/commit/d82b3aa22bc1b45a735a9ec30ae198b2a4603972"
+      },
+      {
+        "label": "agentralab-tech-web · commit",
+        "href": "https://github.com/agentralabs/agentralab-tech-web/commit/25b94f332e70e172788c56a80b671d233a687928"
+      },
+      {
+        "label": "agentralab-tech-web · commit",
+        "href": "https://github.com/agentralabs/agentralab-tech-web/commit/a034da5f473d3bed0453e26b4e8901e9a1fa9d4a"
+      },
+      {
+        "label": "agentralab-tech-web · commit",
+        "href": "https://github.com/agentralabs/agentralab-tech-web/commit/4c08a2b4555491b6dd2de3f76ca8ac790a5ee67a"
+      },
+      {
+        "label": "agentralab-tech-web · commit",
+        "href": "https://github.com/agentralabs/agentralab-tech-web/commit/d266348ea4fc9fc26308fbe284f6d01009609487"
+      },
+      {
+        "label": "agentralab-tech-web · commit",
+        "href": "https://github.com/agentralabs/agentralab-tech-web/commit/960035dfaaf02001f8aa34c6914a838acf9487de"
+      }
+    ],
+    "sourceCount": 6,
+    "signalCount": 6,
+    "carryoverMode": false,
+    "reposTouched": [
+      "agentralab-tech-web"
+    ]
+  },
+  {
     "slug": "lab-log-20260407T0557",
     "title": "Blog Update · 2026-04-07",
     "dateIso": "2026-04-07",
