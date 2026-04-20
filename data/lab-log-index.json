@@ -1,5 +1,61 @@
 [
   {
+    "slug": "lab-log-20260420T0628",
+    "title": "Blog Update · 2026-04-20",
+    "dateIso": "2026-04-20",
+    "publishedAt": "2026-04-20T06:28:37.193Z",
+    "summary": "6 fresh signals across 4 repos in the latest 4-5 day publishing window.",
+    "category": "Release",
+    "notes": [
+      "This blog update captures the latest publishing window ending on 2026-04-20. We recorded 6 signals across 4 repositories, including 4 releases, 2 commit updates, and 0 manually curated notes. The latest release cycle prioritized deployable improvements tied to reliability and operator speed.",
+      "Highlights from this cycle: agentralab-tech-web: released Blog Update · 2026-04-16 · Release Broadcast; agentralab-tech-web: commit chore(lab-log): publish automated entry; agentic-identity: commit Add identity parity session/runtime controls; agentic-codebase: released v0.1.4. Taken together, these changes focus on runtime reliability, clearer operations flow, and lower adoption friction across the Agentra systems. Commercially, this batch improves deployment readiness and lowers the support burden during rollout. Core repositories touched in this cycle: agentralab-tech-web, agentic-identity, agentic-codebase, agentic-memory.",
+      "Recommended action is phased rollout through staging, then controlled promotion into shared environments after MCP and artifact checks. For each item, source links are attached below so teams can validate scope, migration impact, and follow-up tasks without context loss before broad release communication."
+    ],
+    "highlights": [
+      "agentralab-tech-web (release): Blog Update · 2026-04-16 · Release Broadcast",
+      "agentralab-tech-web (commit): chore(lab-log): publish automated entry",
+      "agentic-identity (commit): Add identity parity session/runtime controls",
+      "agentic-codebase (release): v0.1.4",
+      "agentic-codebase (release): v0.1.3",
+      "agentic-memory (release): v0.2.5"
+    ],
+    "sources": [
+      {
+        "label": "agentralab-tech-web · release",
+        "href": "https://github.com/agentralabs/agentralab-tech-web/releases/tag/lab-log-20260416-0614"
+      },
+      {
+        "label": "agentralab-tech-web · commit",
+        "href": "https://github.com/agentralabs/agentralab-tech-web/commit/c56b26c14b44452836f9ab27c17581151cb0ea9e"
+      },
+      {
+        "label": "agentic-identity · commit",
+        "href": "https://github.com/agentralabs/agentic-identity/commit/e3efc3ecd17cb7129a9b0baa8af8fb196dd9baef"
+      },
+      {
+        "label": "agentic-codebase · release",
+        "href": "https://github.com/agentralabs/agentic-codebase/releases/tag/v0.1.4"
+      },
+      {
+        "label": "agentic-codebase · release",
+        "href": "https://github.com/agentralabs/agentic-codebase/releases/tag/v0.1.3"
+      },
+      {
+        "label": "agentic-memory · release",
+        "href": "https://github.com/agentralabs/agentic-memory/releases/tag/v0.2.5"
+      }
+    ],
+    "sourceCount": 6,
+    "signalCount": 6,
+    "carryoverMode": false,
+    "reposTouched": [
+      "agentralab-tech-web",
+      "agentic-identity",
+      "agentic-codebase",
+      "agentic-memory"
+    ]
+  },
+  {
     "slug": "lab-log-20260416T0614",
     "title": "Blog Update · 2026-04-16",
     "dateIso": "2026-04-16",
