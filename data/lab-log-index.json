@@ -1,5 +1,58 @@
 [
   {
+    "slug": "lab-log-20260926T0924",
+    "title": "Blog Update · 2026-09-26",
+    "dateIso": "2026-09-26",
+    "publishedAt": "2026-09-26T09:24:03.480Z",
+    "summary": "6 fresh signals across 1 repo in the latest 4-5 day publishing window.",
+    "category": "Release",
+    "notes": [
+      "This blog update captures the latest publishing window ending on 2026-09-26. We recorded 6 signals across 1 repository, including 2 releases, 4 commit updates, and 0 manually curated notes. The latest release cycle prioritized deployable improvements tied to reliability and operator speed.",
+      "Highlights from this cycle: agentralab-tech-web: commit chore(lab-log): publish automated entry; agentralab-tech-web: released Blog Update · 2026-09-16 · Release Broadcast; agentralab-tech-web: commit chore(lab-log): publish automated entry; agentralab-tech-web: commit chore(lab-log): publish automated entry. Taken together, these changes focus on runtime reliability, clearer operations flow, and lower adoption friction across the Agentra systems. Commercially, this batch improves deployment readiness and lowers the support burden during rollout. Core repositories touched in this cycle: agentralab-tech-web.",
+      "Recommended action is phased rollout through staging, then controlled promotion into shared environments after MCP and artifact checks. For each item, source links are attached below so teams can validate scope, migration impact, and follow-up tasks without context loss before broad release communication."
+    ],
+    "highlights": [
+      "agentralab-tech-web (commit): chore(lab-log): publish automated entry",
+      "agentralab-tech-web (release): Blog Update · 2026-09-16 · Release Broadcast",
+      "agentralab-tech-web (commit): chore(lab-log): publish automated entry",
+      "agentralab-tech-web (commit): chore(lab-log): publish automated entry",
+      "agentralab-tech-web (release): Blog Update · 2026-09-07 · Release Broadcast",
+      "agentralab-tech-web (commit): chore(lab-log): publish automated entry"
+    ],
+    "sources": [
+      {
+        "label": "agentralab-tech-web · commit",
+        "href": "https://github.com/agentralabs/agentralab-tech-web/commit/3523322c605f877aae84ac65ad9bf033bddbb773"
+      },
+      {
+        "label": "agentralab-tech-web · release",
+        "href": "https://github.com/agentralabs/agentralab-tech-web/releases/tag/lab-log-20260916-0920"
+      },
+      {
+        "label": "agentralab-tech-web · commit",
+        "href": "https://github.com/agentralabs/agentralab-tech-web/commit/d58876adf4f672bdccb9223726ef7187074e914d"
+      },
+      {
+        "label": "agentralab-tech-web · commit",
+        "href": "https://github.com/agentralabs/agentralab-tech-web/commit/26834cec4ca5d6623675814dda0d3ce2b05ed336"
+      },
+      {
+        "label": "agentralab-tech-web · release",
+        "href": "https://github.com/agentralabs/agentralab-tech-web/releases/tag/lab-log-20260907-0926"
+      },
+      {
+        "label": "agentralab-tech-web · commit",
+        "href": "https://github.com/agentralabs/agentralab-tech-web/commit/d4bc048a3e3c0cb2b28b500b550f1b8d3c571ccd"
+      }
+    ],
+    "sourceCount": 6,
+    "signalCount": 6,
+    "carryoverMode": true,
+    "reposTouched": [
+      "agentralab-tech-web"
+    ]
+  },
+  {
     "slug": "lab-log-20260921T1001",
     "title": "Blog Update · 2026-09-21",
     "dateIso": "2026-09-21",
