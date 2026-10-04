@@ -1,5 +1,60 @@
 [
   {
+    "slug": "lab-log-20261004T1037",
+    "title": "Blog Update · 2026-10-04",
+    "dateIso": "2026-10-04",
+    "publishedAt": "2026-10-04T10:37:54.577Z",
+    "summary": "6 fresh signals across 3 repos in the latest 4-5 day publishing window.",
+    "category": "Release",
+    "notes": [
+      "This blog update captures the latest publishing window ending on 2026-10-04. We recorded 6 signals across 3 repositories, including 0 releases, 6 commit updates, and 0 manually curated notes. This publishing window concentrated on execution quality, with delivery aimed at production confidence.",
+      "Highlights from this cycle: agentic-identity: commit Merge pull request #1 from sampurnamo/feat/windows-credential-manager-passphrases; agentic-memory: commit Merge pull request #13 from marcdhansen/lossless-export-import; agentralab-tech-web: commit chore(lab-log): publish automated entry; agentic-memory: commit style: format lossless import edge dedup. Taken together, these changes focus on runtime reliability, clearer operations flow, and lower adoption friction across the Agentra systems. Operationally, these updates reduce onboarding overhead and improve release confidence across environments. Core repositories touched in this cycle: agentic-identity, agentic-memory, agentralab-tech-web.",
+      "The safest rollout path is staged verification first, followed by controlled promotion once telemetry and MCP wiring are clean. For each item, source links are attached below so teams can validate scope, migration impact, and follow-up tasks without context loss before broad release communication."
+    ],
+    "highlights": [
+      "agentic-identity (commit): Merge pull request #1 from sampurnamo/feat/windows-credential-manager-passphrases",
+      "agentic-memory (commit): Merge pull request #13 from marcdhansen/lossless-export-import",
+      "agentralab-tech-web (commit): chore(lab-log): publish automated entry",
+      "agentic-memory (commit): style: format lossless import edge dedup",
+      "agentic-memory (commit): feat(cli): lossless, idempotent export/import round-trip",
+      "agentic-identity (commit): aid: support Windows Credential Manager passphrases"
+    ],
+    "sources": [
+      {
+        "label": "agentic-identity · commit",
+        "href": "https://github.com/agentralabs/agentic-identity/commit/b5df6d36dce5a41f292b6f20f0db19bb5d0623db"
+      },
+      {
+        "label": "agentic-memory · commit",
+        "href": "https://github.com/agentralabs/agentic-memory/commit/9d20fc4af3dea32ea9b2f28e490459cdb63c6e28"
+      },
+      {
+        "label": "agentralab-tech-web · commit",
+        "href": "https://github.com/agentralabs/agentralab-tech-web/commit/8be0582344dd23873ec14ffce3878d9a8ba80bd9"
+      },
+      {
+        "label": "agentic-memory · commit",
+        "href": "https://github.com/agentralabs/agentic-memory/commit/e0cbf95d0465cc82bc38c1d4990c7db31a763eea"
+      },
+      {
+        "label": "agentic-memory · commit",
+        "href": "https://github.com/agentralabs/agentic-memory/commit/17a9dcb766b203b78e17ce0be6610e5b55bc7fa1"
+      },
+      {
+        "label": "agentic-identity · commit",
+        "href": "https://github.com/agentralabs/agentic-identity/commit/42e1bbf1ffd19c30c71a37a48c1775d0b66b9020"
+      }
+    ],
+    "sourceCount": 6,
+    "signalCount": 6,
+    "carryoverMode": false,
+    "reposTouched": [
+      "agentic-identity",
+      "agentic-memory",
+      "agentralab-tech-web"
+    ]
+  },
+  {
     "slug": "lab-log-20260930T1032",
     "title": "Blog Update · 2026-09-30",
     "dateIso": "2026-09-30",
